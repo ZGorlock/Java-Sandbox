@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1ae0032a-13d8-4543-91be-5f4b32e82cc0" name="Default" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="Sandbox" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="C:\Users\Zack\.m2\repository" />
+        <option name="mavenHome" value="C:/maven/apache-maven-3.6.1" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+        <option name="vmOptionsForImporter" value="-Xmx768m" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1Uz7ZN8ZMMVuaAuIwfnFQZmtNTr" />
+  <component name="ProjectViewState">
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1546026182350" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/OsrsKeepLoggedIn" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.21789473" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Coding\JAVA\Sandbox\PictureResizer\data" />
+      <recent name="E:\Coding\JAVA\Sandbox\PictureResizer\src" />
+      <recent name="E:\Coding\JAVA\Sandbox\VideoRenamer\src\main\java\common" />
+      <recent name="E:\Coding\JAVA\Sandbox\src" />
+      <recent name="E:\Coding\JAVA\Testing\SettingsReadWrite\src" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Coding\JAVA\Sandbox\PictureResizer\data" />
+      <recent name="E:\Coding\JAVA\Sandbox" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.VideoRenamer">
+    <configuration default="true" type="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PictureResizer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="PictureResizer" />
+      <module name="pictureResizer" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/PictureResizer" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VideoRenamer (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="VideoRenamer" />
+      <module name="VideoRenamer" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VideoRenamer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="main.java.VideoRenamer" />
+      <module name="VideoRenamer" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/VideoRenamer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.java.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <module name="Testing" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG">
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file enabled="true" id="idea.log" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.PictureResizer" />
+      <item itemvalue="Application.VideoRenamer" />
+      <item itemvalue="Application.VideoRenamer (1)" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.VideoRenamer" />
+        <item itemvalue="Application.VideoRenamer (1)" />
+        <item itemvalue="Application.PictureResizer" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1ae0032a-13d8-4543-91be-5f4b32e82cc0" name="Default" comment="" />
+      <created>1507779250884</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1507779250884</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="517" y="127" key="#Project_Structure" timestamp="1576348480236">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="517" y="127" key="#Project_Structure/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576348480236" />
+    <state x="479" y="199" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1576628296837">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="479" y="199" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576628296837" />
+    <state x="733" y="336" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1576625725949">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="733" y="336" key="#com.intellij.fileTypes.FileTypeChooser/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576625725949" />
+    <state x="761" y="384" width="526" height="355" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1576348059681">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="761" y="384" width="526" height="355" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576348059681" />
+    <state x="883" y="185" width="441" height="742" key="#xdebugger.evaluate" timestamp="1576628352181">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="883" y="185" width="441" height="742" key="#xdebugger.evaluate/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576628352181" />
+    <state x="3315" y="199" key="FileChooserDialogImpl" timestamp="1576961291722">
+      <screen x="2560" y="0" width="2048" height="1152" />
+    </state>
+    <state x="755" y="192" key="FileChooserDialogImpl/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576535635695" />
+    <state x="3315" y="199" key="FileChooserDialogImpl/0.0.2048.1112/2560.0.2048.1152@2560.0.2048.1152" timestamp="1576961291722" />
+    <state width="2021" height="311" key="GridCell.Tab.0.bottom" timestamp="1576630776210">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state width="2021" height="311" key="GridCell.Tab.0.bottom/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576630776210" />
+    <state width="2021" height="311" key="GridCell.Tab.0.center" timestamp="1576630776210">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state width="2021" height="311" key="GridCell.Tab.0.center/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576630776210" />
+    <state width="2021" height="311" key="GridCell.Tab.0.left" timestamp="1576630776210">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state width="2021" height="311" key="GridCell.Tab.0.left/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576630776210" />
+    <state width="2021" height="311" key="GridCell.Tab.0.right" timestamp="1576630776210">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state width="2021" height="311" key="GridCell.Tab.0.right/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576630776210" />
+    <state x="3190" y="186" key="NewModule_or_Project.wizard" timestamp="1576961301411">
+      <screen x="2560" y="0" width="2048" height="1152" />
+    </state>
+    <state x="630" y="180" key="NewModule_or_Project.wizard/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576349087083" />
+    <state x="3190" y="186" key="NewModule_or_Project.wizard/0.0.2048.1112/2560.0.2048.1152@2560.0.2048.1152" timestamp="1576961301411" />
+    <state x="424" y="44" key="SettingsEditor" timestamp="1576627880378">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="424" y="44" key="SettingsEditor/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576627880378" />
+    <state x="2560" y="0" width="1699" height="1062" key="dock-window-1" timestamp="1576350678560">
+      <screen x="2560" y="0" width="2048" height="1152" />
+    </state>
+    <state x="2560" y="0" width="1699" height="1062" key="dock-window-1/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576350678560" />
+    <state x="653" y="225" width="753" height="662" key="find.popup" timestamp="1576628757599">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="653" y="225" width="753" height="662" key="find.popup/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576628757599" />
+    <state x="295" y="84" key="new project wizard" timestamp="1576535684352">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="295" y="84" key="new project wizard/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576535684352" />
+    <state x="603" y="77" width="840" height="1034" key="search.everywhere.popup" timestamp="1576630701461">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="603" y="77" width="840" height="1034" key="search.everywhere.popup/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576630701461" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/HtmlScraper/src/main/java/HtmlScraper.java</url>
+          <line>25</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="fileSrc.getName().contains(&quot;Come Along With Me&quot;)" language="JAVA" />
+          <url>file://$PROJECT_DIR$/VideoRenamer/src/main/java/common/Filesystem.java</url>
+          <line>200</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

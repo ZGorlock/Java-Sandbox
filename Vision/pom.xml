@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>sandbox</artifactId>
+        <groupId>sandbox</groupId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>vision</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+
+    <!-- OPEN CV -->
+    <dependencies>
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacv</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacv-platform</artifactId>
+            <version>1.5.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacpp</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bytedeco.javacpp-presets</groupId>
+            <artifactId>opencv</artifactId>
+            <version>3.2.0-1.3</version>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>com.googlecode.javacv</groupId>-->
+<!--            <artifactId>javacv</artifactId>-->
+<!--            <version>0.1</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>com.googlecode.javacpp</groupId>-->
+<!--            <artifactId>javacpp</artifactId>-->
+<!--            <version>0.4</version>-->
+<!--        </dependency>-->
+    </dependencies>
+
+</project>

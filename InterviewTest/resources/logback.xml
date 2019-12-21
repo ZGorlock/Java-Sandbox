@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration level="debug">
+
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
+
+    <property scope="context" name="logroot" value="log/" />
+    <property scope="context" name="log" value="log"/>
+    <property scope="context" name="errorlog" value="log-error" />
+
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.out</target>
+        
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>DENY</onMatch>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+        </filter>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %5level %16logger{36} - %message%n</pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="STDERR" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.err</target>
+
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %5level %16logger{36} - %message%n</pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logroot}${log}.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logroot}${log}-%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %5level %16logger{36} - %message%n</pattern>
+        </encoder>
+
+        <append>true</append>
+        <prudent>true</prudent>
+    </appender>
+    
+    <appender name="FILE-ERR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logroot}${errorlog}.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logroot}${errorlog}-%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %5level %16logger{36} - %message%n</pattern>
+        </encoder>
+
+        <append>true</append>
+        <prudent>true</prudent>
+    </appender>
+
+
+    <root level="trace">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="STDERR" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="FILE-ERR" />
+    </root>
+
+</configuration>

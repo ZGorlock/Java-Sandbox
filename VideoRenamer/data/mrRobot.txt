@@ -1,0 +1,44 @@
+S01 E10 · eps1.9_zer0-day.avi
+S01 E09 · eps1.8_m1rr0r1ng.qt
+S01 E08 · eps1.7wh1ter0se.m4v
+S01 E07 · eps1.6v1ew-s0urce.flv
+S01 E06 · eps1.5br4ve-trave1er.asf
+S01 E05 · eps1.4_3xpl0its.wmv
+S01 E04 · eps1.3da3m0ns.mp4
+S01 E03 · eps1.2d3bug.mkv
+S01 E02 · eps1.1ones-and-zer0es.mpeg
+S01 E01 · Eps1.0 hellofriend.mov
+S02 E12 · eps2.9pyth0n-pt2.p7z
+S02 E11 · eps2.9pyth0n-pt1.p7z
+S02 E10 · eps2.8h1dden-pr0cess.axx
+S02 E09 · eps2.7init5.fve
+S02 E08 · eps2.6succ3ss0r.p12
+S02 E07 · eps2.5h4ndshake.sme
+S02 E06 · eps2.4m4ster-s1ave.aes
+S02 E05 · eps2.3logic-b0mb.hc
+S02 E04 · eps2.2init1.asec
+S02 E03 · eps2.1k3rnel-pan1c.ksd
+S02 E02 · eps2.0unm4sk-pt2.tc
+S02 E01 · eps2.0unm4sk-pt1.tc
+S03 E10 · eps3.9_shutdown-r
+S03 E09 · eps3.8_stage3.torrent
+S03 E08 · eps3.7dont-delete-me.ko
+S03 E07 · eps3.6fredrick+tanya.chk
+S03 E06 · eps3.5kill-pr0cess.inc
+S03 E05 · eps3.4_runtime-error.r00
+S03 E04 · eps3.3metadata.par2
+S03 E03 · eps3.2legacy.so
+S03 E02 · eps3.1undo.gz
+S03 E01 · eps3.0power-saver-mode.h
+S04 E12 · Series Finale Part 1
+S04 E11 · Exit
+S04 E10 · 410 Gone
+S04 E09 · 409 Conflict
+S04 E08 · 408 Request Timeout
+S04 E07 · 407 Proxy Authentication Required
+S04 E06 · 406 Not Acceptable
+S04 E05 · 405 Method Not Allowed
+S04 E04 · 404 Not Found
+S04 E03 · 403 Forbidden
+S04 E02 · 402 Payment Required
+S04 E01 · 401 Unauthorized

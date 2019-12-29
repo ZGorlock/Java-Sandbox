@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1ae0032a-13d8-4543-91be-5f4b32e82cc0" name="Default" comment="" />
+    <list default="true" id="1ae0032a-13d8-4543-91be-5f4b32e82cc0" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PictureResizer/bin/classes/PictureResizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/PictureResizer/bin/classes/PictureResizer.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,6 +26,7 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="MavenImportPreferences">
@@ -46,7 +51,7 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1546026182350" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/OsrsKeepLoggedIn" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../SpecimensWebsiteGenerator" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.21789473" />
@@ -68,9 +73,17 @@
       <recent name="E:\Coding\JAVA\Sandbox" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.VideoRenamer">
+  <component name="RunManager" selected="Application.OsrsKeepLoggedIn">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OsrsKeepLoggedIn" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="OsrsKeepLoggedIn" />
+      <module name="OsrsKeepLoggedIn" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -153,12 +166,14 @@
       <item itemvalue="Application.PictureResizer" />
       <item itemvalue="Application.VideoRenamer" />
       <item itemvalue="Application.VideoRenamer (1)" />
+      <item itemvalue="Application.OsrsKeepLoggedIn" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.OsrsKeepLoggedIn" />
+        <item itemvalue="Application.PictureResizer" />
         <item itemvalue="Application.VideoRenamer" />
         <item itemvalue="Application.VideoRenamer (1)" />
-        <item itemvalue="Application.PictureResizer" />
       </list>
     </recent_temporary>
   </component>
@@ -208,27 +223,31 @@
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="883" y="185" width="441" height="742" key="#xdebugger.evaluate/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576628352181" />
-    <state x="3315" y="199" key="FileChooserDialogImpl" timestamp="1576961291722">
-      <screen x="2560" y="0" width="2048" height="1152" />
+    <state x="755" y="192" key="FileChooserDialogImpl" timestamp="1577494251736">
+      <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="755" y="192" key="FileChooserDialogImpl/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576535635695" />
+    <state x="755" y="192" key="FileChooserDialogImpl/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1577494251736" />
     <state x="3315" y="199" key="FileChooserDialogImpl/0.0.2048.1112/2560.0.2048.1152@2560.0.2048.1152" timestamp="1576961291722" />
-    <state width="2021" height="311" key="GridCell.Tab.0.bottom" timestamp="1576630776210">
+    <state width="2021" height="505" key="GridCell.Tab.0.bottom" timestamp="1577580881046">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2021" height="311" key="GridCell.Tab.0.bottom/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576630776210" />
-    <state width="2021" height="311" key="GridCell.Tab.0.center" timestamp="1576630776210">
+    <state width="2021" height="505" key="GridCell.Tab.0.bottom/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1577580881046" />
+    <state width="2021" height="484" key="GridCell.Tab.0.bottom/0.0.2048.1112/2560.0.2048.1152@2560.0.2048.1152" timestamp="1577499911634" />
+    <state width="2021" height="505" key="GridCell.Tab.0.center" timestamp="1577580881045">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2021" height="311" key="GridCell.Tab.0.center/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576630776210" />
-    <state width="2021" height="311" key="GridCell.Tab.0.left" timestamp="1576630776210">
+    <state width="2021" height="505" key="GridCell.Tab.0.center/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1577580881045" />
+    <state width="2021" height="484" key="GridCell.Tab.0.center/0.0.2048.1112/2560.0.2048.1152@2560.0.2048.1152" timestamp="1577499911634" />
+    <state width="2021" height="505" key="GridCell.Tab.0.left" timestamp="1577580881045">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2021" height="311" key="GridCell.Tab.0.left/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576630776210" />
-    <state width="2021" height="311" key="GridCell.Tab.0.right" timestamp="1576630776210">
+    <state width="2021" height="505" key="GridCell.Tab.0.left/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1577580881045" />
+    <state width="2021" height="484" key="GridCell.Tab.0.left/0.0.2048.1112/2560.0.2048.1152@2560.0.2048.1152" timestamp="1577499911634" />
+    <state width="2021" height="505" key="GridCell.Tab.0.right" timestamp="1577580881045">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2021" height="311" key="GridCell.Tab.0.right/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576630776210" />
+    <state width="2021" height="505" key="GridCell.Tab.0.right/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1577580881045" />
+    <state width="2021" height="484" key="GridCell.Tab.0.right/0.0.2048.1112/2560.0.2048.1152@2560.0.2048.1152" timestamp="1577499911634" />
     <state x="3190" y="186" key="NewModule_or_Project.wizard" timestamp="1576961301411">
       <screen x="2560" y="0" width="2048" height="1152" />
     </state>

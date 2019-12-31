@@ -11,6 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/Keylistener/Keylistener.iml" filepath="$PROJECT_DIR$/Keylistener/Keylistener.iml" />
       <module fileurl="file://$PROJECT_DIR$/LotteryGuesser/LotteryGuesser.iml" filepath="$PROJECT_DIR$/LotteryGuesser/LotteryGuesser.iml" />
       <module fileurl="file://$PROJECT_DIR$/OsrsKeepLoggedIn/OsrsKeepLoggedIn.iml" filepath="$PROJECT_DIR$/OsrsKeepLoggedIn/OsrsKeepLoggedIn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OsrsMerchingStatistics/OsrsMerchingStatistics.iml" filepath="$PROJECT_DIR$/OsrsMerchingStatistics/OsrsMerchingStatistics.iml" />
       <module fileurl="file://$PROJECT_DIR$/PiBot/PiBot.iml" filepath="$PROJECT_DIR$/PiBot/PiBot.iml" />
       <module fileurl="file://$PROJECT_DIR$/Sandbox.iml" filepath="$PROJECT_DIR$/Sandbox.iml" />
       <module fileurl="file://$PROJECT_DIR$/SettingsReadWrite/SettingsReadWrite.iml" filepath="$PROJECT_DIR$/SettingsReadWrite/SettingsReadWrite.iml" />

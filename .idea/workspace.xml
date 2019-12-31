@@ -2,9 +2,32 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1ae0032a-13d8-4543-91be-5f4b32e82cc0" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OsrsMerchingStatistics/Merchanting Log - 1 Year.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OsrsMerchingStatistics/OsrsMerchingStatistics.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OsrsMerchingStatistics/bin/classes/OsrsMerchingStatistics$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OsrsMerchingStatistics/bin/classes/OsrsMerchingStatistics$Transaction.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OsrsMerchingStatistics/bin/classes/OsrsMerchingStatistics.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OsrsMerchingStatistics/bin/classes/common/Filesystem.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OsrsMerchingStatistics/bin/classes/common/ListUtility.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OsrsMerchingStatistics/bin/classes/common/StringUtility$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OsrsMerchingStatistics/bin/classes/common/StringUtility$BoxType.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OsrsMerchingStatistics/bin/classes/common/StringUtility.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OsrsMerchingStatistics/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OsrsMerchingStatistics/src/main/java/OsrsMerchingStatistics.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OsrsMerchingStatistics/src/main/java/common/Filesystem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OsrsMerchingStatistics/src/main/java/common/ListUtility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OsrsMerchingStatistics/src/main/java/common/StringUtility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/OsrsMerchingStatistics/stats.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Keylistener/Keylistener.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Keylistener/Keylistener.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OsrsKeepLoggedIn/OsrsKeepLoggedIn.iml" beforeDir="false" afterPath="$PROJECT_DIR$/OsrsKeepLoggedIn/OsrsKeepLoggedIn.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PictureResizer/bin/classes/PictureResizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/PictureResizer/bin/classes/PictureResizer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PictureResizer/src/PictureResizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/PictureResizer/src/PictureResizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoRenamer/VideoRenamer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/VideoRenamer/VideoRenamer.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,30 +73,31 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1546026182350" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../SpecimensWebsiteGenerator" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/OsrsMerchingStatistics/src/main/java" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.21789473" />
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\Coding\JAVA\Sandbox\PictureResizer\data" />
-      <recent name="E:\Coding\JAVA\Sandbox\PictureResizer\src" />
-      <recent name="E:\Coding\JAVA\Sandbox\VideoRenamer\src\main\java\common" />
-      <recent name="E:\Coding\JAVA\Sandbox\src" />
-      <recent name="E:\Coding\JAVA\Testing\SettingsReadWrite\src" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\Coding\JAVA\Sandbox\PictureResizer\data" />
       <recent name="E:\Coding\JAVA\Sandbox" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Coding\JAVA\Sandbox\OsrsMerchingStatistics\src\main\java" />
+      <recent name="E:\Coding\JAVA\Sandbox\OsrsMerchingStatistics" />
+      <recent name="E:\Coding\JAVA\Sandbox\PictureResizer\data" />
+      <recent name="E:\Coding\JAVA\Sandbox\PictureResizer\src" />
+      <recent name="E:\Coding\JAVA\Sandbox\VideoRenamer\src\main\java\common" />
+    </key>
   </component>
-  <component name="RunManager" selected="Application.OsrsKeepLoggedIn">
+  <component name="RunManager" selected="Application.OsrsMerchingStatistics">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -84,6 +108,14 @@
       <option name="MAIN_CLASS_NAME" value="OsrsKeepLoggedIn" />
       <module name="OsrsKeepLoggedIn" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OsrsMerchingStatistics" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="OsrsMerchingStatistics" />
+      <module name="OsrsMerchingStatistics" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/OsrsMerchingStatistics" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -167,11 +199,13 @@
       <item itemvalue="Application.VideoRenamer" />
       <item itemvalue="Application.VideoRenamer (1)" />
       <item itemvalue="Application.OsrsKeepLoggedIn" />
+      <item itemvalue="Application.OsrsMerchingStatistics" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.OsrsKeepLoggedIn" />
+        <item itemvalue="Application.OsrsMerchingStatistics" />
         <item itemvalue="Application.PictureResizer" />
+        <item itemvalue="Application.OsrsKeepLoggedIn" />
         <item itemvalue="Application.VideoRenamer" />
         <item itemvalue="Application.VideoRenamer (1)" />
       </list>
@@ -207,10 +241,10 @@
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="517" y="127" key="#Project_Structure/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576348480236" />
-    <state x="479" y="199" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1576628296837">
+    <state x="479" y="199" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1577785215868">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="479" y="199" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576628296837" />
+    <state x="479" y="199" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1577785215868" />
     <state x="733" y="336" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1576625725949">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
@@ -219,44 +253,44 @@
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="761" y="384" width="526" height="355" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576348059681" />
-    <state x="883" y="185" width="441" height="742" key="#xdebugger.evaluate" timestamp="1576628352181">
+    <state x="846" y="185" width="478" height="742" key="#xdebugger.evaluate" timestamp="1577822204562">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="883" y="185" width="441" height="742" key="#xdebugger.evaluate/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576628352181" />
+    <state x="846" y="185" width="478" height="742" key="#xdebugger.evaluate/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1577822204562" />
     <state x="755" y="192" key="FileChooserDialogImpl" timestamp="1577494251736">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="755" y="192" key="FileChooserDialogImpl/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1577494251736" />
     <state x="3315" y="199" key="FileChooserDialogImpl/0.0.2048.1112/2560.0.2048.1152@2560.0.2048.1152" timestamp="1576961291722" />
-    <state width="2021" height="505" key="GridCell.Tab.0.bottom" timestamp="1577580881046">
+    <state width="2021" height="293" key="GridCell.Tab.0.bottom" timestamp="1577823386745">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2021" height="505" key="GridCell.Tab.0.bottom/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1577580881046" />
+    <state width="2021" height="293" key="GridCell.Tab.0.bottom/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1577823386745" />
     <state width="2021" height="484" key="GridCell.Tab.0.bottom/0.0.2048.1112/2560.0.2048.1152@2560.0.2048.1152" timestamp="1577499911634" />
-    <state width="2021" height="505" key="GridCell.Tab.0.center" timestamp="1577580881045">
+    <state width="2021" height="293" key="GridCell.Tab.0.center" timestamp="1577823386745">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2021" height="505" key="GridCell.Tab.0.center/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1577580881045" />
+    <state width="2021" height="293" key="GridCell.Tab.0.center/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1577823386745" />
     <state width="2021" height="484" key="GridCell.Tab.0.center/0.0.2048.1112/2560.0.2048.1152@2560.0.2048.1152" timestamp="1577499911634" />
-    <state width="2021" height="505" key="GridCell.Tab.0.left" timestamp="1577580881045">
+    <state width="2021" height="293" key="GridCell.Tab.0.left" timestamp="1577823386745">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2021" height="505" key="GridCell.Tab.0.left/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1577580881045" />
+    <state width="2021" height="293" key="GridCell.Tab.0.left/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1577823386745" />
     <state width="2021" height="484" key="GridCell.Tab.0.left/0.0.2048.1112/2560.0.2048.1152@2560.0.2048.1152" timestamp="1577499911634" />
-    <state width="2021" height="505" key="GridCell.Tab.0.right" timestamp="1577580881045">
+    <state width="2021" height="293" key="GridCell.Tab.0.right" timestamp="1577823386745">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state width="2021" height="505" key="GridCell.Tab.0.right/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1577580881045" />
+    <state width="2021" height="293" key="GridCell.Tab.0.right/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1577823386745" />
     <state width="2021" height="484" key="GridCell.Tab.0.right/0.0.2048.1112/2560.0.2048.1152@2560.0.2048.1152" timestamp="1577499911634" />
     <state x="3190" y="186" key="NewModule_or_Project.wizard" timestamp="1576961301411">
       <screen x="2560" y="0" width="2048" height="1152" />
     </state>
     <state x="630" y="180" key="NewModule_or_Project.wizard/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576349087083" />
     <state x="3190" y="186" key="NewModule_or_Project.wizard/0.0.2048.1112/2560.0.2048.1152@2560.0.2048.1152" timestamp="1576961301411" />
-    <state x="424" y="44" key="SettingsEditor" timestamp="1576627880378">
+    <state x="424" y="44" key="SettingsEditor" timestamp="1577782979989">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="424" y="44" key="SettingsEditor/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576627880378" />
+    <state x="424" y="44" key="SettingsEditor/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1577782979989" />
     <state x="2560" y="0" width="1699" height="1062" key="dock-window-1" timestamp="1576350678560">
       <screen x="2560" y="0" width="2048" height="1152" />
     </state>
@@ -265,10 +299,10 @@
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="653" y="225" width="753" height="662" key="find.popup/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576628757599" />
-    <state x="295" y="84" key="new project wizard" timestamp="1576535684352">
+    <state x="295" y="84" key="new project wizard" timestamp="1577782957018">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="295" y="84" key="new project wizard/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1576535684352" />
+    <state x="295" y="84" key="new project wizard/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1577782957018" />
     <state x="603" y="77" width="840" height="1034" key="search.everywhere.popup" timestamp="1576630701461">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>

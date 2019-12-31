@@ -13,6 +13,7 @@
         <sourceTestOutputDir name="bin/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="HtmlScraper" />
+        <module name="OsrsMerchingStatistics" />
         <module name="VideoRenamer" />
         <module name="pictureResizer" />
         <module name="Vision" />
@@ -21,6 +22,7 @@
     <bytecodeTargetLevel>
       <module name="HtmlScraper" target="1.8" />
       <module name="Keylistener" target="1.5" />
+      <module name="OsrsMerchingStatistics" target="1.8" />
       <module name="PictureResizer" target="1.8" />
       <module name="pictureResizer" target="1.8" />
       <module name="Sandbox" target="1.5" />

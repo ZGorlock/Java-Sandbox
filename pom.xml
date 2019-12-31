@@ -12,6 +12,7 @@
         <module>pictureResizer</module>
         <module>videoRenamer</module>
         <module>vision</module>
+        <module>OsrsMerchingStatistics</module>
     </modules>
     <packaging>pom</packaging>
 

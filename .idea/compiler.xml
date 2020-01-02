@@ -6,29 +6,34 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Keylistener" />
+        <module name="InterviewTest" />
       </profile>
       <profile name="Annotation profile for sandbox" enabled="true">
         <sourceOutputDir name="bin/generated-sources/annotations" />
         <sourceTestOutputDir name="bin/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="HtmlScraper" />
         <module name="OsrsMerchingStatistics" />
         <module name="VideoRenamer" />
-        <module name="pictureResizer" />
+        <module name="Sphinx4test" />
+        <module name="PictureResizer" />
+        <module name="DictionaryTest" />
+        <module name="PiBot" />
+        <module name="Keylistener" />
+        <module name="SineWaves" />
+        <module name="HtmlScraper" />
+        <module name="OsrsKeepLoggedIn" />
+        <module name="LotteryGuesser" />
         <module name="Vision" />
+        <module name="AlchBuddy" />
+        <module name="DicingBotSimulator" />
+        <module name="DBTest" />
+        <module name="TTSTest" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="HtmlScraper" target="1.8" />
-      <module name="Keylistener" target="1.5" />
-      <module name="OsrsMerchingStatistics" target="1.8" />
-      <module name="PictureResizer" target="1.8" />
-      <module name="pictureResizer" target="1.8" />
-      <module name="Sandbox" target="1.5" />
-      <module name="Testing" target="1.5" />
-      <module name="VideoRenamer" target="1.8" />
-      <module name="Vision" target="1.8" />
-    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="InterviewTest" options="-parameters" />
+    </option>
   </component>
 </project>

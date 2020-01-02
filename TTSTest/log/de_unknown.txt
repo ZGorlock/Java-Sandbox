@@ -1,4 +1,0 @@
-1 voice
-1 speech
-1 This
-1 sample

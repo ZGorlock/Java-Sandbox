@@ -30,12 +30,4 @@ public class SphinxTraining
         this.fileIdsFile = fileIdsFile;
     }
     
-    
-    //Methods
-    
-    public boolean train()
-    {
-        File trainingDirectory = new File();
-    }
-    
 }

@@ -7,15 +7,28 @@
     <groupId>sandbox</groupId>
     <artifactId>sandbox</artifactId>
     <version>1.0</version>
+    <packaging>pom</packaging>
+    
     <modules>
+        <module>alchBuddy</module>
+        <module>dbTest</module>
+        <module>dicingBotSimulator</module>
+        <module>dictionaryTest</module>
         <module>htmlScraper</module>
+        <module>keyListener</module>
+        <module>lotteryGuesser</module>
+        <module>osrsKeepLoggedIn</module>
+        <module>osrsMerchingStatistics</module>
+        <module>piBot</module>
         <module>pictureResizer</module>
+        <module>sineWaves</module>
+        <module>sphinx4test</module>
+        <module>ttsTest</module>
         <module>videoRenamer</module>
         <module>vision</module>
-        <module>OsrsMerchingStatistics</module>
     </modules>
-    <packaging>pom</packaging>
 
+    
     <properties>
         <!-- JAVA -->
         <java.version>1.8</java.version>
@@ -210,5 +223,5 @@
             </plugins>
         </pluginManagement>
     </build>
-    
+
 </project>

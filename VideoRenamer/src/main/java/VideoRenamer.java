@@ -4,8 +4,6 @@
  * Author:  Zachary Gill
  */
 
-package main.java;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,12 +19,14 @@ public class VideoRenamer {
     
     public enum VideoSet {
         ADVENTURE_TIME ("adventureTime", "Adventure Time"),
+        ALTERED_CARBON ("alteredCarbon", "Altered Carbon"),
         AMERICAN_HORROR_STORY ("americanHorrorStory", "American Horror Story"),
         AN_IDIOT_ABROAD ("anIdiotAbroad", "An Idiot Abroad"),
         BLACK_MIRROR ("blackMirror", "Black Mirror"),
         BREAKING_BAD ("breakingBad", "Breaking Bad"),
         DANGER_5 ("danger5", "Danger 5"),
         GAME_OF_THRONES ("gameOfThrones", "Game Of Thrones"),
+        HOUSE ("house", "House"),
         HOUSE_OF_CARDS ("houseOfCards", "House of Cards"),
         ITS_ALWAYS_SUNNY_IN_PHILADELPHIA ("itsAlwaysSunnyInPhiladelphia", "It's Always Sunny in Philadelphia"),
         LEGION ("legion", "Legion"),

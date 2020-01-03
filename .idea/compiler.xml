@@ -12,22 +12,22 @@
         <sourceOutputDir name="bin/generated-sources/annotations" />
         <sourceTestOutputDir name="bin/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="OsrsMerchingStatistics" />
-        <module name="VideoRenamer" />
-        <module name="Sphinx4test" />
-        <module name="PictureResizer" />
-        <module name="DictionaryTest" />
-        <module name="PiBot" />
-        <module name="Keylistener" />
-        <module name="SineWaves" />
         <module name="HtmlScraper" />
-        <module name="OsrsKeepLoggedIn" />
-        <module name="LotteryGuesser" />
-        <module name="Vision" />
-        <module name="AlchBuddy" />
-        <module name="DicingBotSimulator" />
-        <module name="DBTest" />
         <module name="TTSTest" />
+        <module name="OsrsMerchingStatistics" />
+        <module name="LotteryGuesser" />
+        <module name="SineWaves" />
+        <module name="Keylistener" />
+        <module name="PiBot" />
+        <module name="AlchBuddy" />
+        <module name="OsrsKeepLoggedIn" />
+        <module name="DicingBotSimulator" />
+        <module name="PictureResizer" />
+        <module name="VideoRenamer" />
+        <module name="DBTest" />
+        <module name="DictionaryTest" />
+        <module name="Vision" />
+        <module name="Sphinx4test" />
       </profile>
     </annotationProcessing>
   </component>

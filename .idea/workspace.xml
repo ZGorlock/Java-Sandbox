@@ -2,345 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="50c2ecc8-edb4-4df5-ab5d-cc3cd7db46e6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/LotteryGuesser/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OsrsKeepLoggedIn/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PiBot/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SineWaves/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TTSTest/tts.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VideoRenamer/data/alteredCarbon.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/VideoRenamer/data/house.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_1_7.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_core_1_1_7.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_1stleg_jnativehook_2_1_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_findbugs_jsr305_1_3_9.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_errorprone_error_prone_annotations_2_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_guava_25_0_jre.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_j2objc_j2objc_annotations_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_json_simple_json_simple_1_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_squareup_okhttp3_okhttp_3_11_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_squareup_okio_okio_1_14_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_io_commons_io_2_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_logging_commons_logging_1_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_net_commons_net_3_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_1_8_15.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_sourceforge_htmlunit_htmlunit_2_35_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_sourceforge_htmlunit_htmlunit_core_js_2_35_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_sourceforge_htmlunit_htmlunit_cssparser_1_4_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_sourceforge_htmlunit_neko_htmlunit_2_35_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_exec_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_9.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_text_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_derby_derby_10_12_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_11.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpmime_4_5_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_artoolkitplus_2_3_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_artoolkitplus_android_arm64_2_3_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_artoolkitplus_android_arm_2_3_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_artoolkitplus_android_x86_2_3_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_artoolkitplus_android_x86_64_2_3_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_artoolkitplus_linux_arm64_2_3_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_artoolkitplus_linux_armhf_2_3_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_artoolkitplus_linux_ppc64le_2_3_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_artoolkitplus_linux_x86_2_3_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_artoolkitplus_linux_x86_64_2_3_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_artoolkitplus_macosx_x86_64_2_3_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_artoolkitplus_platform_2_3_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_artoolkitplus_windows_x86_2_3_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_artoolkitplus_windows_x86_64_2_3_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_ffmpeg_4_2_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_ffmpeg_android_arm64_4_2_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_ffmpeg_android_arm_4_2_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_ffmpeg_android_x86_4_2_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_ffmpeg_android_x86_64_4_2_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_ffmpeg_linux_arm64_4_2_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_ffmpeg_linux_armhf_4_2_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_ffmpeg_linux_ppc64le_4_2_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_ffmpeg_linux_x86_4_2_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_ffmpeg_linux_x86_64_4_2_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_ffmpeg_macosx_x86_64_4_2_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_ffmpeg_platform_4_2_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_ffmpeg_windows_x86_4_2_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_ffmpeg_windows_x86_64_4_2_1_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_flandmark_1_07_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_flandmark_android_arm64_1_07_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_flandmark_android_arm_1_07_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_flandmark_android_x86_1_07_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_flandmark_android_x86_64_1_07_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_flandmark_linux_arm64_1_07_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_flandmark_linux_armhf_1_07_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_flandmark_linux_ppc64le_1_07_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_flandmark_linux_x86_1_07_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_flandmark_linux_x86_64_1_07_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_flandmark_macosx_x86_64_1_07_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_flandmark_platform_1_07_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_flandmark_windows_x86_1_07_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_flandmark_windows_x86_64_1_07_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_flycapture_2_13_3_31_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_flycapture_linux_arm64_2_13_3_31_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_flycapture_linux_armhf_2_13_3_31_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_flycapture_linux_x86_2_13_3_31_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_flycapture_linux_x86_64_2_13_3_31_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_flycapture_platform_2_13_3_31_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_flycapture_windows_x86_2_13_3_31_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_flycapture_windows_x86_64_2_13_3_31_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_javacpp_1_3_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_javacpp_presets_artoolkitplus_2_3_1_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_javacpp_presets_ffmpeg_3_2_1_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_javacpp_presets_flandmark_1_07_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_javacpp_presets_flycapture_2_9_3_43_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_javacpp_presets_libdc1394_2_2_4_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_javacpp_presets_libfreenect2_0_2_0_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_javacpp_presets_libfreenect_0_5_3_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_javacpp_presets_librealsense_1_9_6_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_javacpp_presets_opencv_3_2_0_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_javacpp_presets_videoinput_0_200_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_javacv_1_3_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_javacv_platform_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_leptonica_1_78_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_leptonica_android_arm64_1_78_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_leptonica_android_arm_1_78_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_leptonica_android_x86_1_78_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_leptonica_android_x86_64_1_78_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_leptonica_linux_arm64_1_78_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_leptonica_linux_armhf_1_78_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_leptonica_linux_ppc64le_1_78_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_leptonica_linux_x86_1_78_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_leptonica_linux_x86_64_1_78_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_leptonica_macosx_x86_64_1_78_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_leptonica_platform_1_78_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_leptonica_windows_x86_1_78_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_leptonica_windows_x86_64_1_78_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libdc1394_2_2_6_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libdc1394_linux_arm64_2_2_6_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libdc1394_linux_armhf_2_2_6_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libdc1394_linux_ppc64le_2_2_6_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libdc1394_linux_x86_2_2_6_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libdc1394_linux_x86_64_2_2_6_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libdc1394_macosx_x86_64_2_2_6_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libdc1394_platform_2_2_6_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libdc1394_windows_x86_2_2_6_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libdc1394_windows_x86_64_2_2_6_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libfreenect2_0_2_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libfreenect2_linux_x86_0_2_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libfreenect2_linux_x86_64_0_2_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libfreenect2_macosx_x86_64_0_2_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libfreenect2_platform_0_2_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libfreenect2_windows_x86_64_0_2_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libfreenect_0_5_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libfreenect_linux_arm64_0_5_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libfreenect_linux_armhf_0_5_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libfreenect_linux_ppc64le_0_5_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libfreenect_linux_x86_0_5_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libfreenect_linux_x86_64_0_5_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libfreenect_macosx_x86_64_0_5_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libfreenect_platform_0_5_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libfreenect_windows_x86_0_5_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_libfreenect_windows_x86_64_0_5_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_librealsense2_2_29_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_librealsense2_linux_x86_2_29_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_librealsense2_linux_x86_64_2_29_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_librealsense2_macosx_x86_64_2_29_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_librealsense2_platform_2_29_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_librealsense2_windows_x86_2_29_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_librealsense2_windows_x86_64_2_29_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_librealsense_1_12_4_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_librealsense_linux_x86_1_12_4_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_librealsense_linux_x86_64_1_12_4_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_librealsense_macosx_x86_64_1_12_4_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_librealsense_platform_1_12_4_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_librealsense_windows_x86_1_12_4_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_librealsense_windows_x86_64_1_12_4_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_openblas_0_3_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_openblas_android_arm64_0_3_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_openblas_android_arm_0_3_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_openblas_android_x86_0_3_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_openblas_android_x86_64_0_3_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_openblas_ios_arm64_0_3_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_openblas_ios_x86_64_0_3_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_openblas_linux_arm64_0_3_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_openblas_linux_armhf_0_3_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_openblas_linux_ppc64le_0_3_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_openblas_linux_x86_0_3_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_openblas_linux_x86_64_0_3_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_openblas_macosx_x86_64_0_3_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_openblas_platform_0_3_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_openblas_windows_x86_0_3_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_openblas_windows_x86_64_0_3_7_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_opencv_4_1_2_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_opencv_android_arm64_4_1_2_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_opencv_android_arm_4_1_2_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_opencv_android_x86_4_1_2_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_opencv_android_x86_64_4_1_2_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_opencv_ios_arm64_4_1_2_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_opencv_ios_x86_64_4_1_2_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_opencv_linux_arm64_4_1_2_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_opencv_linux_armhf_4_1_2_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_opencv_linux_ppc64le_4_1_2_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_opencv_linux_x86_4_1_2_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_opencv_linux_x86_64_4_1_2_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_opencv_macosx_x86_64_4_1_2_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_opencv_platform_4_1_2_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_opencv_windows_x86_4_1_2_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_opencv_windows_x86_64_4_1_2_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_tesseract_4_1_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_tesseract_android_arm64_4_1_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_tesseract_android_arm_4_1_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_tesseract_android_x86_4_1_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_tesseract_android_x86_64_4_1_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_tesseract_linux_arm64_4_1_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_tesseract_linux_armhf_4_1_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_tesseract_linux_ppc64le_4_1_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_tesseract_linux_x86_4_1_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_tesseract_linux_x86_64_4_1_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_tesseract_macosx_x86_64_4_1_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_tesseract_platform_4_1_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_tesseract_windows_x86_4_1_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_tesseract_windows_x86_64_4_1_0_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_videoinput_0_200_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_videoinput_platform_0_200_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_videoinput_windows_x86_0_200_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bytedeco_videoinput_windows_x86_64_0_200_1_5_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_checkerframework_checker_compat_qual_2_0_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_mojo_animal_sniffer_annotations_1_14.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_client_9_4_16_v20190411.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_http_9_4_16_v20190411.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_io_9_4_16_v20190411.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_util_9_4_16_v20190411.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_xml_9_4_16_v20190411.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_websocket_websocket_api_9_4_16_v20190411.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_websocket_websocket_client_9_4_16_v20190411.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_websocket_websocket_common_9_4_16_v20190411.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jsoup_jsoup_1_12_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_seleniumhq_selenium_selenium_api_3_141_59.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_seleniumhq_selenium_selenium_chrome_driver_3_141_59.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_seleniumhq_selenium_selenium_edge_driver_3_141_59.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_seleniumhq_selenium_selenium_firefox_driver_3_141_59.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_seleniumhq_selenium_selenium_ie_driver_3_141_59.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_seleniumhq_selenium_selenium_java_3_141_59.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_seleniumhq_selenium_selenium_opera_driver_3_141_59.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_seleniumhq_selenium_selenium_remote_driver_3_141_59.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_seleniumhq_selenium_selenium_safari_driver_3_141_59.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_seleniumhq_selenium_selenium_support_3_141_59.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_26.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__xalan_serializer_2_7_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__xalan_xalan_2_7_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__xerces_xercesImpl_2_12_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__xml_apis_xml_apis_1_4_01.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AlchBuddy/AlchBuddy.iml" beforeDir="false" afterPath="$PROJECT_DIR$/AlchBuddy/AlchBuddy.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AlchBuddy/bin/AlchBuddy.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AlchBuddy/bin/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AlchBuddy/bin/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AlchBuddy/bin/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AlchBuddy/bin/runescape-helper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AlchBuddy/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/AlchBuddy/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DBTest/DBTest.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DBTest/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/DBTest/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DicingBotSimulator/DicingBotSimulator.iml" beforeDir="false" afterPath="$PROJECT_DIR$/DicingBotSimulator/DicingBotSimulator.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DictionaryTest/DictionaryTest.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DictionaryTest/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/DictionaryTest/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HtmlScraper/HtmlScraper.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/HtmlScraper/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/HtmlScraper/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InterviewTest/InterviewTest.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InterviewTest/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/InterviewTest/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InterviewTest/target/classes/META-INF/interviewTest.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Keylistener/Keylistener.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Keylistener/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Keylistener/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LotteryGuesser/LotteryGuesser.iml" beforeDir="false" afterPath="$PROJECT_DIR$/LotteryGuesser/LotteryGuesser.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LotteryGuesser/out/production/LotteryGuesser/LotteryGuesser.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OsrsKeepLoggedIn/OsrsKeepLoggedIn.iml" beforeDir="false" afterPath="$PROJECT_DIR$/OsrsKeepLoggedIn/OsrsKeepLoggedIn.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OsrsKeepLoggedIn/out/production/OsrsKeepLoggedIn/OsrsKeepLoggedIn.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OsrsMerchingStatistics/OsrsMerchingStatistics.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/OsrsMerchingStatistics/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/OsrsMerchingStatistics/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PiBot/PiBot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PiBot/PiBot.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PiBot/out/production/PiBot/PiBot.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PiBot/out/production/PiBot/Test.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PictureResizer/bin/classes/PictureResizer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PictureResizer/bin/classes/common/Filesystem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PictureResizer/bin/classes/common/ListUtility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PictureResizer/bin/classes/common/StringUtility$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PictureResizer/bin/classes/common/StringUtility$BoxType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PictureResizer/bin/classes/common/StringUtility.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PictureResizer/pictureResizer.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PictureResizer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PictureResizer/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sandbox.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Sandbox.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SettingsReadWrite/SettingsReadWrite.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SettingsReadWrite/src/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SettingsReadWrite/src/Setting.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SettingsReadWrite/src/SettingGroup.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SineWaves/SineWaves.iml" beforeDir="false" afterPath="$PROJECT_DIR$/SineWaves/SineWaves.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SineWaves/out/production/SineWaves/SineWaves$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SineWaves/out/production/SineWaves/SineWaves.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sphinx4Test/Sphinx4Test.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sphinx4Test/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Sphinx4Test/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sphinx4Test/src/main/java/SphinxTraining.java" beforeDir="false" afterPath="$PROJECT_DIR$/Sphinx4Test/src/main/java/SphinxTraining.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__javax_speech_jsapi_1_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__net_sf_sociaal_freetts_1_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest/TTSTest.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest/log/de_english-words.txt" beforeDir="false" afterPath="$PROJECT_DIR$/DicingBotSimulator/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest/log/de_unknown.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest/src/main/java/FreeTTS.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest/target/classes/FreeTTS.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/kotlinc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_1_7.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_1_7.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__ch_qos_logback_logback_core_1_1_7.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__ch_qos_logback_logback_core_1_1_7.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__com_google_guava_guava_14_0_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__com_google_guava_guava_14_0_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__com_ibm_icu_icu4j_54_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__com_ibm_icu_icu4j_54_1_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__com_twmacinta_fast_md5_2_7_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__com_twmacinta_fast_md5_2_7_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__commons_collections_commons_collections_3_2_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__commons_collections_commons_collections_3_2_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__commons_io_commons_io_2_5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__commons_io_commons_io_2_5.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__commons_lang_commons_lang_2_6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__commons_lang_commons_lang_2_6.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__de_dfki_lt_jtok_jtok_core_1_9_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__de_dfki_lt_jtok_jtok_core_1_9_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__de_dfki_mary_emotionml_checker_java_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__de_dfki_mary_emotionml_checker_java_1_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__de_dfki_mary_marytts_common_5_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__de_dfki_mary_marytts_common_5_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__de_dfki_mary_marytts_lang_en_5_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__de_dfki_mary_marytts_lang_en_5_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__de_dfki_mary_marytts_runtime_5_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__de_dfki_mary_marytts_runtime_5_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__de_dfki_mary_marytts_signalproc_5_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__de_dfki_mary_marytts_signalproc_5_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__de_dfki_mary_voice_cmu_bdl_hsmm_5_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__de_dfki_mary_voice_cmu_bdl_hsmm_5_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__de_dfki_mary_voice_cmu_rms_hsmm_5_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__de_dfki_mary_voice_cmu_rms_hsmm_5_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__de_dfki_mary_voice_cmu_slt_hsmm_5_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__de_dfki_mary_voice_cmu_slt_hsmm_5_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__de_dfki_mary_voice_dfki_obadiah_hsmm_5_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__de_dfki_mary_voice_dfki_obadiah_hsmm_5_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__de_dfki_mary_voice_dfki_poppy_hsmm_5_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__de_dfki_mary_voice_dfki_poppy_hsmm_5_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__de_dfki_mary_voice_dfki_prudence_hsmm_5_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__de_dfki_mary_voice_dfki_prudence_hsmm_5_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__de_dfki_mary_voice_dfki_spike_hsmm_5_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__de_dfki_mary_voice_dfki_spike_hsmm_5_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__gov_nist_math_Jampack_1_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__gov_nist_math_Jampack_1_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__gov_nist_math_jama_1_0_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__gov_nist_math_jama_1_0_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__log4j_log4j_1_2_16.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__log4j_log4j_1_2_16.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__net_sf_jwordnet_jwnl_1_3_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__net_sf_jwordnet_jwnl_1_3_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__net_sf_trove4j_trove4j_2_0_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__net_sf_trove4j_trove4j_2_0_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_nio_4_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_nio_4_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__org_apache_opennlp_opennlp_maxent_3_0_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__org_apache_opennlp_opennlp_maxent_3_0_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__org_apache_opennlp_opennlp_tools_1_5_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__org_apache_opennlp_opennlp_tools_1_5_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__org_codehaus_groovy_groovy_all_2_4_5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__org_codehaus_groovy_groovy_all_2_4_5.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__org_hsqldb_hsqldb_2_0_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__org_hsqldb_hsqldb_2_0_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_21.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_21.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__org_slf4j_slf4j_log4j12_1_6_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__org_slf4j_slf4j_log4j12_1_6_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/libraries/Maven__org_swinglabs_swing_layout_1_0_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/libraries/Maven__org_swinglabs_swing_layout_1_0_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/TTSTest2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/log/server.log" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/log/server.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/src/main/java/TTS.java" beforeDir="false" afterPath="$PROJECT_DIR$/TTSTest/src/main/java/TTS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTSTest2/target/classes/TTS.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VideoRenamer/VideoRenamer.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vision/Vision.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vision/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Vision/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoRenamer/src/main/java/VideoRenamer.java" beforeDir="false" afterPath="$PROJECT_DIR$/VideoRenamer/src/main/java/VideoRenamer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -367,7 +33,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Vision/pom.xml" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.21789473" />
@@ -380,6 +46,14 @@
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <module />
       <method />
+    </configuration>
+    <configuration name="VideoRenamer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="VideoRenamer" />
+      <module name="VideoRenamer" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/VideoRenamer" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -459,6 +133,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.VideoRenamer" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -486,22 +165,46 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
+    <state x="479" y="199" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1578076740816">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="479" y="199" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1578076740816" />
+    <state x="612" y="77" key="CommitChangelistDialog2" timestamp="1578076951234">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state x="612" y="77" key="CommitChangelistDialog2/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1578076951234" />
     <state x="755" y="192" key="FileChooserDialogImpl" timestamp="1577995620257">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="755" y="192" key="FileChooserDialogImpl/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1577995620257" />
+    <state width="1993" height="284" key="GridCell.Tab.0.bottom" timestamp="1578076903107">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state width="1993" height="284" key="GridCell.Tab.0.bottom/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1578076903107" />
+    <state width="1993" height="284" key="GridCell.Tab.0.center" timestamp="1578076903107">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state width="1993" height="284" key="GridCell.Tab.0.center/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1578076903107" />
+    <state width="1993" height="284" key="GridCell.Tab.0.left" timestamp="1578076903107">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state width="1993" height="284" key="GridCell.Tab.0.left/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1578076903107" />
+    <state width="1993" height="284" key="GridCell.Tab.0.right" timestamp="1578076903107">
+      <screen x="0" y="0" width="2048" height="1112" />
+    </state>
+    <state width="1993" height="284" key="GridCell.Tab.0.right/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1578076903107" />
     <state x="630" y="180" key="NewModule_or_Project.wizard" timestamp="1577995386035">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="630" y="180" key="NewModule_or_Project.wizard/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1577995386035" />
-    <state x="377" y="22" key="SettingsEditor" timestamp="1577995819530">
+    <state x="377" y="22" key="SettingsEditor" timestamp="1578076731795">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
-    <state x="377" y="22" key="SettingsEditor/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1577995819530" />
-    <state x="2664" y="-10" width="669" height="750" maximized="true" key="dock-window-1" timestamp="1577995056747">
+    <state x="377" y="22" key="SettingsEditor/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1578076731795" />
+    <state x="2664" y="-10" width="669" height="750" maximized="true" key="dock-window-1" timestamp="1578076089954">
       <screen x="2560" y="0" width="2048" height="1152" />
     </state>
-    <state x="2664" y="-10" width="669" height="750" maximized="true" key="dock-window-1/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1577995056747" />
+    <state x="2664" y="-10" width="669" height="750" maximized="true" key="dock-window-1/0.0.2048.1112/2560.0.2048.1152@0.0.2048.1112" timestamp="1578076089954" />
     <state x="603" y="77" width="840" height="1034" key="search.everywhere.popup" timestamp="1577995823486">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>

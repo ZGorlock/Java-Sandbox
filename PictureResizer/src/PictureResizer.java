@@ -4,12 +4,12 @@
  * Author:  Zachary Gill
  */
 
-import javax.imageio.ImageIO;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
 
 import common.Filesystem;
 
@@ -36,7 +36,7 @@ public class PictureResizer {
             BufferedImage image = ImageIO.read(picture);
             Image newImage = image.getScaledInstance(image.getWidth(), image.getHeight(), Image.SCALE_DEFAULT);
             image.getGraphics().drawImage(newImage, 0, 0, null);
-            File output = new File("output", picture.getName().replace(".JPG", ".jpg"));
+            File output = new File("output", picture.getName().replaceAll("(\\.[JPG][jpg])+", ".jpg"));
             if (ImageIO.write(image, "JPG", output)) {
                 if (directory != null) {
                     Filesystem.deleteFile(picture);

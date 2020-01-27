@@ -30,8 +30,9 @@ S03 E04 · eps3.3metadata.par2
 S03 E03 · eps3.2legacy.so
 S03 E02 · eps3.1undo.gz
 S03 E01 · eps3.0power-saver-mode.h
-S04 E12 · Series Finale Part 1
-S04 E11 · Exit
+S04 E13 · Hello, Elliot
+S04 E12 · whoami
+S04 E11 · eXit
 S04 E10 · 410 Gone
 S04 E09 · 409 Conflict
 S04 E08 · 408 Request Timeout

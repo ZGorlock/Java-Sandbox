@@ -108,26 +108,27 @@ S05 E04 · Birthmarks
 S05 E03 · Adverse Events
 S05 E02 · Not Cancer
 S05 E01 · Dying Changes Everything
-S06 E22 · Help Me
-S06 E21 · Baggage
-S06 E20 · The Choice
-S06 E19 · Open and Shut
-S06 E18 · Knight Fall
-S06 E17 · Lockdown
-S06 E16 · Black Hole
-S06 E15 · Private Lives
-S06 E14 · 5 to 9
-S06 E13 · Moving the Chains
-S06 E12 · Remorse
-S06 E11 · The Down Low
-S06 E10 · Wilson
+S06 E21 · Help Me
+S06 E20 · Baggage
+S06 E19 · The Choice
+S06 E18 · Open and Shut
+S06 E17 · Knight Fall
+S06 E16 · Lockdown
+S06 E15 · Black Hole
+S06 E14 · Private Lives
+S06 E13 · 5 to 9
+S06 E12 · Moving the Chains
+S06 E11 · Remorse
+S06 E10 · The Down Low
+S06 E09 · Wilson
 S06 E08 · Ignorance Is Bliss
-S06 E07 · Known Unknowns
-S06 E06 · Brave Heart
-S06 E05 · Instant Karma
+S06 E07 · Teamwork
+S06 E06 · Known Unknowns
+S06 E05 · Brave Heart
+S06 E04 · Instant Karma
 S06 E03 · The Tyrant
-S06 E02 · Broken Part 2
-S06 E01 · Broken Part 1
+S06 E02 · Epic Fail
+S06 E01 · Broken Part 1 ~ Broken Part 2
 S07 E23 · Moving On
 S07 E22 · After Hours
 S07 E21 · The Fix

@@ -26,6 +26,7 @@
         <module>ttsTest</module>
         <module>videoRenamer</module>
         <module>vision</module>
+        <module>VideoProcessor</module>
     </modules>
 
     

@@ -1,0 +1,10 @@
+/.idea/libraries
+/.idea/workspace.xml
+**/*.iws
+
+**/bin/
+**/target/
+**/out/
+**/log/
+
+**/stats.*

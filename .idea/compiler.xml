@@ -22,6 +22,7 @@
         <module name="AlchBuddy" />
         <module name="OsrsKeepLoggedIn" />
         <module name="DicingBotSimulator" />
+        <module name="videoProcessor" />
         <module name="PictureResizer" />
         <module name="VideoRenamer" />
         <module name="DBTest" />

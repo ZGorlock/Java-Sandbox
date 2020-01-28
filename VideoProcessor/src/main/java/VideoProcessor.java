@@ -27,11 +27,13 @@ public class VideoProcessor {
     public static final File log = new File("log/" + new SimpleDateFormat("YYYY-MM-dd").format(new Date()) + ".txt");
     
     public static final File statsFile = new File("stats.csv");
+    public static final File dirStatsFile = new File("stats.dir.csv");
     
     public static void main(String[] args) {
 //        convertShowToMp4();
 //        stripMetadataAndChapters();
-        Map<String, Map<String, String>> stats = produceStats();
+//        Map<String, Map<String, String>> stats = produceStats();
+        Map<String, Map<String, String>> dirStats = produceDirStats();
     }
     
     private static String ffmpeg(String cmd) {
@@ -346,6 +348,97 @@ public class VideoProcessor {
             
             stats.putAll(dStats);
         }
+        
+        return stats;
+    }
+    
+    private static Map<String, Map<String, String>> produceDirStats() {
+        final boolean csvOutput = false;
+        Map<String, Map<String, String>> stats = produceDirStatsHelper(videoDir, 1);
+    
+        List<String> output = new ArrayList<>();
+        if (csvOutput) {
+            for (Map.Entry<String, Map<String, String>> entry : stats.entrySet()) {
+                String key = entry.getKey();
+                Map<String, String> value = entry.getValue();
+    
+                String line = "\"" + key + "\"," +
+                        "\"" + (value.containsKey("Size") ? ("Size: " + value.get("Size")) : "") + "\"," +
+                        "\"" + (value.containsKey("Count") ? ("Count: " + value.get("Count")) : "") + "\"," +
+                        "\"" + (value.containsKey("Average Size") ? ("Size: " + value.get("Size")) : "") + "\"";
+                output.add(line);
+            }
+            Filesystem.writeLines(dirStatsFile, output);
+            
+        } else {
+            Map<String, Integer> columnWidths = new HashMap<>();
+            for (Map.Entry<String, Map<String, String>> entry : stats.entrySet()) {
+                columnWidths.putIfAbsent("Key", 0);
+                int keyLength = entry.getKey().length();
+                if (columnWidths.get("Key") < keyLength) {
+                    columnWidths.replace("Key", keyLength);
+                }
+                for (Map.Entry<String, String> statEntry : entry.getValue().entrySet()) {
+                    columnWidths.putIfAbsent(statEntry.getKey(), 0);
+                    int length = (statEntry.getKey() + ":" + statEntry.getValue()).length();
+                    if (columnWidths.get(statEntry.getKey()) < length) {
+                        columnWidths.replace(statEntry.getKey(), length);
+                    }
+                }
+            }
+    
+            for (Map.Entry<String, Map<String, String>> entry : stats.entrySet()) {
+                String key = entry.getKey();
+                Map<String, String> value = entry.getValue();
+                String line = String.format("%-" + columnWidths.get("Key") + "s  " +
+                                "%-" + columnWidths.get("Size") + "s  " +
+                                "%-" + columnWidths.get("Count") + "s  " +
+                                "%-" + columnWidths.get("Average Size") + "s  ",
+                        key,
+                        value.containsKey("Size") ? ("Size: " + value.get("Size")) : "",
+                        value.containsKey("Count") ? ("Count: " + value.get("Count")) : "",
+                        value.containsKey("Average Size") ? ("Average Size: " + value.get("Average Size")) : "");
+                output.add(line);
+            }
+            Filesystem.writeLines(new File(statsFile.getAbsolutePath().replace(".csv", ".txt")), output);
+        }
+        
+        return stats;
+    }
+    
+    private static Map<String, Map<String, String>> produceDirStatsHelper(File dir, int depth) {
+        DecimalFormat df = new DecimalFormat("#.##");
+        Map<String, Map<String, String>> stats = new LinkedHashMap<>();
+        Map<String, String> dStats = new LinkedHashMap<>();
+    
+        stats.put(StringUtility.spaces(3 * (depth - 1)) + "|-\\ " + dir.getAbsolutePath().replace(videoDir.getParentFile().getAbsolutePath(), ""), dStats);
+        dStats.put("Size", "0.0 MB");
+        dStats.put("Count", "0");
+        dStats.put("Average Size", "0.0 MB");
+        
+        for (File f : Filesystem.getFiles(dir)) {
+            if (f.getName().endsWith("txt") || f.getName().endsWith("ini")) {
+                continue;
+            }
+            
+            double size = (double) f.length() / (1024 * 1024);
+            dStats.put("Count", String.valueOf(Integer.parseInt(dStats.get("Count")) + 1));
+            dStats.put("Size", df.format(Double.parseDouble(StringUtility.rShear(dStats.get("Size"), " MB".length())) + size) + " MB");
+        }
+        
+        for (File d : Filesystem.getDirs(dir)) {
+            if (d.getName().equalsIgnoreCase("old")) {
+                continue;
+            }
+    
+            Map<String, Map<String, String>> fStats = produceStatsHelper(d, depth + 1);
+            String dName = StringUtility.spaces(3 * depth) + "|-\\ " + d.getAbsolutePath().replace(videoDir.getParentFile().getAbsolutePath(), "");
+    
+            dStats.put("Count", df.format(Integer.parseInt(dStats.get("Count")) + Integer.parseInt(fStats.get(dName).get("Count"))));
+            dStats.put("Size", df.format(Double.parseDouble(StringUtility.rShear(dStats.get("Size"), " MB".length())) + Double.parseDouble(StringUtility.rShear(fStats.get(dName).get("Size"), " MB".length()))) + " MB");
+        }
+        
+        dStats.put("Average Size", df.format(Double.parseDouble(StringUtility.rShear(dStats.get("Size"), " MB".length())) / Integer.parseInt(dStats.get("Count"))) + " MB");
         
         return stats;
     }

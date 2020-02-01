@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PiBot.iml" filepath="$PROJECT_DIR$/PiBot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WavCompressor/WavCompressor.iml" filepath="$PROJECT_DIR$/WavCompressor/WavCompressor.iml" />
     </modules>
   </component>
 </project>

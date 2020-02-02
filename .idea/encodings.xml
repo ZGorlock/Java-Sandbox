@@ -19,6 +19,8 @@
     <file url="file://$PROJECT_DIR$/VideoProcessor/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/VideoRenamer/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/VideoRenamer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/WavDecoder/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/WavDecoder/src/main/resources" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

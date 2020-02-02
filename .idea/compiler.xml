@@ -2,33 +2,34 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile name="Annotation profile for sandbox" enabled="true">
+        <sourceOutputDir name="bin/generated-sources/annotations" />
+        <sourceTestOutputDir name="bin/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="VideoProcessor" />
+        <module name="VideoRenamer" />
+        <module name="Sphinx4test" />
+        <module name="PictureResizer" />
+        <module name="DBTest" />
+        <module name="PiBot" />
+        <module name="Keylistener" />
+        <module name="SineWaves" />
+        <module name="DictionaryTest" />
+        <module name="AlchBuddy" />
+        <module name="LotteryGuesser" />
+        <module name="OsrsMerchingStatistics" />
+        <module name="Vision" />
+        <module name="OsrsKeepLoggedIn" />
+        <module name="WavDecoder" />
+        <module name="DicingBotSimulator" />
+        <module name="HtmlScraper" />
+        <module name="TTSTest" />
+      </profile>
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="InterviewTest" />
-      </profile>
-      <profile name="Annotation profile for sandbox" enabled="true">
-        <sourceOutputDir name="bin/generated-sources/annotations" />
-        <sourceTestOutputDir name="bin/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="HtmlScraper" />
-        <module name="TTSTest" />
-        <module name="OsrsMerchingStatistics" />
-        <module name="LotteryGuesser" />
-        <module name="SineWaves" />
-        <module name="Keylistener" />
-        <module name="PiBot" />
-        <module name="AlchBuddy" />
-        <module name="OsrsKeepLoggedIn" />
-        <module name="DicingBotSimulator" />
-        <module name="videoProcessor" />
-        <module name="PictureResizer" />
-        <module name="VideoRenamer" />
-        <module name="DBTest" />
-        <module name="DictionaryTest" />
-        <module name="Vision" />
-        <module name="Sphinx4test" />
       </profile>
     </annotationProcessing>
   </component>

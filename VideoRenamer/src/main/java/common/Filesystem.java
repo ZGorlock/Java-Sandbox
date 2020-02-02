@@ -4,7 +4,7 @@
  * Author:  Zachary Gill
  */
 
-package main.java.common;
+package common;
 
 import java.io.File;
 import java.io.FileFilter;

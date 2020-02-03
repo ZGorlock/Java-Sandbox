@@ -25,6 +25,8 @@ public final class CmdLine {
      */
     private static final Logger logger = LoggerFactory.getLogger(CmdLine.class);
     
+    public static boolean printOutput = false;
+    
     
     //Functions
     
@@ -48,6 +50,9 @@ public final class CmdLine {
                 line = r.readLine();
                 if (line == null) {
                     break;
+                }
+                if (printOutput) {
+                    System.out.println(line);
                 }
                 response.append(line).append(System.lineSeparator());
             }

@@ -1,17 +1,20 @@
 /*
  * File:    Test.java
- * Package: PACKAGE_NAME
+ * Package:
  * Author:  Zachary Gill
  */
 
 import org.opencv.core.Core;
-import org.opencv.core.Mat;
 import org.opencv.core.CvType;
+import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
 
 public class Test {
+    
     // Compulsory
-    static{ System.loadLibrary(Core.NATIVE_LIBRARY_NAME); }
+    static {
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+    }
     
     public static void main(String[] args) {
         System.out.println("Welcome to OpenCV " + Core.VERSION);

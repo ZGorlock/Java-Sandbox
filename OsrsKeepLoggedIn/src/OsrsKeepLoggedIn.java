@@ -1,6 +1,6 @@
 /*
  * File:    OsrsKeepLoggedIn.java
- * Package: PACKAGE_NAME
+ * Package:
  * Author:  Zachary Gill
  */
 

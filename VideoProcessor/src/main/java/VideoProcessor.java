@@ -1,6 +1,6 @@
 /*
  * File:    VideoProcessor.java
- * Package: PACKAGE_NAME
+ * Package:
  * Author:  Zachary Gill
  */
 
@@ -394,7 +394,7 @@ public class VideoProcessor {
                     "\"" + (value.containsKey("Count") ? ("Count: " + value.get("Count")) : "") + "\"," +
                     "\"" + (value.containsKey("Average Size") ? ("Size: " + value.get("Size")) : "") + "\"";
             cvsOutput.add(cvsLine);
-                
+            
             value.put("Size", df.format(Double.parseDouble(StringUtility.rShear(value.get("Size"), " MB".length())) / 1000.0) + " GB");
             String line;
             if (justSize) {
@@ -496,8 +496,8 @@ public class VideoProcessor {
         Filesystem.createDirectory(out);
         
         for (File f : Filesystem.getFilesRecursively(dir)) {
-            if (f.getAbsolutePath().contains("\\new\\") && 
-                    (!dir.getName().equalsIgnoreCase("new") || 
+            if (f.getAbsolutePath().contains("\\new\\") &&
+                    (!dir.getName().equalsIgnoreCase("new") ||
                             (f.getAbsolutePath().contains("\\new\\new\\")))) {
                 continue;
             }

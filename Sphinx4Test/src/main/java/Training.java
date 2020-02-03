@@ -1,13 +1,12 @@
 /*
  * File:    Training.java
- * Package: PACKAGE_NAME
+ * Package:
  * Author:  Zachary Gill
  */
 
 import java.util.Scanner;
 
-public class Training
-{
+public class Training {
     
     /**
      * Entry to run the program

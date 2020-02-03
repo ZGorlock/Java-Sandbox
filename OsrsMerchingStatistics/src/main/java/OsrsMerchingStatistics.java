@@ -1,6 +1,6 @@
 /*
  * File:    OsrsMerchingStatistics.java
- * Package: PACKAGE_NAME
+ * Package:
  * Author:  Zachary Gill
  */
 
@@ -25,12 +25,10 @@ public class OsrsMerchingStatistics {
     
     private static final List<Transaction> transactions = new ArrayList<>();
     
-    
     public static void main(String[] args) throws Exception {
         parseLog();
         evaluateTransactions();
     }
-    
     
     private static void evaluateTransactions() throws Exception {
         long totalProfit = 0;
@@ -75,14 +73,14 @@ public class OsrsMerchingStatistics {
         output.add("Total Trade:   " + commaify(totalCost + totalRevenue));
         output.add("Profit Margin: " + ((totalRevenue - totalCost) / (double) totalCost * 100) + "%");
         output.add("");
-    
+        
         output.add("Most Profitable:");
         mostProfitable.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).forEachOrdered(e -> output.add(e.getKey() + ": " + commaify(e.getValue())));
         output.add("");
         output.add("Most Traded:");
         mostTraded.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).forEachOrdered(e -> output.add(e.getKey() + ": " + commaify(e.getValue())));
         output.add("");
-    
+        
         output.add("Profit Per Month:");
         profitPerMonth.forEach((key, value) -> output.add(StringUtility.padRight((key + ": "), "SEPTEMBER 0000: ".length()) + commaify(value)));
         output.add("AVERAGE PER MONTH: " + commaify(totalProfit / profitPerMonth.size()));
@@ -128,10 +126,10 @@ public class OsrsMerchingStatistics {
         String[] dateParts = dateStringParts[0].split("/");
         String[] timeParts = dateStringParts[1].split(":");
         String newDateString = StringUtility.padZero(dateParts[1], 2) + "/" +
-                               StringUtility.padZero(dateParts[0], 2) + "/" + 
-                               "20" + dateParts[2] + " " + 
-                               StringUtility.padZero(timeParts[0], 2) + ":" + 
-                               StringUtility.padZero(timeParts[1], 2) + ":" + "00";
+                StringUtility.padZero(dateParts[0], 2) + "/" +
+                "20" + dateParts[2] + " " +
+                StringUtility.padZero(timeParts[0], 2) + ":" +
+                StringUtility.padZero(timeParts[1], 2) + ":" + "00";
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         return sdf.parse(newDateString);
     }
@@ -148,20 +146,32 @@ public class OsrsMerchingStatistics {
         return commaified.toString();
     }
     
-    
     private static class Transaction {
+        
         String item;
+        
         int buyPrice;
+        
         int sellPrice;
+        
         int quantity;
+        
         long totalCost;
+        
         long totalRevenue;
+        
         int profitPer;
+        
         long totalProfit;
+        
         long cumulativeProfit;
+        
         long gpPerHour;
+        
         String totalTransactionTime;
+        
         Date buyDate;
+        
         Date soldDate;
     }
     

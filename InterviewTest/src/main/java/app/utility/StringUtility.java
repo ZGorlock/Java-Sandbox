@@ -26,7 +26,6 @@ public final class StringUtility {
     
     //Enums
     
-    
     /**
      * An enumeration of box types for the boxText method.
      */
@@ -357,8 +356,8 @@ public final class StringUtility {
      */
     public static String replaceSubstringAt(String str, int startIndex, int endIndex, String replace) {
         if ((startIndex < 0) || (startIndex > str.length()) ||
-            (endIndex < 0) || (endIndex > str.length()) ||
-            (startIndex > endIndex)) {
+                (endIndex < 0) || (endIndex > str.length()) ||
+                (startIndex > endIndex)) {
             return str;
         }
         if (startIndex == str.length()) {
@@ -398,8 +397,8 @@ public final class StringUtility {
      */
     public static String deleteSubstringAt(String str, int startIndex, int endIndex) {
         if ((startIndex < 0) || (startIndex > (str.length() - 1)) ||
-            (endIndex < 0) || (endIndex > str.length()) ||
-            (startIndex > endIndex)) {
+                (endIndex < 0) || (endIndex > str.length()) ||
+                (startIndex > endIndex)) {
             return str;
         }
         if (endIndex == str.length()) {

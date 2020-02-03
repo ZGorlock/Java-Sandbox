@@ -1,37 +1,37 @@
 /*
  * File:    LotteryGuesser.java
- * Package: PACKAGE_NAME
+ * Package:
  * Author:  Zachary Gill
  */
 
-import com.sun.deploy.util.StringUtils;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class LotteryGuesser
-{
+import com.sun.deploy.util.StringUtils;
+
+public class LotteryGuesser {
     
     private static final List<List<Integer>> tallies = new ArrayList<>();
+    
     private static final List<List<Double>> odds = new ArrayList<>();
     
     private static int populationSize = 0;
     
-    
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         initializeStructures();
         populateTallies();
         calculateOdds();
         guessLottery();
     }
     
-    private static void guessLottery()
-    {
+    private static void guessLottery() {
         StringBuilder numbers = new StringBuilder();
         for (List<Double> odd : odds) {
             if (!numbers.toString().isEmpty()) {
@@ -42,8 +42,7 @@ public class LotteryGuesser
         System.out.println(numbers.toString());
     }
     
-    private static void calculateOdds()
-    {
+    private static void calculateOdds() {
         for (int i = 0; i < tallies.size(); i++) {
             final double hitChance = 1.0 / tallies.get(i).size();
             final double missChance = (double) (tallies.get(i).size() - 1) / tallies.get(i).size();
@@ -56,8 +55,7 @@ public class LotteryGuesser
         }
     }
     
-    private static void initializeStructures()
-    {
+    private static void initializeStructures() {
         for (int i = 0; i < 5; i++) {
             List<Integer> tally = new ArrayList<>();
             List<Double> odd = new ArrayList<>();
@@ -79,13 +77,12 @@ public class LotteryGuesser
         odds.add(odd);
     }
     
-    private static void populateTallies()
-    {
+    private static void populateTallies() {
         List<String> lines = readData();
-    
+        
         for (String line : lines) {
             String[] elements = StringUtils.splitString(line, ",");
-    
+            
             if (elements.length == 7 && isValidDate(elements[0])) {
                 for (int i = 0; i < 6; i++) {
                     int ball = Integer.valueOf(elements[i + 1]) - 1;
@@ -96,8 +93,7 @@ public class LotteryGuesser
         }
     }
     
-    private static List<String> readData()
-    {
+    private static List<String> readData() {
         List<String> lines = new ArrayList<>();
         
         try {
@@ -116,8 +112,7 @@ public class LotteryGuesser
         return lines;
     }
     
-    private static boolean isValidDate(String date)
-    {
+    private static boolean isValidDate(String date) {
         List<SimpleDateFormat> possibleFormats = new ArrayList<>();
         possibleFormats.add(new SimpleDateFormat("MM/dd/yyyy"));
         possibleFormats.add(new SimpleDateFormat("MM/d/yyyy"));
@@ -135,7 +130,7 @@ public class LotteryGuesser
         if (d == null) {
             return false;
         }
-    
+        
         try {
             Date changeover = possibleFormats.get(0).parse("10/07/2015");
             return d.after(changeover) || d.compareTo(changeover) == 0;
@@ -144,8 +139,7 @@ public class LotteryGuesser
         }
     }
     
-    private static int maximumValueIndex(List<Double> list)
-    {
+    private static int maximumValueIndex(List<Double> list) {
         int index = -1;
         double max = 0;
         for (int i = 0; i < list.size(); i++) {

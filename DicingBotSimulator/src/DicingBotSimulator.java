@@ -1,18 +1,20 @@
 /*
  * File:    DicingBotSimulator.java
- * Package: PACKAGE_NAME
+ * Package:
  * Author:  Zachary Gill
  */
-
 
 public class DicingBotSimulator {
     
     public static long profit;
-    public static double rate;
-    public static long rolls;
-    public static long initialBet;
-    public static long limitBet;
     
+    public static double rate;
+    
+    public static long rolls;
+    
+    public static long initialBet;
+    
+    public static long limitBet;
     
     public static void main(String[] args) {
         profit = 0;
@@ -33,9 +35,9 @@ public class DicingBotSimulator {
                         currentBet = initialBet;
                     }
                 }
-        
+                
                 double roll = Math.random();
-        
+                
                 if (roll <= rate) {
                     profit += currentBet;
                     lost = false;
@@ -46,7 +48,7 @@ public class DicingBotSimulator {
             }
             total += profit;
         }
-    
+        
         System.out.println(total / 10000);
     }
     

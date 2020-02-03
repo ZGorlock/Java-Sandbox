@@ -1,12 +1,14 @@
 /*
  * File:    TTS.java
- * Package: PACKAGE_NAME
+ * Package:
  * Author:  Zachary Gill
  */
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import javax.sound.sampled.AudioInputStream;
 
-import ch.qos.logback.classic.Logger;
 import marytts.LocalMaryInterface;
 import marytts.MaryInterface;
 import marytts.exceptions.MaryConfigurationException;
@@ -14,50 +16,36 @@ import marytts.exceptions.SynthesisException;
 import marytts.util.data.audio.AudioPlayer;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-public class TTS
-{
+public class TTS {
     
     org.slf4j.Logger logger = LoggerFactory.getLogger("TTS");
     
-    
     private MaryInterface marytts;
+    
     private AudioPlayer ap;
     
-    public TTS(String voiceName)
-    {
-        try
-        {
+    public TTS(String voiceName) {
+        try {
             marytts = new LocalMaryInterface();
             marytts.setVoice(voiceName);
             ap = new AudioPlayer();
-        }
-        catch (MaryConfigurationException ex)
-        {
+        } catch (MaryConfigurationException ex) {
             ex.printStackTrace();
         }
     }
     
-    public void say(String input)
-    {
-        try
-        {
+    public void say(String input) {
+        try {
             AudioInputStream audio = marytts.generateAudio(input);
             
             ap.setAudio(audio);
             ap.start();
-        }
-        catch (SynthesisException ex)
-        {
+        } catch (SynthesisException ex) {
             System.err.println("Error saying phrase.");
         }
     }
     
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         //TextToSpeech tts = new TextToSpeech;
         long a = System.currentTimeMillis();
         

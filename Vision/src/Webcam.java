@@ -1,8 +1,6 @@
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,17 +15,18 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.objdetect.CascadeClassifier;
 import org.opencv.videoio.VideoCapture;
 
-import javax.swing.*;
-
-public class Webcam extends JPanel
-{
+public class Webcam extends JPanel {
+    
     final static int INTERVAL = 50;///you may use interval
+    
     final static String DETECTOR_DIR = "resources" + File.separator;
     
     static Mat matrix;
+    
     static BufferedImage image;
     
     static final List<CascadeClassifier> detectors = new ArrayList<>();
+    
     static final List<Rect[]> detections = new ArrayList<>();
     
     public void loop() throws FileNotFoundException, IOException {
@@ -48,7 +47,7 @@ public class Webcam extends JPanel
     public BufferedImage captureSnapShot() {
         VideoCapture capture = new VideoCapture(0);
         
-        if( capture.isOpened()) {
+        if (capture.isOpened()) {
             if (capture.read(matrix)) {
                 image = new BufferedImage(matrix.width(),
                         matrix.height(), BufferedImage.TYPE_3BYTE_BGR);
@@ -63,14 +62,14 @@ public class Webcam extends JPanel
     }
     
     static int i = 0;
+    
     public static void saveImage() {
         String file = "snapshot.jpg";
         i++;
         Imgcodecs.imwrite(file, matrix);
     }
     
-    public void doDetections()
-    {
+    public void doDetections() {
         for (int i = 0; i < detectors.size(); i++) {
             CascadeClassifier detector = detectors.get(i);
             MatOfRect detected = new MatOfRect();
@@ -79,15 +78,13 @@ public class Webcam extends JPanel
         }
     }
     
-    public static void addDetector(String detector)
-    {
+    public static void addDetector(String detector) {
         detectors.add(new CascadeClassifier(new File(DETECTOR_DIR + detector).getAbsolutePath()));
-        detections.add(new Rect[]{});
+        detections.add(new Rect[] {});
     }
     
-    
     public static void main(String args[]) {
-        System.loadLibrary( Core.NATIVE_LIBRARY_NAME );
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         
         JFrame window = new JFrame("Webcam");
         final Webcam webcam = new Webcam();
@@ -115,7 +112,7 @@ public class Webcam extends JPanel
             //super.paint(g);
             Graphics2D g2d = (Graphics2D) g.create();
             g2d.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null);
-    
+            
             for (Rect[] rects : detections) {
                 for (Rect rect : rects) {
                     Stroke stroke = g2d.getStroke();

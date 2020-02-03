@@ -1,16 +1,13 @@
 /*
  * File:    SphinxTraining.java
- * Package: PACKAGE_NAME
+ * Package:
  * Author:  Zachary Gill
  */
-
-import java.io.File;
 
 /**
  * Performs training for Sphinx speech recognition.
  */
-public class SphinxTraining
-{
+public class SphinxTraining {
     
     //Fields
     
@@ -23,8 +20,7 @@ public class SphinxTraining
     
     //Constructors
     
-    public SphinxTraining(String sphinxDirectory, String transcriptionFile, String fileIdsFile)
-    {
+    public SphinxTraining(String sphinxDirectory, String transcriptionFile, String fileIdsFile) {
         this.sphinxDirectory = sphinxDirectory;
         this.transcriptionFile = transcriptionFile;
         this.fileIdsFile = fileIdsFile;

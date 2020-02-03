@@ -1,6 +1,6 @@
 /*
  * File:    HtmlScraper.java
- * Package: PACKAGE_NAME
+ * Package:
  * Author:  Zachary Gill
  */
 
@@ -14,19 +14,13 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import org.apache.commons.logging.LogFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
-public class HtmlScraper
-{
-    
+public class HtmlScraper {
     
     public static void main(String[] args) throws Exception {
         Document d = getHtml("https://www.google.com/search?num=1&q=define+run");
         int x = 5;
     }
-    
-    
     
     /**
      * Downloads an html from a url and returns the retrieved Document.
@@ -38,7 +32,6 @@ public class HtmlScraper
 //        WebDriver driver = new ChromeDriver();
 //        driver.get(url);
 //        return Jsoup.parse(driver.getPageSource());
-        
         
         
         LogFactory.getFactory().setAttribute("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
@@ -53,11 +46,10 @@ public class HtmlScraper
         webClient.getOptions().setJavaScriptEnabled(true);
         HtmlPage page = webClient.getPage(url);
         webClient.waitForBackgroundJavaScript(30 * 1000);
-
+        
         return Jsoup.parse(page.asXml());
-        
-        
-        
+
+
 //        return Jsoup.connect(url)
 //                .ignoreContentType(true)
 //                .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.80 Safari/537.36")

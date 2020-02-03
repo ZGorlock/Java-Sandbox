@@ -1,29 +1,30 @@
 /*
  * File:    Main.java
- * Package: PACKAGE_NAME
+ * Package:
  * Author:  Zachary Gill
  */
 
+import java.util.Scanner;
 
 import net.sf.extjwnl.JWNLException;
-import net.sf.extjwnl.data.*;
+import net.sf.extjwnl.data.IndexWord;
+import net.sf.extjwnl.data.POS;
+import net.sf.extjwnl.data.PointerUtils;
+import net.sf.extjwnl.data.Synset;
+import net.sf.extjwnl.data.Word;
 import net.sf.extjwnl.data.list.PointerTargetNode;
 import net.sf.extjwnl.dictionary.Dictionary;
 
-import java.util.Scanner;
-
-public class Main
-{
+public class Main {
     
     public static Dictionary dictionary = null;
     
-    public static void main(String[] args) throws JWNLException
-    {
+    public static void main(String[] args) throws JWNLException {
         dictionary = Dictionary.getDefaultResourceInstance();
         if (dictionary == null) {
             System.out.println("Dictionary error");
         }
-    
+        
         Scanner s = new Scanner(System.in);
         while (true) {
             String word = s.nextLine();
@@ -38,11 +39,9 @@ public class Main
         }
     }
     
-    
-    public static void noun(String param) throws JWNLException
-    {
+    public static void noun(String param) throws JWNLException {
         IndexWord word = dictionary.getIndexWord(POS.NOUN, param);
-    
+        
         if (word != null) {
             System.out.println("NOUN");
             int i = 0;
@@ -55,8 +54,7 @@ public class Main
         }
     }
     
-    public static void verb(String param) throws JWNLException
-    {
+    public static void verb(String param) throws JWNLException {
         IndexWord word = dictionary.getIndexWord(POS.VERB, param);
         
         if (word != null) {
@@ -71,8 +69,7 @@ public class Main
         }
     }
     
-    public static void adjective(String param) throws JWNLException
-    {
+    public static void adjective(String param) throws JWNLException {
         IndexWord word = dictionary.getIndexWord(POS.ADJECTIVE, param);
         
         if (word != null) {
@@ -87,8 +84,7 @@ public class Main
         }
     }
     
-    public static void adverb(String param) throws JWNLException
-    {
+    public static void adverb(String param) throws JWNLException {
         IndexWord word = dictionary.getIndexWord(POS.ADVERB, param);
         
         if (word != null) {
@@ -103,9 +99,7 @@ public class Main
         }
     }
     
-    
-    public static void produceAdditionalSynsetInformation(IndexWord word, Synset s) throws JWNLException
-    {
+    public static void produceAdditionalSynsetInformation(IndexWord word, Synset s) throws JWNLException {
         getSynonyms(word, s);
         
         getAntonyms(word, s);
@@ -137,9 +131,7 @@ public class Main
         getAlsoSees(word, s);
     }
     
-    
-    public static void getSynonyms(IndexWord word, Synset s) throws JWNLException
-    {
+    public static void getSynonyms(IndexWord word, Synset s) throws JWNLException {
         StringBuilder synonyms = new StringBuilder();
         if (s.getPOS().equals(POS.ADJECTIVE)) {
             for (Object pt : PointerUtils.getSynonyms(s)) {
@@ -166,9 +158,7 @@ public class Main
         }
     }
     
-    
-    public static void getAntonyms(IndexWord word, Synset s) throws JWNLException
-    {
+    public static void getAntonyms(IndexWord word, Synset s) throws JWNLException {
         StringBuilder antonyms = new StringBuilder();
         for (Object pt : PointerUtils.getAntonyms(s)) {
             PointerTargetNode ptn = (PointerTargetNode) pt;
@@ -186,9 +176,7 @@ public class Main
         }
     }
     
-    
-    public static void getHolonyms(IndexWord word, Synset s) throws JWNLException
-    {
+    public static void getHolonyms(IndexWord word, Synset s) throws JWNLException {
         StringBuilder holonyms = new StringBuilder();
         for (Object pt : PointerUtils.getHolonyms(s)) {
             PointerTargetNode ptn = (PointerTargetNode) pt;
@@ -206,8 +194,7 @@ public class Main
         }
     }
     
-    public static void getMemberHolonyms(IndexWord word, Synset s) throws JWNLException
-    {
+    public static void getMemberHolonyms(IndexWord word, Synset s) throws JWNLException {
         StringBuilder memberHolonyms = new StringBuilder();
         for (Object pt : PointerUtils.getMemberHolonyms(s)) {
             PointerTargetNode ptn = (PointerTargetNode) pt;
@@ -225,8 +212,7 @@ public class Main
         }
     }
     
-    public static void getPartHolonyms(IndexWord word, Synset s) throws JWNLException
-    {
+    public static void getPartHolonyms(IndexWord word, Synset s) throws JWNLException {
         StringBuilder partHolonyms = new StringBuilder();
         for (Object pt : PointerUtils.getPartHolonyms(s)) {
             PointerTargetNode ptn = (PointerTargetNode) pt;
@@ -244,8 +230,7 @@ public class Main
         }
     }
     
-    public static void getSubstanceHolonyms(IndexWord word, Synset s) throws JWNLException
-    {
+    public static void getSubstanceHolonyms(IndexWord word, Synset s) throws JWNLException {
         StringBuilder substanceHolonyms = new StringBuilder();
         for (Object pt : PointerUtils.getSubstanceHolonyms(s)) {
             PointerTargetNode ptn = (PointerTargetNode) pt;
@@ -263,9 +248,7 @@ public class Main
         }
     }
     
-    
-    public static void getDirectHyponyms(IndexWord word, Synset s) throws JWNLException
-    {
+    public static void getDirectHyponyms(IndexWord word, Synset s) throws JWNLException {
         StringBuilder directHyponyms = new StringBuilder();
         for (Object pt : PointerUtils.getDirectHyponyms(s)) {
             PointerTargetNode ptn = (PointerTargetNode) pt;
@@ -283,9 +266,7 @@ public class Main
         }
     }
     
-    
-    public static void getDirectHypernyms(IndexWord word, Synset s) throws JWNLException
-    {
+    public static void getDirectHypernyms(IndexWord word, Synset s) throws JWNLException {
         StringBuilder directHypernyms = new StringBuilder();
         for (Object pt : PointerUtils.getDirectHypernyms(s)) {
             PointerTargetNode ptn = (PointerTargetNode) pt;
@@ -303,9 +284,7 @@ public class Main
         }
     }
     
-    
-    public static void getMeronyms(IndexWord word, Synset s) throws JWNLException
-    {
+    public static void getMeronyms(IndexWord word, Synset s) throws JWNLException {
         StringBuilder meronyms = new StringBuilder();
         for (Object pt : PointerUtils.getMeronyms(s)) {
             PointerTargetNode ptn = (PointerTargetNode) pt;
@@ -323,8 +302,7 @@ public class Main
         }
     }
     
-    public static void getMemberMeronyms(IndexWord word, Synset s) throws JWNLException
-    {
+    public static void getMemberMeronyms(IndexWord word, Synset s) throws JWNLException {
         StringBuilder memberMeronyms = new StringBuilder();
         for (Object pt : PointerUtils.getMemberMeronyms(s)) {
             PointerTargetNode ptn = (PointerTargetNode) pt;
@@ -342,8 +320,7 @@ public class Main
         }
     }
     
-    public static void getPartMeronyms(IndexWord word, Synset s) throws JWNLException
-    {
+    public static void getPartMeronyms(IndexWord word, Synset s) throws JWNLException {
         StringBuilder partMeronyms = new StringBuilder();
         for (Object pt : PointerUtils.getPartMeronyms(s)) {
             PointerTargetNode ptn = (PointerTargetNode) pt;
@@ -361,8 +338,7 @@ public class Main
         }
     }
     
-    public static void getSubstanceMeronyms(IndexWord word, Synset s) throws JWNLException
-    {
+    public static void getSubstanceMeronyms(IndexWord word, Synset s) throws JWNLException {
         StringBuilder substanceMeronyms = new StringBuilder();
         for (Object pt : PointerUtils.getSubstanceMeronyms(s)) {
             PointerTargetNode ptn = (PointerTargetNode) pt;
@@ -380,9 +356,7 @@ public class Main
         }
     }
     
-    
-    public static void getPertainyms(IndexWord word, Synset s) throws JWNLException
-    {
+    public static void getPertainyms(IndexWord word, Synset s) throws JWNLException {
         StringBuilder pertainyms = new StringBuilder();
         for (Object pt : PointerUtils.getPertainyms(s)) {
             PointerTargetNode ptn = (PointerTargetNode) pt;
@@ -400,9 +374,7 @@ public class Main
         }
     }
     
-    
-    public static void getParticipleOf(IndexWord word, Synset s) throws JWNLException
-    {
+    public static void getParticipleOf(IndexWord word, Synset s) throws JWNLException {
         StringBuilder participleOf = new StringBuilder();
         for (Object pt : PointerUtils.getParticipleOf(s)) {
             PointerTargetNode ptn = (PointerTargetNode) pt;
@@ -420,8 +392,7 @@ public class Main
         }
     }
     
-    public static void getVerbGroup(IndexWord word, Synset s) throws JWNLException
-    {
+    public static void getVerbGroup(IndexWord word, Synset s) throws JWNLException {
         StringBuilder verbGroup = new StringBuilder();
         for (Object pt : PointerUtils.getVerbGroup(s)) {
             PointerTargetNode ptn = (PointerTargetNode) pt;
@@ -440,9 +411,7 @@ public class Main
         }
     }
     
-    
-    public static void getAttributes(IndexWord word, Synset s) throws JWNLException
-    {
+    public static void getAttributes(IndexWord word, Synset s) throws JWNLException {
         StringBuilder attributes = new StringBuilder();
         for (Object pt : PointerUtils.getAttributes(s)) {
             PointerTargetNode ptn = (PointerTargetNode) pt;
@@ -460,8 +429,7 @@ public class Main
         }
     }
     
-    public static void getCauses(IndexWord word, Synset s) throws JWNLException
-    {
+    public static void getCauses(IndexWord word, Synset s) throws JWNLException {
         StringBuilder causes = new StringBuilder();
         for (Object pt : PointerUtils.getCauses(s)) {
             PointerTargetNode ptn = (PointerTargetNode) pt;
@@ -479,8 +447,7 @@ public class Main
         }
     }
     
-    public static void getEntailments(IndexWord word, Synset s) throws JWNLException
-    {
+    public static void getEntailments(IndexWord word, Synset s) throws JWNLException {
         StringBuilder entailments = new StringBuilder();
         for (Object pt : PointerUtils.getEntailments(s)) {
             PointerTargetNode ptn = (PointerTargetNode) pt;
@@ -498,9 +465,7 @@ public class Main
         }
     }
     
-    
-    public static void getCoordinateTerms(IndexWord word, Synset s) throws JWNLException
-    {
+    public static void getCoordinateTerms(IndexWord word, Synset s) throws JWNLException {
         StringBuilder coordinateTerms = new StringBuilder();
         for (Object pt : PointerUtils.getCoordinateTerms(s)) {
             PointerTargetNode ptn = (PointerTargetNode) pt;
@@ -518,8 +483,7 @@ public class Main
         }
     }
     
-    public static void getAlsoSees(IndexWord word, Synset s) throws JWNLException
-    {
+    public static void getAlsoSees(IndexWord word, Synset s) throws JWNLException {
         StringBuilder alsoSee = new StringBuilder();
         for (Object pt : PointerUtils.getAlsoSees(s)) {
             PointerTargetNode ptn = (PointerTargetNode) pt;

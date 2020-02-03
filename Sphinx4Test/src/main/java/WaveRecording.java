@@ -1,18 +1,23 @@
 /*
  * File:    WaveRecording.java
- * Package: PACKAGE_NAME
+ * Package:
  * Author:  Zachary Gill
  */
 
-import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.TargetDataLine;
 
 /**
  * Captures a WAV recording.
  */
-public class WaveRecording
-{
+public class WaveRecording {
     
     //Constants
     
@@ -47,8 +52,7 @@ public class WaveRecording
      *
      * @param file The file to produce the recording in.
      */
-    public WaveRecording(String file)
-    {
+    public WaveRecording(String file) {
         wavFile = new File(file);
     }
     
@@ -60,12 +64,11 @@ public class WaveRecording
      *
      * @return Whether the recording was successfully started or not.
      */
-    public boolean start()
-    {
+    public boolean start() {
         try {
             AudioFormat format = getAudioFormat();
             DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
-        
+            
             // checks if system supports the data line
             if (!AudioSystem.isLineSupported(info)) {
                 System.out.println("Your microphone is not supported or your system does not allow audio capture");
@@ -74,12 +77,12 @@ public class WaveRecording
             line = (TargetDataLine) AudioSystem.getLine(info);
             line.open(format);
             line.start();
-    
+            
             recording = new Thread(() -> {
                 try {
                     // start capturing
                     AudioInputStream ais = new AudioInputStream(line);
-    
+                    
                     // start recording
                     AudioSystem.write(ais, AudioFileFormat.Type.WAVE, wavFile);
                 } catch (IOException e) {
@@ -105,8 +108,7 @@ public class WaveRecording
     /**
      * Closes the target data line to finish capturing and recording.
      */
-    public void stop()
-    {
+    public void stop() {
         line.stop();
         line.close();
         

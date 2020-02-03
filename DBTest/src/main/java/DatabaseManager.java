@@ -1,20 +1,26 @@
-package main.java;/*
+/*
  * File:    DatabaseManager.java
  * Package: dla.manager
  * Author:  Zachary Gill
  */
 
+package main.java;
+
 import java.lang.reflect.InvocationTargetException;
-import java.sql.*;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Objects;
 import java.util.Properties;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Manages database access within the system.
  */
-public class DatabaseManager
-{
+public class DatabaseManager {
     
     //Constants
     
@@ -34,21 +40,18 @@ public class DatabaseManager
     public static final String PROTOCOL = "jdbc:derby:";
     
     
-    
     //Constructors
     
     /**
      * The private constructor for a DatabaseManager.
      */
-    public DatabaseManager()
-    {
+    public DatabaseManager() {
     }
     
     
     //Methods
     
-    public final void setup()
-    {
+    public final void setup() {
         try {
             Class.forName(DRIVER).getConstructor().newInstance();
         } catch (InstantiationException e) {
@@ -64,8 +67,7 @@ public class DatabaseManager
         }
     }
     
-    public final void shutdown()
-    {
+    public final void shutdown() {
         if (Objects.equals("embedded", FRAMEWORK)) {
             try {
                 DriverManager.getConnection(PROTOCOL + ";shutdown=true");
@@ -75,11 +77,9 @@ public class DatabaseManager
     }
     
     
-    
     //Functions
     
-    public static Connection connect(String db, String user, String pass, boolean autoCommit)
-    {
+    public static Connection connect(String db, String user, String pass, boolean autoCommit) {
         Properties props = new Properties();
         props.put("user", user);
         props.put("password", pass);
@@ -97,23 +97,19 @@ public class DatabaseManager
         return conn;
     }
     
-    public static Connection connect(String db, String user, String pass)
-    {
+    public static Connection connect(String db, String user, String pass) {
         return connect(db, user, pass, true);
     }
     
-    public static Connection connect(String db, boolean autoCommit)
-    {
+    public static Connection connect(String db, boolean autoCommit) {
         return connect(db, "admin", "admin", autoCommit);
     }
     
-    public static Connection connect(String db)
-    {
+    public static Connection connect(String db) {
         return connect(db, "admin", "admin");
     }
     
-    public static boolean disconnect(Connection conn)
-    {
+    public static boolean disconnect(Connection conn) {
         try {
             conn.close();
         } catch (SQLException ignored) {
@@ -122,8 +118,7 @@ public class DatabaseManager
         return false;
     }
     
-    public static boolean isConnected(Connection conn)
-    {
+    public static boolean isConnected(Connection conn) {
         try {
             return !conn.isClosed();
         } catch (SQLException e) {
@@ -132,8 +127,7 @@ public class DatabaseManager
         }
     }
     
-    public static boolean commitChanges(Connection conn)
-    {
+    public static boolean commitChanges(Connection conn) {
         try {
             if (!conn.getAutoCommit()) {
                 conn.commit();
@@ -145,8 +139,7 @@ public class DatabaseManager
         return true;
     }
     
-    public static boolean rollbackChanges(Connection conn)
-    {
+    public static boolean rollbackChanges(Connection conn) {
         try {
             if (!conn.getAutoCommit()) {
                 conn.rollback();
@@ -158,8 +151,7 @@ public class DatabaseManager
         return true;
     }
     
-    public static boolean setReadOnly(Connection conn, boolean readOnly)
-    {
+    public static boolean setReadOnly(Connection conn, boolean readOnly) {
         try {
             conn.setReadOnly(readOnly);
         } catch (SQLException e) {
@@ -169,8 +161,7 @@ public class DatabaseManager
         return true;
     }
     
-    public static boolean isReadOnly(Connection conn)
-    {
+    public static boolean isReadOnly(Connection conn) {
         try {
             return conn.isReadOnly();
         } catch (SQLException e) {
@@ -179,8 +170,7 @@ public class DatabaseManager
         }
     }
     
-    public static Statement getStatement(Connection conn)
-    {
+    public static Statement getStatement(Connection conn) {
         Statement s;
         try {
             s = conn.createStatement();
@@ -191,8 +181,7 @@ public class DatabaseManager
         return s;
     }
     
-    public static PreparedStatement getPreparedStatement(Connection conn, String sql)
-    {
+    public static PreparedStatement getPreparedStatement(Connection conn, String sql) {
         PreparedStatement ps;
         try {
             ps = conn.prepareStatement(sql);
@@ -203,8 +192,7 @@ public class DatabaseManager
         return ps;
     }
     
-    public static CallableStatement getCallableStatement(Connection conn, String sql)
-    {
+    public static CallableStatement getCallableStatement(Connection conn, String sql) {
         CallableStatement cs;
         try {
             cs = conn.prepareCall(sql);
@@ -215,8 +203,7 @@ public class DatabaseManager
         return cs;
     }
     
-    public static boolean executeSql(Statement s, String sql)
-    {
+    public static boolean executeSql(Statement s, String sql) {
         try {
             s.execute(sql);
         } catch (SQLException e) {
@@ -226,8 +213,7 @@ public class DatabaseManager
         return true;
     }
     
-    public static ResultSet querySql(Statement s, String sql)
-    {
+    public static ResultSet querySql(Statement s, String sql) {
         ResultSet rs;
         try {
             rs = s.executeQuery(sql);
@@ -238,8 +224,7 @@ public class DatabaseManager
         return rs;
     }
     
-    public static int updateSql(Statement s, String sql)
-    {
+    public static int updateSql(Statement s, String sql) {
         try {
             return s.executeUpdate(sql);
         } catch (SQLException e) {
@@ -248,8 +233,7 @@ public class DatabaseManager
         }
     }
     
-    public static boolean closeStatement(Statement s)
-    {
+    public static boolean closeStatement(Statement s) {
         try {
             s.close();
         } catch (SQLException e) {

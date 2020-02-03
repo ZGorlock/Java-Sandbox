@@ -1,6 +1,6 @@
 /*
  * File:    PictureResizer.java
- * Package: PACKAGE_NAME
+ * Package:
  * Author:  Zachary Gill
  */
 
@@ -15,7 +15,7 @@ import common.Filesystem;
 
 public class PictureResizer {
     
-//    private static File directory = new File("E:/Documents/Taxidermy/Specimens");
+    //    private static File directory = new File("E:/Documents/Taxidermy/Specimens");
     private static File directory = new File("C:\\Users\\Zack\\Desktop\\New folder");
     
     public static void main(String[] args) throws Exception {

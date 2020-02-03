@@ -1,6 +1,6 @@
 /*
  * File:    VideoRenamer.java
- * Package: PACKAGE_NAME
+ * Package:
  * Author:  Zachary Gill
  */
 
@@ -18,32 +18,33 @@ import common.StringUtility;
 public class VideoRenamer {
     
     public enum VideoSet {
-        ADVENTURE_TIME ("adventureTime", "Adventure Time"),
-        ALTERED_CARBON ("alteredCarbon", "Altered Carbon"),
-        AMERICAN_HORROR_STORY ("americanHorrorStory", "American Horror Story"),
-        AN_IDIOT_ABROAD ("anIdiotAbroad", "An Idiot Abroad"),
-        ASH_VS_EVIL_DEAD ("ashVsEvilDead", "Ash vs Evil Dead"),
-        BLACK_MIRROR ("blackMirror", "Black Mirror"),
-        BREAKING_BAD ("breakingBad", "Breaking Bad"),
-        DANGER_5 ("danger5", "Danger 5"),
-        GAME_OF_THRONES ("gameOfThrones", "Game Of Thrones"),
-        HOUSE ("house", "House"),
-        HOUSE_OF_CARDS ("houseOfCards", "House of Cards"),
-        ITS_ALWAYS_SUNNY_IN_PHILADELPHIA ("itsAlwaysSunnyInPhiladelphia", "It's Always Sunny in Philadelphia"),
-        LEGION ("legion", "Legion"),
-        MR_ROBOT ("mrRobot", "Mr. Robot"),
-        RICK_AND_MORTY ("rickAndMorty", "Rick and Morty"),
-        SHERLOCK ("sherlock", "Sherlock"),
-        STARGATE_SG1 ("stargateSg1", "Stargate SG1"),
-        STRANGER_THINGS ("strangerThings", "Stranger Things"),
-        THE_BOONDOCKS ("theBoondocks", "The Boondocks"),
-        THE_OFFICE ("theOffice", "The Office"),
-        TRAILER_PARK_BOYS ("trailerParkBoys", "Trailer Park Boys"),
-        TRUE_DETECTIVE ("trueDetective", "True Detective"),
-        TWIN_PEAKS ("twinPeaks", "Twin Peaks"),
-        WESTWORLD ("westworld", "Westworld");
+        ADVENTURE_TIME("adventureTime", "Adventure Time"),
+        ALTERED_CARBON("alteredCarbon", "Altered Carbon"),
+        AMERICAN_HORROR_STORY("americanHorrorStory", "American Horror Story"),
+        AN_IDIOT_ABROAD("anIdiotAbroad", "An Idiot Abroad"),
+        ASH_VS_EVIL_DEAD("ashVsEvilDead", "Ash vs Evil Dead"),
+        BLACK_MIRROR("blackMirror", "Black Mirror"),
+        BREAKING_BAD("breakingBad", "Breaking Bad"),
+        DANGER_5("danger5", "Danger 5"),
+        GAME_OF_THRONES("gameOfThrones", "Game Of Thrones"),
+        HOUSE("house", "House"),
+        HOUSE_OF_CARDS("houseOfCards", "House of Cards"),
+        ITS_ALWAYS_SUNNY_IN_PHILADELPHIA("itsAlwaysSunnyInPhiladelphia", "It's Always Sunny in Philadelphia"),
+        LEGION("legion", "Legion"),
+        MR_ROBOT("mrRobot", "Mr. Robot"),
+        RICK_AND_MORTY("rickAndMorty", "Rick and Morty"),
+        SHERLOCK("sherlock", "Sherlock"),
+        STARGATE_SG1("stargateSg1", "Stargate SG1"),
+        STRANGER_THINGS("strangerThings", "Stranger Things"),
+        THE_BOONDOCKS("theBoondocks", "The Boondocks"),
+        THE_OFFICE("theOffice", "The Office"),
+        TRAILER_PARK_BOYS("trailerParkBoys", "Trailer Park Boys"),
+        TRUE_DETECTIVE("trueDetective", "True Detective"),
+        TWIN_PEAKS("twinPeaks", "Twin Peaks"),
+        WESTWORLD("westworld", "Westworld");
         
         String key;
+        
         String name;
         
         VideoSet(String key, String name) {
@@ -52,12 +53,11 @@ public class VideoRenamer {
         }
     }
     
-    
     private static VideoSet activeVideoSet = VideoSet.AMERICAN_HORROR_STORY;
+    
     private static final boolean doAll = true;
     
     private static Map<String, String> episodes = new HashMap<>();
-    
     
     public static void main(String[] args) {
         if (doAll) {
@@ -76,12 +76,11 @@ public class VideoRenamer {
         }
     }
     
-    
     public static void googleGridParser(File in, File out) {
         Pattern textPattern = Pattern.compile("\\s*<div\\sclass=\"title\">(?<episode>S\\d+\\s?E\\d+)\\s?·\\s?(?<title>[^<]*)</div>\\s*");
         List<String> results = new ArrayList<>();
         List<String> episodes = new ArrayList<>();
-    
+        
         StringBuilder text = new StringBuilder();
         List<String> lines = Filesystem.readLines(in);
         for (String line : lines) {

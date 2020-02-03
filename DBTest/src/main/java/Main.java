@@ -1,27 +1,24 @@
-package main.java;/*
+/*
  * File:    Main.java
- * Package: PACKAGE_NAME
+ * Package:
  * Author:  Zachary Gill
  */
 
-import org.apache.derby.impl.sql.execute.DMLWriteGeneratedColumnsResultSet;
+package main.java;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
-public class Main
-{
+public class Main {
     
-    public static void main(String args[])
-    {
-    
+    public static void main(String args[]) {
+        
         
         DatabaseManager dbm = new DatabaseManager();
         dbm.setup();
-    
+        
         Connection c = DatabaseManager.connect("data/DLA/Module1/testdb");
         Statement s = DatabaseManager.getStatement(c);
         DatabaseManager.executeSql(s, "DROP TABLE x");
@@ -32,7 +29,7 @@ public class Main
         DatabaseManager.updateSql(s, "INSERT INTO x VALUES (4, 'Holly')");
         
         ResultSet r = DatabaseManager.querySql(s, "SELECT * FROM x");
-    
+        
         try {
             while (r.next()) {
                 String name = r.getString("id");
@@ -41,10 +38,10 @@ public class Main
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    
+        
         DatabaseManager.closeStatement(s);
         DatabaseManager.disconnect(c);
         dbm.shutdown();
     }
-
+    
 }

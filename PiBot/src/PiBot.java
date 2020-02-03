@@ -1,6 +1,6 @@
 /*
  * File:    PiBot.java
- * Package: PACKAGE_NAME
+ * Package:
  * Author:  Zachary Gill
  */
 
@@ -76,7 +76,7 @@ public class PiBot {
     
     /**
      * The main method for calculating Pi.
-     * 
+     *
      * @param args The arguments for the main method.
      */
     public static void main(String[] args) {
@@ -88,7 +88,7 @@ public class PiBot {
         
         initializeTwoPowers();
         int c = 0;
-        for (int k = 0; k <= RUN_LENGTH; k+= CHUNK_SIZE) {
+        for (int k = 0; k <= RUN_LENGTH; k += CHUNK_SIZE) {
             if (c == BUFFER_SIZE) {
                 writeBuffer();
                 c = 0;
@@ -105,7 +105,7 @@ public class PiBot {
     
     /**
      * Calculates the 10 hexadecimal digits of Pi starting at an index.
-     * 
+     *
      * @param index The index of Pi to start calculation from.
      * @return The 10 hexadecimal digits of Pi starting at the specified index.
      */
@@ -122,7 +122,7 @@ public class PiBot {
     
     /**
      * Determines the series for calculating Pi.
-     * 
+     *
      * @param m The factor for the denominator.
      * @param n The index of Pi to calculate the series for.
      * @return The series for calculating Pi.
@@ -136,23 +136,23 @@ public class PiBot {
             sum += (term / denom);
             sum -= (int) sum;
         }
-    
+        
         for (long k = n; k <= n + 100; k++) {
             double denom = 8 * k + m;
-            double term = Math.pow(16.0, (double)(n - k)) / denom;
+            double term = Math.pow(16.0, (double) (n - k)) / denom;
             if (term < EPSILON) {
                 break;
             }
             sum += term;
             sum -= (int) sum;
         }
-    
+        
         return sum;
     }
     
     /**
      * Determines a fraction in hexadecimal.
-     * 
+     *
      * @param p The power of the fraction.
      * @param m The denominator of the fraction.
      * @return The fraction in hexadecimal.
@@ -200,7 +200,7 @@ public class PiBot {
         
         for (int i = 0; i < 16; i++) {
             y = 16.0 * (y - Math.floor(y));
-            sb.append(hexChars.charAt((int)y));
+            sb.append(hexChars.charAt((int) y));
         }
         
         return sb.toString();
@@ -218,10 +218,10 @@ public class PiBot {
     
     /**
      * Initializes the files for the program.
-     * 
+     *
      * @return Whether the initialization was completed successfully or not.
      */
-    private static boolean initializeFiles() {    
+    private static boolean initializeFiles() {
         if (!INDEX_FILE.exists()) {
             try {
                 if (!INDEX_FILE.createNewFile()) {
@@ -232,7 +232,7 @@ public class PiBot {
                 return false;
             }
         }
-    
+        
         if (INDEX_FILE.length() == 0) {
             try {
                 BufferedWriter indexWriter = new BufferedWriter(new FileWriter(INDEX_FILE, false));
@@ -244,7 +244,7 @@ public class PiBot {
                 return false;
             }
         }
-    
+        
         if (!PI_FILE.exists()) {
             try {
                 if (!PI_FILE.createNewFile()) {
@@ -261,7 +261,7 @@ public class PiBot {
     
     /**
      * Reads the index from the index file.
-     * 
+     *
      * @return Whether the index was read successfully or not.
      */
     private static boolean readIndex() {
@@ -269,7 +269,7 @@ public class PiBot {
             System.out.println("Could not find index file");
             return false;
         }
-    
+        
         if (INDEX_FILE.length() > 0) {
             try {
                 BufferedReader indexReader = new BufferedReader(new FileReader(INDEX_FILE));
@@ -289,7 +289,7 @@ public class PiBot {
     
     /**
      * Writes the buffer to file.
-     * 
+     *
      * @return Whether the buffer was successfully written to a file or not.
      */
     private static boolean writeBuffer() {

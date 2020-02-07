@@ -18,8 +18,8 @@ S02 E01 · Charlie Gets Crippled
 S02 E00 · Making A Scene It's Always Sunny
 S03 E15 · The Gang Dances Their Asses Off
 S03 E14 · Bums: Making a Mess All Over the City
-S03 E13 · The Gang Gets Whacked (Part 2)
-S03 E12 · The Gang Gets Whacked (Part 1)
+S03 E13 · The Gang Gets Whacked, Part 2
+S03 E12 · The Gang Gets Whacked, Part 1
 S03 E11 · Dennis Looks Like a Registered Sex Offender
 S03 E10 · Mac Is a Serial Killer
 S03 E09 · Sweet Dee's Dating a Retarded Person
@@ -43,7 +43,7 @@ S04 E05 · Mac and Charlie Die, Part 1
 S04 E04 · Mac's Banging the Waitress
 S04 E03 · America's Next Top Paddy's Billboard Model Contest
 S04 E02 · The Gang Solves the Gas Crisis
-S04 E01 · Mac &amp; Dennis: Manhunters
+S04 E01 · Mac & Dennis: Manhunters
 S05 E12 · The Gang Reignites the Rivalry
 S05 E11 · Mac and Charlie Write a Movie
 S05 E10 · The D.E.N.N.I.S. System
@@ -56,8 +56,7 @@ S05 E04 · The Gang Gives Frank an Intervention
 S05 E03 · The Great Recession
 S05 E02 · The Gang Hits the Road
 S05 E01 · The Gang Exploits the Mortgage Crisis
-S06 E14 · A Very Sunny Christmas (Part 2)
-S06 E13 · A Very Sunny Christmas (Part 1)
+S06 E13 · A Very Sunny Christmas
 S06 E12 · Dee Gives Birth
 S06 E11 · The Gang Gets Stranded in the Woods
 S06 E10 · Charlie Kelly: King of the Rats
@@ -70,8 +69,8 @@ S06 E04 · Mac's Big Break
 S06 E03 · The Gang Buys a Boat
 S06 E02 · Dennis Gets Divorced
 S06 E01 · Mac Fights Gay Marriage
-S07 E13 · The High School Reunion Part 2: The Gang's Revenge
-S07 E12 · The High School Reunion
+S07 E13 · The High School Reunion, Part 2: The Gang's Revenge
+S07 E12 · The High School Reunion, Part 1
 S07 E11 · Thunder Gun Express
 S07 E10 · How Mac Got Fat
 S07 E09 · The Gang Gets Trapped
@@ -113,12 +112,12 @@ S10 E04 · Charlie Work
 S10 E03 · Psycho Pete Returns
 S10 E02 · The Gang Group Dates
 S10 E01 · The Gang Beats Boggs
-S11 E10 · The Gang Goes to Hell: Part Two
-S11 E09 · The Gang Goes to Hell
+S11 E10 · The Gang Goes to Hell, Part 2
+S11 E09 · The Gang Goes to Hell, Part 1
 S11 E08 · Charlie Catches a Leprechaun
 S11 E07 · McPoyle vs. Ponderosa: The Trial of the Century
 S11 E06 · Being Frank
-S11 E05 · Mac &amp; Dennis Move to the Suburbs
+S11 E05 · Mac & Dennis Move to the Suburbs
 S11 E04 · Dee Made a Smut Film
 S11 E03 · The Gang Hits the Slopes
 S11 E02 · Frank Falls Out the Window

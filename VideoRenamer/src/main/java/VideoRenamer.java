@@ -22,22 +22,34 @@ public class VideoRenamer {
         ALTERED_CARBON("alteredCarbon", "Altered Carbon"),
         AMERICAN_HORROR_STORY("americanHorrorStory", "American Horror Story"),
         AN_IDIOT_ABROAD("anIdiotAbroad", "An Idiot Abroad"),
+        ARRESTED_DEVELOPMENT("arrestedDevelopment", "Arrested Development"),
         ASH_VS_EVIL_DEAD("ashVsEvilDead", "Ash vs Evil Dead"),
+        BETTER_CALL_SAUL("betterCallSaul", "Better Call Saul"),
         BLACK_MIRROR("blackMirror", "Black Mirror"),
         BREAKING_BAD("breakingBad", "Breaking Bad"),
         DANGER_5("danger5", "Danger 5"),
-        GAME_OF_THRONES("gameOfThrones", "Game Of Thrones"),
+        DAREDEVIL("daredevil", "Daredevil"),
+        DEXTER("dexter", "Dexter"),
+        GAME_OF_THRONES("gameOfThrones", "Game of Thrones"),
         HOUSE("house", "House"),
         HOUSE_OF_CARDS("houseOfCards", "House of Cards"),
         ITS_ALWAYS_SUNNY_IN_PHILADELPHIA("itsAlwaysSunnyInPhiladelphia", "It's Always Sunny in Philadelphia"),
         LEGION("legion", "Legion"),
+        LIMITLESS("limitless", "Limitless"),
+        MAD_MEN("madMen", "Mad Men"),
         MR_ROBOT("mrRobot", "Mr. Robot"),
+        PARKS_AND_RECREATION("parksAndRecreation", "Parks and Recreation"),
+        PRISON_BREAK("prisonBreak", "Prison Break"),
         RICK_AND_MORTY("rickAndMorty", "Rick and Morty"),
         SHERLOCK("sherlock", "Sherlock"),
         STARGATE_SG1("stargateSg1", "Stargate SG1"),
         STRANGER_THINGS("strangerThings", "Stranger Things"),
+        THE_BLACKLIST("theBlacklist", "The Blacklist"),
         THE_BOONDOCKS("theBoondocks", "The Boondocks"),
         THE_OFFICE("theOffice", "The Office"),
+        THE_PUNISHER("thePunisher", "The Punisher"),
+        THE_WALKING_DEAD("theWalkingDead", "The Walking Dead"),
+        THE_WIRE("theWire", "The Wire"),
         TRAILER_PARK_BOYS("trailerParkBoys", "Trailer Park Boys"),
         TRUE_DETECTIVE("trueDetective", "True Detective"),
         TWIN_PEAKS("twinPeaks", "Twin Peaks"),
@@ -53,7 +65,7 @@ public class VideoRenamer {
         }
     }
     
-    private static VideoSet activeVideoSet = VideoSet.AMERICAN_HORROR_STORY;
+    private static VideoSet activeVideoSet = VideoSet.LIMITLESS;
     
     private static final boolean doAll = true;
     
@@ -77,16 +89,23 @@ public class VideoRenamer {
     }
     
     public static void googleGridParser(File in, File out) {
+        if (out.exists()) {
+            return;
+        }
+        
         Pattern textPattern = Pattern.compile("\\s*<div\\sclass=\"title\">(?<episode>S\\d+\\s?E\\d+)\\s?·\\s?(?<title>[^<]*)</div>\\s*");
         List<String> results = new ArrayList<>();
         List<String> episodes = new ArrayList<>();
         
         StringBuilder text = new StringBuilder();
         List<String> lines = Filesystem.readLines(in);
+        if (out.exists()) {
+            return;
+        }
         for (String line : lines) {
             Matcher textMatcher = textPattern.matcher(line);
             if (textMatcher.matches() && !episodes.contains(textMatcher.group("episode"))) {
-                results.add(textMatcher.group("episode") + " · " + textMatcher.group("title"));
+                results.add(textMatcher.group("episode") + " · " + textMatcher.group("title").replace("&amp;", "&"));
                 episodes.add(textMatcher.group("episode"));
             }
         }

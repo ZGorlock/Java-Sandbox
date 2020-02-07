@@ -7,7 +7,7 @@ S01 E17 · Enigma
 S01 E16 · Cor-Ai
 S01 E15 · Singularity
 S01 E14 · Hathor
-S01 E13 · Fire &amp; Water
+S01 E13 · Fire & Water
 S01 E12 · Bloodlines
 S01 E11 · The Torment of Tantalus
 S01 E10 · Thor's Hammer
@@ -18,8 +18,8 @@ S01 E06 · The First Commandment
 S01 E05 · Broca Divide
 S01 E04 · Emancipation
 S01 E03 · The Enemy Within
-S01 E02 · Children of the Gods Part 2
-S01 E01 · Children of the Gods Part 1
+S01 E02 · Children of the Gods, Part 2
+S01 E01 · Children of the Gods, Part 1
 S02 E22 · Out of Mind
 S02 E21 · 1969
 S02 E20 · Show and Tell
@@ -30,8 +30,8 @@ S02 E16 · A Matter of Time
 S02 E15 · The Fifth Race
 S02 E14 · Touchstone
 S02 E13 · Spirits
-S02 E12 · The Tok'ra Part 2
-S02 E11 · Tok'ra Part 1
+S02 E12 · The Tok'ra, Part 2
+S02 E11 · The Tok'ra, Part 1
 S02 E10 · Bane
 S02 E09 · Secrets
 S02 E08 · Family
@@ -128,20 +128,20 @@ S06 E06 · Abyss
 S06 E05 · Nightwalkers
 S06 E04 · Frozen
 S06 E03 · Descent
-S06 E02 · Redemption Part 2
-S06 E01 · Redemption Part 1
-S07 E22 · Lost City Part 2
-S07 E21 · Lost City Part 1
+S06 E02 · Redemption, Part 2
+S06 E01 · Redemption, Part 1
+S07 E22 · Lost City, Part 2
+S07 E21 · Lost City, Part 1
 S07 E20 · Inauguration
 S07 E19 · Resurrection
-S07 E18 · Heroes Part 2
-S07 E17 · Heroes Part 1
+S07 E18 · Heroes, Part 2
+S07 E17 · Heroes, Part 1
 S07 E16 · Death Knell
 S07 E15 · Chimera
 S07 E14 · Fallout
 S07 E13 · Grace
-S07 E12 · Evolution Part 2
-S07 E11 · Evolution Part 1
+S07 E12 · Evolution, Part 2
+S07 E11 · Evolution, Part 1
 S07 E10 · Birthright
 S07 E09 · Avenger 2.0
 S07 E08 · Space Race
@@ -152,11 +152,11 @@ S07 E04 · Orpheus
 S07 E03 · Fragile Balance
 S07 E02 · Homecoming
 S07 E01 · Fallen
-S08 E20 · Moebius Part 2
-S08 E19 · Moebius Part 1
+S08 E20 · Moebius, Part 2
+S08 E19 · Moebius, Part 1
 S08 E18 · Threads
-S08 E17 · Reckoning Part 2
-S08 E16 · Reckoning Part 1
+S08 E17 · Reckoning, Part 2
+S08 E16 · Reckoning, Part 1
 S08 E15 · Citizen Joe
 S08 E14 · Full Alert
 S08 E13 · It's Good to Be King
@@ -170,8 +170,8 @@ S08 E06 · Avatar
 S08 E05 · Icon
 S08 E04 · Zero Hour
 S08 E03 · Lockdown
-S08 E02 · New Order Part 2
-S08 E01 · New Order Part 1
+S08 E02 · New Order, Part 2
+S08 E01 · New Order, Part 1
 S09 E20 · Camelot
 S09 E19 · Crusade
 S09 E18 · Arthur's Mantle
@@ -181,8 +181,8 @@ S09 E15 · Ethon
 S09 E14 · Stronghold
 S09 E13 · Ripple Effect
 S09 E12 · Collateral Damage
-S09 E11 · The Fourth Horseman Part 2
-S09 E10 · The Fourth Horseman Part 1
+S09 E11 · The Fourth Horseman, Part 2
+S09 E10 · The Fourth Horseman, Part 1
 S09 E09 · Prototype
 S09 E08 · Babylon
 S09 E07 · Ex Deus Machina

@@ -2,7 +2,7 @@ S01 E22 · Honeymoon
 S01 E21 · Three Stories
 S01 E20 · Love Hurts
 S01 E19 · Kids
-S01 E18 · Babies &amp; Bathwater
+S01 E18 · Babies & Bathwater
 S01 E17 · Role Model
 S01 E16 · Heavy
 S01 E15 · Mob Rules
@@ -23,8 +23,8 @@ S01 E01 · Pilot
 S02 E24 · No Reason
 S02 E23 · Who's Your Daddy?
 S02 E22 · Forever
-S02 E21 · Euphoria (2)
-S02 E20 · Euphoria: Part 1
+S02 E21 · Euphoria, Part 2
+S02 E20 · Euphoria, Part 1
 S02 E19 · House vs. God
 S02 E18 · Sleeping Dogs Lie
 S02 E17 · All In
@@ -128,7 +128,7 @@ S06 E05 · Brave Heart
 S06 E04 · Instant Karma
 S06 E03 · The Tyrant
 S06 E02 · Epic Fail
-S06 E01 · Broken Part 1 ~ Broken Part 2
+S06 E01 · Broken
 S07 E23 · Moving On
 S07 E22 · After Hours
 S07 E21 · The Fix
@@ -152,12 +152,12 @@ S07 E04 · Massage Therapy
 S07 E03 · Unwritten
 S07 E02 · Selfish
 S07 E01 · Now What?
-S08 E23 · Swan Song; Everybody Dies Part 2
+S08 E23 · Swan Song
 S08 E22 · Everybody Dies
 S08 E21 · Holding On
 S08 E20 · Post Mortem
 S08 E19 · The C-Word
-S08 E18 · Body &amp; Soul
+S08 E18 · Body & Soul
 S08 E17 · We Need the Eggs
 S08 E16 · Gut Check
 S08 E15 · Blowing the Whistle
@@ -168,7 +168,7 @@ S08 E11 · Nobody's Fault
 S08 E10 · Runaways
 S08 E09 · Better Half
 S08 E08 · Perils of Paranoia
-S08 E07 · Dead &amp; Buried
+S08 E07 · Dead & Buried
 S08 E06 · Parents
 S08 E05 · The Confession
 S08 E04 · Risky Business

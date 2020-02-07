@@ -32,11 +32,11 @@ public class VideoProcessor {
     
     public static void main(String[] args) {
 //        convertShowToMp4();
-        convertDirToMp4();
+//        convertDirToMp4();
 //        stripMetadataAndChapters();
 //        lossTest();
-//        Map<String, Map<String, String>> stats = produceStats();
-//        Map<String, Map<String, String>> dirStats = produceDirStats();
+        Map<String, Map<String, String>> stats = produceStats();
+        Map<String, Map<String, String>> dirStats = produceDirStats();
     }
     
     private static String ffmpeg(String cmd, boolean printOutput) {
@@ -491,7 +491,7 @@ public class VideoProcessor {
     }
     
     private static void convertDirToMp4() {
-        File dir = new File("E:\\Downloads\\The Blacklist");
+        File dir = new File("E:\\Downloads\\Arrested Development");
         File out = new File(dir, "new");
         Filesystem.createDirectory(out);
         
@@ -514,8 +514,9 @@ public class VideoProcessor {
 //            String cmd = "-y -i \"" + f.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -map 0 -map -0:v:1 -map -0:v:2 -map -0:v:3 -c copy -c:s mov_text \"" + output.getAbsolutePath() + "\"";
 //            String cmd = "-y -i \"" + f.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -c:a copy -c:s mov_text -b:v 2400k \"" + output.getAbsolutePath() + "\"";
 //            String cmd = "-y -i \"" + f.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -c:v libx265 -c:a copy -c:s mov_text -crf 23 \"" + output.getAbsolutePath() + "\"";
-            String cmd = "-y -i \"" + f.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -c:v libx265 -c:a copy -c:s mov_text \"" + output.getAbsolutePath() + "\"";
-//            String cmd = "-y -i \"" + f.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -c:v copy -c:a copy -c:s copy \"" + output.getAbsolutePath() + "\"";
+//            String cmd = "-y -i \"" + f.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -c:v libx265 -c:a copy -c:s mov_text \"" + output.getAbsolutePath() + "\"";
+//            String cmd = "-y -i \"" + f.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -c:v libx264 -c:a copy -crf 20 \"" + output.getAbsolutePath() + "\"";
+            String cmd = "-y -i \"" + f.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -c:v copy -c:a copy -c:s mov_text \"" + output.getAbsolutePath() + "\"";
             ffmpeg(cmd, true);
         }
     }

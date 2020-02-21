@@ -9,12 +9,11 @@
         <module name="osrsKeepLoggedIn" />
         <module name="VideoRenamer" />
         <module name="ttsTest" />
-        <module name="Sphinx4test" />
         <module name="alchBuddy" />
         <module name="TTSTest" />
         <module name="DictionaryTest" />
         <module name="OsrsKeepLoggedIn" />
-        <module name="vision" />
+        <module name="lotteryGuesser" />
         <module name="dbTest" />
         <module name="AlchBuddy" />
         <module name="PiBot" />
@@ -23,14 +22,14 @@
         <module name="WavDecoder" />
         <module name="htmlScraper" />
         <module name="OsrsMerchingStatistics" />
-        <module name="HtmlScraper" />
+        <module name="vision" />
         <module name="dictionaryTest" />
         <module name="videoProcessor" />
         <module name="SineWaves" />
         <module name="wavDecoder" />
         <module name="DBTest" />
         <module name="osrsMerchingStatistics" />
-        <module name="lotteryGuesser" />
+        <module name="Sphinx4test" />
         <module name="Vision" />
         <module name="videoRenamer" />
         <module name="DicingBotSimulator" />
@@ -41,13 +40,14 @@
         <module name="VideoProcessor" />
         <module name="reactionTimeClicker" />
         <module name="LotteryGuesser" />
+        <module name="HtmlScraper" />
       </profile>
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="interviewTest" />
         <module name="InterviewTest" />
+        <module name="interviewTest" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

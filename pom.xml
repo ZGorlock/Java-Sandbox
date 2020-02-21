@@ -15,12 +15,12 @@
         <module>dicingBotSimulator</module>
         <module>dictionaryTest</module>
         <module>htmlScraper</module>
-        <module>keyListener</module>
         <module>lotteryGuesser</module>
         <module>osrsKeepLoggedIn</module>
         <module>osrsMerchingStatistics</module>
         <module>piBot</module>
         <module>pictureResizer</module>
+        <module>reactionTimeClicker</module>
         <module>sineWaves</module>
         <module>sphinx4test</module>
         <module>ttsTest</module>

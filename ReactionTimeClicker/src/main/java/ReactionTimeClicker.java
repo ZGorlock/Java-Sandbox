@@ -24,10 +24,12 @@ public class ReactionTimeClicker {
                 robot.delay(10);
                 robot.mouseRelease(InputEvent.BUTTON1_MASK);
                 count++;
-                robot.delay(500);
-                robot.mousePress(InputEvent.BUTTON1_MASK);
-                robot.delay(10);
-                robot.mouseRelease(InputEvent.BUTTON1_MASK);
+                if (count < 5) {
+                    robot.delay(500);
+                    robot.mousePress(InputEvent.BUTTON1_MASK);
+                    robot.delay(10);
+                    robot.mouseRelease(InputEvent.BUTTON1_MASK);
+                }
             }
         }
     }

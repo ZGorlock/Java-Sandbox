@@ -19,13 +19,13 @@
         <module name="PiBot" />
         <module name="sineWaves" />
         <module name="sphinx4test" />
+        <module name="WavDecoder" />
         <module name="htmlScraper" />
         <module name="OsrsMerchingStatistics" />
         <module name="vision" />
         <module name="dictionaryTest" />
         <module name="videoProcessor" />
         <module name="SineWaves" />
-        <module name="wavDecoder" />
         <module name="DBTest" />
         <module name="osrsMerchingStatistics" />
         <module name="Sphinx4test" />

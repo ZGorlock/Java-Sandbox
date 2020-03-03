@@ -16,6 +16,7 @@
         <module>dictionaryTest</module>
         <module>htmlScraper</module>
         <module>lotteryGuesser</module>
+        <module>musicPlayer</module>
         <module>osrsKeepLoggedIn</module>
         <module>osrsMerchingStatistics</module>
         <module>piBot</module>

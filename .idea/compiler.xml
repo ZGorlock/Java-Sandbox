@@ -22,6 +22,7 @@
         <module name="WavDecoder" />
         <module name="htmlScraper" />
         <module name="OsrsMerchingStatistics" />
+        <module name="MusicPlayer" />
         <module name="vision" />
         <module name="dictionaryTest" />
         <module name="videoProcessor" />

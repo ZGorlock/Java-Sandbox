@@ -9,7 +9,7 @@
         <module name="osrsKeepLoggedIn" />
         <module name="VideoRenamer" />
         <module name="ttsTest" />
-        <module name="alchBuddy" />
+        <module name="MusicPlayer" />
         <module name="TTSTest" />
         <module name="DictionaryTest" />
         <module name="OsrsKeepLoggedIn" />
@@ -22,7 +22,6 @@
         <module name="WavDecoder" />
         <module name="htmlScraper" />
         <module name="OsrsMerchingStatistics" />
-        <module name="MusicPlayer" />
         <module name="vision" />
         <module name="dictionaryTest" />
         <module name="videoProcessor" />
@@ -39,6 +38,7 @@
         <module name="piBot" />
         <module name="VideoProcessor" />
         <module name="reactionTimeClicker" />
+        <module name="alchBuddy" />
         <module name="LotteryGuesser" />
         <module name="HtmlScraper" />
       </profile>
@@ -46,8 +46,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="InterviewTest" />
         <module name="interviewTest" />
+        <module name="InterviewTest" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

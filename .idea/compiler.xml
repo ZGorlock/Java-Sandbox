@@ -19,6 +19,7 @@
         <module name="PiBot" />
         <module name="sineWaves" />
         <module name="sphinx4test" />
+        <module name="StackOverflow" />
         <module name="WavDecoder" />
         <module name="htmlScraper" />
         <module name="OsrsMerchingStatistics" />
@@ -46,8 +47,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="interviewTest" />
         <module name="InterviewTest" />
+        <module name="interviewTest" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

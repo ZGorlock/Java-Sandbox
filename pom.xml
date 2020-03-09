@@ -29,6 +29,7 @@
         <module>vision</module>
         <module>videoProcessor</module>
         <module>wavDecoder</module>
+        <module>StackOverflow</module>
     </modules>
 
     

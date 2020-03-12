@@ -21,8 +21,8 @@ public class ThiagoCruz {
     public static void main(String[] args) {
         Pattern pattern = Pattern.compile("^(?<firstName>[^\\s]+)\\s((de|da)(\\s|$))?(?<otherName>.*)$");
         
-        List<String> targetList = Arrays.asList("Maria souza silva", "Maria souza silva", "Maria souza silva", "Maria souza silva", "Maria de souza silva", "Maria de souza silva");
-        List<String> sourceList = Arrays.asList("Maria souza silva", "Maria silva", "Maria Carvalho", "Ana souza silva", "Maria de", "Maria souza");
+        List<String> targetList = Arrays.asList("Maria souza silva", "Maria souza silva", "Maria souza silva", "Maria souza silva", "Maria de souza silva", "Maria de souza silva", "Maria da silva de souza");
+        List<String> sourceList = Arrays.asList("Maria souza silva", "Maria silva", "Maria Carvalho", "Ana souza silva", "Maria de", "Maria souza", "Maria de da");
         
         for (int i = 0; i < targetList.size(); i++) {
             checkName(targetList.get(i), sourceList.get(i));

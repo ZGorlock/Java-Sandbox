@@ -10,7 +10,7 @@
         <version>2.1.6.RELEASE</version>
     </parent>
     
-    <artifactId>interviewTest</artifactId>
+    <artifactId>InterviewTest</artifactId>
     <version>1.0-SNAPSHOT</version>
 
 

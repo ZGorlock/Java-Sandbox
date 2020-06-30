@@ -182,7 +182,6 @@ public final class Filesystem {
      *
      * @param file The file or directory.
      * @return Whether the operation was successful or not.
-     *
      * @see #deleteFile(File)
      * @see #deleteDirectory(File)
      */
@@ -278,7 +277,6 @@ public final class Filesystem {
      * @param src  The original file or directory.
      * @param dest The renamed file or directory.
      * @return Whether the operation was successful or not.
-     *
      * @see #renameFile(File, File)
      * @see #renameDirectory(File, File)
      */
@@ -460,7 +458,6 @@ public final class Filesystem {
      * @param dirDest   The destination directory.
      * @param overwrite Whether or not to overwrite the destination directory if it exists.
      * @return Whether the operation was successful or not.
-     *
      * @see #copyDirectory(File, File, boolean, boolean)
      */
     public static boolean copyDirectory(File dirSrc, File dirDest, boolean overwrite) {
@@ -473,7 +470,6 @@ public final class Filesystem {
      * @param dirSrc  The source directory.
      * @param dirDest The destination directory.
      * @return Whether the operation was successful or not.
-     *
      * @see #copyDirectory(File, File, boolean)
      */
     public static boolean copyDirectory(File dirSrc, File dirDest) {
@@ -487,7 +483,6 @@ public final class Filesystem {
      * @param dest      The path to the destination file or directory.
      * @param overwrite Whether or not to overwrite the destination directory if it exists.
      * @return Whether the operation was successful or not.
-     *
      * @see #copyFile(File, File, boolean)
      * @see #copyDirectory(File, File, boolean)
      */
@@ -501,7 +496,6 @@ public final class Filesystem {
      * @param src  The path to the source file or directory.
      * @param dest The path to the destination file or directory.
      * @return Whether the operation was successful or not.
-     *
      * @see #copy(File, File, boolean)
      */
     public static boolean copy(File src, File dest) {
@@ -580,7 +574,6 @@ public final class Filesystem {
      * @param fileSrc  The source file.
      * @param fileDest The destination file.
      * @return Whether the operation was successful or not.
-     *
      * @see #moveFile(File, File, boolean)
      */
     public static boolean moveFile(File fileSrc, File fileDest) {
@@ -676,7 +669,6 @@ public final class Filesystem {
      * @param dirDest   The destination directory.
      * @param overwrite Whether or not to overwrite the destination directory if it exists.
      * @return Whether the operation was successful or not.
-     *
      * @see #moveDirectory(File, File, boolean, boolean)
      */
     public static boolean moveDirectory(File dirSrc, File dirDest, boolean overwrite) {
@@ -689,7 +681,6 @@ public final class Filesystem {
      * @param dirSrc  The source directory.
      * @param dirDest The destination directory.
      * @return Whether the operation was successful or not.
-     *
      * @see #moveDirectory(File, File, boolean)
      */
     public static boolean moveDirectory(File dirSrc, File dirDest) {
@@ -703,7 +694,6 @@ public final class Filesystem {
      * @param dest      The destination file or directory.
      * @param overwrite Whether or not to overwrite the destination directory if it exists.
      * @return Whether the operation was successful or not.
-     *
      * @see #moveFile(File, File, boolean)
      * @see #moveDirectory(File, File, boolean)
      */
@@ -717,7 +707,6 @@ public final class Filesystem {
      * @param src  The source file or directory.
      * @param dest The destination file or directory.
      * @return Whether the operation was successful or not.
-     *
      * @see #move(File, File, boolean)
      */
     public static boolean move(File src, File dest) {
@@ -838,7 +827,6 @@ public final class Filesystem {
      * @param directory       The directory to search for files in.
      * @param regexFileFilter The filter for files.
      * @return A list of files that were discovered.
-     *
      * @see #getFilesRecursively(File, String, String)
      */
     public static List<File> getFilesRecursively(File directory, String regexFileFilter) {
@@ -850,7 +838,6 @@ public final class Filesystem {
      *
      * @param directory The directory to search for files in.
      * @return A list of files that were discovered.
-     *
      * @see #getFilesRecursively(File, String)
      */
     public static List<File> getFilesRecursively(File directory) {
@@ -911,7 +898,6 @@ public final class Filesystem {
      *
      * @param directory The directory to search for directories in.
      * @return A list of directories that were discovered.
-     *
      * @see #getDirsRecursively(File, String)
      */
     public static List<File> getDirsRecursively(File directory) {
@@ -977,7 +963,6 @@ public final class Filesystem {
      * @param directory       The directory to search for files and directories in.
      * @param regexFileFilter The filter for files.
      * @return A list of files and directories that were discovered.
-     *
      * @see #getFilesAndDirsRecursively(File, String, String)
      */
     public static List<File> getFilesAndDirsRecursively(File directory, String regexFileFilter) {
@@ -989,7 +974,6 @@ public final class Filesystem {
      *
      * @param directory The directory to search for files and directories in.
      * @return A list of files and directories that were discovered.
-     *
      * @see #getFilesAndDirsRecursively(File, String)
      */
     public static List<File> getFilesAndDirsRecursively(File directory) {
@@ -1012,7 +996,6 @@ public final class Filesystem {
      *
      * @param directory The directory to search for files in.
      * @return A list of files that were discovered.
-     *
      * @see #getFiles(File, String)
      */
     public static List<File> getFiles(File directory) {
@@ -1035,7 +1018,6 @@ public final class Filesystem {
      *
      * @param directory The directory to search for files in.
      * @return A list of directories that were discovered.
-     *
      * @see #getDirs(File, String)
      */
     public static List<File> getDirs(File directory) {
@@ -1060,7 +1042,6 @@ public final class Filesystem {
      * @param directory       The directory to search for files and directories in.
      * @param regexFileFilter The filter for files.
      * @return A list of files and directories that were discovered.
-     *
      * @see #getFilesAndDirs(File, String, String)
      */
     public static List<File> getFilesAndDirs(File directory, String regexFileFilter) {
@@ -1072,7 +1053,6 @@ public final class Filesystem {
      *
      * @param directory The directory to search for files and directories in.
      * @return A list of files and directories that were discovered.
-     *
      * @see #getFilesAndDirs(File, String)
      */
     public static List<File> getFilesAndDirs(File directory) {
@@ -1152,7 +1132,6 @@ public final class Filesystem {
      * @param file The file or directory.
      * @return The size of the file or directory in bytes.<br>
      * Will return 0 if the file or directory does not exist.
-     *
      * @see #sizeOfFile(File)
      * @see #sizeOfDirectory(File)
      */
@@ -1210,7 +1189,6 @@ public final class Filesystem {
      *
      * @param file The file or directory to test.
      * @return Whether the file or directory is empty or not.
-     *
      * @see #fileIsEmpty(File)
      * @see #directoryIsEmpty(File)
      */
@@ -1341,7 +1319,6 @@ public final class Filesystem {
      *
      * @param f The file to open for output.
      * @return The output stream that was opened.
-     *
      * @see #openOutputStream(File, boolean)
      */
     public static FileOutputStream openOutputStream(File f) {
@@ -1487,7 +1464,6 @@ public final class Filesystem {
      * @param f    The file to write to.
      * @param data The string to write to the file.
      * @return Whether the write was successful or not.
-     *
      * @see #writeStringToFile(File, String, boolean)
      */
     public static boolean writeStringToFile(File f, String data) {
@@ -1533,7 +1509,6 @@ public final class Filesystem {
      * @param f    The file to write to.
      * @param data The byte array to write to the file.
      * @return Whether the write was successful or not.
-     *
      * @see #writeByteArrayToFile(File, byte[], boolean)
      */
     public static boolean writeByteArrayToFile(File f, byte[] data) {
@@ -1579,7 +1554,6 @@ public final class Filesystem {
      * @param f     The file to write to.
      * @param lines The collection of lines to be written.
      * @return Whether the write was successful or not.
-     *
      * @see #writeLines(File, Collection, boolean)
      */
     public static boolean writeLines(File f, Collection<String> lines) {

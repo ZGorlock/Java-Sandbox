@@ -92,7 +92,6 @@ public final class StringUtility {
      *
      * @param str The string to tokenize.
      * @return A list of all the tokens of the passed string.
-     *
      * @see #tokenize(String, String)
      */
     public static List<String> tokenize(String str) {
@@ -122,7 +121,6 @@ public final class StringUtility {
      *
      * @param tokens The list of tokens to detokenize.
      * @return A string composed of the tokens in the passed list.
-     *
      * @see #detokenize(List, String)
      */
     public static String detokenize(List<String> tokens) {
@@ -610,7 +608,6 @@ public final class StringUtility {
      *
      * @param string The string to convert.
      * @return The string converted to title case.
-     *
      * @see #toTitleCase(String, boolean)
      */
     public static String toTitleCase(String string) {
@@ -623,7 +620,6 @@ public final class StringUtility {
      *
      * @param string The string to convert.
      * @return The string converted to upper title case.
-     *
      * @see #toTitleCase(String, boolean)
      */
     public static String toUpperTitleCase(String string) {

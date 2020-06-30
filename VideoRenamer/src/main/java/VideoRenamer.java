@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
 
 import common.Filesystem;
 import common.StringUtility;
-import org.apache.commons.lang3.StringUtils;
 
 public class VideoRenamer {
     

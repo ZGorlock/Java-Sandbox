@@ -28,7 +28,6 @@ public class ThiagoCruz {
             checkName(targetList.get(i), sourceList.get(i));
         }
         
-        
     }
     
     private static void checkName(String target, String source) {
@@ -38,14 +37,14 @@ public class ThiagoCruz {
         if (!targetMatcher.matches() || !sourceMatcher.matches()) {
             System.out.println("Nok");
         }
-    
+        
         boolean ok = true;
         if (!sourceMatcher.group("firstName").equals(targetMatcher.group("firstName"))) {
             ok = false;
         } else {
             String[] otherSourceName = sourceMatcher.group("otherName").split("\\s");
             String[] otherTargetName = targetMatcher.group("otherName").split("\\s");
-        
+            
             int targetIndex = 0;
             for (String s : otherSourceName) {
                 boolean hit = false;

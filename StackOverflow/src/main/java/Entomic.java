@@ -4,9 +4,6 @@
  * Author:  Zachary Gill
  */
 
-import java.io.File;
-import java.nio.file.Path;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

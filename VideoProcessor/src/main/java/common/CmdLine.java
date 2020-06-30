@@ -106,7 +106,6 @@ public final class CmdLine {
      * @param cmd              The command to build a process for.
      * @param useScriptCommand Whether or not to include the script command at the beginning ("cmd.exe  /c" or "bash -c")
      * @return The process that was built or null if it was not built.
-     *
      * @throws Exception When there is an unknown operating system.
      */
     @SuppressWarnings("DuplicateBranchesInSwitch")

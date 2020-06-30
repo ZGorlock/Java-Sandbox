@@ -1,279 +1,279 @@
-S01 E01 · Slumber Party Panic
-S01 E02 · Trouble in Lumpy Space
-S01 E03 · Prisoners of Love
-S01 E04 · Tree Trunks
-S01 E05 · The Enchiridion!
-S01 E06 · The Jiggler
-S01 E07 · Ricardio the Heart Guy
-S01 E08 · Business Time
-S01 E09 · My Two Favorite People
-S01 E10 · Memories of Boom Boom Mountain
-S01 E11 · Wizard
-S01 E12 · Evicted!
-S01 E13 · City of Thieves
-S01 E14 · The Witch's Garden
-S01 E15 · What is Life?
-S01 E16 · Ocean of Fear
-S01 E17 · When Wedding Bells Thaw
-S01 E18 · Dungeon
-S01 E19 · The Duke
-S01 E20 · Freak City
-S01 E21 · Donny
-S01 E22 · Henchman
-S01 E23 · Rainy Day Daydream
-S01 E24 · What Have You Done?
-S01 E25 · His Hero
 S01 E26 · Gut Grinder
-S02 E01 · It Came from the Nightosphere
-S02 E02 · The Eyes
-S02 E03 · Loyalty to the King
-S02 E04 · Blood Under the Skin
-S02 E05 · Storytelling
-S02 E06 · Slow Love
-S02 E07 · Power Animal
-S02 E08 · Crystals Have Power
-S02 E09 · The Other Tarts
-S02 E10 · To Cut a Woman's Hair
-S02 E11 · The Chamber of Frozen Blades
-S02 E12 · Her Parents
-S02 E13 · The Pods
-S02 E14 · The Silent King
-S02 E15 · The Real You
-S02 E16 · Guardians of Sunshine
-S02 E17 · Death in Bloom
-S02 E18 · Susan Strong
-S02 E19 · Mystery Train
-S02 E20 · Go With Me
-S02 E21 · Belly of the Beast
-S02 E22 · The Limit
-S02 E23 · Video Makers
+S01 E25 · His Hero
+S01 E24 · What Have You Done?
+S01 E23 · Rainy Day Daydream
+S01 E22 · Henchman
+S01 E21 · Donny
+S01 E20 · Freak City
+S01 E19 · The Duke
+S01 E18 · Dungeon
+S01 E17 · When Wedding Bells Thaw
+S01 E16 · Ocean of Fear
+S01 E15 · What Is Life?
+S01 E14 · The Witch's Garden
+S01 E13 · City of Thieves
+S01 E12 · Evicted!
+S01 E11 · Wizard
+S01 E10 · Memories of Boom Boom Mountain
+S01 E09 · My Two Favorite People
+S01 E08 · Business Time
+S01 E07 · Ricardio the Heart Guy
+S01 E06 · The Jiggler
+S01 E05 · The Enchiridion!
+S01 E04 · Tree Trunks
+S01 E03 · Prisoners of Love
+S01 E02 · Trouble in Lumpy Space
+S01 E01 · Slumber Party Panic
 S02 E26 · Heat Signature
-S02 E24 · Mortal Folly
 S02 E25 · Mortal Recoil
-S03 E01 · Conquest of Cuteness
-S03 E02 · Morituri Te Salutamus
-S03 E03 · Memory of a Memory
-S03 E04 · Hitman
-S03 E05 · Too Young
-S03 E06 · The Monster
-S03 E07 · Still
-S03 E08 · Wizard Battle
-S03 E09 · Fionna and Cake
-S03 E10 · What Was Missing
-S03 E11 · Apple Thief
-S03 E12 · The Creeps
-S03 E13 · From Bad to Worse
-S03 E14 · Beautopia
-S03 E15 · No One Can Hear You
-S03 E16 · Jake vs. Me-Mow
-S03 E17 · Thank You
-S03 E18 · The New Frontier
-S03 E19 · Holly Jolly Secrets, Part 1
-S03 E20 · Holly Jolly Secrets, Part 2
-S03 E21 · Marceline's Closet
-S03 E22 · Paper Pete
-S03 E23 · Another Way
-S03 E24 · Ghost Princess
-S03 E25 · Dad's Dungeon
+S02 E24 · Mortal Folly
+S02 E23 · Video Makers
+S02 E22 · The Limit
+S02 E21 · Belly of the Beast
+S02 E20 · Go With Me
+S02 E19 · Mystery Train
+S02 E18 · Susan Strong
+S02 E17 · Death in Bloom
+S02 E16 · Guardians of Sunshine
+S02 E15 · The Real You
+S02 E14 · The Silent King
+S02 E13 · The Pods
+S02 E12 · Her Parents
+S02 E11 · The Chamber of Frozen Blades
+S02 E10 · To Cut a Woman's Hair
+S02 E09 · The Other Tarts
+S02 E08 · Crystals Have Power
+S02 E07 · Power Animal
+S02 E06 · Slow Love
+S02 E05 · Storytelling
+S02 E04 · Blood Under the Skin
+S02 E03 · Loyalty to the King
+S02 E02 · The Eyes
+S02 E01 · It Came From The Nightosphere
 S03 E26 · Incendium
-S04 E01 · Hot to the Touch
-S04 E02 · Five Short Graybles
-S04 E03 · Web Weirdos
-S04 E04 · Dream of Love
-S04 E05 · Return to the Nightosphere
-S04 E06 · Daddy's Little Monster
-S04 E07 · In Your Footsteps
-S04 E08 · Hug Wolf
-S04 E09 · Princess Monster Wife
-S04 E10 · Goliad
-S04 E11 · Beyond this Earthly Realm
-S04 E12 · Gotcha!
-S04 E13 · Princess Cookie
-S04 E14 · Card Wars
-S04 E15 · Sons of Mars
-S04 E16 · Burning Low
-S04 E17 · BMO Noire
-S04 E18 · King Worm 
-S04 E19 · Lady & Peebles
-S04 E20 · You Made Me
-S04 E21 · Who Would Win
-S04 E22 · Ignition Point
-S04 E23 · The Hard Easy
-S04 E24 · Reign of Gunters
-S04 E25 · I Remember You
+S03 E25 · Dad's Dungeon
+S03 E24 · Ghost Princess
+S03 E23 · Another Way
+S03 E22 · Paper Pete
+S03 E21 · Marceline's Closet
+S03 E20 · Holly Jolly Secrets: Part 2
+S03 E19 · Holly Jolly Secrets: Part 1
+S03 E18 · The New Frontier
+S03 E17 · Thank You
+S03 E16 · Jake vs Me-Mow
+S03 E15 · No One Can Hear You
+S03 E14 · Beautopia
+S03 E13 · From Bad to Worse
+S03 E12 · The Creeps
+S03 E11 · Apple Thief
+S03 E10 · What Was Missing
+S03 E09 · Fionna and Cake
+S03 E08 · Wizard Battle
+S03 E07 · Still
+S03 E06 · The Monster
+S03 E05 · Too Young
+S03 E04 · Hitman
+S03 E03 · Memory of a Memory
+S03 E02 · Morituri Te Salutamus
+S03 E01 · Conquest of Cuteness
 S04 E26 · The Lich
-S05 E01 · Finn the Human
-S05 E02 · Jake the Dog
-S05 E03 · Five More Short Graybles
-S05 E04 · Up a Tree
-S05 E05 · All the Little People
-S05 E06 · Jake the Dad
-S05 E07 · Davey
-S05 E08 · Mystery Dungeon
-S05 E09 · All Your Fault
-S05 E10 · Little Dude
-S05 E11 · Bad Little Boy
-S05 E12 · Vault of Bones
-S05 E13 · The Great Bird Man
-S05 E14 · Simon & Marcy
-S05 E15 · A Glitch is a Glitch
-S05 E16 · Puhoy
-S05 E17 · BMO Lost
-S05 E18 · Princess Potluck
-S05 E19 · James Baxter the Horse
-S05 E20 · Shh!
-S05 E21 · The Suitor
-S05 E22 · The Party's Over, Isla de Señorita
-S05 E23 · One Last Job
-S05 E24 · Another Five More Short Graybles
-S05 E25 · Candy Streets
-S05 E26 · Wizards Only, Fools
-S05 E27 · Jake Suit
-S05 E28 · Be More
-S05 E29 · Sky Witch
-S05 E30 · Frost & Fire
-S05 E31 · Too Old
-S05 E32 · Earth & Water
-S05 E33 · Time Sandwich
-S05 E34 · The Vault
-S05 E35 · Love Games
-S05 E36 · Dungeon Train
-S05 E37 · Box Prince
-S05 E38 · Red Starved
-S05 E39 · We Fixed a Truck
-S05 E40 · Play Date
-S05 E41 · The Pit
-S05 E42 · James
-S05 E43 · Root Beer Guy
-S05 E44 · Apple Wedding
-S05 E45 · Blade of Grass
-S05 E46 · Rattleballs
-S05 E47 · The Red Throne
-S05 E48 · Betty
-S05 E49 · Bad Timing
-S05 E50 · Lemonhope, Part 1
-S05 E51 · Lemonhope, Part 2
+S04 E25 · I Remember You
+S04 E24 · Reign of Gunters
+S04 E23 · The Hard Easy
+S04 E22 · Ignition Point
+S04 E21 · Who Would Win
+S04 E20 · You Made Me
+S04 E19 · Lady & Peebles
+S04 E18 · King Worm
+S04 E17 · BMO Noire
+S04 E16 · Burning Low
+S04 E15 · Sons of Mars
+S04 E14 · Card Wars
+S04 E13 · Princess Cookie
+S04 E12 · Gotcha!
+S04 E11 · Beyond This Earthly Realm
+S04 E10 · Goliad
+S04 E09 · Princess Monster Wife
+S04 E08 · Hug Wolf
+S04 E07 · In Your Footsteps
+S04 E06 · Daddy's Little Monster
+S04 E05 · Return to the Nightosphere
+S04 E04 · Dream of Love
+S04 E03 · Web Weirdos
+S04 E02 · Five Short Graybles
+S04 E01 · Hot to the Touch
 S05 E52 · Billy's Bucket List
-S06 E01 · Wake Up
-S06 E02 · Escape from the Citadel
-S06 E03 · James II
-S06 E04 · The Tower
-S06 E05 · Sad Face
-S06 E06 · Breezy
-S06 E07 · Food Chain
-S06 E08 · Furniture & Meat
-S06 E09 · The Prince Who Wanted Everything
-S06 E10 · Something Big
-S06 E11 · Little Brother
-S06 E12 · Ocarina
-S06 E13 · Thanks for the Crabapples, Giuseppe
-S06 E14 · Princess Day
-S06 E15 · Nemesis
-S06 E16 · Joshua and Margaret Investigations
-S06 E17 · Ghost Fly
-S06 E18 · Everything's Jake
-S06 E19 · Is That You?
-S06 E20 · Jake The Brick
-S06 E21 · Dentist
-S06 E22 · The Cooler
-S06 E23 · The Pajama War
-S06 E24 · Evergreen
-S06 E25 · Astral Plane
-S06 E26 · Gold Stars
-S06 E27 · The Visitor
-S06 E28 · The Mountain
-S06 E29 · Dark Purple
-S06 E30 · The Diary
-S06 E31 · Walnuts & Rain
-S06 E32 · Friends Forever
-S06 E33 · Jermaine
-S06 E34 · Chips and Ice Cream
-S06 E35 · Graybles 1000+
-S06 E36 · Hoots
-S06 E37 · Water Park Prank
-S06 E38 · You Forgot Your Floaties
-S06 E39 · Be Sweet
-S06 E40 · Orgalorg
-S06 E41 · On the Lam
-S06 E42 · Hot Diggity Doom
+S05 E51 · Lemonhope - Part 2
+S05 E50 · Lemonhope - Part 1
+S05 E49 · Bad Timing
+S05 E48 · Betty
+S05 E47 · The Red Throne
+S05 E46 · Rattleballs
+S05 E45 · Blade of Grass
+S05 E44 · Apple Wedding
+S05 E43 · Root Beer Guy
+S05 E42 · James
+S05 E41 · The Pit
+S05 E40 · Play Date
+S05 E39 · We Fixed a Truck
+S05 E38 · Red Starved
+S05 E37 · Box Prince
+S05 E36 · Dungeon Train
+S05 E35 · Love Games
+S05 E34 · The Vault
+S05 E33 · Time Sandwich
+S05 E32 · Earth & Water
+S05 E31 · Too Old
+S05 E30 · Frost & Fire
+S05 E29 · Sky Witch
+S05 E28 · Be More
+S05 E27 · Jake Suit
+S05 E26 · Wizards Only, Fools
+S05 E25 · Candy Streets
+S05 E24 · Another Five More Short Graybles
+S05 E23 · One Last Job
+S05 E22 · The Party's Over, Isla de Señorita
+S05 E21 · The Suitor
+S05 E20 · Shh!
+S05 E19 · James Baxter the Horse
+S05 E18 · Princess Potluck
+S05 E17 · BMO Lost
+S05 E16 · Puhoy
+S05 E15 · A Glitch Is a Glitch
+S05 E14 · Simon & Marcy
+S05 E13 · The Great Bird Man
+S05 E12 · Vault of Bones
+S05 E11 · Bad Little Boy
+S05 E10 · Little Dude
+S05 E09 · All Your Fault
+S05 E08 · Mystery Dungeon
+S05 E07 · Davey
+S05 E06 · Jake the Dad
+S05 E05 · All the Little People
+S05 E04 · Up a Tree
+S05 E03 · Five More Short Graybles
+S05 E02 · Jake the Dog
+S05 E01 · Finn the Human
 S06 E43 · The Comet
-S07 E01 · Bonnie and Neddy
-S07 E02 · Varmints
-S07 E03 · Cherry Cream Soda
-S07 E04 · Mama Said
-S07 E05 · Football
-S07 E06 · Marceline The Vampire Queen
-S07 E07 · Everything Stays
-S07 E08 · Vamps About
-S07 E09 · The Empress Eyes
-S07 E10 · May I Come In?
-S07 E11 · Take Her Back
-S07 E12 · Checkmate
-S07 E13 · The Dark Cloud
-S07 E14 · The More You Moe, The Moe You Know, Part 1
-S07 E14 · The More You Moe, The Moe You Know, Part 2
-S07 E16 · Summer Showers
-S07 E17 · Angel Face
-S07 E18 · President Porpoise is Missing!
-S07 E19 · Blank-Eyed Girl
-S07 E20 · Bad Jubies
-S07 E21 · King's Ransom
-S07 E22 · Scamps
-S07 E23 · Crossover
-S07 E24 · The Hall of Egress
-S07 E25 · Flute Spell
+S06 E42 · Hot Diggity Doom
+S06 E41 · On the Lam
+S06 E40 · Orgalorg
+S06 E39 · Be Sweet
+S06 E38 · You Forgot Your Floaties
+S06 E37 · Water Park Prank
+S06 E36 · Hoots
+S06 E35 · Graybles 1000+
+S06 E34 · Chips and Ice Cream
+S06 E33 · Jermaine
+S06 E32 · Friends Forever
+S06 E31 · Walnuts & Rain
+S06 E30 · The Diary
+S06 E29 · Dark Purple
+S06 E28 · The Mountain
+S06 E27 · The Visitor
+S06 E26 · Gold Stars
+S06 E25 · Astral Plane
+S06 E24 · Evergreen
+S06 E23 · The Pajama War
+S06 E22 · The Cooler
+S06 E21 · Dentist
+S06 E20 · Jake the Brick
+S06 E19 · Is That You?
+S06 E18 · Everything's Jake
+S06 E17 · Ghost Fly
+S06 E16 · Joshua & Margaret Investigations
+S06 E15 · Nemesis
+S06 E14 · Princess Day
+S06 E13 · Thanks for the Crabapples, Giuseppe
+S06 E12 · Ocarina
+S06 E11 · Little Brother
+S06 E10 · Something Big
+S06 E09 · The Prince Who Wanted Everything
+S06 E08 · Furniture & Meat
+S06 E07 · Food Chain
+S06 E06 · Breezy
+S06 E05 · Sad Face
+S06 E04 · The Tower
+S06 E03 · James II
+S06 E02 · Escape from the Citadel
+S06 E01 · Wake Up
 S07 E26 · The Thin Yellow Line
-S08 E01 · Broke His Crown
-S08 E02 · Don't Look
-S08 E03 · Beyond the Grotto
-S08 E04 · Lady Rainicorn of the Crystal Dimension
-S08 E05 · I Am a Sword
-S08 E06 · Bun Bun
-S08 E07 · Normal Man
-S08 E08 · Elemental
-S08 E09 · Five Short Tables
-S08 E10 · The Music Hole
-S08 E11 · Daddy-Daughter Card Wars
-S08 E12 · Preboot
-S08 E13 · Reboot
-S08 E14 · Two Swords
-S08 E15 · Do No Harm
-S08 E16 · Wheels
-S08 E17 · High Strangeness
-S08 E18 · Horse and Ball
-S08 E19 · Jelly Beans Have Power
-S08 E20 · The Invitation
-S08 E21 · Whipple the Happy Dragon
-S08 E22 · Mysterious Island
-S08 E23 · Imaginary Resources
-S08 E24 · Hide and Seek
-S08 E25 · Min and Marty
-S08 E26 · Helpers
+S07 E25 · Flute Spell
+S07 E24 · The Hall of Egress
+S07 E23 · Crossover
+S07 E22 · Scamps
+S07 E21 · King's Ransom
+S07 E20 · Bad Jubies
+S07 E19 · Blank-Eyed Girl
+S07 E18 · President Porpoise Is Missing!
+S07 E17 · Angel Face
+S07 E16 · Summer Showers
+S07 E15 · The More You Moe, The Moe You Know - Part 2
+S07 E14 · The More You Moe, The Moe You Know - Part 1
+S07 E13 · The Dark Cloud
+S07 E12 · Checkmate
+S07 E11 · Take Her Back
+S07 E10 · May I Come In?
+S07 E09 · The Empress Eyes
+S07 E08 · Vamps About
+S07 E07 · Everything Stays
+S07 E06 · Marceline the Vampire Queen
+S07 E05 · Football
+S07 E04 · Mama Said
+S07 E03 · Cherry Cream Soda
+S07 E02 · Varmints
+S07 E01 · Bonnie and Neddy
 S08 E27 · The Light Cloud
-S09 E01 · Orb
-S09 E02 · Skyhooks
-S09 E03 · Bespoken For
-S09 E04 · Winter Light
-S09 E05 · Cloudy
-S09 E06 · Slime Central
-S09 E07 · Happy Warrior
-S09 E08 · Hero Heart
-S09 E09 · Skyhooks II
-S09 E10 · Abstract
-S09 E11 · Ketchup
-S09 E12 · Fionna and Cake and Fionna
-S09 E13 · Whispers
+S08 E26 · Helpers
+S08 E25 · Min and Marty
+S08 E24 · Hide and Seek
+S08 E23 · Imaginary Resources
+S08 E22 · Mysterious Island
+S08 E21 · Whipple the Happy Dragon
+S08 E20 · The Invitation
+S08 E19 · Jelly Beans Have Power
+S08 E18 · Horse and Ball
+S08 E17 · High Strangeness
+S08 E16 · Wheels
+S08 E15 · Do No Harm
+S08 E14 · Two Swords
+S08 E13 · Reboot
+S08 E12 · Preboot
+S08 E11 · Daddy-Daughter Card Wars
+S08 E10 · The Music Hole
+S08 E09 · Five Short Tables
+S08 E08 · Elemental
+S08 E07 · Normal Man
+S08 E06 · Bun Bun
+S08 E05 · I Am a Sword
+S08 E04 · Lady Rainicorn of the Crystal Dimension
+S08 E03 · Beyond the Grotto
+S08 E02 · Don't Look
+S08 E01 · Broke His Crown
 S09 E14 · Three Buckets
-S10 E01 · The Wild Hunt
-S10 E02 · Always BMO Closing
-S10 E03 · Son of Rap Bear
-S10 E04 · Bonnibel Bubblegum
-S10 E05 · Seventeen
-S10 E06 · Ring of Fire
-S10 E07 · Marcy & Hunson
-S10 E08 · The First Investigation
-S10 E09 · Blenanas
-S10 E10 · Jake the Starchild
-S10 E11 · Temple of Mars
+S09 E13 · Whispers
+S09 E12 · Fionna and Cake and Fionna
+S09 E11 · Ketchup
+S09 E10 · Abstract
+S09 E09 · Skyhooks II
+S09 E08 · Hero Heart
+S09 E07 · Happy Warrior
+S09 E06 · Slime Central
+S09 E05 · Cloudy
+S09 E04 · Winter Light
+S09 E03 · Bespoken For
+S09 E02 · Skyhooks
+S09 E01 · Orb
+S10 E13 · Come Along with Me
 S10 E12 · Gumbaldia
-S10 E13 · Come Along With Me
+S10 E11 · Temple of Mars
+S10 E10 · Jake the Starchild
+S10 E09 · Blenanas
+S10 E08 · The First Investigation
+S10 E07 · Marcy & Hunson
+S10 E06 · Ring of Fire
+S10 E05 · Seventeen
+S10 E04 · Bonnibel Bubblegum
+S10 E03 · Son of Rap Bear
+S10 E02 · Always BMO Closing
+S10 E01 · The Wild Hunt

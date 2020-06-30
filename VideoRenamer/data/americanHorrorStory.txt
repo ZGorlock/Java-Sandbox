@@ -5,8 +5,8 @@ S01 E09 · Spooky Little Girl
 S01 E08 · Rubber Man
 S01 E07 · Open House
 S01 E06 · Piggy Piggy
-S01 E05 · Halloween, Part 2
-S01 E04 · Halloween, Part 1
+S01 E05 · Halloween - Part 2
+S01 E04 · Halloween - Part 1
 S01 E03 · Murder House
 S01 E02 · Home Invasion
 S01 E01 · Pilot
@@ -18,8 +18,8 @@ S02 E09 · The Coat Hanger
 S02 E08 · Unholy Night
 S02 E07 · Dark Cousin
 S02 E06 · The Origins of Monstrosity
-S02 E05 · I Am Anne Frank, Part 2
-S02 E04 · I Am Anne Frank, Part 1
+S02 E05 · I Am Anne Frank - Part 2
+S02 E04 · I Am Anne Frank - Part 1
 S02 E03 · Nor'easter
 S02 E02 · Tricks and Treats
 S02 E01 · Welcome to Briarcliff
@@ -45,8 +45,8 @@ S04 E08 · Blood Bath
 S04 E07 · Test of Strength
 S04 E06 · Bullseye
 S04 E05 · Pink Cupcakes
-S04 E04 · Edward Mordrake, Part 2
-S04 E03 · Edward Mordrake, Part 1
+S04 E04 · Edward Mordrake: Part 2
+S04 E03 · Edward Mordrake: Part 1
 S04 E02 · Massacres and Matinees
 S04 E01 · Monsters Among Us
 S05 E12 · Be Our Guest

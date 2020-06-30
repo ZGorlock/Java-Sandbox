@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 
 import common.Filesystem;
 import common.StringUtility;
+import org.apache.commons.lang3.StringUtils;
 
 public class VideoRenamer {
     
@@ -24,6 +25,7 @@ public class VideoRenamer {
         AN_IDIOT_ABROAD("anIdiotAbroad", "An Idiot Abroad"),
         ARRESTED_DEVELOPMENT("arrestedDevelopment", "Arrested Development"),
         ASH_VS_EVIL_DEAD("ashVsEvilDead", "Ash vs Evil Dead"),
+        AVATAR_THE_LAST_AIRBENDER("avatarTheLastAirbender", "Avatar - The Last Airbender"),
         BETTER_CALL_SAUL("betterCallSaul", "Better Call Saul"),
         BLACK_MIRROR("blackMirror", "Black Mirror"),
         BREAKING_BAD("breakingBad", "Breaking Bad"),
@@ -89,19 +91,13 @@ public class VideoRenamer {
     }
     
     public static void googleGridParser(File in, File out) {
-        if (out.exists()) {
-            return;
-        }
-        
         Pattern textPattern = Pattern.compile("\\s*<div\\sclass=\"title\">(?<episode>S\\d+\\s?E\\d+)\\s?·\\s?(?<title>[^<]*)</div>\\s*");
         List<String> results = new ArrayList<>();
         List<String> episodes = new ArrayList<>();
         
         StringBuilder text = new StringBuilder();
         List<String> lines = Filesystem.readLines(in);
-        if (out.exists()) {
-            return;
-        }
+        
         for (String line : lines) {
             Matcher textMatcher = textPattern.matcher(line);
             if (textMatcher.matches() && !episodes.contains(textMatcher.group("episode"))) {
@@ -120,7 +116,7 @@ public class VideoRenamer {
         for (String line : lines) {
             Matcher textMatcher = textPattern.matcher(line);
             if (textMatcher.matches()) {
-                episodes.put(StringUtility.removeWhiteSpace(textMatcher.group("episode")), textMatcher.group("title").replaceAll("[?<>\"*]", "").replaceAll("[/\\\\:|]", "-").replace("&amp;", "&"));
+                episodes.put(StringUtility.removeWhiteSpace(textMatcher.group("episode")), textMatcher.group("title").replaceAll("[?<>\"*]", "").replaceAll("[/\\\\|]", "-").replaceAll("[:;]", " - ").replace("&amp;", "&").replaceAll("\\s+", " "));
             } else {
                 System.err.println(line + " does not match");
             }
@@ -143,27 +139,31 @@ public class VideoRenamer {
                     String newVideoName = activeVideoSet.name + " - " + videoNameMatcher.group("episode") + " - " + episodes.get(videoNameMatcher.group("episode")) + "." + videoNameMatcher.group("fileExtension");
                     File newVideo = new File(video.getParentFile(), newVideoName);
                     if (!newVideoName.equalsIgnoreCase(videoName)) {
+                        System.out.println("Renaming: " + video);
+                        System.out.println("      To: " + newVideo);
                         if (!Filesystem.renameFile(video, newVideo)) {
-                            System.out.println("Error Renaming: " + video.getAbsolutePath());
+                            System.err.println("Error Renaming: " + video.getAbsolutePath());
                         }
                     }
                 } else {
-                    System.out.println("No Key: " + video.getAbsolutePath());
+                    System.err.println("No Key: " + video.getAbsolutePath());
                 }
             } else if (videoDoubleNameMatcher.matches()) {
                 if (episodes.containsKey(videoDoubleNameMatcher.group("episode1")) && episodes.containsKey(videoDoubleNameMatcher.group("episode2"))) {
                     String newVideoName = activeVideoSet.name + " - " + videoDoubleNameMatcher.group("episode1") + "-" + videoDoubleNameMatcher.group("episode2") + " - " + episodes.get(videoDoubleNameMatcher.group("episode1")) + " ~ " + episodes.get(videoDoubleNameMatcher.group("episode2")) + "." + videoDoubleNameMatcher.group("fileExtension");
                     File newVideo = new File(video.getParentFile(), newVideoName);
                     if (!newVideoName.equalsIgnoreCase(videoName)) {
+                        System.out.println("Renaming: " + video);
+                        System.out.println("      To: " + newVideo);
                         if (!Filesystem.renameFile(video, newVideo)) {
-                            System.out.println("Error Renaming: " + video.getAbsolutePath());
+                            System.err.println("Error Renaming: " + video.getAbsolutePath());
                         }
                     }
                 } else {
-                    System.out.println("No Key: " + video.getAbsolutePath());
+                    System.err.println("No Key: " + video.getAbsolutePath());
                 }
             } else {
-                System.out.println("No Match: " + video.getAbsolutePath());
+                System.err.println("No Match: " + video.getAbsolutePath());
             }
         }
     }

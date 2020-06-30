@@ -8,6 +8,7 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -34,9 +35,10 @@ public class VideoProcessor {
 //        convertShowToMp4();
 //        convertDirToMp4();
 //        stripMetadataAndChapters();
+//        addSubtitles();
 //        lossTest();
         Map<String, Map<String, String>> stats = produceStats();
-        Map<String, Map<String, String>> dirStats = produceDirStats();
+//        Map<String, Map<String, String>> dirStats = produceDirStats();
     }
     
     private static String ffmpeg(String cmd, boolean printOutput) {
@@ -60,6 +62,7 @@ public class VideoProcessor {
     
     private static Map<String, Map<String, String>> produceStats() {
         Map<String, Map<String, String>> stats = produceStatsHelper(videoDir, 1);
+//        Map<String, Map<String, String>> stats = produceStatsHelper(new File(videoDir, "The Blacklist"), 1);
         
         List<String> csvOutput = new ArrayList<>();
         List<String> output = new ArrayList<>();
@@ -466,7 +469,7 @@ public class VideoProcessor {
     }
     
     private static void convertShowToMp4() {
-        String show = "Stargate SG1";
+        String show = "Avatar - The Last Airbender";
         boolean reencode = false;
         boolean copySubtitles = true;
         
@@ -491,7 +494,7 @@ public class VideoProcessor {
     }
     
     private static void convertDirToMp4() {
-        File dir = new File("E:\\Downloads\\Arrested Development");
+        File dir = new File("E:\\Videos\\old\\The Blacklist\\Season 7");
         File out = new File(dir, "new");
         Filesystem.createDirectory(out);
         
@@ -509,14 +512,20 @@ public class VideoProcessor {
             if (output.exists()) {
                 continue;
             }
-//            String cmd = "-y -i \"" + f.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -map 0 -map -0:s:0 -map -0:s:2 -map -0:s:3 -map -0:s:4 -map -0:s:5 -c copy -c:s mov_text \"" + output.getAbsolutePath() + "\"";
-//            String cmd = "-y -i \"" + f.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -map 0 -map -0:s:0 -map -0:a:0 -c copy -c:s mov_text \"" + output.getAbsolutePath() + "\"";
-//            String cmd = "-y -i \"" + f.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -map 0 -map -0:v:1 -map -0:v:2 -map -0:v:3 -c copy -c:s mov_text \"" + output.getAbsolutePath() + "\"";
-//            String cmd = "-y -i \"" + f.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -c:a copy -c:s mov_text -b:v 2400k \"" + output.getAbsolutePath() + "\"";
-//            String cmd = "-y -i \"" + f.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -c:v libx265 -c:a copy -c:s mov_text -crf 23 \"" + output.getAbsolutePath() + "\"";
-//            String cmd = "-y -i \"" + f.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -c:v libx265 -c:a copy -c:s mov_text \"" + output.getAbsolutePath() + "\"";
-//            String cmd = "-y -i \"" + f.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -c:v libx264 -c:a copy -crf 20 \"" + output.getAbsolutePath() + "\"";
-            String cmd = "-y -i \"" + f.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -c:v copy -c:a copy -c:s mov_text \"" + output.getAbsolutePath() + "\"";
+            
+            String baseParams = "-map_metadata -1 -map_chapters -1";
+//            String params = "-map 0 -map -0:s:0 -map -0:s:2 -map -0:s:3 -map -0:s:4 -map -0:s:5 -c copy -c:s mov_text";
+//            String params = "-map 0 -map -0:s:0 -map -0:a:0 -c copy -c:s mov_text";
+//            String params = "-map 0 -map -0:v:1 -map -0:v:2 -map -0:v:3 -c copy -c:s mov_text";
+//            String params = "-c:a copy -c:s mov_text -b:v 2400k";
+//            String params = "-c:v libx265 -c:a copy -c:s mov_text";
+//            String params = "-c:v libx264 -c:a copy -crf 20";
+//            String params = "-c:v copy -c:a copy";
+//            String params = "-c:v copy -c:a copy -c:s mov_text";
+//            String params = "-c:v libx264 -c:a copy -c:s mov_text -crf 26";
+            String params = "-c:v libx265 -c:a copy -c:s mov_text -crf 27";
+            
+            String cmd = "-y -i \"" + f.getAbsolutePath() + "\" " + baseParams + " " + params + " \"" + output.getAbsolutePath() + "\"";
             ffmpeg(cmd, true);
         }
     }
@@ -531,6 +540,30 @@ public class VideoProcessor {
             }
             File output = new File(f.getAbsolutePath().replace("old\\", ""));
             String cmd = "-y -i \"" + f.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -map 0 -c copy -c:s mov_text \"" + output.getAbsolutePath() + "\"";
+            ffmpeg(cmd, true);
+        }
+    }
+    
+    private static void addSubtitles() {
+        File dir = new File("E:\\Videos\\old\\Better Call Saul\\Season 5");
+        File out = new File(dir, "new");
+        Filesystem.createDirectory(out);
+        
+        List<File> videos = Filesystem.listFiles(dir, x -> x.getName().endsWith(".mp4"));
+        List<File> subtitles = Filesystem.listFiles(dir, x -> x.getName().endsWith(".srt"));
+        if (videos.size() != subtitles.size()) {
+            return;
+        }
+        
+        videos.sort(Comparator.comparing(File::getName));
+        subtitles.sort(Comparator.comparing(File::getName));
+        
+        for (int i = 0; i < videos.size(); i++) {
+            File output = new File(out, StringUtility.rShear(videos.get(i).getName(), 4) + ".mp4");
+            if (output.exists()) {
+                continue;
+            }
+            String cmd = "-y -i \"" + videos.get(i).getAbsolutePath() + "\" -i \"" + subtitles.get(i).getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -c:v copy -c:a copy -c:s mov_text \"" + output.getAbsolutePath() + "\"";
             ffmpeg(cmd, true);
         }
     }

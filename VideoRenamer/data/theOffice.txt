@@ -26,8 +26,8 @@ S02 E04 · The Fire
 S02 E03 · Office Olympics
 S02 E02 · Sexual Harassment
 S02 E01 · The Dundies
-S03 E25 · The Job, Part 2
-S03 E24 · The Job, Part 1
+S03 E25 · The Job: Part 2
+S03 E24 · The Job: Part 1
 S03 E23 · Beach Games
 S03 E22 · Women's Appreciation
 S03 E21 · Product Recall
@@ -40,8 +40,8 @@ S03 E15 · Ben Franklin
 S03 E14 · The Return
 S03 E13 · Traveling Salesmen
 S03 E12 · Back from Vacation
-S03 E11 · A Benihana Christmas, Part 2
-S03 E10 · A Benihana Christmas, Part 1
+S03 E11 · A Benihana Christmas: Part 2
+S03 E10 · A Benihana Christmas: Part 1
 S03 E09 · The Convict
 S03 E08 · The Merger
 S03 E07 · Branch Closing
@@ -51,8 +51,8 @@ S03 E04 · Grief Counseling
 S03 E03 · The Coup
 S03 E02 · The Convention
 S03 E01 · Gay Witch Hunt
-S04 E19 · Goodbye, Toby, Part 2
-S04 E18 · Goodbye, Toby, Part 1
+S04 E19 · Goodbye, Toby: Part 2
+S04 E18 · Goodbye, Toby: Part 1
 S04 E17 · Job Fair
 S04 E16 · Did I Stutter?
 S04 E15 · Night Out
@@ -62,14 +62,14 @@ S04 E12 · The Deposition
 S04 E11 · Survivor Man
 S04 E10 · Branch Wars
 S04 E09 · Local Ad
-S04 E08 · Money, Part 2
-S04 E07 · Money, Part 1
-S04 E06 · Launch Party, Part 2
-S04 E05 · Launch Party, Part 1
-S04 E04 · Dunder-Mifflin Infinity, Part 2
-S04 E03 · Dunder-Mifflin Infinity, Part 1
-S04 E02 · Fun Run, Part 2
-S04 E01 · Fun Run, Part 1
+S04 E08 · Money: Part 2
+S04 E07 · Money: Part 1
+S04 E06 · Launch Party: Part 2
+S04 E05 · Launch Party: Part 1
+S04 E04 · Dunder-Mifflin Infinity: Part 2
+S04 E03 · Dunder-Mifflin Infinity: Part 1
+S04 E02 · Fun Run: Part 2
+S04 E01 · Fun Run: Part 1
 S05 E28 · Company Picnic
 S05 E27 · Cafe Disco
 S05 E26 · Casual Friday
@@ -81,10 +81,10 @@ S05 E21 · Two Weeks
 S05 E20 · New Boss
 S05 E19 · Golden Ticket
 S05 E18 · Blood Drive
-S05 E17 · Lecture Circuit, Part 2
-S05 E16 · Lecture Circuit, Part 1
-S05 E15 · Stress Relief, Part 2
-S05 E14 · Stress Relief, Part 1
+S05 E17 · Lecture Circuit: Part 2
+S05 E16 · Lecture Circuit: Part 1
+S05 E15 · Stress Relief: Part 2
+S05 E14 · Stress Relief: Part 1
 S05 E13 · Prince Family Paper
 S05 E12 · The Duel
 S05 E11 · Moroccan Christmas
@@ -96,8 +96,8 @@ S05 E06 · Employee Transfer
 S05 E05 · Crime Aid
 S05 E04 · Baby Shower
 S05 E03 · Business Ethics
-S05 E02 · Weight Loss, Part 2
-S05 E01 · Weight Loss, Part 1
+S05 E02 · Weight Loss: Part 2
+S05 E01 · Weight Loss: Part 1
 S06 E26 · Whistleblower
 S06 E25 · The Chump
 S06 E24 · The Cover-Up
@@ -106,8 +106,8 @@ S06 E22 · Secretary's Day
 S06 E21 · Happy Hour
 S06 E20 · New Leads
 S06 E19 · St. Patrick's Day
-S06 E18 · The Delivery, Part 2
-S06 E17 · The Delivery, Parts 1
+S06 E18 · The Delivery: Part 2
+S06 E17 · The Delivery: Part 1
 S06 E16 · The Manager and the Salesman
 S06 E15 · Sabre
 S06 E14 · The Banker
@@ -119,13 +119,13 @@ S06 E09 · Double Date
 S06 E08 · Koi Pond
 S06 E07 · The Lover
 S06 E06 · Mafia
-S06 E05 · Niagara, Part 2
-S06 E04 · Niagara, Part 1
+S06 E05 · Niagara: Part 2
+S06 E04 · Niagara: Part 1
 S06 E03 · The Promotion
 S06 E02 · The Meeting
 S06 E01 · Gossip
-S07 E26 · Search Committee, Part 2
-S07 E25 · Search Committee, Part 1
+S07 E26 · Search Committee: Part 2
+S07 E25 · Search Committee: Part 1
 S07 E24 · Dwight K. Schrute, (Acting) Manager
 S07 E23 · The Inner Circle
 S07 E22 · Goodbye, Michael
@@ -138,8 +138,8 @@ S07 E16 · PDA
 S07 E15 · The Search
 S07 E14 · The Seminar
 S07 E13 · Ultimatum
-S07 E12 · Classy Christmas, Part 2
-S07 E11 · Classy Christmas, Part 1
+S07 E12 · Classy Christmas: Part 2
+S07 E11 · Classy Christmas: Part 1
 S07 E10 · China
 S07 E09 · WUPHF.com
 S07 E08 · Viewing Party
@@ -174,16 +174,18 @@ S08 E04 · Garden Party
 S08 E03 · Lotto
 S08 E02 · The Incentive
 S08 E01 · The List
-S09 E25 · Finale, Part 2
-S09 E24 · Finale, Part 1
-S09 E23 · A.A.R.M., Part 2
-S09 E22 · A.A.R.M., Part 1
-S09 E21 · Livin' the Dream
-S09 E20 · Paper Airplane
-S09 E19 · Stairmageddon
-S09 E18 · Promos
-S09 E17 · The Farm
-S09 E16 · Moving On
+S09 E27 · Finale: Part 2
+S09 E26 · Finale: Part 1
+S09 E25 · A.A.R.M.: Part 2
+S09 E24 · A.A.R.M.: Part 1
+S09 E23 · Livin' the Dream: Part 2
+S09 E22 · Livin' the Dream: Part 1
+S09 E21 · Paper Airplane
+S09 E20 · Stairmageddon
+S09 E19 · Promos
+S09 E18 · The Farm
+S09 E17 · Moving On: Part 2
+S09 E16 · Moving On: Part 1
 S09 E15 · Couples Discount
 S09 E14 · Vandalism
 S09 E13 · Junior Salesman

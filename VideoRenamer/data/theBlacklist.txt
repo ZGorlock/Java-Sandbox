@@ -131,6 +131,15 @@ S06 E04 · The Pawnbrokers
 S06 E03 · The Pharmacist
 S06 E02 · The Corsican
 S06 E01 · Dr. Hans Koehler
+S07 E19 · The Kazanjian Brothers
+S07 E18 · Roy Cain
+S07 E17 · Brothers
+S07 E16 · Nyle Hatcher
+S07 E15 · Gordon Kemp
+S07 E14 · Twamie Ullulaq
+S07 E13 · Newton Purcell
+S07 E12 · Cornelius Ruck
+S07 E11 · Victoria Fenberg
 S07 E10 · Katarina Rostova
 S07 E09 · Orion Relocation Services
 S07 E08 · The Hawaladar
@@ -139,5 +148,5 @@ S07 E06 · Dr. Lewis Powell
 S07 E05 · Norman Devane
 S07 E04 · Kuwait
 S07 E03 · Les Fleurs du Mal
-S07 E02 · Louis T. Steinhil: The Conclusion
+S07 E02 · Louis T. Steinhil: Conclusion
 S07 E01 · Louis T. Steinhil

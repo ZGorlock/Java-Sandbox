@@ -5,6 +5,8 @@
  */
 
 import java.awt.Image;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,6 +37,12 @@ public class PictureResizer {
     private static final boolean preserveMetadata = false;
     
     private static final boolean preserveDates = true;
+    
+    private static final boolean saveBackup = true;
+    
+    private static final boolean limitDimensions = false; //only active if preserveMetadata is false
+    
+    private static final int maxDimension = 3072;
     
     
     //Static Fields
@@ -88,6 +96,10 @@ public class PictureResizer {
                                              .replaceAll("(\\.[pP][nN][gG])+", ".png"));
         File output = new File(picture.getParentFile(), tmp.getName());
         
+        if (saveBackup) {
+            backupImage(picture);
+        }
+        
         if (preserveMetadata) {
             processPicturePreserveMetadata(picture, tmp, type);
         } else {
@@ -119,9 +131,34 @@ public class PictureResizer {
     private static void processPictureLoseMetadata(File source, File target, String type) throws Exception {
         BufferedImage image = ImageIO.read(source);
         
+        if (limitDimensions) {
+            int dim = Math.max(image.getWidth(), image.getHeight());
+            if (dim > maxDimension) {
+                double scale = (double) maxDimension / dim;
+                AffineTransform transform = new AffineTransform();
+                transform.scale(scale, scale);
+                AffineTransformOp transformOp = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
+                BufferedImage scaled = new BufferedImage((int) (image.getWidth() * scale), (int) (image.getHeight() * scale), BufferedImage.TYPE_3BYTE_BGR);
+                image = transformOp.filter(image, scaled);
+            }
+        }
+        
         Image newImage = image.getScaledInstance(image.getWidth(), image.getHeight(), Image.SCALE_DEFAULT);
         image.getGraphics().drawImage(newImage, 0, 0, null);
         ImageIO.write(image, type, target);
+    }
+    
+    private static void backupImage(File picture) throws Exception {
+        File backupDir = new File(picture.getParentFile(), "original");
+        if (!backupDir.exists() && !Filesystem.createDirectory(backupDir)) {
+            System.err.println("Failed to create backup directory: " + backupDir.getAbsolutePath());
+            throw new Exception();
+        }
+        File backup = new File(backupDir, picture.getName());
+        if (!Filesystem.copyFile(picture, backup)) {
+            System.err.println("Failed to create backup: " + backup.getAbsolutePath());
+            throw new Exception();
+        }
     }
     
     private static void replaceImage(File source, File tmp, File target) throws Exception {

@@ -31,6 +31,7 @@ public class VideoRenamer {
         DANGER_5("danger5", "Danger 5"),
         DAREDEVIL("daredevil", "Daredevil"),
         DEXTER("dexter", "Dexter"),
+        FUTURAMA("futurama", "Futurama"),
         GAME_OF_THRONES("gameOfThrones", "Game of Thrones"),
         HOUSE("house", "House"),
         HOUSE_OF_CARDS("houseOfCards", "House of Cards"),

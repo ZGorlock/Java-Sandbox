@@ -36,9 +36,9 @@
         <module name="dicingBotSimulator" />
         <module name="pictureResizer" />
         <module name="PictureResizer" />
+        <module name="ReactionTimeClicker" />
         <module name="piBot" />
         <module name="VideoProcessor" />
-        <module name="reactionTimeClicker" />
         <module name="alchBuddy" />
         <module name="LotteryGuesser" />
         <module name="HtmlScraper" />

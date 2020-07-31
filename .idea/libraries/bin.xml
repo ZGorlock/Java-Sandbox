@@ -1,9 +1,6 @@
 <component name="libraryTable">
   <library name="bin">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/AlchBuddy/bin/AlchBuddy.jar!/" />
-      <root url="jar://$PROJECT_DIR$/AlchBuddy/bin/runescape-helper.jar!/" />
-    </CLASSES>
+    <CLASSES />
     <JAVADOC />
     <SOURCES />
   </library>

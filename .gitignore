@@ -4,7 +4,6 @@
 
 /Video*/**/stats.*
 
-**/bin/
 **/target/
 **/out/
 **/log/

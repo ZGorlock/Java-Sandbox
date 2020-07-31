@@ -5,6 +5,7 @@
  */
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.Month;
@@ -21,7 +22,8 @@ import common.StringUtility;
 
 public class OsrsMerchingStatistics {
     
-    private static final File log = new File("Merchanting Log - 1 Year.csv");
+    private static final File log = new File("data/Merchanting Log - 20200730.csv");
+    //private static final File log = new File("data/Merchanting Log - 1 Year.csv");
     
     private static final List<Transaction> transactions = new ArrayList<>();
     
@@ -31,9 +33,10 @@ public class OsrsMerchingStatistics {
     }
     
     private static void evaluateTransactions() throws Exception {
-        long totalProfit = 0;
-        long totalCost = 0;
-        long totalRevenue = 0;
+        long tmpTotalProfit = 0;
+        long tmpTotalCost = 0;
+        long tmpTotalRevenue = 0;
+        int tmpItemWidth = 0;
         
         Map<String, Long> mostProfitable = new LinkedHashMap<>();
         Map<String, Long> mostTraded = new LinkedHashMap<>();
@@ -43,14 +46,15 @@ public class OsrsMerchingStatistics {
         Map<String, Long> profitPerWeekDay = new LinkedHashMap<>();
         
         for (Transaction t : transactions) {
-            totalProfit += t.totalProfit;
-            totalCost += t.totalCost;
-            totalRevenue += t.totalRevenue;
+            tmpTotalProfit += t.totalProfit;
+            tmpTotalCost += t.totalCost;
+            tmpTotalRevenue += t.totalRevenue;
             
             mostProfitable.putIfAbsent(t.item, 0L);
             mostTraded.putIfAbsent(t.item, 0L);
             mostProfitable.replace(t.item, mostProfitable.get(t.item) + t.totalProfit);
             mostTraded.replace(t.item, mostTraded.get(t.item) + t.quantity);
+            tmpItemWidth = Math.max(t.item.length(), tmpItemWidth);
             
             Calendar cal = Calendar.getInstance();
             cal.setTime(t.soldDate);
@@ -65,44 +69,51 @@ public class OsrsMerchingStatistics {
             profitPerWeekDay.replace(weekdayKey, profitPerWeekDay.get(weekdayKey) + t.totalProfit);
         }
         
+        final long totalProfit = tmpTotalProfit;
+        final long totalCost = tmpTotalCost;
+        final long totalRevenue = tmpTotalRevenue;
+        final int itemWidth = tmpItemWidth;
+        
         List<String> output = new ArrayList<>();
-        output.add("Total Profit:  " + commaify(totalProfit));
+        output.add("TOTAL PROFIT:  " + commaify(totalProfit));
         output.add("");
-        output.add("Total Cost:    " + commaify(totalCost));
-        output.add("Total Revenue: " + commaify(totalRevenue));
-        output.add("Total Trade:   " + commaify(totalCost + totalRevenue));
-        output.add("Profit Margin: " + ((totalRevenue - totalCost) / (double) totalCost * 100) + "%");
-        output.add("");
-        
-        output.add("Most Profitable:");
-        mostProfitable.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).forEachOrdered(e -> output.add(e.getKey() + ": " + commaify(e.getValue())));
-        output.add("");
-        output.add("Most Traded:");
-        mostTraded.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).forEachOrdered(e -> output.add(e.getKey() + ": " + commaify(e.getValue())));
+        output.add("TOTAL COST:    " + commaify(totalCost));
+        output.add("TOTAL REVENUE: " + commaify(totalRevenue));
+        output.add("TOTAL TRADE:   " + commaify(totalCost + totalRevenue));
+        output.add("PROFIT MARGIN: " + new DecimalFormat("#.#####").format((totalRevenue - totalCost) / (double) totalCost * 100) + "%");
         output.add("");
         
-        output.add("Profit Per Month:");
+        output.add("MOST PROFITABLE:");
+        mostProfitable.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).forEachOrdered(e -> output.add(String.format("%-" + itemWidth + "s  %s", e.getKey(), commaify(e.getValue())).replaceAll("\\s{2}", "..").replaceAll("\\s(?=[0-9\\-])", ".")));
+        output.add("");
+        output.add("MOST TRADED:");
+        mostTraded.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).forEachOrdered(e -> output.add(String.format("%-" + itemWidth + "s  %s", e.getKey(), commaify(e.getValue())).replaceAll("\\s{2}", "..").replaceAll("\\s(?=[0-9\\-])", ".")));
+        output.add("");
+        
+        output.add("PROFIT PER MONTH:");
         profitPerMonth.forEach((key, value) -> output.add(StringUtility.padRight((key + ": "), "SEPTEMBER 0000: ".length()) + commaify(value)));
         output.add("AVERAGE PER MONTH: " + commaify(totalProfit / profitPerMonth.size()));
         output.add("");
-        output.add("Profit Per Week:");
+        output.add("PROFIT PER WEEK:");
         profitPerWeek.forEach((key, value) -> output.add(key + ": " + commaify(value)));
         output.add("AVERAGE PER WEEK: " + commaify(totalProfit / profitPerWeek.size()));
         output.add("");
-        output.add("Profit Per Week Day:");
-        profitPerWeekDay.forEach((key, value) -> output.add(StringUtility.padRight((key + ": "), "WEDNESDAY: ".length()) + commaify(value)));
+        output.add("PROFIT PER WEEK DAY:");
+        profitPerWeekDay.forEach((key, value) -> output.add(StringUtility.padRight((key + ": "), "WEDNESDAY: ".length()) + commaify(value) + " (" + ((int) ((double) value / totalProfit * 100)) + "%)"));
         output.add("");
         
         for (String outputLine : output) {
             System.out.println(outputLine);
         }
-        Filesystem.writeLines(new File("stats.txt"), output);
+        Filesystem.writeLines(new File(log.getPath().replace(".csv", " - Stats.txt")), output);
     }
     
     private static void parseLog() throws Exception {
         List<String> lines = Filesystem.readLines(log);
+        lines.remove(0);
         for (String line : lines) {
-            String[] lineParts = line.split(",", -1);
+            line = line.replaceAll("^\"", "").replaceAll("\"$", "");
+            String[] lineParts = line.split("\",\"", -1);
             Transaction transaction = new Transaction();
             transaction.item = lineParts[0];
             transaction.buyPrice = Integer.parseInt(lineParts[1]);
@@ -137,11 +148,18 @@ public class OsrsMerchingStatistics {
     private static String commaify(long value) {
         StringBuilder commaified = new StringBuilder();
         String valueString = String.valueOf(value);
+        boolean negative = value < 0;
+        if (negative) {
+            valueString = StringUtility.lShear(valueString, 1);
+        }
         for (int i = 0; i < valueString.length(); i++) {
             if (i % 3 == 0 && i > 0) {
                 commaified.insert(0, ",");
             }
             commaified.insert(0, valueString.charAt(valueString.length() - 1 - i));
+        }
+        if (negative) {
+            commaified.insert(0, "-");
         }
         return commaified.toString();
     }

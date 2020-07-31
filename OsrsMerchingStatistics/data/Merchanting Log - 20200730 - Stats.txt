@@ -1,0 +1,499 @@
+TOTAL PROFIT:  3,797,730,958
+
+TOTAL COST:    480,363,340,051
+TOTAL REVENUE: 484,161,071,009
+TOTAL TRADE:   964,524,411,060
+PROFIT MARGIN: 0.7906%
+
+MOST PROFITABLE:
+Bandos godsword..................653,598,569
+Saradomin godsword...............616,248,518
+Primordial boots.................485,440,500
+Armadyl godsword.................462,032,639
+Godsword blade...................289,688,578
+Zamorak godsword.................223,579,652
+Pegasian boots...................199,429,598
+Eternal boots....................137,722,278
+Justiciar armour set.............118,195,718
+Ancestral robes set..............81,240,884
+Toxic blowpipe (empty)...........70,640,227
+Zulrah's scales..................58,046,386
+Blade of saeldor (inactive)......50,731,000
+Ghrazi rapier....................35,642,560
+Anguish ornament kit.............33,973,175
+Divine super combat potion(4)....27,558,389
+Dragon full helm.................26,281,283
+Torture ornament kit.............21,635,195
+Dragon hunter crossbow...........17,849,218
+Occult ornament kit..............15,634,002
+Spectral spirit shield...........11,761,000
+Ranger boots.....................9,680,101
+Amulet of eternal glory..........8,444,264
+3rd age range top................6,274,002
+Dragon harpoon...................5,652,988
+Justiciar legguards..............5,572,242
+Justiciar faceguard..............5,514,557
+Dragon warhammer.................5,413,537
+3rd age robe.....................4,927,000
+3rd age mage hat.................4,748,006
+3rd age amulet...................4,644,998
+Pharaoh's sceptre................4,631,470
+Uncharged toxic trident (e)......4,611,154
+Rangers' tunic...................4,470,000
+Arcane prayer scroll.............4,045,580
+Obsidian cape (r)................3,922,000
+3rd age robe top.................3,772,000
+Fury ornament kit................3,697,674
+Kodai wand.......................3,629,000
+Justiciar chestguard.............3,538,463
+Ankou top........................3,451,121
+3rd age platelegs................3,346,000
+Ankou's leggings.................3,026,000
+Ancestral robe bottom............2,872,753
+Dragonfire ward..................2,801,000
+Team cape zero...................2,519,561
+Imbued heart.....................2,233,000
+Ancient wyvern shield............2,191,671
+Feather..........................2,137,000
+Dragonfire shield................2,000,388
+Ale of the gods..................1,948,000
+Primordial crystal...............1,947,342
+Armadyl crossbow.................1,923,798
+Saradomin godsword ornament kit..1,802,004
+Saradomin's tear.................1,731,998
+Ankou gloves.....................1,693,000
+Adamant dart tip.................1,689,000
+Abyssal dagger...................1,660,000
+Elysian spirit shield............1,639,000
+3rd age range coif...............1,584,542
+Rune dart tip....................1,529,000
+Mage's book......................1,463,000
+Dragon kiteshield ornament kit...1,387,000
+Pharaoh's sceptre (3)............1,351,998
+Dexterous prayer scroll..........1,245,233
+Abyssal bludgeon.................1,082,006
+Necklace of anguish..............1,047,000
+3rd age kiteshield...............1,042,000
+Ranger gloves....................1,024,000
+Bryophyta's staff (uncharged)....1,024,000
+Ring of suffering................958,000
+3rd age vambraces................936,000
+Dragon defender ornament kit.....912,000
+Armadyl chainskirt...............899,003
+Mystic smoke staff...............865,000
+Zenyte amulet....................736,000
+Unholy book page set.............730,000
+Thammaron's sceptre (u)..........710,000
+Ankou mask.......................704,996
+Light trousers...................698,000
+Bandos godsword ornament kit.....686,000
+Abyssal dagger (p)...............683,000
+Bucket helm (g)..................635,860
+Avantoe potion (unf).............622,488
+Gilded boots.....................607,984
+Eternal gem......................568,000
+Karil's leathertop...............557,500
+Tanzanite fang...................542,000
+Staff of the dead................539,012
+Infinity boots...................531,208
+Teacher wand.....................518,000
+Tormented bracelet...............488,500
+Dragon arrowtips.................470,000
+Smoke battlestaff................462,000
+Master wand......................461,030
+Dragon claws.....................449,003
+Scythe of vitur (uncharged)......447,000
+3rd age wand.....................433,000
+3rd age full helmet..............432,000
+Dragon pickaxe...................405,000
+Gout tuber.......................395,000
+Red chinchompa...................364,000
+Obsidian armour set..............351,000
+Serpentine visage................347,005
+Apprentice wand..................344,000
+Team cape x......................305,996
+Gilded platelegs.................296,000
+Abyssal dagger (p+)..............286,000
+Ankou socks......................271,000
+Twisted buckler..................266,000
+Ahrim's robeskirt................253,600
+Eclectic impling jar.............248,750
+Chinchompa.......................238,260
+Dragon dart tip..................231,000
+Draconic visage..................194,000
+Armadyl godsword ornament kit....192,000
+Saradomin hilt...................188,000
+Serpentine helm (uncharged)......186,995
+Smouldering stone................185,000
+Coal.............................182,000
+Granite hammer...................168,000
+Dinh's bulwark...................154,000
+Amulet of fury...................152,000
+Toxic staff (uncharged)..........148,000
+Jar of darkness..................143,000
+Lantadyme potion (unf)...........140,040
+Ring of nature...................124,000
+Gilded chainbody.................118,000
+Steam battlestaff................116,004
+Staff of light...................116,000
+Onyx bracelet....................95,844
+Infinity hat.....................94,000
+Dragon scimitar ornament kit.....88,265
+Evil chicken feet................77,000
+Zamorak godsword ornament kit....74,000
+Dragon platebody.................59,000
+Guthan's helm....................55,200
+Mithril dart tip.................52,000
+Zamorak page.2...................51,000
+Fire rune........................50,000
+Zamorak page.3...................48,000
+Treasonous ring..................40,000
+Tyrannical ring..................37,992
+Super combat potion(4)...........27,528
+Bandos hilt......................21,128
+Headless arrow...................21,000
+Ring of coins....................20,001
+Dharok's platebody...............14,300
+Diamond bolts....................11,000
+Team cape i......................1,002
+Guthan's platebody...............800
+Amulet of torture................712
+Malediction shard.2..............-2,002
+Ancient relic....................-6,000
+Zenyte...........................-10,000
+Regen bracelet...................-12,234
+Zamorakian spear.................-13,445
+Rune plateskirt (t)..............-13,650
+Abyssal dagger (p++).............-27,000
+Infinity bottoms.................-36,011
+Dragon boots.....................-41,962
+New crystal bow..................-81,000
+Bandos d'hide body...............-116,000
+Obsidian platebody...............-120,000
+Magic fang.......................-154,000
+Gilded scimitar..................-167,004
+Guardian boots...................-168,000
+Pegasian crystal.................-169,723
+Royal crown......................-182,000
+Armadyl chestplate...............-215,000
+Ancestral hat....................-275,121
+Armadyl hilt.....................-291,996
+Armadyl helmet...................-385,000
+Brimstone ring...................-427,000
+Eternal crystal..................-680,416
+Ancestral robe top...............-1,042,752
+Sapphire dragon bolts............-1,164,000
+Bandos chestplate................-1,193,000
+Elder maul.......................-1,205,000
+Bandos tassets...................-1,535,654
+Dragon hunter lance..............-1,780,001
+Avernic defender hilt............-3,276,000
+Arcane spirit shield.............-4,320,897
+
+MOST TRADED:
+Zulrah's scales..................20,640,000
+Feather..........................6,477,000
+Adamant dart tip.................159,000
+Fire rune........................50,000
+Rune dart tip....................33,000
+Avantoe potion (unf).............22,423
+Mithril dart tip.................13,000
+Coal.............................13,000
+Diamond bolts....................11,000
+Dragon dart tip..................11,000
+Godsword blade...................10,173
+Dragon arrowtips.................10,000
+Red chinchompa...................7,000
+Headless arrow...................7,000
+Divine super combat potion(4)....6,657
+Sapphire dragon bolts............6,000
+Bandos godsword..................5,409
+Chinchompa.......................4,180
+Primordial boots.................3,433
+Armadyl godsword.................3,355
+Saradomin godsword...............2,691
+Eternal boots....................2,003
+Zamorak godsword.................1,769
+Pegasian boots...................1,585
+Lantadyme potion (unf)...........1,556
+Toxic blowpipe (empty)...........1,365
+Super combat potion(4)...........444
+Torture ornament kit.............293
+Anguish ornament kit.............266
+Justiciar armour set.............252
+Eclectic impling jar.............250
+Ancestral robes set..............211
+Occult ornament kit..............178
+Ranger boots.....................74
+Dragon full helm.................57
+Amulet of eternal glory..........57
+Justiciar legguards..............56
+Pharaoh's sceptre................55
+Eternal crystal..................54
+Fury ornament kit................50
+Arcane prayer scroll.............48
+Rangers' tunic...................46
+Obsidian cape (r)................45
+Ancestral hat....................43
+Justiciar faceguard..............43
+Uncharged toxic trident (e)......31
+Dragon harpoon...................27
+Thammaron's sceptre (u)..........26
+Justiciar chestguard.............25
+Primordial crystal...............23
+3rd age mage hat.................22
+Ale of the gods..................22
+Dragon boots.....................22
+Ancestral robe top...............21
+3rd age amulet...................20
+Team cape zero...................19
+Bandos hilt......................19
+Ranger gloves....................18
+Ghrazi rapier....................16
+3rd age robe.....................15
+Pegasian crystal.................15
+Ankou top........................14
+Serpentine visage................14
+Ankou's leggings.................14
+Abyssal dagger...................14
+Pharaoh's sceptre (3)............13
+Mystic smoke staff...............13
+3rd age range coif...............13
+3rd age range top................13
+Smoke battlestaff................13
+Zamorakian spear.................12
+Serpentine helm (uncharged)......12
+Armadyl hilt.....................12
+Bryophyta's staff (uncharged)....11
+Saradomin godsword ornament kit..11
+Tanzanite fang...................10
+Twisted buckler..................10
+Saradomin's tear.................10
+Ancestral robe bottom............10
+Rune plateskirt (t)..............10
+Staff of the dead................9
+Dragonfire shield................9
+Bucket helm (g)..................8
+Magic fang.......................8
+Dinh's bulwark...................8
+Ankou gloves.....................7
+Gout tuber.......................7
+Master wand......................7
+Team cape x......................6
+Ancient wyvern shield............6
+Bandos godsword ornament kit.....6
+Zamorak page.2...................6
+Obsidian armour set..............6
+Dragon defender ornament kit.....6
+Infinity bottoms.................5
+Gilded boots.....................5
+Smouldering stone................5
+Armadyl godsword ornament kit....5
+Unholy book page set.............5
+3rd age robe top.................5
+Armadyl helmet...................5
+Dragon hunter lance..............5
+Saradomin hilt...................5
+Tyrannical ring..................4
+3rd age kiteshield...............4
+Apprentice wand..................4
+Eternal gem......................4
+Elder maul.......................4
+Armadyl chainskirt...............4
+Bandos d'hide body...............4
+Steam battlestaff................4
+3rd age platelegs................4
+Dragonfire ward..................4
+Toxic staff (uncharged)..........4
+Arcane spirit shield.............4
+Karil's leathertop...............3
+Dexterous prayer scroll..........3
+Staff of light...................3
+3rd age vambraces................3
+Gilded platelegs.................3
+Abyssal dagger (p++).............3
+Dragon platebody.................3
+Light trousers...................3
+Ankou mask.......................3
+Zamorak page.3...................3
+Teacher wand.....................3
+Regen bracelet...................3
+Obsidian platebody...............3
+Ankou socks......................3
+Granite hammer...................3
+New crystal bow..................3
+Dragon hunter crossbow...........3
+Elysian spirit shield............3
+Infinity boots...................3
+Gilded scimitar..................2
+Zenyte amulet....................2
+Guardian boots...................2
+Zenyte...........................2
+Guthan's platebody...............2
+Onyx bracelet....................2
+Ahrim's robeskirt................2
+Ring of suffering................2
+Malediction shard.2..............2
+Royal crown......................2
+Brimstone ring...................2
+Guthan's helm....................2
+3rd age full helmet..............2
+Spectral spirit shield...........2
+Avernic defender hilt............2
+Dragon claws.....................2
+Abyssal dagger (p+)..............2
+Abyssal bludgeon.................2
+Scythe of vitur (uncharged)......2
+Bandos chestplate................2
+Bandos tassets...................2
+Tormented bracelet...............2
+Armadyl crossbow.................2
+Armadyl chestplate...............2
+Dragon warhammer.................2
+Zamorak godsword ornament kit....1
+Abyssal dagger (p)...............1
+Gilded chainbody.................1
+Team cape i......................1
+Evil chicken feet................1
+Treasonous ring..................1
+Infinity hat.....................1
+Draconic visage..................1
+Dragon scimitar ornament kit.....1
+Ancient relic....................1
+Ring of nature...................1
+Dragon kiteshield ornament kit...1
+3rd age wand.....................1
+Ring of coins....................1
+Dragon pickaxe...................1
+Dharok's platebody...............1
+Amulet of torture................1
+Necklace of anguish..............1
+Amulet of fury...................1
+Imbued heart.....................1
+Mage's book......................1
+Kodai wand.......................1
+Blade of saeldor (inactive)......1
+Jar of darkness..................1
+
+PROFIT PER MONTH:
+DECEMBER 2018:  85,200,450
+JANUARY 2019:   177,445,349
+FEBRUARY 2019:  234,078,134
+MARCH 2019:     301,198,732
+APRIL 2019:     227,942,221
+MAY 2019:       176,139,514
+JUNE 2019:      165,752,685
+JULY 2019:      131,694,988
+AUGUST 2019:    145,083,282
+SEPTEMBER 2019: 178,714,574
+OCTOBER 2019:   195,037,147
+NOVEMBER 2019:  191,978,492
+DECEMBER 2019:  169,749,374
+JANUARY 2020:   134,566,795
+FEBRUARY 2020:  168,858,943
+MARCH 2020:     307,925,684
+APRIL 2020:     187,614,530
+MAY 2020:       209,406,739
+JUNE 2020:      139,705,045
+JULY 2020:      269,638,280
+AVERAGE PER MONTH: 189,886,547
+
+PROFIT PER WEEK:
+Week 50 2018: 5,432,878
+Week 51 2018: 24,751,670
+Week 52 2018: 44,909,266
+Week 01 2018: 10,106,636
+Week 01 2019: 40,688,247
+Week 02 2019: 17,749,501
+Week 03 2019: 43,039,355
+Week 04 2019: 58,126,751
+Week 05 2019: 51,518,969
+Week 06 2019: 56,773,436
+Week 07 2019: 49,854,874
+Week 08 2019: 46,250,419
+Week 09 2019: 73,842,540
+Week 10 2019: 52,604,842
+Week 11 2019: 66,400,363
+Week 12 2019: 78,776,627
+Week 13 2019: 67,295,278
+Week 14 2019: 75,172,599
+Week 15 2019: 44,640,713
+Week 16 2019: 65,796,633
+Week 17 2019: 53,624,725
+Week 18 2019: 11,718,144
+Week 19 2019: 51,562,036
+Week 20 2019: 36,258,945
+Week 21 2019: 41,324,206
+Week 22 2019: 50,669,769
+Week 23 2019: 56,156,256
+Week 24 2019: 24,299,185
+Week 25 2019: 4,574,643
+Week 26 2019: 59,565,795
+Week 27 2019: 68,614,704
+Week 28 2019: 33,897,167
+Week 29 2019: 27,396,247
+Week 30 2019: 8,392,587
+Week 31 2019: 25,223,891
+Week 32 2019: 43,795,810
+Week 33 2019: 32,478,633
+Week 34 2019: 24,455,609
+Week 35 2019: 28,204,958
+Week 36 2019: 39,757,480
+Week 37 2019: 33,300,910
+Week 38 2019: 36,717,945
+Week 39 2019: 60,574,415
+Week 40 2019: 50,831,515
+Week 41 2019: 52,326,466
+Week 42 2019: 30,671,254
+Week 43 2019: 39,989,936
+Week 44 2019: 41,824,142
+Week 45 2019: 41,472,232
+Week 46 2019: 40,886,212
+Week 47 2019: 44,465,882
+Week 48 2019: 52,911,824
+Week 49 2019: 43,179,322
+Week 50 2019: 32,451,516
+Week 51 2019: 49,935,417
+Week 52 2019: 32,773,567
+Week 01 2020: 45,096,280
+Week 02 2020: 18,625,709
+Week 03 2020: 16,710,088
+Week 04 2020: 32,205,004
+Week 05 2020: 26,998,734
+Week 06 2020: 103,434,467
+Week 07 2020: 12,519,623
+Week 08 2020: 18,894,769
+Week 09 2020: 28,941,064
+Week 10 2020: 59,237,358
+Week 11 2020: 88,332,586
+Week 12 2020: 76,263,424
+Week 13 2020: 53,646,659
+Week 14 2020: 53,011,444
+Week 15 2020: 42,519,456
+Week 16 2020: 57,352,475
+Week 17 2020: 32,445,220
+Week 18 2020: 38,656,163
+Week 19 2020: 40,338,073
+Week 20 2020: 54,152,299
+Week 21 2020: 38,192,142
+Week 22 2020: 65,098,741
+Week 23 2020: 32,293,224
+Week 24 2020: 23,523,094
+Week 25 2020: 36,767,967
+Week 26 2020: 42,691,281
+Week 27 2020: 67,935,566
+Week 28 2020: 38,659,911
+Week 29 2020: 66,270,712
+Week 30 2020: 48,281,834
+Week 31 2020: 58,620,649
+AVERAGE PER WEEK: 43,652,079
+
+PROFIT PER WEEK DAY:
+SATURDAY:  666,978,107 (17%)
+SUNDAY:    650,248,482 (17%)
+MONDAY:    534,999,914 (14%)
+TUESDAY:   453,546,527 (11%)
+WEDNESDAY: 485,246,489 (12%)
+THURSDAY:  515,806,749 (13%)
+FRIDAY:    490,904,690 (12%)
+

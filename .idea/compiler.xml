@@ -2,6 +2,12 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="InterviewTest" />
+      </profile>
       <profile name="Annotation profile for sandbox" enabled="true">
         <sourceOutputDir name="bin/generated-sources/annotations" />
         <sourceTestOutputDir name="bin/generated-test-sources/test-annotations" />
@@ -12,6 +18,7 @@
         <module name="MusicPlayer" />
         <module name="TTSTest" />
         <module name="DictionaryTest" />
+        <module name="Ackermann" />
         <module name="OsrsKeepLoggedIn" />
         <module name="lotteryGuesser" />
         <module name="dbTest" />
@@ -39,18 +46,14 @@
         <module name="ReactionTimeClicker" />
         <module name="piBot" />
         <module name="VideoProcessor" />
+        <module name="reactionTimeClicker" />
         <module name="alchBuddy" />
         <module name="LotteryGuesser" />
         <module name="HtmlScraper" />
       </profile>
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="InterviewTest" />
-      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Ackermann" target="1.8" />
       <module name="keylistener" target="1.8" />
       <module name="Keylistener" target="1.8" />
     </bytecodeTargetLevel>

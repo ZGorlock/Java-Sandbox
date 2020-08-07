@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     
     <modules>
+        <module>ackermann</module>
         <module>alchBuddy</module>
         <module>dbTest</module>
         <module>dicingBotSimulator</module>

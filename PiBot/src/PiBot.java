@@ -8,6 +8,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.IntStream;
 
 /**
@@ -21,6 +26,11 @@ public class PiBot {
      * The file that stores the digits of Pi currently calculated.
      */
     public static final File PI_FILE = new File("data/pi.txt");
+    
+    /**
+     * The list of benchmark decimal places.
+     */
+    public static final List<Integer> benchmarks = new ArrayList<>();
     
     /**
      * The run length of the program per session.
@@ -83,6 +93,7 @@ public class PiBot {
             return;
         }
         initializeTwoPowers();
+        initializeBenchmarks();
         
         System.out.println(index + " (start)");
         
@@ -102,6 +113,7 @@ public class PiBot {
             });
             
             writeBuffer();
+            checkBenchmarks();
             index += BUFFER_SIZE;
             System.out.println(index);
         }
@@ -221,6 +233,34 @@ public class PiBot {
     }
     
     /**
+     * Initializes the array of benchmark digit counts.
+     */
+    private static void initializeBenchmarks() {
+        benchmarks.add(100);
+        benchmarks.add(250);
+        benchmarks.add(500);
+        benchmarks.add(1000);
+        benchmarks.add(2500);
+        benchmarks.add(5000);
+        benchmarks.add(10000);
+        benchmarks.add(20000);
+        benchmarks.add(50000);
+        benchmarks.add(100000);
+        benchmarks.add(250000);
+        benchmarks.add(500000);
+        benchmarks.add(1000000);
+        benchmarks.add(2500000);
+        benchmarks.add(5000000);
+        benchmarks.add(10000000);
+        benchmarks.add(25000000);
+        benchmarks.add(50000000);
+        benchmarks.add(100000000);
+        benchmarks.add(250000000);
+        benchmarks.add(500000000);
+        benchmarks.add(1000000000);
+    }
+    
+    /**
      * Initializes the files for the program.
      *
      * @return Whether the initialization was completed successfully or not.
@@ -273,6 +313,44 @@ public class PiBot {
             return false;
         }
         return true;
+    }
+    
+    /**
+     * Checks for benchmark digit counts.
+     */
+    private static void checkBenchmarks() {
+        for (Integer benchmark : benchmarks) {
+            File benchmarkFile = new File("data/pi-" + benchmark + ".txt");
+            if (benchmarkFile.exists()) {
+                continue;
+            }
+            if (PI_FILE.length() > benchmark + 2) {
+                try {
+                    String hex = new String(Files.readAllBytes(PI_FILE.toPath())).substring(0, (benchmark + 2));
+                    String decimal = toDecimal(hex);
+                    
+                    BufferedWriter piBenchmarkWriter = new BufferedWriter(new FileWriter(benchmarkFile, false));
+                    piBenchmarkWriter.write(decimal);
+                    piBenchmarkWriter.close();
+                } catch (Exception ignored) {
+                }
+            }
+        }
+    }
+    
+    /**
+     * Converts the hex pi string to a decimal pi string.
+     *
+     * @param hex The hex pi string.
+     * @return The decimal pi string.
+     */
+    @SuppressWarnings("BigDecimalMethodWithoutRoundingCalled")
+    private static String toDecimal(String hex) {
+        String rawHex = hex.replace(".", "");
+        BigDecimal base = new BigDecimal(new BigInteger(rawHex, 16));
+        BigDecimal factor = new BigDecimal(BigInteger.valueOf(2).pow((rawHex.length() - 1) * 4));
+        BigDecimal value = base.divide(factor);
+        return value.toPlainString().substring(0, hex.length());
     }
     
 }

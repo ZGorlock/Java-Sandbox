@@ -3,7 +3,7 @@
 **/*.iws
 
 /Video*/**/stats.*
-**/pi.txt
+**/pi*.txt
 
 **/bin/
 **/target/

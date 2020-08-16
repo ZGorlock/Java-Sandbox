@@ -4,12 +4,11 @@
  * Author:  Zachary Gill
  */
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.stream.IntStream;
 
 /**
  * Calculates Pi.
@@ -19,29 +18,24 @@ public class PiBot {
     //Constants
     
     /**
-     * The file that stores the current index of Pi calculated.
-     */
-    public static final File INDEX_FILE = new File("E:\\Other\\Pi\\index");
-    
-    /**
      * The file that stores the digits of Pi currently calculated.
      */
-    public static final File PI_FILE = new File("E:\\Other\\Pi\\pi");
+    public static final File PI_FILE = new File("data/pi.txt");
     
     /**
      * The run length of the program per session.
      */
-    private static final int RUN_LENGTH = 1000000;
-    
-    /**
-     * The size of the buffer to fill before outputting.
-     */
-    private static final int BUFFER_SIZE = 1000;
+    private static final int RUN_LENGTH = -1;
     
     /**
      * The chunk size for calculating digits.
      */
     private static final int CHUNK_SIZE = 10;
+    
+    /**
+     * The size of the buffer to fill before outputting.
+     */
+    private static final int BUFFER_SIZE = CHUNK_SIZE * 100;
     
     /**
      * The number of powers of 2 to store.
@@ -84,22 +78,32 @@ public class PiBot {
             System.out.println("Could not initialize program files");
             return;
         }
-        readIndex();
-        
+        if (!readIndex()) {
+            System.out.println("Could not acquire index");
+            return;
+        }
         initializeTwoPowers();
+        
+        System.out.println(index + " (start)");
+        
         int c = 0;
-        for (int k = 0; k <= RUN_LENGTH; k += CHUNK_SIZE) {
-            if (c == BUFFER_SIZE) {
-                writeBuffer();
-                c = 0;
+        int k = 0;
+        while (true) {
+            k += BUFFER_SIZE;
+            if ((RUN_LENGTH > 0) && (k > RUN_LENGTH)) {
+                break;
             }
             
-            String n = calculatePiDigit(index);
-            for (int i = 0; i < n.length(); i++) {
-                buffer[c] = n.charAt(i);
-                c++;
-            }
-            index += CHUNK_SIZE;
+            IntStream.range(0, BUFFER_SIZE / CHUNK_SIZE).boxed().parallel().forEach(e -> {
+                String n = calculatePiDigit(index + (e * CHUNK_SIZE));
+                for (int i = 0; i < n.length(); i++) {
+                    buffer[i + (e * CHUNK_SIZE)] = n.charAt(i);
+                }
+            });
+            
+            writeBuffer();
+            index += BUFFER_SIZE;
+            System.out.println(index);
         }
     }
     
@@ -129,7 +133,7 @@ public class PiBot {
      */
     private static double series(int m, long n) {
         double sum = 0.0;
-        for (int k = 0; k < n; k++) {
+        for (long k = 0; k < n; k++) {
             double denom = 8 * k + m;
             double pow = n - k;
             double term = modPow16(pow, denom);
@@ -222,34 +226,15 @@ public class PiBot {
      * @return Whether the initialization was completed successfully or not.
      */
     private static boolean initializeFiles() {
-        if (!INDEX_FILE.exists()) {
-            try {
-                if (!INDEX_FILE.createNewFile()) {
-                    throw new IOException();
-                }
-            } catch (IOException ignored) {
-                System.out.println("Could not create index file");
-                return false;
-            }
-        }
-        
-        if (INDEX_FILE.length() == 0) {
-            try {
-                BufferedWriter indexWriter = new BufferedWriter(new FileWriter(INDEX_FILE, false));
-                indexWriter.write(String.valueOf(index));
-                indexWriter.close();
-                PI_FILE.delete();
-            } catch (IOException ignored) {
-                System.out.println("Could not initialize index file");
-                return false;
-            }
-        }
-        
         if (!PI_FILE.exists()) {
             try {
                 if (!PI_FILE.createNewFile()) {
                     throw new IOException();
                 }
+                buffer = new char[2];
+                buffer[0] = '3';
+                buffer[1] = '.';
+                writeBuffer();
             } catch (IOException ignored) {
                 System.out.println("Could not create pi file");
                 return false;
@@ -265,26 +250,11 @@ public class PiBot {
      * @return Whether the index was read successfully or not.
      */
     private static boolean readIndex() {
-        if (!INDEX_FILE.exists()) {
-            System.out.println("Could not find index file");
-            return false;
+        if (PI_FILE.exists()) {
+            index = PI_FILE.length() - "3.".length();
+            return true;
         }
-        
-        if (INDEX_FILE.length() > 0) {
-            try {
-                BufferedReader indexReader = new BufferedReader(new FileReader(INDEX_FILE));
-                index = Long.valueOf(indexReader.readLine());
-                indexReader.close();
-            } catch (IOException ignored) {
-                System.out.println("Could not read the index file");
-                return false;
-            }
-        } else {
-            System.out.println("The index file does not contain the index");
-            return false;
-        }
-        
-        return true;
+        return false;
     }
     
     /**
@@ -302,16 +272,6 @@ public class PiBot {
             System.out.println("Could not write to pi file");
             return false;
         }
-        
-        try {
-            BufferedWriter indexWriter = new BufferedWriter(new FileWriter(INDEX_FILE, false));
-            indexWriter.write(String.valueOf(index));
-            indexWriter.close();
-        } catch (IOException ignored) {
-            System.out.println("Could not write to index file");
-            return false;
-        }
-        
         return true;
     }
     

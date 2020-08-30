@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -31,6 +32,11 @@ public class PiBot {
      * The list of benchmark decimal places.
      */
     public static final List<Integer> benchmarks = new ArrayList<>();
+    
+    /**
+     * A flag indicating whether or not to enable decimal conversion of benchmark decimal places.
+     */
+    public static final boolean enableBenchmarks = true;
     
     /**
      * The run length of the program per session.
@@ -84,6 +90,9 @@ public class PiBot {
      * @param args The arguments for the main method.
      */
     public static void main(String[] args) {
+        //TODO verify against pi-verify
+        //TODO fix calculation issue
+        
         if (!initializeFiles()) {
             System.out.println("Could not initialize program files");
             return;
@@ -319,15 +328,20 @@ public class PiBot {
      * Checks for benchmark digit counts.
      */
     private static void checkBenchmarks() {
+        if (!enableBenchmarks) {
+            return;
+        }
+        
         for (Integer benchmark : benchmarks) {
             File benchmarkFile = new File("data/pi-" + benchmark + ".txt");
             if (benchmarkFile.exists()) {
                 continue;
             }
-            if (PI_FILE.length() > benchmark + 2) {
+            if (PI_FILE.length() > benchmark + 2 + 20) {
                 try {
-                    String hex = new String(Files.readAllBytes(PI_FILE.toPath())).substring(0, (benchmark + 2));
-                    String decimal = toDecimal(hex);
+                    System.out.println("Generating benchmark: " + benchmark);
+                    String hex = new String(Files.readAllBytes(PI_FILE.toPath())).substring(0, (benchmark + 2 + 20));
+                    String decimal = hexToDecimal(hex);
                     
                     BufferedWriter piBenchmarkWriter = new BufferedWriter(new FileWriter(benchmarkFile, false));
                     piBenchmarkWriter.write(decimal);
@@ -339,18 +353,62 @@ public class PiBot {
     }
     
     /**
-     * Converts the hex pi string to a decimal pi string.
+     * Converts a hex number string to a decimal number string.
      *
-     * @param hex The hex pi string.
-     * @return The decimal pi string.
+     * @param hex      The hex number string.
+     * @param accuracy The number of decimal places to return in the decimal number string.
+     * @return The decimal number string.
      */
-    @SuppressWarnings("BigDecimalMethodWithoutRoundingCalled")
-    private static String toDecimal(String hex) {
-        String rawHex = hex.replace(".", "");
-        BigDecimal base = new BigDecimal(new BigInteger(rawHex, 16));
-        BigDecimal factor = new BigDecimal(BigInteger.valueOf(2).pow((rawHex.length() - 1) * 4));
-        BigDecimal value = base.divide(factor);
-        return value.toPlainString().substring(0, hex.length());
+    public static String hexToDecimal(String hex, int accuracy) {
+        if (!hex.matches("[0-9A-Fa-f.\\-]+") || (accuracy < 0)) {
+            return "";
+        }
+        
+        boolean negative = hex.startsWith("-");
+        hex = hex.replaceAll("^-", "");
+        String integral = hex.contains(".") ? hex.substring(0, hex.indexOf(".")) : hex;
+        String fraction = hex.contains(".") ? hex.substring(hex.indexOf(".") + 1) : "";
+        if (integral.contains("-") || fraction.contains(".") || fraction.contains("-")) {
+            return "";
+        }
+        
+        StringBuilder decimal = new StringBuilder();
+        decimal.append(negative ? "-" : "");
+        decimal.append(integral.isEmpty() ? "0" : new BigDecimal(new BigInteger(integral, 16)).toPlainString());
+        if (fraction.isEmpty() || (accuracy == 0)) {
+            return decimal.toString();
+        }
+        decimal.append(".");
+        
+        int numberDigits = accuracy;
+        int length = Math.min(fraction.length(), numberDigits);
+        int[] hexDigits = new int[numberDigits];
+        Arrays.fill(hexDigits, 0);
+        IntStream.range(0, length).boxed().parallel().forEach(i -> hexDigits[i] = Integer.parseInt(String.valueOf(fraction.charAt(i)), 16));
+        
+        while ((numberDigits != 0)) {
+            int carry = 0;
+            for (int i = length - 1; i >= 0; i--) {
+                int value = hexDigits[i] * 10 + carry;
+                carry = value / 16;
+                hexDigits[i] = value % 16;
+            }
+            decimal.append(carry);
+            numberDigits--;
+        }
+        return decimal.toString();
+    }
+    
+    /**
+     * Converts a hex number string to a decimal number string.
+     *
+     * @param hex The hex number string.
+     * @return The decimal number string.
+     * @see #hexToDecimal(String, int)
+     */
+    public static String hexToDecimal(String hex) {
+        String fraction = hex.contains(".") ? hex.substring(hex.indexOf(".") + 1) : "";
+        return hexToDecimal(hex, fraction.length());
     }
     
 }

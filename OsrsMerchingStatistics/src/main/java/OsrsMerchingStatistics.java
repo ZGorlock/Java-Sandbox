@@ -22,7 +22,8 @@ import common.StringUtility;
 
 public class OsrsMerchingStatistics {
     
-    private static final File log = new File("data/Merchanting Log - 20200730.csv");
+    private static final File log = new File("data/Merchanting Log - 4b.csv");
+    //private static final File log = new File("data/Merchanting Log - 20200730.csv");
     //private static final File log = new File("data/Merchanting Log - 1 Year.csv");
     
     private static final List<Transaction> transactions = new ArrayList<>();

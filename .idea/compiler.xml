@@ -25,6 +25,7 @@
         <module name="AlchBuddy" />
         <module name="PiBot" />
         <module name="sineWaves" />
+        <module name="RegexpTrie" />
         <module name="sphinx4test" />
         <module name="StackOverflow" />
         <module name="WavDecoder" />
@@ -46,14 +47,12 @@
         <module name="ReactionTimeClicker" />
         <module name="piBot" />
         <module name="VideoProcessor" />
-        <module name="reactionTimeClicker" />
         <module name="alchBuddy" />
         <module name="LotteryGuesser" />
         <module name="HtmlScraper" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Ackermann" target="1.8" />
       <module name="keylistener" target="1.8" />
       <module name="Keylistener" target="1.8" />
     </bytecodeTargetLevel>

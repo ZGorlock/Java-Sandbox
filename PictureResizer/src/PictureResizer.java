@@ -4,7 +4,9 @@
  * Author:  Zachary Gill
  */
 
+import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -43,6 +45,16 @@ public class PictureResizer {
     private static final boolean limitDimensions = false; //only active if preserveMetadata is false
     
     private static final int maxDimension = 3072;
+    
+    private static final boolean crop = false;
+    
+    private static final int cropOffTop = 31;
+    
+    private static final int cropOffLeft = 0;
+    
+    private static final int cropOffRight = 0;
+    
+    private static final int cropOffBottom = 0;
     
     
     //Static Fields
@@ -115,6 +127,9 @@ public class PictureResizer {
         reader.setInput(imageInputStream);
         IIOMetadata metadata = reader.getImageMetadata(0);
         BufferedImage image = reader.read(0);
+        if (crop) {
+            image = cropPicture(image);
+        }
         
         ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(new FileOutputStream(target));
         ImageWriter writer = ImageIO.getImageWriter(reader);
@@ -130,6 +145,9 @@ public class PictureResizer {
     
     private static void processPictureLoseMetadata(File source, File target, String type) throws Exception {
         BufferedImage image = ImageIO.read(source);
+        if (crop) {
+            image = cropPicture(image);
+        }
         
         if (limitDimensions) {
             int dim = Math.max(image.getWidth(), image.getHeight());
@@ -146,6 +164,19 @@ public class PictureResizer {
         Image newImage = image.getScaledInstance(image.getWidth(), image.getHeight(), Image.SCALE_DEFAULT);
         image.getGraphics().drawImage(newImage, 0, 0, null);
         ImageIO.write(image, type, target);
+    }
+    
+    private static BufferedImage cropPicture(BufferedImage image, Rectangle rect) {
+        BufferedImage cropped = new BufferedImage((int) rect.getWidth(), (int) rect.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
+        Graphics g = cropped.getGraphics();
+        g.drawImage(image, 0, 0, (int) rect.getWidth(), (int) rect.getHeight(), (int) rect.getX(), (int) rect.getY(), (int) (rect.getX() + rect.getWidth()), (int) (rect.getY() + rect.getHeight()), null);
+        g.dispose();
+        return cropped;
+    }
+    
+    private static BufferedImage cropPicture(BufferedImage image) {
+        Rectangle rect = new Rectangle(cropOffLeft, cropOffTop, (image.getWidth() - cropOffLeft - cropOffRight), (image.getHeight() - cropOffTop - cropOffBottom));
+        return cropPicture(image, rect);
     }
     
     private static void backupImage(File picture) throws Exception {

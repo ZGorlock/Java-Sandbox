@@ -33,12 +33,13 @@ public class VideoProcessor {
     
     public static void main(String[] args) {
 //        convertShowToMp4();
-        convertDirToMp4();
+//        convertDirToMp4();
 //        stripMetadataAndChapters();
 //        addSubtitles();
 //        lossTest();
 //        Map<String, Map<String, String>> stats = produceStats();
 //        Map<String, Map<String, String>> dirStats = produceDirStats();
+        makePlaylists();
     }
     
     private static String ffmpeg(String cmd, boolean printOutput) {
@@ -326,7 +327,8 @@ public class VideoProcessor {
         }
         
         for (File d : Filesystem.getDirs(dir)) {
-            if (d.getName().equalsIgnoreCase("old")) {
+            if (d.getName().equalsIgnoreCase("old") ||
+                    d.getName().equalsIgnoreCase("Youtube")) {
                 continue;
             }
             
@@ -445,7 +447,9 @@ public class VideoProcessor {
         }
         
         for (File d : Filesystem.getDirs(dir)) {
-            if (d.getName().equalsIgnoreCase("old") || (depth > 1 && !d.getAbsolutePath().contains("Season"))) {
+            if (d.getName().equalsIgnoreCase("old") ||
+                    d.getName().equalsIgnoreCase("Youtube") ||
+                    (depth > 1 && !d.getAbsolutePath().contains("Season"))) {
                 continue;
             }
             
@@ -566,6 +570,29 @@ public class VideoProcessor {
             }
             String cmd = "-y -i \"" + videos.get(i).getAbsolutePath() + "\" -i \"" + subtitles.get(i).getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -c:v copy -c:a copy -c:s mov_text \"" + output.getAbsolutePath() + "\"";
             ffmpeg(cmd, true);
+        }
+    }
+    
+    private static void makePlaylists() {
+        List<File> shows = Filesystem.getDirs(videoDir);
+        for (File show : shows) {
+            if (show.getName().equalsIgnoreCase("Youtube") ||
+                    show.getName().equalsIgnoreCase("Short Films") ||
+                    show.getName().equalsIgnoreCase("To Watch")) {
+                continue;
+            }
+            List<String> showPlaylist = new ArrayList<>();
+            List<File> seasons = Filesystem.getDirs(show);
+            for (File season : seasons) {
+                List<String> seasonPlaylist = new ArrayList<>();
+                List<File> episodes = Filesystem.getFiles(season);
+                for (File episode : episodes) {
+                    seasonPlaylist.add(episode.getAbsolutePath());
+                    showPlaylist.add(episode.getAbsolutePath());
+                }
+                Filesystem.writeLines(new File(show, season.getName() + ".m3u"), seasonPlaylist);
+            }
+            Filesystem.writeLines(new File(show, show.getName() + ".m3u"), showPlaylist);
         }
     }
     

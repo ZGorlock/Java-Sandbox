@@ -473,7 +473,7 @@ public class VideoProcessor {
     }
     
     private static void convertShowToMp4() {
-        String show = "Avatar - The Last Airbender";
+        String show = "MythBusters";
         boolean reencode = false;
         boolean copySubtitles = true;
         
@@ -583,6 +583,7 @@ public class VideoProcessor {
             }
             List<String> showPlaylist = new ArrayList<>();
             List<File> seasons = Filesystem.getDirs(show);
+            seasons.sort(Comparator.comparingInt(o -> Integer.parseInt(StringUtility.trim(StringUtility.rSnip(o.getName(), 2)))));
             for (File season : seasons) {
                 List<String> seasonPlaylist = new ArrayList<>();
                 List<File> episodes = Filesystem.getFiles(season);

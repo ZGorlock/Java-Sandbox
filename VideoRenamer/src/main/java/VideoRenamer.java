@@ -40,6 +40,7 @@ public class VideoRenamer {
         LIMITLESS("limitless", "Limitless"),
         MAD_MEN("madMen", "Mad Men"),
         MR_ROBOT("mrRobot", "Mr. Robot"),
+        MYTHBUSTERS("mythBusters", "MythBusters"),
         PARKS_AND_RECREATION("parksAndRecreation", "Parks and Recreation"),
         PRISON_BREAK("prisonBreak", "Prison Break"),
         RICK_AND_MORTY("rickAndMorty", "Rick and Morty"),
@@ -91,7 +92,7 @@ public class VideoRenamer {
     }
     
     public static void googleGridParser(File in, File out) {
-        Pattern textPattern = Pattern.compile("\\s*<div\\sclass=\"title\">(?<episode>S\\d+\\s?E\\d+)\\s?·\\s?(?<title>[^<]*)</div>\\s*");
+        Pattern textPattern = Pattern.compile("\\s*<div\\sclass=\"title\">(?<episode>S\\d+\\s?E[\\d.]+)\\s?·\\s?(?<title>[^<]*)</div>\\s*");
         List<String> results = new ArrayList<>();
         List<String> episodes = new ArrayList<>();
         
@@ -111,7 +112,7 @@ public class VideoRenamer {
     
     public static void parseEpisodes(File list) {
         List<String> lines = Filesystem.readLines(list);
-        Pattern textPattern = Pattern.compile("(?<episode>S\\d+\\s?E\\d+)\\s?·\\s?(?<title>.+)");
+        Pattern textPattern = Pattern.compile("(?<episode>S\\d+\\s?E[\\d.]+)\\s?·\\s?(?<title>.+)");
         episodes.clear();
         for (String line : lines) {
             Matcher textMatcher = textPattern.matcher(line);
@@ -125,10 +126,10 @@ public class VideoRenamer {
     
     public static void renameVideos(File dir) {
         List<File> videos = Filesystem.getFilesAndDirsRecursively(dir);
-        Pattern videoNamePattern = Pattern.compile(activeVideoSet.name + "\\s-\\s" + "(?<episode>S\\d+E\\d+)(\\s-\\s(?<title>[^~]+))?\\.(?<fileExtension>.{3})");
-        Pattern videoDoubleNamePattern = Pattern.compile(activeVideoSet.name + "\\s-\\s" + "(?<episode1>S\\d+E\\d+)(-(?<episode2>S\\d+E\\d+))?(\\s-\\s(?<title1>[^~]+)(\\s[+~]\\s(?<title2>[^~]+))?)?\\.(?<fileExtension>.{3})");
+        Pattern videoNamePattern = Pattern.compile(activeVideoSet.name + "\\s-\\s" + "(?<episode>S\\d+E[\\d.]+)(\\s-\\s(?<title>[^~]+))?\\.(?<fileExtension>.{3})");
+        Pattern videoDoubleNamePattern = Pattern.compile(activeVideoSet.name + "\\s-\\s" + "(?<episode1>S\\d+E[\\d.]+)(-(?<episode2>S\\d+E[\\d.]+))?(\\s-\\s(?<title1>[^~]+)(\\s[+~]\\s(?<title2>[^~]+))?)?\\.(?<fileExtension>.{3})");
         for (File video : videos) {
-            if (video.isDirectory() || !video.getAbsolutePath().contains(activeVideoSet.name + "\\" + "Season")) {
+            if (video.isDirectory() || !video.getAbsolutePath().contains(activeVideoSet.name + "\\" + "Season") || !video.getName().endsWith(".mp4")) {
                 continue;
             }
             String videoName = video.getName();

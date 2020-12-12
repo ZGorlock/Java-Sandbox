@@ -498,7 +498,7 @@ public class VideoProcessor {
     }
     
     private static void convertDirToMp4() {
-        File dir = new File("E:\\Downloads\\Futurama");
+        File dir = new File("E:\\Downloads\\The Midnight Gospel");
         File out = new File(dir, "new");
         Filesystem.createDirectory(out);
         
@@ -520,13 +520,14 @@ public class VideoProcessor {
             String baseParams = "-map_metadata -1 -map_chapters -1";
 //            String params = "-map 0 -map -0:s:0 -map -0:s:2 -map -0:s:3 -map -0:s:4 -map -0:s:5 -c copy -c:s mov_text";
 //            String params = "-map 0 -map -0:s:0 -map -0:a:0 -c copy -c:s mov_text";
-            String params = "-map 0 -map -0:a:0 -map -0:s:0 -0:s:1 -c:v copy -c:a copy";
+//            String params = "-map 0 -map -0:a:0 -map -0:s:0 -0:s:1 -c:v copy -c:a copy";
 //            String params = "-map 0 -map -0:v:1 -map -0:v:2 -map -0:v:3 -c copy -c:s mov_text";
 //            String params = "-c:a copy -c:s mov_text -b:v 2400k";
 //            String params = "-c:v libx265 -c:a copy -c:s mov_text";
 //            String params = "-c:v libx264 -c:a copy -crf 20";
 //            String params = "-c:v copy -c:a copy";
 //            String params = "-c:v copy -c:a copy -c:s mov_text";
+            String params = "-c:v copy -c:a aac -c:s mov_text";
 //            String params = "-c:v libx264 -c:a copy -c:s mov_text -crf 26";
 //            String params = "-c:v libx265 -c:a copy -c:s mov_text -crf 27";
             

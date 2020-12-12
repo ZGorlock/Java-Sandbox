@@ -49,6 +49,7 @@ public class VideoRenamer {
         STRANGER_THINGS("strangerThings", "Stranger Things"),
         THE_BLACKLIST("theBlacklist", "The Blacklist"),
         THE_BOONDOCKS("theBoondocks", "The Boondocks"),
+        THE_MIDNIGHT_GOSPEL("theMidnightGospel", "The Midnight Gospel"),
         THE_OFFICE("theOffice", "The Office"),
         THE_PUNISHER("thePunisher", "The Punisher"),
         THE_WALKING_DEAD("theWalkingDead", "The Walking Dead"),

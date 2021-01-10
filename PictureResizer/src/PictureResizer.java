@@ -122,25 +122,31 @@ public class PictureResizer {
     }
     
     private static void processPicturePreserveMetadata(File source, File target, String type) throws Exception {
-        ImageInputStream imageInputStream = ImageIO.createImageInputStream(new FileInputStream(source));
-        ImageReader reader = ImageIO.getImageReaders(imageInputStream).next();
-        reader.setInput(imageInputStream);
-        IIOMetadata metadata = reader.getImageMetadata(0);
-        BufferedImage image = reader.read(0);
-        if (crop) {
-            image = cropPicture(image);
-        }
-        
-        ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(new FileOutputStream(target));
-        ImageWriter writer = ImageIO.getImageWriter(reader);
-        writer.setOutput(imageOutputStream);
-        ImageWriteParam params = writer.getDefaultWriteParam();
+        try (FileInputStream fileInputStream = new FileInputStream(source);
+             FileOutputStream fileOutputStream = new FileOutputStream(target)) {
+            
+            ImageInputStream imageInputStream = ImageIO.createImageInputStream(fileInputStream);
+            ImageReader reader = ImageIO.getImageReaders(imageInputStream).next();
+            reader.setInput(imageInputStream);
+            IIOMetadata metadata = reader.getImageMetadata(0);
+            BufferedImage image = reader.read(0);
+            imageInputStream.flush();
+            
+            if (crop) {
+                image = cropPicture(image);
+            }
+            
+            ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(new FileOutputStream(target));
+            ImageWriter writer = ImageIO.getImageWriter(reader);
+            writer.setOutput(imageOutputStream);
+            ImageWriteParam params = writer.getDefaultWriteParam();
 //        params.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
 //        params.setCompressionQuality(.05f);
-        writer.write(null, new IIOImage(image, null, null), params);
-        writer.dispose();
-        ImageIO.write(image, type, imageOutputStream);
-        imageOutputStream.close();
+            writer.write(null, new IIOImage(image, null, null), params);
+            writer.dispose();
+            ImageIO.write(image, type, imageOutputStream);
+            imageOutputStream.flush();
+        }
     }
     
     private static void processPictureLoseMetadata(File source, File target, String type) throws Exception {
@@ -155,8 +161,8 @@ public class PictureResizer {
                 double scale = (double) maxDimension / dim;
                 AffineTransform transform = new AffineTransform();
                 transform.scale(scale, scale);
-                AffineTransformOp transformOp = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
-                BufferedImage scaled = new BufferedImage((int) (image.getWidth() * scale), (int) (image.getHeight() * scale), BufferedImage.TYPE_3BYTE_BGR);
+                AffineTransformOp transformOp = new AffineTransformOp(transform, AffineTransformOp.TYPE_BICUBIC);
+                BufferedImage scaled = new BufferedImage((int) (image.getWidth() * scale), (int) (image.getHeight() * scale), image.getType());
                 image = transformOp.filter(image, scaled);
             }
         }
@@ -167,7 +173,7 @@ public class PictureResizer {
     }
     
     private static BufferedImage cropPicture(BufferedImage image, Rectangle rect) {
-        BufferedImage cropped = new BufferedImage((int) rect.getWidth(), (int) rect.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
+        BufferedImage cropped = new BufferedImage((int) rect.getWidth(), (int) rect.getHeight(), image.getType());
         Graphics g = cropped.getGraphics();
         g.drawImage(image, 0, 0, (int) rect.getWidth(), (int) rect.getHeight(), (int) rect.getX(), (int) rect.getY(), (int) (rect.getX() + rect.getWidth()), (int) (rect.getY() + rect.getHeight()), null);
         g.dispose();

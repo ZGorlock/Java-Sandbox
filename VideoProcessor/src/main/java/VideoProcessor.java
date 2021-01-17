@@ -37,9 +37,9 @@ public class VideoProcessor {
 //        stripMetadataAndChapters();
 //        addSubtitles();
 //        lossTest();
-//        Map<String, Map<String, String>> stats = produceStats();
+        Map<String, Map<String, String>> stats = produceStats();
 //        Map<String, Map<String, String>> dirStats = produceDirStats();
-        makePlaylists();
+//        makePlaylists();
     }
     
     private static String ffmpeg(String cmd, boolean printOutput) {
@@ -63,7 +63,7 @@ public class VideoProcessor {
     
     private static Map<String, Map<String, String>> produceStats() {
         Map<String, Map<String, String>> stats = produceStatsHelper(videoDir, 1);
-//        Map<String, Map<String, String>> stats = produceStatsHelper(new File(videoDir, "The Blacklist"), 1);
+//        Map<String, Map<String, String>> stats = produceStatsHelper(new File(videoDir, "Youtube"), 1);
         
         List<String> csvOutput = new ArrayList<>();
         List<String> output = new ArrayList<>();
@@ -144,13 +144,13 @@ public class VideoProcessor {
             
             String line;
             if (entry.getValue().containsKey("Count")) {
-                line = String.format("%-" + columnWidths.get("Key") + "s  " +
-                                "%-" + columnWidths.get("Size") + "s  " +
-                                "%-" + columnWidths.get("Count") + "s  " +
-                                "%-" + columnWidths.get("Min Video Bitrate") + "s  " +
-                                "%-" + columnWidths.get("Max Video Bitrate") + "s  " +
-                                "%-" + columnWidths.get("Min Audio Bitrate") + "s  " +
-                                "%-" + columnWidths.get("Max Audio Bitrate") + "s",
+                line = String.format("%-" + (columnWidths.containsKey("Key") ? columnWidths.get("Key") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Size") ? columnWidths.get("Size") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Count") ? columnWidths.get("Count") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Min Video Bitrate") ? columnWidths.get("Min Video Bitrate") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Max Video Bitrate") ? columnWidths.get("Max Video Bitrate") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Min Audio Bitrate") ? columnWidths.get("Min Audio Bitrate") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Max Audio Bitrate") ? columnWidths.get("Max Audio Bitrate") : "1") + "s",
                         key,
                         value.containsKey("Size") ? ("Size: " + value.get("Size")) : "",
                         value.containsKey("Extension") ? ("Extension: " + value.get("Extension")) : "",
@@ -160,27 +160,27 @@ public class VideoProcessor {
                         value.containsKey("Min Audio Bitrate") ? ("Min Audio Bitrate: " + value.get("Min Audio Bitrate")) : "",
                         value.containsKey("Max Audio Bitrate") ? ("Max Audio Bitrate: " + value.get("Max Audio Bitrate")) : "");
             } else {
-                line = String.format("%-" + columnWidths.get("Key") + "s  " +
-                                "%-" + columnWidths.get("Size") + "s  " +
-                                "%-" + columnWidths.get("Extension") + "s  " +
-                                "%-" + columnWidths.get("Length") + "s  " +
-                                "%-" + columnWidths.get("Bitrate") + "s  " +
-                                "%-" + columnWidths.get("Streams") + "s  " +
-                                "%-" + columnWidths.get("Video Streams") + "s  " +
-                                "%-" + columnWidths.get("Audio Streams") + "s  " +
-                                "%-" + columnWidths.get("Subtitle Streams") + "s  " +
-                                "%-" + columnWidths.get("Video Codec") + "s  " +
-                                "%-" + columnWidths.get("Dimensions") + "s  " +
-                                "%-" + columnWidths.get("Video Bitrate") + "s  " +
-                                "%-" + columnWidths.get("Framerate") + "s  " +
-                                "%-" + columnWidths.get("Video Language") + "s  " +
-                                "%-" + columnWidths.get("Audio Codec") + "s  " +
-                                "%-" + columnWidths.get("Frequency") + "s  " +
-                                "%-" + columnWidths.get("Channel") + "s  " +
-                                "%-" + columnWidths.get("Audio Bitrate") + "s  " +
-                                "%-" + columnWidths.get("Audio Language") + "s  " +
-                                "%-" + columnWidths.get("Subtitle Codec") + "s  " +
-                                "%-" + columnWidths.get("Subtitle Language") + "s",
+                line = String.format("%-" + (columnWidths.containsKey("Key") ? columnWidths.get("Key") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Size") ? columnWidths.get("Size") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Extension") ? columnWidths.get("Extension") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Length") ? columnWidths.get("Length") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Bitrate") ? columnWidths.get("Bitrate") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Streams") ? columnWidths.get("Streams") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Video Streams") ? columnWidths.get("Video Streams") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Audio Streams") ? columnWidths.get("Audio Streams") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Subtitle Streams") ? columnWidths.get("Subtitle Streams") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Video Codec") ? columnWidths.get("Video Codec") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Dimensions") ? columnWidths.get("Dimensions") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Video Bitrate") ? columnWidths.get("Video Bitrate") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Framerate") ? columnWidths.get("Framerate") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Video Language") ? columnWidths.get("Video Language") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Audio Codec") ? columnWidths.get("Audio Codec") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Frequency") ? columnWidths.get("Frequency") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Channel") ? columnWidths.get("Channel") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Audio Bitrate") ? columnWidths.get("Audio Bitrate") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Audio Language") ? columnWidths.get("Audio Language") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Subtitle Codec") ? columnWidths.get("Subtitle Codec") : "1") + "s  " +
+                                "%-" + (columnWidths.containsKey("Subtitle Language") ? columnWidths.get("Subtitle Language") : "1") + "s",
                         key,
                         value.containsKey("Size") ? ("Size: " + value.get("Size")) : "",
                         value.containsKey("Extension") ? ("Extension: " + value.get("Extension")) : "",

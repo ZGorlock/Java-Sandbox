@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.sun.deploy.util.StringUtils;
-
 public class LotteryGuesser {
     
     private static final List<List<Integer>> tallies = new ArrayList<>();
@@ -81,7 +79,7 @@ public class LotteryGuesser {
         List<String> lines = readData();
         
         for (String line : lines) {
-            String[] elements = StringUtils.splitString(line, ",");
+            String[] elements = line.split(",");
             
             if (elements.length == 7 && isValidDate(elements[0])) {
                 for (int i = 0; i < 6; i++) {

@@ -11,6 +11,7 @@ public final class PatternUtils {
     public static final String metaChars = "\\^$.()[]{}<>?*+|=:";
     
     private static final int METACHAR_LEN = 128;
+    
     private static final BitSet isMetaChar = new BitSet(METACHAR_LEN);
     
     static {

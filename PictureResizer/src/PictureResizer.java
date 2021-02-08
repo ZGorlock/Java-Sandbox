@@ -104,8 +104,8 @@ public class PictureResizer {
     private static void processPicture(File picture) throws Exception {
         String type = StringUtility.rSnip(picture.getName().toLowerCase(), 3);
         File tmp = new File("output", picture.getName()
-                                             .replaceAll("(\\.[jJ][pP][gG])+", ".jpg")
-                                             .replaceAll("(\\.[pP][nN][gG])+", ".png"));
+                .replaceAll("(\\.[jJ][pP][gG])+", ".jpg")
+                .replaceAll("(\\.[pP][nN][gG])+", ".png"));
         File output = new File(picture.getParentFile(), tmp.getName());
         
         if (saveBackup) {

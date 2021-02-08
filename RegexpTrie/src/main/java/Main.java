@@ -62,42 +62,42 @@ public class Main {
                        escapeRegex(alternations.get(0).substring(depth)) : "");
             return out.toString();
         }
-    
+        
         alternations.sort((s1, s2) ->
                 (s1.length() > depth) ?
                 ((s2.length() > depth) ? (s1.charAt(depth) - s2.charAt(depth)) : 1) :
                 ((s2.length() > depth) ? -1 : 0));
-    
+        
         int index = IntStream.range(0, size).boxed()
-                             .filter(i -> alternations.get(i).length() > depth).findFirst().orElse(size);
+                .filter(i -> alternations.get(i).length() > depth).findFirst().orElse(size);
         if (index == size) {
             return out.toString();
         }
-    
+        
         final boolean hasEmpty = index > 0;
         final boolean allSame = alternations.get(index).charAt(depth) == alternations.get(size - 1).charAt(depth);
-    
+        
         out.append((!allSame || hasEmpty) ? "(?:" : "");
         if (allSame) {
             out.append(escapeRegexChar(alternations.get(index).charAt(depth)));
             optimizeAlternationHelper(alternations.subList(index, size), depth + 1, out);
-        
+            
         } else {
             boolean first = true;
             while (index < size) {
                 final char c = alternations.get(index).charAt(depth);
                 final int start = index;
                 index = IntStream.range(index, size).boxed()
-                                 .filter(i -> alternations.get(i).charAt(depth) != c).findFirst().orElse(size);
-            
+                        .filter(i -> alternations.get(i).charAt(depth) != c).findFirst().orElse(size);
+                
                 out.append(first ? "" : '|').append(escapeRegexChar(c));
                 optimizeAlternationHelper(alternations.subList(start, index), depth + 1, out);
-            
+                
                 first = false;
             }
         }
         out.append((!allSame || hasEmpty) ? ')' : "").append(hasEmpty ? '?' : "");
-    
+        
         return out.toString();
     }
     
@@ -110,8 +110,8 @@ public class Main {
      */
     public static String escapeRegex(String str) {
         return str.chars().boxed()
-                  .map(i -> escapeRegexChar((char) i.intValue()))
-                  .collect(Collectors.joining());
+                .map(i -> escapeRegexChar((char) i.intValue()))
+                .collect(Collectors.joining());
     }
     
     /**

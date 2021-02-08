@@ -31,10 +31,13 @@ import java.util.List;
 public final class RegexpTrie {
     
     private static class CharAtComparator implements Comparator<String> {
+        
         private final int n;
+        
         public CharAtComparator(int n) {
             this.n = n;
         }
+        
         public int compare(String s1, String s2) {
             final int len1 = s1.length();
             final int len2 = s2.length();
@@ -77,7 +80,7 @@ public final class RegexpTrie {
             return;
         }
         final boolean hasEmpty = i > 0;
-        final boolean allSame = strs.get(i).charAt(depth) == strs.get(size-1).charAt(depth);
+        final boolean allSame = strs.get(i).charAt(depth) == strs.get(size - 1).charAt(depth);
         if (!allSame || hasEmpty) {
             out.append("(?:");
         }

@@ -104,7 +104,7 @@ public class WavDecoder {
                 for (int channel = 0; channel < numChannels; channel++) {
                     samples[sample][channel] =
                             new BigInteger(ByteBuffer.wrap(Arrays.copyOfRange(fileData, offset, offset = (offset + (channelSize / 8))))
-                                                     .order(ByteOrder.LITTLE_ENDIAN).array()).intValue();
+                                    .order(ByteOrder.LITTLE_ENDIAN).array()).intValue();
                 }
             }
         }

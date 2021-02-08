@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
+    
     <parent>
         <groupId>sandbox</groupId>
         <artifactId>sandbox</artifactId>
@@ -12,11 +12,11 @@
     
     <artifactId>alchBuddy</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+    
     <properties>
         <!-- JAVA -->
         <java.version>1.8</java.version>
-
+        
         <!-- MAVEN -->
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
         <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
@@ -24,16 +24,16 @@
         <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
         <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
         <maven-clean-plugin.version>3.0.0</maven-clean-plugin.version>
-
+        
         <!-- JSON -->
         <json-simple.version>1.1.1</json-simple.version>
-
+        
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <dependency.locations.enabled>false</dependency.locations.enabled>
     </properties>
-
-
+    
+    
     <dependencies>
         <!-- JSON -->
         <dependency>
@@ -42,15 +42,15 @@
             <version>${json-simple.version}</version>
         </dependency>
     </dependencies>
-
-
+    
+    
     <build>
         <directory>${project.basedir}/bin</directory>
         <finalName>${project.artifactId}</finalName>
-
+        
         <sourceDirectory>${project.basedir}/src</sourceDirectory>
         <outputDirectory>${project.basedir}/bin</outputDirectory>
-
+        
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -64,7 +64,7 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-
+        
         <plugins>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>

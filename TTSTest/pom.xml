@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
+    
     <parent>
         <groupId>sandbox</groupId>
         <artifactId>sandbox</artifactId>
@@ -12,19 +12,17 @@
     
     <artifactId>ttsTest</artifactId>
     <version>1.0-SNAPSHOT</version>
-
-
+    
+    
     <properties>
         <!-- LOGGING -->
         <slf4j.version>1.7.21</slf4j.version>
         <logback.version>1.1.7</logback.version>
     </properties>
-
-
-
-
+    
+    
     <dependencies>
-
+        
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -40,8 +38,8 @@
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
         </dependency>
-
-
+        
+        
         <dependency>
             <groupId>de.dfki.mary</groupId>
             <artifactId>marytts-runtime</artifactId>
@@ -57,7 +55,7 @@
             <artifactId>marytts-signalproc</artifactId>
             <version>5.2</version>
         </dependency>
-
+        
         <!--<dependency>-->
         <!--<groupId>de.dfki.mary</groupId>-->
         <!--<artifactId>voice-bits1-hsmm</artifactId>-->
@@ -144,7 +142,7 @@
         <!--<version>5.2</version>-->
         <!--</dependency>-->
     </dependencies>
-
+    
     <repositories>
         <repository>
             <id>jcenter</id>

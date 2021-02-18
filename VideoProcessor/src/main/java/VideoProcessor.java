@@ -37,9 +37,9 @@ public class VideoProcessor {
 //        stripMetadataAndChapters();
 //        addSubtitles();
 //        lossTest();
-        Map<String, Map<String, String>> stats = produceStats();
+//        Map<String, Map<String, String>> stats = produceStats();
 //        Map<String, Map<String, String>> dirStats = produceDirStats();
-//        makePlaylists();
+        makePlaylists();
     }
     
     private static String ffmpeg(String cmd, boolean printOutput) {
@@ -582,6 +582,7 @@ public class VideoProcessor {
                     show.getName().equalsIgnoreCase("To Watch")) {
                 continue;
             }
+            String playlistPath = show.getAbsolutePath() + '\\';
             List<String> showPlaylist = new ArrayList<>();
             List<File> seasons = Filesystem.getDirs(show);
             seasons.sort(Comparator.comparingInt(o -> Integer.parseInt(StringUtility.trim(StringUtility.rSnip(o.getName(), 2)))));
@@ -589,8 +590,8 @@ public class VideoProcessor {
                 List<String> seasonPlaylist = new ArrayList<>();
                 List<File> episodes = Filesystem.getFiles(season);
                 for (File episode : episodes) {
-                    seasonPlaylist.add(episode.getAbsolutePath());
-                    showPlaylist.add(episode.getAbsolutePath());
+                    seasonPlaylist.add(episode.getAbsolutePath().replace(playlistPath, ""));
+                    showPlaylist.add(episode.getAbsolutePath().replace(playlistPath, ""));
                 }
                 Filesystem.writeLines(new File(show, season.getName() + ".m3u"), seasonPlaylist);
             }

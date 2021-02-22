@@ -89,7 +89,7 @@ public class PictureResizer {
     }
     
     private static void processPictures(List<File> pictures) throws Exception {
-        Filesystem.createDirectory(new File("data"));
+        Filesystem.createDirectory(new File("tmp"));
         for (File picture : pictures) {
             System.out.println("Processing: " + picture.getAbsolutePath());
             try {
@@ -103,7 +103,7 @@ public class PictureResizer {
     
     private static void processPicture(File picture) throws Exception {
         String type = StringUtility.rSnip(picture.getName().toLowerCase(), 3);
-        File tmp = new File("output", picture.getName()
+        File tmp = new File("tmp", picture.getName()
                 .replaceAll("(\\.[jJ][pP][gG])+", ".jpg")
                 .replaceAll("(\\.[pP][nN][gG])+", ".png"));
         File output = new File(picture.getParentFile(), tmp.getName());

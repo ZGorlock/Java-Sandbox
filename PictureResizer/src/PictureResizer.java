@@ -89,7 +89,7 @@ public class PictureResizer {
     }
     
     private static void processPictures(List<File> pictures) throws Exception {
-        Filesystem.createDirectory(new File("output"));
+        Filesystem.createDirectory(new File("data"));
         for (File picture : pictures) {
             System.out.println("Processing: " + picture.getAbsolutePath());
             try {

@@ -95,7 +95,7 @@ public class LotteryGuesser {
         List<String> lines = new ArrayList<>();
         
         try {
-            File dataFile = new File("powerball.csv");
+            File dataFile = new File("resources/powerball.csv");
             FileReader reader = new FileReader(dataFile);
             BufferedReader bufferedReader = new BufferedReader(reader);
             

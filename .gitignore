@@ -2,12 +2,13 @@
 /.idea/workspace.xml
 **/*.iws
 
-/Video*/**/stats.*
+/Video*/data/**/stats.*
 **/pi*.txt
 
 **/bin/
 **/target/
 **/out/
 **/log/
+**/tmp/
 
 **/*.class

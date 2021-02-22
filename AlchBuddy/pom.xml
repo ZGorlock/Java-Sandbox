@@ -5,17 +5,20 @@
     <modelVersion>4.0.0</modelVersion>
     
     <parent>
-        <groupId>sandbox</groupId>
+        <groupId>com.gillsystemsllc.sandbox</groupId>
         <artifactId>sandbox</artifactId>
         <version>1.0</version>
     </parent>
     
     <artifactId>alchBuddy</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    
     
     <properties>
         <!-- JAVA -->
         <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <dependency.locations.enabled>false</dependency.locations.enabled>
         
         <!-- MAVEN -->
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
@@ -27,10 +30,6 @@
         
         <!-- JSON -->
         <json-simple.version>1.1.1</json-simple.version>
-        
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <dependency.locations.enabled>false</dependency.locations.enabled>
     </properties>
     
     
@@ -49,7 +48,7 @@
         <finalName>${project.artifactId}</finalName>
         
         <sourceDirectory>${project.basedir}/src</sourceDirectory>
-        <outputDirectory>${project.basedir}/bin</outputDirectory>
+        <outputDirectory>${project.basedir}/bin/classes</outputDirectory>
         
         <pluginManagement>
             <plugins>

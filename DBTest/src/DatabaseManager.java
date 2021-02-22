@@ -4,8 +4,6 @@
  * Author:  Zachary Gill
  */
 
-package main.java;
-
 import java.lang.reflect.InvocationTargetException;
 import java.sql.CallableStatement;
 import java.sql.Connection;

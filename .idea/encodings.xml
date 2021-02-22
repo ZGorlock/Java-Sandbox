@@ -2,55 +2,48 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Ackermann/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Ackermann/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Ackermann/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/AlchBuddy" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/AlchBuddy/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/DBTest" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/DBTest/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/DicingBotSimulator" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/DicingBotSimulator/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/DictionaryTest" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/DictionaryTest/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/DictionaryTest/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/DictionaryTest/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/HtmlScraper" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/HtmlScraper/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/HtmlScraper/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/HtmlScraper/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/InterviewTest" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/InterviewTest/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/LotteryGuesser" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/MusicPlayer/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/MusicPlayer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/LotteryGuesser/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MusicPlayer/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/OsrsKeepLoggedIn" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/OsrsKeepLoggedIn/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/OsrsMerchingStatistics" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/OsrsMerchingStatistics/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/OsrsMerchingStatistics/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/OsrsMerchingStatistics/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/PiBot" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/PiBot/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/PictureResizer" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/PictureResizer/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ReactionTimeClicker" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/ReactionTimeClicker/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/RegexpTrie/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/RegexpTrie/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ReactionTimeClicker/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/RegexpTrie/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SineWaves" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SineWaves/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Sphinx4Test" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Sphinx4Test/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Sphinx4Test/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/StackOverflow/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/StackOverflow/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Sphinx4Test/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/StackOverflow/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/TTSTest" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/TTSTest/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/TTSTest/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/TTSTest/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/VideoProcessor" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/VideoProcessor/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/VideoProcessor/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/VideoProcessor/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/VideoRenamer" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/VideoRenamer/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/VideoRenamer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/VideoRenamer/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Vision" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Vision/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/WavDecoder" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/WavDecoder/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/WavDecoder/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/WavDecoder/src" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

@@ -57,7 +57,7 @@ public class AlchBuddy {
     public static void parseItemsJson() {
         String json = "";
         try {
-            Scanner scanner = new Scanner(new File("items.json"), "UTF-8");
+            Scanner scanner = new Scanner(new File("data/items.json"), "UTF-8");
             json = scanner.nextLine();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -185,7 +185,7 @@ public class AlchBuddy {
         }
         
         
-        try (PrintWriter out = new PrintWriter("analysis.csv")) {
+        try (PrintWriter out = new PrintWriter("data/analysis.csv")) {
             out.println(output.toString());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -198,7 +198,7 @@ public class AlchBuddy {
         List<String> limit = new ArrayList<>(10000);
         
         
-        File file = new File("data1.txt");
+        File file = new File("data/data1.txt");
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -233,7 +233,7 @@ public class AlchBuddy {
         Pattern p2 = Pattern.compile(" {32}<td><a href=\".*\" title=\".*\">(?<name>.*)</a></td>");
         Pattern p3 = Pattern.compile(" {76}(?<value>.*)");
         
-        File file2 = new File("data2.txt");
+        File file2 = new File("data/data2.txt");
         try (BufferedReader br = new BufferedReader(new FileReader(file2))) {
             String line;
             int c = 0;

@@ -5,13 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     
     <parent>
-        <groupId>sandbox</groupId>
+        <groupId>com.gillsystemsllc.sandbox</groupId>
         <artifactId>sandbox</artifactId>
         <version>1.0</version>
     </parent>
     
     <artifactId>ttsTest</artifactId>
-    <version>1.0-SNAPSHOT</version>
     
     
     <properties>
@@ -22,7 +21,6 @@
     
     
     <dependencies>
-        
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>

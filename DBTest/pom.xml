@@ -5,13 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     
     <parent>
-        <groupId>sandbox</groupId>
+        <groupId>com.gillsystemsllc.sandbox</groupId>
         <artifactId>sandbox</artifactId>
         <version>1.0</version>
     </parent>
     
     <artifactId>dbTest</artifactId>
-    <version>1.0-SNAPSHOT</version>
     
     
     <dependencies>
@@ -28,13 +27,7 @@
         <directory>${project.basedir}/bin</directory>
         
         <sourceDirectory>${project.basedir}/src</sourceDirectory>
-        <outputDirectory>${project.basedir}/bin</outputDirectory>
-        
-        <resources>
-            <resource>
-                <directory>${project.basedir}/resources</directory>
-            </resource>
-        </resources>
+        <outputDirectory>${project.basedir}/bin/classes</outputDirectory>
         
         <pluginManagement>
             <plugins>

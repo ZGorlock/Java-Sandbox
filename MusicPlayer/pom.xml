@@ -11,6 +11,7 @@
     
     <artifactId>musicPlayer</artifactId>
     
+    
     <dependencies>
         <dependency>
             <groupId>uk.co.caprica</groupId>

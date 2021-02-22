@@ -4,8 +4,6 @@
  * Author:  Zachary Gill
  */
 
-package main.java;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,7 +17,7 @@ public class Main {
         DatabaseManager dbm = new DatabaseManager();
         dbm.setup();
         
-        Connection c = DatabaseManager.connect("data/DLA/Module1/testdb");
+        Connection c = DatabaseManager.connect("resources/DLA/Module1/testdb");
         Statement s = DatabaseManager.getStatement(c);
         DatabaseManager.executeSql(s, "DROP TABLE x");
         DatabaseManager.executeSql(s, "CREATE TABLE x (id INTEGER NOT NULL PRIMARY KEY, name VARCHAR(32))");

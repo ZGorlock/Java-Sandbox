@@ -13,7 +13,7 @@ public class Training {
      */
     public static void main(String[] args) {
         
-        WaveRecording recording = new WaveRecording("text.wav");
+        WaveRecording recording = new WaveRecording("data/text.wav");
         
         recording.start();
         

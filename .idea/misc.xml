@@ -4,28 +4,18 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
+        <option value="$PROJECT_DIR$/Ackermann/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/AlchBuddy/pom.xml" />
-        <option value="$PROJECT_DIR$/DBTest/pom.xml" />
-        <option value="$PROJECT_DIR$/DictionaryTest/pom.xml" />
-        <option value="$PROJECT_DIR$/HtmlScraper/pom.xml" />
         <option value="$PROJECT_DIR$/InterviewTest/pom.xml" />
-        <option value="$PROJECT_DIR$/OsrsMerchingStatistics/pom.xml" />
-        <option value="$PROJECT_DIR$/PictureResizer/pom.xml" />
-        <option value="$PROJECT_DIR$/Sphinx4Test/pom.xml" />
-        <option value="$PROJECT_DIR$/TTSTest/pom.xml" />
-        <option value="$PROJECT_DIR$/VideoRenamer/pom.xml" />
-        <option value="$PROJECT_DIR$/Vision/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
-        <option value="$PROJECT_DIR$/Ackermann/pom.xml" />
         <option value="$PROJECT_DIR$/ckermann/pom.xml" />
       </set>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_13_PREVIEW" default="false" project-jdk-name="13" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_15" project-jdk-name="13" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/bin" />
   </component>
 </project>

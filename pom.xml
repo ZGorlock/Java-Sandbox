@@ -31,7 +31,8 @@
         <module>vision</module>
         <module>videoProcessor</module>
         <module>wavDecoder</module>
-        <module>RegexpTrie</module>
+        <module>regexpTrie</module>
+        <module>vmdkProcessor</module>
     </modules>
     
     

@@ -34,12 +34,13 @@
         <module name="videoRenamer" />
         <module name="vision" />
         <module name="DictionaryTest" />
+        <module name="vmdkProcessor" />
         <module name="Vision" />
         <module name="videoProcessor" />
         <module name="HtmlScraper" />
         <module name="VideoRenamer" />
-        <module name="regexpTrie" />
         <module name="pictureResizer" />
+        <module name="regexpTrie" />
         <module name="wavDecoder" />
       </profile>
       <profile name="Maven default annotation processors profile" enabled="true">
@@ -60,6 +61,7 @@
       <module name="ReactionTimeClicker" target="1.8" />
       <module name="RegexpTrie" target="1.8" />
       <module name="Sandbox" target="1.5" />
+      <module name="sandbox" target="1.5" />
       <module name="SineWaves" target="1.8" />
       <module name="WavDecoder" target="1.8" />
     </bytecodeTargetLevel>

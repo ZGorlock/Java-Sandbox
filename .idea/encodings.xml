@@ -23,6 +23,8 @@
     <file url="file://$PROJECT_DIR$/VideoProcessor/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/VideoRenamer/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Vision/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/VmdkProcessor/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/VmdkProcessor/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/WavDecoder/src" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>

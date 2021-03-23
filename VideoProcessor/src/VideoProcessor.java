@@ -25,7 +25,7 @@ public class VideoProcessor {
     
     public static final File videoDir = new File("E:\\Videos");
     
-    public static final File log = new File("log/" + new SimpleDateFormat("YYYY-MM-dd").format(new Date()) + ".txt");
+    public static final File log = new File("log/" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + ".txt");
     
     public static final File statsFile = new File("stats.csv");
     
@@ -498,7 +498,7 @@ public class VideoProcessor {
     }
     
     private static void convertDirToMp4() {
-        File dir = new File("E:\\Downloads\\The Midnight Gospel");
+        File dir = new File("E:\\Downloads\\Over the Garden Wall\\Season 1");
         File out = new File(dir, "new");
         Filesystem.createDirectory(out);
         
@@ -522,12 +522,13 @@ public class VideoProcessor {
 //            String params = "-map 0 -map -0:s:0 -map -0:a:0 -c copy -c:s mov_text";
 //            String params = "-map 0 -map -0:a:0 -map -0:s:0 -0:s:1 -c:v copy -c:a copy";
 //            String params = "-map 0 -map -0:v:1 -map -0:v:2 -map -0:v:3 -c copy -c:s mov_text";
+            String params = "-map 0 -map -0:a:1 -map -0:a:2 -map -0:a:3 -map -0:s -c copy";
 //            String params = "-c:a copy -c:s mov_text -b:v 2400k";
 //            String params = "-c:v libx265 -c:a copy -c:s mov_text";
 //            String params = "-c:v libx264 -c:a copy -crf 20";
 //            String params = "-c:v copy -c:a copy";
 //            String params = "-c:v copy -c:a copy -c:s mov_text";
-            String params = "-c:v copy -c:a aac -c:s mov_text";
+//            String params = "-c:v copy -c:a aac -c:s mov_text";
 //            String params = "-c:v libx264 -c:a copy -c:s mov_text -crf 26";
 //            String params = "-c:v libx265 -c:a copy -c:s mov_text -crf 27";
             

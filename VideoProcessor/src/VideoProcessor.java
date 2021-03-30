@@ -8,6 +8,7 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class VideoProcessor {
     public static void main(String[] args) {
 //        convertShowToMp4();
 //        convertDirToMp4();
-//        stripMetadataAndChapters();
+        stripMetadataAndChapters();
 //        addSubtitles();
 //        lossTest();
 //        Map<String, Map<String, String>> stats = produceStats();
@@ -537,9 +538,9 @@ public class VideoProcessor {
         }
     }
     
-    private static void stripMetadataAndChapters() {
-        File source = new File(videoDir, "old");
-        File dest = videoDir;
+    private static void stripMetadataAndChapters(File dir) {
+        File source = new File(dir, "old");
+        File dest = new File(dir.getAbsolutePath());
         
         for (File f : Filesystem.getFilesRecursively(source)) {
             if (f.getAbsolutePath().contains("\\old\\old\\") || !f.getName().endsWith("mp4")) {
@@ -549,6 +550,11 @@ public class VideoProcessor {
             String cmd = "-y -i \"" + f.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -map 0 -c copy -c:s mov_text \"" + output.getAbsolutePath() + "\"";
             ffmpeg(cmd, true);
         }
+    }
+    
+    private static void stripMetadataAndChapters() {
+//        stripMetadataAndChapters(videoDir);
+        stripMetadataAndChapters(new File("E:\\Videos\\Anime\\Neon Genesis Evangelion\\Season 1"));
     }
     
     private static void addSubtitles() {
@@ -576,13 +582,12 @@ public class VideoProcessor {
     }
     
     private static void makePlaylists() {
-        List<File> shows = Filesystem.getDirs(videoDir);
+        List<String> skipDirs = Arrays.asList("Youtube", "Anime", "Short Films", "To Watch");
+        List<File> shows = Filesystem.listFiles(videoDir,
+                e -> e.isDirectory() && !skipDirs.contains(e.getName()));
+        shows.addAll(Filesystem.getDirs(new File(videoDir, "Anime")));
+        
         for (File show : shows) {
-            if (show.getName().equalsIgnoreCase("Youtube") ||
-                    show.getName().equalsIgnoreCase("Short Films") ||
-                    show.getName().equalsIgnoreCase("To Watch")) {
-                continue;
-            }
             String playlistPath = show.getAbsolutePath() + '\\';
             List<String> showPlaylist = new ArrayList<>();
             List<File> seasons = Filesystem.getDirs(show);

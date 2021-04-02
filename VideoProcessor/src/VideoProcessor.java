@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import common.CmdLine;
 import common.Filesystem;
@@ -35,12 +36,13 @@ public class VideoProcessor {
     public static void main(String[] args) {
 //        convertShowToMp4();
 //        convertDirToMp4();
-        stripMetadataAndChapters();
-//        addSubtitles();
+//        stripMetadataAndChapters();
+        stripMetadataAndChaptersInPlace();
+        addSubtitles();
 //        lossTest();
 //        Map<String, Map<String, String>> stats = produceStats();
 //        Map<String, Map<String, String>> dirStats = produceDirStats();
-        makePlaylists();
+//        makePlaylists();
     }
     
     private static String ffmpeg(String cmd, boolean printOutput) {
@@ -555,6 +557,41 @@ public class VideoProcessor {
     private static void stripMetadataAndChapters() {
 //        stripMetadataAndChapters(videoDir);
         stripMetadataAndChapters(new File("E:\\Videos\\Anime\\Neon Genesis Evangelion\\Season 1"));
+    }
+    
+    private static void stripMetadataAndChaptersInPlace(File dir) {
+        List<File> files = Filesystem.getFilesRecursively(dir, ".*\\.mp4");
+        for (File f : files) {
+            if (f.getAbsolutePath().contains("\\old\\")) {
+                continue;
+            }
+            Filesystem.move(f, new File(new File(f.getParentFile(), "old"), f.getName()));
+        }
+
+        List<File> dirs = Filesystem.getDirsRecursively(dir).stream().filter(e -> e.getName().equals("old")).collect(Collectors.toList());
+        for (File doDir : dirs) {
+            stripMetadataAndChapters(doDir.getParentFile());   
+        }
+
+        files = Filesystem.getFilesRecursively(dir);
+        for (File f : files) {
+            if (f.getAbsolutePath().contains("\\old\\")) {
+                if (new File(f.getAbsolutePath().replace("old\\", "")).exists()) {
+                    Filesystem.deleteFile(f);
+                } else {
+                    System.out.println("Error, file not stripped: " + f.getAbsolutePath());
+                }
+            }
+        }
+        
+        dirs = Filesystem.getDirsRecursively(dir).stream().filter(e -> e.getName().equals("old")).collect(Collectors.toList());
+        for (File doDir : dirs) {
+            Filesystem.deleteDirectory(doDir);
+        }
+    }
+    
+    private static void stripMetadataAndChaptersInPlace() {
+        stripMetadataAndChaptersInPlace(new File(videoDir, "Anime"));
     }
     
     private static void addSubtitles() {

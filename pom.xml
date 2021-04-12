@@ -33,6 +33,7 @@
         <module>wavDecoder</module>
         <module>regexpTrie</module>
         <module>vmdkProcessor</module>
+        <module>homeVideoSplitter</module>
     </modules>
     
     

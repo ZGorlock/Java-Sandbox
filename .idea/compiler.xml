@@ -12,6 +12,7 @@
         <module name="stackOverflow" />
         <module name="htmlScraper" />
         <module name="Sphinx4test" />
+        <module name="homeVideoSplitter" />
         <module name="VideoProcessor" />
         <module name="alchBuddy" />
         <module name="musicPlayer" />
@@ -61,7 +62,6 @@
       <module name="ReactionTimeClicker" target="1.8" />
       <module name="RegexpTrie" target="1.8" />
       <module name="Sandbox" target="1.5" />
-      <module name="sandbox" target="1.5" />
       <module name="SineWaves" target="1.8" />
       <module name="WavDecoder" target="1.8" />
     </bytecodeTargetLevel>

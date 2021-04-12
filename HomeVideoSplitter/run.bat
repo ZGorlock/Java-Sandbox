@@ -1,0 +1,3 @@
+javac HomeVideoSplitter.java
+java HomeVideoSplitter
+pause

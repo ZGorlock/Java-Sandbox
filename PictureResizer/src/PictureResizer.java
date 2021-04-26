@@ -5,7 +5,6 @@
  */
 
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
@@ -20,6 +19,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
@@ -29,20 +29,23 @@ import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.metadata.Directory;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.Tag;
 import common.Filesystem;
-import common.StringUtility;
 
 public class PictureResizer {
     
     //Constants
     
-    private static final boolean preserveMetadata = false;
+    private static final boolean preserveMetadata = true; //when inactive, file dates will be preserved if preserveDates is enabled but 'Date Taken' will not
     
-    private static final boolean preserveDates = true;
+    private static final boolean preserveDates = true; //when active, file dates will be preserved but 'Date Taken' will not
     
     private static final boolean saveBackup = true;
     
-    private static final boolean limitDimensions = false; //only active if preserveMetadata is false
+    private static final boolean limitDimensions = false; //aspect ratio will be preserved
     
     private static final int maxDimension = 3072;
     
@@ -55,6 +58,10 @@ public class PictureResizer {
     private static final int cropOffRight = 0;
     
     private static final int cropOffBottom = 0;
+    
+    private static final File dataDir = new File("data");
+    
+    private static final List<String> pictureTypes = Arrays.asList("jpg", "jpeg", "png", "gif", "bmp", "tif", "tiff");
     
     
     //Static Fields
@@ -72,25 +79,15 @@ public class PictureResizer {
     //Methods
     
     private static List<File> getPictures(File directory) throws Exception {
-        List<File> pictures;
-        if (directory != null) {
-            List<File> files = Filesystem.getFilesRecursively(directory);
-            pictures = new ArrayList<>();
-            for (File f : files) {
-                if (f.getName().toLowerCase().endsWith(".jpg") ||
-                        f.getName().toLowerCase().endsWith(".png")) {
-                    pictures.add(f);
-                }
-            }
-        } else {
-            pictures = Filesystem.getFiles(new File("data"));
-        }
-        return pictures;
+        return Filesystem.getFilesRecursively(directory != null ? directory : dataDir).stream()
+                .filter(e -> pictureTypes.contains(Filesystem.getFileType(e).toLowerCase()))
+                .collect(Collectors.toList());
     }
     
     private static void processPictures(List<File> pictures) throws Exception {
         Filesystem.createDirectory(new File("tmp"));
-        for (File picture : pictures) {
+        
+        pictures.forEach(picture -> {
             System.out.println("Processing: " + picture.getAbsolutePath());
             try {
                 processPicture(picture);
@@ -98,81 +95,78 @@ public class PictureResizer {
                 System.err.println("Failed to process: " + picture.getAbsolutePath());
                 e.printStackTrace(System.err);
             }
-        }
+        });
     }
     
     private static void processPicture(File picture) throws Exception {
-        String type = StringUtility.rSnip(picture.getName().toLowerCase(), 3);
-        File tmp = new File("tmp", picture.getName()
-                .replaceAll("(\\.[jJ][pP][gG])+", ".jpg")
-                .replaceAll("(\\.[pP][nN][gG])+", ".png"));
+        String type = Filesystem.getFileType(picture).toLowerCase();
+        File tmp = new File("tmp", picture.getName().replaceAll("(?<=\\.)[^.]+$]", type));
         File output = new File(picture.getParentFile(), tmp.getName());
+        
+        //System.out.println("INPUT");
+        //readMetadata(picture);
         
         if (saveBackup) {
             backupImage(picture);
         }
         
         if (preserveMetadata) {
-            processPicturePreserveMetadata(picture, tmp, type);
+            processPicturePreserveMetadata(picture, tmp);
         } else {
-            processPictureLoseMetadata(picture, tmp, type);
+            processPictureLoseMetadata(picture, tmp);
         }
         
         replaceImage(picture, tmp, output);
+        
+        //System.out.println("OUTPUT:");
+        //readMetadata(output);
     }
     
-    private static void processPicturePreserveMetadata(File source, File target, String type) throws Exception {
+    private static void processPicturePreserveMetadata(File source, File target) throws Exception {
         try (FileInputStream fileInputStream = new FileInputStream(source);
              FileOutputStream fileOutputStream = new FileOutputStream(target)) {
             
             ImageInputStream imageInputStream = ImageIO.createImageInputStream(fileInputStream);
             ImageReader reader = ImageIO.getImageReaders(imageInputStream).next();
-            reader.setInput(imageInputStream);
+            reader.setInput(imageInputStream, true);
             IIOMetadata metadata = reader.getImageMetadata(0);
+            IIOMetadata streamMetadata = reader.getStreamMetadata();
             BufferedImage image = reader.read(0);
             imageInputStream.flush();
             
-            if (crop) {
-                image = cropPicture(image);
-            }
+            image = preProcessImage(image);
             
-            ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(new FileOutputStream(target));
+            ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(fileOutputStream);
             ImageWriter writer = ImageIO.getImageWriter(reader);
             writer.setOutput(imageOutputStream);
-            ImageWriteParam params = writer.getDefaultWriteParam();
-//        params.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-//        params.setCompressionQuality(.05f);
-            writer.write(null, new IIOImage(image, null, null), params);
+            ImageWriteParam writeParams = writer.getDefaultWriteParam();
+            writeParams.setCompressionMode(ImageWriteParam.MODE_COPY_FROM_METADATA);
+            
+            writer.write(streamMetadata, new IIOImage(image, null, metadata), writeParams);
             writer.dispose();
-            ImageIO.write(image, type, imageOutputStream);
             imageOutputStream.flush();
         }
     }
     
-    private static void processPictureLoseMetadata(File source, File target, String type) throws Exception {
+    private static void processPictureLoseMetadata(File source, File target) throws Exception {
         BufferedImage image = ImageIO.read(source);
-        if (crop) {
-            image = cropPicture(image);
-        }
         
-        if (limitDimensions) {
-            int dim = Math.max(image.getWidth(), image.getHeight());
-            if (dim > maxDimension) {
-                double scale = (double) maxDimension / dim;
-                AffineTransform transform = new AffineTransform();
-                transform.scale(scale, scale);
-                AffineTransformOp transformOp = new AffineTransformOp(transform, AffineTransformOp.TYPE_BICUBIC);
-                BufferedImage scaled = new BufferedImage((int) (image.getWidth() * scale), (int) (image.getHeight() * scale), image.getType());
-                image = transformOp.filter(image, scaled);
-            }
-        }
+        image = preProcessImage(image);
         
-        Image newImage = image.getScaledInstance(image.getWidth(), image.getHeight(), Image.SCALE_DEFAULT);
-        image.getGraphics().drawImage(newImage, 0, 0, null);
-        ImageIO.write(image, type, target);
+        ImageIO.write(image, Filesystem.getFileType(source).toLowerCase(), target);
     }
     
-    private static BufferedImage cropPicture(BufferedImage image, Rectangle rect) {
+    private static BufferedImage preProcessImage(BufferedImage image) {
+        if (crop) {
+            image = cropImage(image);
+        }
+        if (limitDimensions) {
+            image = scaleImage(image, maxDimension, maxDimension);
+        }
+        return image;
+    }
+    
+    private static BufferedImage cropImage(BufferedImage image, Rectangle rect) {
         BufferedImage cropped = new BufferedImage((int) rect.getWidth(), (int) rect.getHeight(), image.getType());
         Graphics g = cropped.getGraphics();
         g.drawImage(image, 0, 0, (int) rect.getWidth(), (int) rect.getHeight(), (int) rect.getX(), (int) rect.getY(), (int) (rect.getX() + rect.getWidth()), (int) (rect.getY() + rect.getHeight()), null);
@@ -180,9 +174,30 @@ public class PictureResizer {
         return cropped;
     }
     
-    private static BufferedImage cropPicture(BufferedImage image) {
+    private static BufferedImage cropImage(BufferedImage image) {
         Rectangle rect = new Rectangle(cropOffLeft, cropOffTop, (image.getWidth() - cropOffLeft - cropOffRight), (image.getHeight() - cropOffTop - cropOffBottom));
-        return cropPicture(image, rect);
+        return cropImage(image, rect);
+    }
+    
+    public static BufferedImage scaleImage(BufferedImage image, double scale) {
+        if ((scale <= 0.0) || (scale >= 1.0)) {
+            return image;
+        }
+        
+        AffineTransform transform = new AffineTransform();
+        transform.scale(scale, scale);
+        AffineTransformOp transformOp = new AffineTransformOp(transform, AffineTransformOp.TYPE_BICUBIC);
+        BufferedImage scaled = new BufferedImage((int) (image.getWidth() * scale), (int) (image.getHeight() * scale), image.getType());
+        return transformOp.filter(image, scaled);
+    }
+    
+    public static BufferedImage scaleImage(BufferedImage image, int maxWidth, int maxHeight) {
+        if ((image.getWidth() <= maxWidth) && (image.getHeight() <= maxHeight)) {
+            return image;
+        }
+        
+        double scale = Math.min(((double) maxWidth / image.getWidth()), ((double) maxHeight / image.getHeight()));
+        return scaleImage(image, scale);
     }
     
     private static void backupImage(File picture) throws Exception {
@@ -229,6 +244,56 @@ public class PictureResizer {
                 continue;
             }
             Files.setAttribute(image.toPath(), attribute, date);
+        }
+    }
+    
+    private static List<MetadataTag> readMetadata(File picture) throws Exception {
+        Metadata metadata = ImageMetadataReader.readMetadata(picture);
+        List<MetadataTag> metadataTags = parseMetadata(metadata);
+        metadataTags.forEach(System.out::println);
+        return metadataTags;
+    }
+    
+    private static List<MetadataTag> parseMetadata(Metadata metadata) {
+        List<MetadataTag> metadataTags = new ArrayList<>();
+        
+        for (Directory directory : metadata.getDirectories()) {
+            for (Tag tag : directory.getTags()) {
+                metadataTags.add(new MetadataTag(directory.getName(), tag.getTagName(), tag.getDescription(), tag.getTagType()));
+            }
+            
+            if (directory.hasErrors()) {
+                for (String error : directory.getErrors()) {
+                    metadataTags.add(new MetadataTag(directory.getName(), "ERROR", error, Integer.MIN_VALUE));
+                }
+            }
+        }
+        return metadataTags;
+    }
+    
+    
+    //Inner Classes
+    
+    public static class MetadataTag {
+        
+        String directory;
+        
+        String tag;
+        
+        String value;
+        
+        int type;
+        
+        public MetadataTag(String directory, String tag, String value, int type) {
+            this.directory = directory;
+            this.tag = tag;
+            this.value = value;
+            this.type = type;
+        }
+        
+        @Override
+        public String toString() {
+            return "[" + directory + "] " + tag + " : " + value;
         }
     }
     

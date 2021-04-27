@@ -100,7 +100,7 @@ public class PictureResizer {
     
     private static void processPicture(File picture) throws Exception {
         String type = Filesystem.getFileType(picture).toLowerCase();
-        File tmp = new File("tmp", picture.getName().replaceAll("(?<=\\.)[^.]+$]", type));
+        File tmp = new File("tmp", picture.getName().replaceAll("(?<=\\.)[^.]+$", "tiff"));
         File output = new File(picture.getParentFile(), tmp.getName());
         
         //System.out.println("INPUT");

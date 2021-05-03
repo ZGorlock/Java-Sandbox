@@ -36,9 +36,9 @@ public class VideoProcessor {
     public static void main(String[] args) {
 //        convertShowToMp4();
 //        convertDirToMp4();
-//        stripMetadataAndChapters();
-        stripMetadataAndChaptersInPlace();
-        addSubtitles();
+        stripMetadataAndChapters();
+//        stripMetadataAndChaptersInPlace();
+//        addSubtitles();
 //        lossTest();
 //        Map<String, Map<String, String>> stats = produceStats();
 //        Map<String, Map<String, String>> dirStats = produceDirStats();
@@ -556,7 +556,7 @@ public class VideoProcessor {
     
     private static void stripMetadataAndChapters() {
 //        stripMetadataAndChapters(videoDir);
-        stripMetadataAndChapters(new File("E:\\Videos\\Anime\\Neon Genesis Evangelion\\Season 1"));
+        stripMetadataAndChapters(new File("E:\\Downloads\\Videos"));
     }
     
     private static void stripMetadataAndChaptersInPlace(File dir) {
@@ -567,12 +567,12 @@ public class VideoProcessor {
             }
             Filesystem.move(f, new File(new File(f.getParentFile(), "old"), f.getName()));
         }
-
+        
         List<File> dirs = Filesystem.getDirsRecursively(dir).stream().filter(e -> e.getName().equals("old")).collect(Collectors.toList());
         for (File doDir : dirs) {
-            stripMetadataAndChapters(doDir.getParentFile());   
+            stripMetadataAndChapters(doDir.getParentFile());
         }
-
+        
         files = Filesystem.getFilesRecursively(dir);
         for (File f : files) {
             if (f.getAbsolutePath().contains("\\old\\")) {

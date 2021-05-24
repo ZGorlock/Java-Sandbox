@@ -39,7 +39,7 @@ public class PictureResizer {
     
     //Constants
     
-    private static final boolean preserveMetadata = true; //when inactive, file dates will be preserved if preserveDates is enabled but 'Date Taken' will not
+    private static final boolean preserveMetadata = false; //when inactive, file dates will be preserved if preserveDates is enabled but 'Date Taken' will not
     
     private static final boolean preserveDates = true; //when active, file dates will be preserved but 'Date Taken' will not
     
@@ -100,7 +100,7 @@ public class PictureResizer {
     
     private static void processPicture(File picture) throws Exception {
         String type = Filesystem.getFileType(picture).toLowerCase();
-        File tmp = new File("tmp", picture.getName().replaceAll("(?<=\\.)[^.]+$", "tiff"));
+        File tmp = new File("tmp", picture.getName().replaceAll("(?<=\\.)[^.]+$", type));
         File output = new File(picture.getParentFile(), tmp.getName());
         
         //System.out.println("INPUT");

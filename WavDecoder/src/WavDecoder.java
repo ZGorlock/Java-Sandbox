@@ -12,7 +12,7 @@ import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
-import org.apache.commons.io.FileUtils;
+import commons.Filesystem;
 
 public class WavDecoder {
     
@@ -61,10 +61,8 @@ public class WavDecoder {
         
         public Wav(File wavFile) {
             file = wavFile;
-            byte[] fileData;
-            try {
-                fileData = FileUtils.readFileToByteArray(wavFile);
-            } catch (IOException e) {
+            byte[] fileData = Filesystem.readFileToByteArray(wavFile);
+            if (fileData.length == 0) {
                 System.err.println("Could not read input WAV file");
                 return;
             }

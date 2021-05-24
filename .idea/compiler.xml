@@ -43,6 +43,8 @@
         <module name="pictureResizer" />
         <module name="regexpTrie" />
         <module name="wavDecoder" />
+        <module name="bicBugsLister" />
+        <module name="BicBugsLister" />
       </profile>
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -64,6 +66,7 @@
       <module name="Sandbox" target="1.5" />
       <module name="SineWaves" target="1.8" />
       <module name="WavDecoder" target="1.8" />
+      <module name="BicBugsLister" target="13" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

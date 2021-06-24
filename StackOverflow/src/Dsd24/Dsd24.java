@@ -1,8 +1,10 @@
 /*
  * File:    Dsd24.java
- * Package: PACKAGE_NAME
+ * Package: Dsd24
  * Author:  Zachary Gill
  */
+
+package Dsd24;
 
 import java.io.File;
 

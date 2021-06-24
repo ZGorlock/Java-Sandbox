@@ -1,8 +1,10 @@
 /*
  * File:    Entomic.java
- * Package: PACKAGE_NAME
+ * Package: Entomic
  * Author:  Zachary Gill
  */
+
+package Entomic;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

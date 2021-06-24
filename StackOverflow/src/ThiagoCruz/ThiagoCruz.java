@@ -1,8 +1,10 @@
 /*
  * File:    ThiagoCruz.java
- * Package: PACKAGE_NAME
+ * Package: ThiagoCruz
  * Author:  Zachary Gill
  */
+
+package ThiagoCruz;
 
 import java.util.Arrays;
 import java.util.List;

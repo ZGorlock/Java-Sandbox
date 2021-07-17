@@ -627,7 +627,7 @@ public class VideoProcessor {
         for (File show : shows) {
             String playlistPath = show.getAbsolutePath() + '\\';
             List<String> showPlaylist = new ArrayList<>();
-            List<File> seasons = Filesystem.getDirs(show);
+            List<File> seasons = Filesystem.getDirs(show, "Season.*");
             seasons.sort(Comparator.comparingInt(o -> Integer.parseInt(StringUtility.trim(StringUtility.rSnip(o.getName(), 2)))));
             for (File season : seasons) {
                 List<String> seasonPlaylist = new ArrayList<>();

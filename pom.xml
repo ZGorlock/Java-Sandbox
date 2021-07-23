@@ -35,6 +35,7 @@
         <module>vmdkProcessor</module>
         <module>homeVideoSplitter</module>
         <module>bicBugsLister</module>
+        <module>PandoraProcessor</module>
     </modules>
     
     

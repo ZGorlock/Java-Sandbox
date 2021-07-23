@@ -20,8 +20,8 @@
         <module name="lotteryGuesser" />
         <module name="piBot" />
         <module name="sineWaves" />
-        <module name="bicBugsLister" />
         <module name="BicBugsLister" />
+        <module name="bicBugsLister" />
         <module name="ackermann" />
         <module name="osrsKeepLoggedIn" />
         <module name="reactionTimeClicker" />
@@ -32,6 +32,7 @@
         <module name="ttsTest" />
         <module name="MusicPlayer" />
         <module name="Ackermann" />
+        <module name="pandoraProcessor" />
         <module name="osrsMerchingStatistics" />
         <module name="dicingBotSimulator" />
         <module name="videoRenamer" />

@@ -1,92 +1,92 @@
-S01 E13 · The Wheel
-S01 E12 · Nixon vs. Kennedy
-S01 E11 · Indian Summer
-S01 E10 · Long Weekend
-S01 E09 · Shoot
-S01 E08 · The Hobo Code
-S01 E07 · Red in the Face
-S01 E06 · Babylon
-S01 E05 · 5G
-S01 E04 · New Amsterdam
-S01 E03 · Marriage of Figaro
-S01 E02 · Ladies Room
 S01 E01 · Smoke Gets in Your Eyes
-S02 E13 · Meditations in an Emergency
-S02 E12 · The Mountain King
-S02 E11 · The Jet Set
-S02 E10 · The Inheritance
-S02 E09 · Six Month Leave
-S02 E08 · A Night to Remember
-S02 E07 · The Gold Violin
-S02 E06 · Maidenform
-S02 E05 · The New Girl
-S02 E04 · Three Sundays
-S02 E03 · The Benefactor
-S02 E02 · Flight 1
+S01 E02 · Ladies Room
+S01 E03 · Marriage of Figaro
+S01 E04 · New Amsterdam
+S01 E05 · 5G
+S01 E06 · Babylon
+S01 E07 · Red in the Face
+S01 E08 · The Hobo Code
+S01 E09 · Shoot
+S01 E10 · Long Weekend
+S01 E11 · Indian Summer
+S01 E12 · Nixon vs. Kennedy
+S01 E13 · The Wheel
 S02 E01 · For Those Who Think Young
-S03 E13 · Shut the Door. Have a Seat.
-S03 E12 · The Grown-Ups
-S03 E11 · The Gypsy and the Hobo
-S03 E10 · The Color Blue
-S03 E09 · Wee Small Hours
-S03 E08 · Souvenir
-S03 E07 · Seven Twenty Three
-S03 E06 · Guy Walks Into an Advertising Agency
-S03 E05 · The Fog
-S03 E04 · The Arrangements
-S03 E03 · My Old Kentucky Home
-S03 E02 · Love Among the Ruins
+S02 E02 · Flight 1
+S02 E03 · The Benefactor
+S02 E04 · Three Sundays
+S02 E05 · The New Girl
+S02 E06 · Maidenform
+S02 E07 · The Gold Violin
+S02 E08 · A Night to Remember
+S02 E09 · Six Month Leave
+S02 E10 · The Inheritance
+S02 E11 · The Jet Set
+S02 E12 · The Mountain King
+S02 E13 · Meditations in an Emergency
 S03 E01 · Out of Town
-S04 E13 · Tomorrowland
-S04 E12 · Blowing Smoke
-S04 E11 · Chinese Wall
-S04 E10 · Hands and Knees
-S04 E09 · The Beautiful Girls
-S04 E08 · The Summer Man
-S04 E07 · The Suitcase
-S04 E06 · Waldorf Stories
-S04 E05 · The Chrysanthemum and the Sword
-S04 E04 · The Rejected
-S04 E03 · The Good News
-S04 E02 · Christmas Comes But Once a Year
+S03 E02 · Love Among the Ruins
+S03 E03 · My Old Kentucky Home
+S03 E04 · The Arrangements
+S03 E05 · The Fog
+S03 E06 · Guy Walks Into an Advertising Agency
+S03 E07 · Seven Twenty Three
+S03 E08 · Souvenir
+S03 E09 · Wee Small Hours
+S03 E10 · The Color Blue
+S03 E11 · The Gypsy and the Hobo
+S03 E12 · The Grown-Ups
+S03 E13 · Shut the Door. Have a Seat.
 S04 E01 · Public Relations
-S05 E13 · The Phantom
-S05 E12 · Commissions and Fees
-S05 E11 · The Other Woman
-S05 E10 · Christmas Waltz
-S05 E09 · Dark Shadows
-S05 E08 · Lady Lazarus
-S05 E07 · At the Codfish Ball
-S05 E06 · Far Away Places
-S05 E05 · Signal 30
-S05 E04 · Mystery Date
-S05 E03 · Tea Leaves
-S05 E02 · A Little Kiss: Part 2
+S04 E02 · Christmas Comes But Once a Year
+S04 E03 · The Good News
+S04 E04 · The Rejected
+S04 E05 · The Chrysanthemum and the Sword
+S04 E06 · Waldorf Stories
+S04 E07 · The Suitcase
+S04 E08 · The Summer Man
+S04 E09 · The Beautiful Girls
+S04 E10 · Hands and Knees
+S04 E11 · Chinese Wall
+S04 E12 · Blowing Smoke
+S04 E13 · Tomorrowland
 S05 E01 · A Little Kiss: Part 1
-S06 E13 · In Care Of
-S06 E12 · The Quality of Mercy
-S06 E11 · Favors
-S06 E10 · A Tale of Two Cities
-S06 E09 · The Better Half
-S06 E08 · The Crash
-S06 E07 · Man With a Plan
-S06 E06 · For Immediate Release
-S06 E05 · The Flood
-S06 E04 · To Have and to Hold
-S06 E03 · Collaborators
-S06 E02 · The Doorway - Part 2
+S05 E02 · A Little Kiss: Part 2
+S05 E03 · Tea Leaves
+S05 E04 · Mystery Date
+S05 E05 · Signal 30
+S05 E06 · Far Away Places
+S05 E07 · At the Codfish Ball
+S05 E08 · Lady Lazarus
+S05 E09 · Dark Shadows
+S05 E10 · Christmas Waltz
+S05 E11 · The Other Woman
+S05 E12 · Commissions and Fees
+S05 E13 · The Phantom
 S06 E01 · The Doorway - Part 1
-S07 E14 · Person to Person
-S07 E13 · The Milk and Honey Route
-S07 E12 · Lost Horizon
-S07 E11 · Time & Life
-S07 E10 · The Forecast
-S07 E09 · New Business
-S07 E08 · Severance
-S07 E07 · Waterloo
-S07 E06 · The Strategy
-S07 E05 · The Runaways
-S07 E04 · The Monolith
-S07 E03 · Field Trip
-S07 E02 · A Day's Work
+S06 E02 · The Doorway - Part 2
+S06 E03 · Collaborators
+S06 E04 · To Have and to Hold
+S06 E05 · The Flood
+S06 E06 · For Immediate Release
+S06 E07 · Man With a Plan
+S06 E08 · The Crash
+S06 E09 · The Better Half
+S06 E10 · A Tale of Two Cities
+S06 E11 · Favors
+S06 E12 · The Quality of Mercy
+S06 E13 · In Care Of
 S07 E01 · Time Zones
+S07 E02 · A Day's Work
+S07 E03 · Field Trip
+S07 E04 · The Monolith
+S07 E05 · The Runaways
+S07 E06 · The Strategy
+S07 E07 · Waterloo
+S07 E08 · Severance
+S07 E09 · New Business
+S07 E10 · The Forecast
+S07 E11 · Time & Life
+S07 E12 · Lost Horizon
+S07 E13 · The Milk and Honey Route
+S07 E14 · Person to Person

@@ -6,6 +6,7 @@
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,9 +70,11 @@ public class VideoRenamer {
         }
     }
     
-    private static VideoSet activeVideoSet = VideoSet.LIMITLESS;
+    private static VideoSet activeVideoSet = VideoSet.TWIN_PEAKS;
     
-    private static final boolean doAll = true;
+    private static final boolean doAll = false;
+    
+    private static final boolean parseSource = false;
     
     private static Map<String, String> episodes = new HashMap<>();
     
@@ -80,13 +83,17 @@ public class VideoRenamer {
             for (VideoSet videoSet : VideoSet.values()) {
                 activeVideoSet = videoSet;
                 System.out.println("***" + videoSet.name + "***");
-                googleGridParser(new File("data/" + activeVideoSet.key + ".html"), new File("data/" + activeVideoSet.key + ".txt"));
+                if (parseSource) {
+                    googleGridParser(new File("data/source/" + activeVideoSet.key + ".html"), new File("data/" + activeVideoSet.key + ".txt"));
+                }
                 parseEpisodes(new File("data/" + activeVideoSet.key + ".txt"));
                 renameVideos(new File("E:/Videos/" + activeVideoSet.name));
                 System.out.println();
             }
         } else {
-            googleGridParser(new File("data/" + activeVideoSet.key + ".html"), new File("data/" + activeVideoSet.key + ".txt"));
+            if (parseSource) {
+                googleGridParser(new File("data/source/" + activeVideoSet.key + ".html"), new File("data/" + activeVideoSet.key + ".txt"));
+            }
             parseEpisodes(new File("data/" + activeVideoSet.key + ".txt"));
             renameVideos(new File("E:/Videos/" + activeVideoSet.name));
         }
@@ -108,6 +115,7 @@ public class VideoRenamer {
             }
         }
         
+        Collections.sort(results);
         Filesystem.writeLines(out, results);
     }
     

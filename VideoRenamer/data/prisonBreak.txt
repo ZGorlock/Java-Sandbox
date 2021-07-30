@@ -1,90 +1,90 @@
-S01 E22 · Flight
-S01 E21 · Go
-S01 E20 · Tonight
-S01 E19 · The Key
-S01 E18 · Bluff
-S01 E17 · J-Cat
-S01 E16 · Brother's Keeper
-S01 E15 · By the Skin and the Teeth
-S01 E14 · The Rat
-S01 E13 · End of the Tunnel
-S01 E12 · Odd Man Out
-S01 E11 · And Then There Were 7
-S01 E10 · Sleight of Hand
-S01 E09 · Tweener
-S01 E08 · The Old Head
-S01 E07 · Riots, Drills and the Devil: Part 2
-S01 E06 · Riots, Drills and the Devil: Part 1
-S01 E05 · English, Fitz or Percy
-S01 E04 · Cute Poison
-S01 E03 · Cell Test
-S01 E02 · Allen
 S01 E01 · Pilot
-S02 E22 · Sona
-S02 E21 · Fin Del Camino
-S02 E20 · Panama
-S02 E19 · Sweet Caroline
-S02 E18 · Wash
-S02 E17 · Bad Blood
-S02 E16 · Chicago
-S02 E15 · The Message
-S02 E14 · John Doe
-S02 E13 · The Killing Box
-S02 E12 · Disconnect
-S02 E11 · Bolshoi Booze
-S02 E10 · Rendezvous
-S02 E09 · Unearthed
-S02 E08 · Dead Fall
-S02 E07 · Buried
-S02 E06 · Subdivision
-S02 E05 · Map 1213
-S02 E04 · First Down
-S02 E03 · Scan
-S02 E02 · Otis
+S01 E02 · Allen
+S01 E03 · Cell Test
+S01 E04 · Cute Poison
+S01 E05 · English, Fitz or Percy
+S01 E06 · Riots, Drills and the Devil: Part 1
+S01 E07 · Riots, Drills and the Devil: Part 2
+S01 E08 · The Old Head
+S01 E09 · Tweener
+S01 E10 · Sleight of Hand
+S01 E11 · And Then There Were 7
+S01 E12 · Odd Man Out
+S01 E13 · End of the Tunnel
+S01 E14 · The Rat
+S01 E15 · By the Skin and the Teeth
+S01 E16 · Brother's Keeper
+S01 E17 · J-Cat
+S01 E18 · Bluff
+S01 E19 · The Key
+S01 E20 · Tonight
+S01 E21 · Go
+S01 E22 · Flight
 S02 E01 · Manhunt
-S03 E13 · The Art of the Deal
-S03 E12 · Hell or High Water
-S03 E11 · Under and Out
-S03 E10 · Dirt Nap
-S03 E09 · Boxed In
-S03 E08 · Bang and Burn
-S03 E07 · Vamonos
-S03 E06 · Photo Finish
-S03 E05 · Interference
-S03 E04 · Good Fences
-S03 E03 · Call Waiting
-S03 E02 · Fire/Water
+S02 E02 · Otis
+S02 E03 · Scan
+S02 E04 · First Down
+S02 E05 · Map 1213
+S02 E06 · Subdivision
+S02 E07 · Buried
+S02 E08 · Dead Fall
+S02 E09 · Unearthed
+S02 E10 · Rendezvous
+S02 E11 · Bolshoi Booze
+S02 E12 · Disconnect
+S02 E13 · The Killing Box
+S02 E14 · John Doe
+S02 E15 · The Message
+S02 E16 · Chicago
+S02 E17 · Bad Blood
+S02 E18 · Wash
+S02 E19 · Sweet Caroline
+S02 E20 · Panama
+S02 E21 · Fin Del Camino
+S02 E22 · Sona
 S03 E01 · Orientación
-S04 E24 · Free
-S04 E23 · The Old Ball and Chain
-S04 E22 · Killing Your Number
-S04 E21 · Rate of Exchange
-S04 E20 · Cowboys & Indians
-S04 E19 · S.O.B.
-S04 E18 · Vs.
-S04 E17 · The Mother Lode
-S04 E16 · The Sunshine State
-S04 E15 · Going Under
-S04 E14 · Just Business
-S04 E13 · Deal or No Deal
-S04 E12 · Selfless
-S04 E11 · Quiet Riot
-S04 E10 · The Legend
-S04 E09 · Greatness Achieved
-S04 E08 · The Price
-S04 E07 · Five the Hard Way
-S04 E06 · Blow Out
-S04 E05 · Safe & Sound
-S04 E04 · Eagles & Angels
-S04 E03 · Shut Down
-S04 E02 · Breaking & Entering
+S03 E02 · Fire/Water
+S03 E03 · Call Waiting
+S03 E04 · Good Fences
+S03 E05 · Interference
+S03 E06 · Photo Finish
+S03 E07 · Vamonos
+S03 E08 · Bang and Burn
+S03 E09 · Boxed In
+S03 E10 · Dirt Nap
+S03 E11 · Under and Out
+S03 E12 · Hell or High Water
+S03 E13 · The Art of the Deal
 S04 E01 · Scylla
-S05 E09 · Behind the Eyes
-S05 E08 · Progeny
-S05 E07 · Wine Dark Sea
-S05 E06 · Phaeacia
-S05 E05 · Contingency
-S05 E04 · The Prisoner's Dilemma
-S05 E03 · The Liar
-S05 E02 · Kaniel Outis
+S04 E02 · Breaking & Entering
+S04 E03 · Shut Down
+S04 E04 · Eagles & Angels
+S04 E05 · Safe & Sound
+S04 E06 · Blow Out
+S04 E07 · Five the Hard Way
+S04 E08 · The Price
+S04 E09 · Greatness Achieved
+S04 E10 · The Legend
+S04 E11 · Quiet Riot
+S04 E12 · Selfless
+S04 E13 · Deal or No Deal
+S04 E14 · Just Business
+S04 E15 · Going Under
+S04 E16 · The Sunshine State
+S04 E17 · The Mother Lode
+S04 E18 · Vs.
+S04 E19 · S.O.B.
+S04 E20 · Cowboys & Indians
+S04 E21 · Rate of Exchange
+S04 E22 · Killing Your Number
+S04 E23 · The Old Ball and Chain
+S04 E24 · Free
 S05 E01 · Ogygia
+S05 E02 · Kaniel Outis
+S05 E03 · The Liar
+S05 E04 · The Prisoner's Dilemma
+S05 E05 · Contingency
+S05 E06 · Phaeacia
+S05 E07 · Wine Dark Sea
+S05 E08 · Progeny
+S05 E09 · Behind the Eyes

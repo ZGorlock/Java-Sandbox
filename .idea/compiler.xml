@@ -32,6 +32,7 @@
         <module name="DBTest" />
         <module name="ttsTest" />
         <module name="MusicPlayer" />
+        <module name="playlistGenerator" />
         <module name="Ackermann" />
         <module name="pandoraProcessor" />
         <module name="osrsMerchingStatistics" />

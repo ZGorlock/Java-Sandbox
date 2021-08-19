@@ -11,6 +11,7 @@
         <module name="StackOverflow" />
         <module name="stackOverflow" />
         <module name="htmlScraper" />
+        <module name="animeDownloadProcessor" />
         <module name="Sphinx4test" />
         <module name="homeVideoSplitter" />
         <module name="VideoProcessor" />

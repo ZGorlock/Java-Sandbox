@@ -2,12 +2,6 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="InterviewTest" />
-      </profile>
       <profile name="Annotation profile for sandbox" enabled="true">
         <sourceOutputDir name="bin/generated-sources/annotations" />
         <sourceTestOutputDir name="bin/generated-test-sources/test-annotations" />
@@ -32,6 +26,7 @@
         <module name="ackermann" />
         <module name="osrsKeepLoggedIn" />
         <module name="reactionTimeClicker" />
+        <module name="InterviewTest" />
         <module name="TTSTest" />
         <module name="dictionaryTest" />
         <module name="PictureResizer" />

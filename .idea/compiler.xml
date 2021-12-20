@@ -2,6 +2,12 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="InterviewTest" />
+      </profile>
       <profile name="Annotation profile for sandbox" enabled="true">
         <sourceOutputDir name="bin/generated-sources/annotations" />
         <sourceTestOutputDir name="bin/generated-test-sources/test-annotations" />
@@ -45,15 +51,9 @@
         <module name="videoProcessor" />
         <module name="HtmlScraper" />
         <module name="VideoRenamer" />
-        <module name="pictureResizer" />
         <module name="regexpTrie" />
+        <module name="pictureResizer" />
         <module name="wavDecoder" />
-      </profile>
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="InterviewTest" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -64,6 +64,7 @@
       <module name="Keylistener" target="1.8" />
       <module name="LotteryGuesser" target="1.8" />
       <module name="OsrsKeepLoggedIn" target="1.8" />
+      <module name="phoneMusicProcessor" target="13" />
       <module name="PiBot" target="1.8" />
       <module name="ReactionTimeClicker" target="1.8" />
       <module name="RegexpTrie" target="1.8" />
@@ -74,7 +75,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="InterviewTest" options="-parameters" />
+      <module name="InterviewTest" options="" />
       <module name="interviewTest" options="-parameters" />
     </option>
   </component>

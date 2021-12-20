@@ -37,7 +37,7 @@
         <module>bicBugsLister</module>
         <module>pandoraProcessor</module>
         <module>animeDownloadProcessor</module>
-        <module>PlaylistGenerator</module>
+        <module>playlistGenerator</module>
     </modules>
     
     

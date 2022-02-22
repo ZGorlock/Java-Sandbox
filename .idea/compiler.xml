@@ -33,6 +33,7 @@
         <module name="DBTest" />
         <module name="ttsTest" />
         <module name="MusicPlayer" />
+        <module name="md5Cracker" />
         <module name="playlistGenerator" />
         <module name="Ackermann" />
         <module name="pandoraProcessor" />

@@ -38,6 +38,7 @@
         <module>pandoraProcessor</module>
         <module>animeDownloadProcessor</module>
         <module>playlistGenerator</module>
+        <module>md5Cracker</module>
     </modules>
     
     

@@ -39,6 +39,7 @@
         <module>animeDownloadProcessor</module>
         <module>playlistGenerator</module>
         <module>md5Cracker</module>
+        <module>HomePictureOrganizer</module>
     </modules>
     
     

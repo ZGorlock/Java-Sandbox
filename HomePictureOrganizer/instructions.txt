@@ -1,0 +1,3 @@
+Copy the pictures to the 'todo' folder
+Run 'run.bat'
+Pictures will be moved to the 'output' folder

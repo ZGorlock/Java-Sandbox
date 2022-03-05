@@ -21,6 +21,7 @@
         <module name="lotteryGuesser" />
         <module name="piBot" />
         <module name="sineWaves" />
+        <module name="homePictureOrganizer" />
         <module name="BicBugsLister" />
         <module name="bicBugsLister" />
         <module name="ackermann" />

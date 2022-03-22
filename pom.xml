@@ -39,7 +39,8 @@
         <module>animeDownloadProcessor</module>
         <module>playlistGenerator</module>
         <module>md5Cracker</module>
-        <module>HomePictureOrganizer</module>
+        <module>homePictureOrganizer</module>
+        <module>billboardHot100Processor</module>
     </modules>
     
     
@@ -69,6 +70,9 @@
         
         <!-- DATABASE -->
         <derby.version>10.12.1.1</derby.version>
+    
+        <!-- MATH -->
+        <big-math.version>2.1.0</big-math.version>
         
         <!-- HOTKEYS -->
         <jnativehook.version>2.1.0</jnativehook.version>
@@ -134,6 +138,13 @@
             <groupId>org.apache.derby</groupId>
             <artifactId>derby</artifactId>
             <version>${derby.version}</version>
+        </dependency>
+    
+        <!-- MATH -->
+        <dependency>
+            <groupId>ch.obermuhlner</groupId>
+            <artifactId>big-math</artifactId>
+            <version>${big-math.version}</version>
         </dependency>
         
         <!-- HOTKEYS -->

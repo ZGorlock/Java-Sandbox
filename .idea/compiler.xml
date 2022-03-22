@@ -25,6 +25,7 @@
         <module name="BicBugsLister" />
         <module name="bicBugsLister" />
         <module name="ackermann" />
+        <module name="billboardHot100Processor" />
         <module name="osrsKeepLoggedIn" />
         <module name="reactionTimeClicker" />
         <module name="InterviewTest" />

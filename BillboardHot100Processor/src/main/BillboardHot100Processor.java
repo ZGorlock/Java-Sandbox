@@ -31,6 +31,7 @@ public class BillboardHot100Processor {
 //        organize();
 //        customEdits();
 //        updateTags();
+//        fixOrdering();
     }
     
     public static void organize() {
@@ -240,6 +241,23 @@ public class BillboardHot100Processor {
                 }
             }
         }
+    }
+    
+    public static void fixOrdering() {
+        File dir = new File(WORK_DIR, "c");
+        
+        for (File m3u : Filesystem.getFiles(dir)) {
+            List<String> songs = Filesystem.readLines(m3u);
+            if (songs.size() < 100) {
+                continue;
+            }
+            
+            String no100 = songs.get(10);
+            songs.remove(10);
+            songs.add(no100);
+            Filesystem.writeLines(m3u, songs);
+        }
+        
     }
     
 }

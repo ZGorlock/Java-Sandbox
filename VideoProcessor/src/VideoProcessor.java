@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import common.CmdLine;
 import common.Filesystem;
@@ -36,9 +37,10 @@ public class VideoProcessor {
     public static void main(String[] args) {
 //        convertShowToMp4();
 //        convertDirToMp4();
-        stripMetadataAndChapters();
+//        stripMetadataAndChapters();
 //        stripMetadataAndChaptersInPlace();
-//        addSubtitles();
+        addSubtitles();
+//        extractSubtitles();
 //        lossTest();
 //        Map<String, Map<String, String>> stats = produceStats();
 //        Map<String, Map<String, String>> dirStats = produceDirStats();
@@ -501,7 +503,7 @@ public class VideoProcessor {
     }
     
     private static void convertDirToMp4() {
-        File dir = new File("E:\\Downloads\\Over the Garden Wall\\Season 1");
+        File dir = new File("E:\\Downloads\\Videos\\Season 15");
         File out = new File(dir, "new");
         Filesystem.createDirectory(out);
         
@@ -525,11 +527,11 @@ public class VideoProcessor {
 //            String params = "-map 0 -map -0:s:0 -map -0:a:0 -c copy -c:s mov_text";
 //            String params = "-map 0 -map -0:a:0 -map -0:s:0 -0:s:1 -c:v copy -c:a copy";
 //            String params = "-map 0 -map -0:v:1 -map -0:v:2 -map -0:v:3 -c copy -c:s mov_text";
-            String params = "-map 0 -map -0:a:1 -map -0:a:2 -map -0:a:3 -map -0:s -c copy";
+//            String params = "-map 0 -map -0:a:1 -map -0:a:2 -map -0:a:3 -map -0:s -c copy";
 //            String params = "-c:a copy -c:s mov_text -b:v 2400k";
 //            String params = "-c:v libx265 -c:a copy -c:s mov_text";
 //            String params = "-c:v libx264 -c:a copy -crf 20";
-//            String params = "-c:v copy -c:a copy";
+            String params = "-c:v copy -c:a copy";
 //            String params = "-c:v copy -c:a copy -c:s mov_text";
 //            String params = "-c:v copy -c:a aac -c:s mov_text";
 //            String params = "-c:v libx264 -c:a copy -c:s mov_text -crf 26";
@@ -595,14 +597,33 @@ public class VideoProcessor {
     }
     
     private static void addSubtitles() {
-        File dir = new File("E:\\Videos\\old\\Better Call Saul\\Season 5");
+        File dir = new File("E:\\Downloads\\Videos\\Season 15");
         File out = new File(dir, "new");
         Filesystem.createDirectory(out);
         
         List<File> videos = Filesystem.listFiles(dir, x -> x.getName().endsWith(".mp4"));
         List<File> subtitles = Filesystem.listFiles(dir, x -> x.getName().endsWith(".srt"));
         if (videos.size() != subtitles.size()) {
-            return;
+            File subsDir = new File(dir, "Subs");
+            if (subsDir.exists()) {
+                subtitles.clear();
+                for (File subDir : Filesystem.getDirs(subsDir)) {
+                    List<File> subs = Filesystem.getFiles(subDir);
+                    if (subs.size() == 1) {
+                        subtitles.add(subs.get(0));
+                    } else {
+                        File subChoice = Stream.of(2, 3, 1, 4).map(i -> i + "_English.srt")
+                                .filter(e -> subs.stream().anyMatch(f -> f.getName().equals(e))).findFirst()
+                                .map(e -> new File(subDir, e)).orElse(null);
+                        if (subChoice == null) {
+                            return;
+                        }
+                        subtitles.add(subChoice);
+                    }
+                }
+            } else {
+                return;
+            }
         }
         
         videos.sort(Comparator.comparing(File::getName));
@@ -614,6 +635,22 @@ public class VideoProcessor {
                 continue;
             }
             String cmd = "-y -i \"" + videos.get(i).getAbsolutePath() + "\" -i \"" + subtitles.get(i).getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -c:v copy -c:a copy -c:s mov_text \"" + output.getAbsolutePath() + "\"";
+            ffmpeg(cmd, true);
+        }
+    }
+    
+    private static void extractSubtitles() {
+        File dir = new File("E:\\Downloads\\Videos\\Season 15");
+        File out = dir;
+        Filesystem.createDirectory(out);
+        
+        List<File> videos = Filesystem.listFiles(dir, x -> x.getName().endsWith(".mkv"));
+        
+        String subParam = "-map 0:s:0";
+        
+        for (File video : videos) {
+            File output = new File(video.getAbsolutePath().replace(".mkv", ".srt"));
+            String cmd = "-y -i \"" + video.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 " + subParam + " \"" + output.getAbsolutePath() + "\"";
             ffmpeg(cmd, true);
         }
     }

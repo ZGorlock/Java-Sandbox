@@ -35,11 +35,12 @@ public class VideoProcessor {
     public static final File dirStatsFile = new File("stats.dir.csv");
     
     public static void main(String[] args) {
+        processDir();
 //        convertShowToMp4();
 //        convertDirToMp4();
 //        stripMetadataAndChapters();
 //        stripMetadataAndChaptersInPlace();
-        addSubtitles();
+//        addSubtitles();
 //        extractSubtitles();
 //        lossTest();
 //        Map<String, Map<String, String>> stats = produceStats();
@@ -538,6 +539,54 @@ public class VideoProcessor {
 //            String params = "-c:v libx265 -c:a copy -c:s mov_text -crf 27";
             
             String cmd = "-y -i \"" + f.getAbsolutePath() + "\" " + baseParams + " " + params + " \"" + output.getAbsolutePath() + "\"";
+            ffmpeg(cmd, true);
+        }
+    }
+    
+    private static void processDir() {
+        File dir = new File("F:\\X");
+        File out = new File(dir, "new");
+        Filesystem.createDirectory(out);
+        
+        String inFormat = ".mp4";
+        String outFormat = ".mp4";
+        String subFormat = ".srt";
+        boolean requireSubs = false;
+        
+        for (File f : Filesystem.getFilesRecursively(dir)) {
+            if (f.getAbsolutePath().contains("\\new\\") &&
+                    (!dir.getName().equalsIgnoreCase("new") ||
+                            (f.getAbsolutePath().contains("\\new\\new\\")))) {
+                continue;
+            }
+            
+            File newDir = new File(out, f.getParentFile().getAbsolutePath().replace(dir.getAbsolutePath(), ""));
+            if (!newDir.exists()) {
+                Filesystem.createDirectory(newDir);
+            }
+            File output = new File(newDir, StringUtility.rShear(f.getName(), inFormat.length()) + outFormat);
+            if (output.exists()) {
+                continue;
+            }
+            
+            if (!f.getName().endsWith(inFormat)) {
+                continue;
+            }
+            File subs = new File(f.getParentFile(), f.getName().replace(inFormat, subFormat));
+            boolean hasSubs = subs.exists();
+            if (!hasSubs && requireSubs) {
+                System.out.println("No subs: " + subs.getAbsolutePath());
+                return;
+            }
+            
+            String inParams = "-i \"" + f.getAbsolutePath() + "\"" + (hasSubs ? (" -i \"" + subs.getAbsolutePath() + "\"") : "");
+            String outParams = "\"" + output.getAbsolutePath() + "\"";
+            
+            String baseParams = "-y -map_metadata -1 -map_chapters -1";
+            
+            String params = "-map 0 -c:v libx264 -c:a copy -vf scale=-1:720 -b:v 2000k -maxrate 2000k -bufsize 2000k" + (hasSubs ? " -map 1 -c:s mov_text" : "");
+            
+            String cmd = String.join(" ", inParams, baseParams, params, outParams);
             ffmpeg(cmd, true);
         }
     }

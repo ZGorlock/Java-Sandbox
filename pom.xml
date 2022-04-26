@@ -41,6 +41,7 @@
         <module>md5Cracker</module>
         <module>homePictureOrganizer</module>
         <module>billboardHot100Processor</module>
+        <module>spotifyPlaylistCreator</module>
     </modules>
     
     

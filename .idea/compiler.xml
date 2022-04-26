@@ -14,19 +14,20 @@
         <module name="animeDownloadProcessor" />
         <module name="Sphinx4test" />
         <module name="homeVideoSplitter" />
+        <module name="musicPlayer" />
         <module name="VideoProcessor" />
         <module name="alchBuddy" />
-        <module name="musicPlayer" />
         <module name="sphinx4test" />
         <module name="lotteryGuesser" />
-        <module name="piBot" />
         <module name="sineWaves" />
+        <module name="piBot" />
         <module name="homePictureOrganizer" />
         <module name="BicBugsLister" />
         <module name="bicBugsLister" />
         <module name="ackermann" />
         <module name="billboardHot100Processor" />
         <module name="osrsKeepLoggedIn" />
+        <module name="spotifyPlaylistCreator" />
         <module name="reactionTimeClicker" />
         <module name="InterviewTest" />
         <module name="TTSTest" />
@@ -35,8 +36,8 @@
         <module name="DBTest" />
         <module name="ttsTest" />
         <module name="MusicPlayer" />
-        <module name="md5Cracker" />
         <module name="playlistGenerator" />
+        <module name="md5Cracker" />
         <module name="Ackermann" />
         <module name="pandoraProcessor" />
         <module name="osrsMerchingStatistics" />
@@ -49,8 +50,8 @@
         <module name="videoProcessor" />
         <module name="HtmlScraper" />
         <module name="VideoRenamer" />
-        <module name="regexpTrie" />
         <module name="pictureResizer" />
+        <module name="regexpTrie" />
         <module name="wavDecoder" />
       </profile>
     </annotationProcessing>

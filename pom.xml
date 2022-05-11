@@ -42,6 +42,7 @@
         <module>homePictureOrganizer</module>
         <module>billboardHot100Processor</module>
         <module>spotifyPlaylistCreator</module>
+        <module>subredditLister</module>
     </modules>
     
     
@@ -60,7 +61,8 @@
         <!-- COMMONS -->
         <commons-io.version>2.7</commons-io.version>
         <commons-codec.version>1.12</commons-codec.version>
-        <commons-lang3.version>3.9</commons-lang3.version>
+        <commons-text.version>1.9</commons-text.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
         
         <!-- JSON -->
         <json-simple.version>1.1.1</json-simple.version>
@@ -74,6 +76,9 @@
     
         <!-- MATH -->
         <big-math.version>2.1.0</big-math.version>
+    
+        <!-- INTERNET -->
+        <jsoup.version>1.14.2</jsoup.version>
         
         <!-- HOTKEYS -->
         <jnativehook.version>2.1.0</jnativehook.version>
@@ -91,6 +96,11 @@
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>${commons-codec.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>${commons-text.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -146,6 +156,13 @@
             <groupId>ch.obermuhlner</groupId>
             <artifactId>big-math</artifactId>
             <version>${big-math.version}</version>
+        </dependency>
+    
+        <!-- INTERNET -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${jsoup.version}</version>
         </dependency>
         
         <!-- HOTKEYS -->

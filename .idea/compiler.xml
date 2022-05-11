@@ -53,6 +53,7 @@
         <module name="pictureResizer" />
         <module name="regexpTrie" />
         <module name="wavDecoder" />
+        <module name="subredditLister" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

@@ -28,7 +28,7 @@ public class SubredditLister {
     
     private static final String baseUrl = "https://old.reddit.com";
     
-    private static final File out = new File("out", "subreddits.txt");
+    private static final File out = new File("data", "subreddits.txt");
     
     private static WebClient webClient;
     

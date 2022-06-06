@@ -1,6 +1,6 @@
 /*
  * File:    BicBugsLister.java
- * Package: PACKAGE_NAME
+ * Package: main
  * Author:  Zachary Gill
  */
 

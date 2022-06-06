@@ -1,1 +1,1 @@
-mvn compile && mvn exec:java -Dexec.mainClass="HomePictureOrganizer"
+mvn compile && mvn exec:java -Dexec.mainClass="main.HomePictureOrganizer"

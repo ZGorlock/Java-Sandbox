@@ -1,3 +1,4 @@
 Copy the 'Disk X' folder to this folder and rename it 'todo'
 Save the spreadsheet for this disk as 'todo.csv' in this folder
 Run 'run.bat'
+Videos will be saved in the 'output' folder

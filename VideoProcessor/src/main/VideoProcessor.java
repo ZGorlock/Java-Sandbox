@@ -11,502 +11,185 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import common.CmdLine;
 import common.Filesystem;
 import common.StringUtility;
 
+@SuppressWarnings({"ConstantConditions", "UnnecessaryLocalVariable"})
 public class VideoProcessor {
+    
+    //Constants
     
     public static final File videoDir = new File("E:\\Videos");
     
+    public static final File workDir = videoDir;//new File("D:\\Work");
+    
     public static final File log = new File("log/" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + ".txt");
     
-    public static final File statsFile = new File("stats.csv");
+    public static final File statsFile = new File("data/stats.txt");
     
-    public static final File dirStatsFile = new File("stats.dir.csv");
+    public static final File statsSpreadsheet = new File("data/stats.csv");
+    
+    public static final File dirStatsFile = new File("data/dirStats.txt");
+    
+    public static final File dirStatsSpreadsheet = new File("data/dirStats.csv");
+    
+    public static final List<String> videoFormats = List.of("mp4", "mkv", "m4v", "flv", "webm");
+    
+    public static final List<String> streamTypes = List.of("", "Video", "Audio", "Subtitle");
+    
+    public static final DecimalFormat decimalFormat = new DecimalFormat("0.00");
+    
+    
+    //Main Method
     
     public static void main(String[] args) {
-        processDir();
-//        convertShowToMp4();
+//        processDir();
+
 //        convertDirToMp4();
+//        convertShowToMp4();
+
 //        stripMetadataAndChapters();
 //        stripMetadataAndChaptersInPlace();
+
 //        addSubtitles();
 //        extractSubtitles();
-//        lossTest();
-//        Map<String, Map<String, String>> stats = produceStats();
-//        Map<String, Map<String, String>> dirStats = produceDirStats();
-//        makePlaylists();
-    }
-    
-    private static String ffmpeg(String cmd, boolean printOutput) {
-        cmd = "ffmpeg -hide_banner " + cmd;
-        if (printOutput) {
-            System.out.println(cmd);
-        }
-        CmdLine.printOutput = printOutput;
-        String cmdLog = CmdLine.executeCmd(cmd);
-        CmdLine.printOutput = false;
-        if (cmdLog.contains("Error") && !cmd.contains("Error")) {
-            System.err.println("Error in ffmpeg: " + cmd);
-        }
-        Filesystem.writeStringToFile(log, cmdLog + "\n" + StringUtility.fillStringOfLength('-', 120) + "\n\n", true);
-        return cmdLog;
-    }
-    
-    private static String ffmpeg(String cmd) {
-        return ffmpeg(cmd, false);
-    }
-    
-    private static Map<String, Map<String, String>> produceStats() {
-        Map<String, Map<String, String>> stats = produceStatsHelper(videoDir, 1);
-//        Map<String, Map<String, String>> stats = produceStatsHelper(new File(videoDir, "Youtube"), 1);
-        
-        List<String> csvOutput = new ArrayList<>();
-        List<String> output = new ArrayList<>();
-        
-        Map<String, Integer> columnWidths = new HashMap<>();
-        for (Map.Entry<String, Map<String, String>> entry : stats.entrySet()) {
-            columnWidths.putIfAbsent("Key", 0);
-            int keyLength = entry.getKey().length();
-            if (columnWidths.get("Key") < keyLength) {
-                columnWidths.replace("Key", keyLength);
-            }
-            for (Map.Entry<String, String> statEntry : entry.getValue().entrySet()) {
-                columnWidths.putIfAbsent(statEntry.getKey(), 0);
-                int length = (statEntry.getKey() + ": " + statEntry.getValue()).length();
-                if (columnWidths.get(statEntry.getKey()) < length) {
-                    columnWidths.replace(statEntry.getKey(), length);
-                }
-            }
-        }
-        
-        for (Map.Entry<String, Map<String, String>> entry : stats.entrySet()) {
-            String key = entry.getKey();
-            Map<String, String> value = entry.getValue();
 
-//                if (value.containsKey("Video Codec") && !value.get("Video Codec").startsWith("hevc")) {
-//                    System.out.println("Video Codec not h265: " + key);
-//                }
-            if (value.containsKey("Audio Streams") && !value.get("Audio Streams").equalsIgnoreCase("1")) {
-                System.out.println("Multiple Audio Streams: " + key);
-            }
-            if (value.containsKey("Subtitle Streams") && !value.get("Subtitle Streams").equalsIgnoreCase("1") && !value.get("Subtitle Streams").equalsIgnoreCase("0")) {
-                System.out.println("Multiple Subtitle Streams: " + key);
-            }
-            if (value.containsKey("Video Language") && !value.get("Video Language").contains("eng") && !value.get("Video Language").contains("und")) {
-                System.out.println("Non-English Video Stream: " + key);
-            }
-            if (value.containsKey("Audio Language") && !value.get("Audio Language").contains("eng") && !value.get("Audio Language").contains("und")) {
-                System.out.println("Non-English Audio Stream: " + key);
-            }
-            if (value.containsKey("Subtitle Language") && !value.get("Subtitle Language").contains("eng") && !value.get("Subtitle Language").contains("und")) {
-                System.out.println("Non-English Subtitle Stream: " + key);
-            }
-            
-            String cvsLine;
-            if (entry.getValue().containsKey("Count")) {
-                cvsLine = "\"" + key + "\"," +
-                        "\"" + (value.containsKey("Size") ? ("Size: " + value.get("Size")) : "") + "\"," +
-                        "\"" + (value.containsKey("Extension") ? ("Extension: " + value.get("Extension")) : "") + "\"," +
-                        "\"" + (value.containsKey("Count") ? ("Count: " + value.get("Count")) : "") + "\"," +
-                        "\"" + (value.containsKey("Min Video Bitrate") ? ("Min Video Bitrate: " + value.get("Min Video Bitrate")) : "") + "\"," +
-                        "\"" + (value.containsKey("Max Video Bitrate") ? ("Max Video Bitrate: " + value.get("Max Video Bitrate")) : "") + "\"," +
-                        "\"" + (value.containsKey("Min Audio Bitrate") ? ("Min Audio Bitrate: " + value.get("Min Audio Bitrate")) : "") + "\"," +
-                        "\"" + (value.containsKey("Max Audio Bitrate") ? ("Max Audio Bitrate: " + value.get("Max Audio Bitrate")) : "") + "\"";
-            } else {
-                cvsLine = "\"" + key + "\"," +
-                        "\"" + (value.containsKey("Size") ? ("Size: " + value.get("Size")) : "") + "\"," +
-                        "\"" + (value.containsKey("Extension") ? ("Extension: " + value.get("Extension")) : "") + "\"," +
-                        "\"" + (value.containsKey("Length") ? ("Length: " + value.get("Length")) : "") + "\"," +
-                        "\"" + (value.containsKey("Bitrate") ? ("Bitrate: " + value.get("Bitrate")) : "") + "\"," +
-                        "\"" + (value.containsKey("Streams") ? ("Streams: " + value.get("Streams")) : "") + "\"," +
-                        "\"" + (value.containsKey("Video Streams") ? ("Video Streams: " + value.get("Video Streams")) : "") + "\"," +
-                        "\"" + (value.containsKey("Audio Streams") ? ("Audio Streams: " + value.get("Audio Streams")) : "") + "\"," +
-                        "\"" + (value.containsKey("Subtitle Streams") ? ("Subtitle Streams: " + value.get("Subtitle Streams")) : "") + "\"," +
-                        "\"" + (value.containsKey("Video Codec") ? ("Video Codec: " + value.get("Video Codec")) : "") + "\"," +
-                        "\"" + (value.containsKey("Dimensions") ? ("Dimensions: " + value.get("Dimensions")) : "") + "\"," +
-                        "\"" + (value.containsKey("Video Bitrate") ? ("Video Bitrate: " + value.get("Video Bitrate")) : "") + "\"," +
-                        "\"" + (value.containsKey("Framerate") ? ("Framerate: " + value.get("Framerate")) : "") + "\"," +
-                        "\"" + (value.containsKey("Video Language") ? ("Video Language: " + value.get("Video Language")) : "") + "\"," +
-                        "\"" + (value.containsKey("Audio Codec") ? ("Audio Codec: " + value.get("Audio Codec")) : "") + "\"," +
-                        "\"" + (value.containsKey("Frequency") ? ("Frequency: " + value.get("Frequency")) : "") + "\"," +
-                        "\"" + (value.containsKey("Channel") ? ("Channel: " + value.get("Channel")) : "") + "\"," +
-                        "\"" + (value.containsKey("Audio Bitrate") ? ("Audio Bitrate: " + value.get("Audio Bitrate")) : "") + "\"," +
-                        "\"" + (value.containsKey("Audio Language") ? ("Audio Language: " + value.get("Audio Language")) : "") + "\"," +
-                        "\"" + (value.containsKey("Subtitle Codec") ? ("Subtitle Codec: " + value.get("Subtitle Codec")) : "") + "\"," +
-                        "\"" + (value.containsKey("Subtitle Language") ? ("Subtitle Language: " + value.get("Subtitle Language")) : "") + "\"";
-            }
-            csvOutput.add(cvsLine);
-            
-            String line;
-            if (entry.getValue().containsKey("Count")) {
-                line = String.format("%-" + (columnWidths.containsKey("Key") ? columnWidths.get("Key") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Size") ? columnWidths.get("Size") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Count") ? columnWidths.get("Count") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Min Video Bitrate") ? columnWidths.get("Min Video Bitrate") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Max Video Bitrate") ? columnWidths.get("Max Video Bitrate") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Min Audio Bitrate") ? columnWidths.get("Min Audio Bitrate") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Max Audio Bitrate") ? columnWidths.get("Max Audio Bitrate") : "1") + "s",
-                        key,
-                        value.containsKey("Size") ? ("Size: " + value.get("Size")) : "",
-                        value.containsKey("Extension") ? ("Extension: " + value.get("Extension")) : "",
-                        value.containsKey("Count") ? ("Count: " + value.get("Count")) : "",
-                        value.containsKey("Min Video Bitrate") ? ("Min Video Bitrate: " + value.get("Min Video Bitrate")) : "",
-                        value.containsKey("Max Video Bitrate") ? ("Max Video Bitrate: " + value.get("Max Video Bitrate")) : "",
-                        value.containsKey("Min Audio Bitrate") ? ("Min Audio Bitrate: " + value.get("Min Audio Bitrate")) : "",
-                        value.containsKey("Max Audio Bitrate") ? ("Max Audio Bitrate: " + value.get("Max Audio Bitrate")) : "");
-            } else {
-                line = String.format("%-" + (columnWidths.containsKey("Key") ? columnWidths.get("Key") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Size") ? columnWidths.get("Size") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Extension") ? columnWidths.get("Extension") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Length") ? columnWidths.get("Length") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Bitrate") ? columnWidths.get("Bitrate") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Streams") ? columnWidths.get("Streams") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Video Streams") ? columnWidths.get("Video Streams") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Audio Streams") ? columnWidths.get("Audio Streams") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Subtitle Streams") ? columnWidths.get("Subtitle Streams") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Video Codec") ? columnWidths.get("Video Codec") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Dimensions") ? columnWidths.get("Dimensions") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Video Bitrate") ? columnWidths.get("Video Bitrate") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Framerate") ? columnWidths.get("Framerate") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Video Language") ? columnWidths.get("Video Language") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Audio Codec") ? columnWidths.get("Audio Codec") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Frequency") ? columnWidths.get("Frequency") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Channel") ? columnWidths.get("Channel") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Audio Bitrate") ? columnWidths.get("Audio Bitrate") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Audio Language") ? columnWidths.get("Audio Language") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Subtitle Codec") ? columnWidths.get("Subtitle Codec") : "1") + "s  " +
-                                "%-" + (columnWidths.containsKey("Subtitle Language") ? columnWidths.get("Subtitle Language") : "1") + "s",
-                        key,
-                        value.containsKey("Size") ? ("Size: " + value.get("Size")) : "",
-                        value.containsKey("Extension") ? ("Extension: " + value.get("Extension")) : "",
-                        value.containsKey("Length") ? ("Length: " + value.get("Length")) : "",
-                        value.containsKey("Bitrate") ? ("Bitrate: " + value.get("Bitrate")) : "",
-                        value.containsKey("Streams") ? ("Streams: " + value.get("Streams")) : "",
-                        value.containsKey("Video Streams") ? ("Video Streams: " + value.get("Video Streams")) : "",
-                        value.containsKey("Audio Streams") ? ("Audio Streams: " + value.get("Audio Streams")) : "",
-                        value.containsKey("Subtitle Streams") ? ("Subtitle Streams: " + value.get("Subtitle Streams")) : "",
-                        value.containsKey("Video Codec") ? ("Video Codec: " + value.get("Video Codec")) : "",
-                        value.containsKey("Dimensions") ? ("Dimensions: " + value.get("Dimensions")) : "",
-                        value.containsKey("Video Bitrate") ? ("Video Bitrate: " + value.get("Video Bitrate")) : "",
-                        value.containsKey("Framerate") ? ("Framerate: " + value.get("Framerate")) : "",
-                        value.containsKey("Video Language") ? ("Video Language: " + value.get("Video Language")) : "",
-                        value.containsKey("Audio Codec") ? ("Audio Codec: " + value.get("Audio Codec")) : "",
-                        value.containsKey("Frequency") ? ("Frequency: " + value.get("Frequency")) : "",
-                        value.containsKey("Channel") ? ("Channel: " + value.get("Channel")) : "",
-                        value.containsKey("Audio Bitrate") ? ("Audio Bitrate: " + value.get("Audio Bitrate")) : "",
-                        value.containsKey("Audio Language") ? ("Audio Language: " + value.get("Audio Language")) : "",
-                        value.containsKey("Subtitle Codec") ? ("Subtitle Codec: " + value.get("Subtitle Codec")) : "",
-                        value.containsKey("Subtitle Language") ? ("Subtitle Language: " + value.get("Subtitle Language")) : "");
-            }
-            output.add(line);
-        }
-        Filesystem.writeLines(statsFile, csvOutput);
-        Filesystem.writeLines(new File(statsFile.getAbsolutePath().replace(".csv", ".txt")), output);
+//        makePlaylists();
+//        lossTest();
         
-        return stats;
+        Stats.produceStats();
+        Stats.produceDirStats();
     }
     
-    private static Map<String, Map<String, String>> produceStatsHelper(File dir, int depth) {
-        DecimalFormat df = new DecimalFormat("#.##");
-        Pattern stream = Pattern.compile("\\s*Stream\\s#(?<stream>\\d+:\\d+).*:.*");
-        Pattern duration = Pattern.compile("\\s*Duration:\\s(?<length>\\d+:\\d+:\\d+\\.\\d+),\\s.*bitrate:\\s(?<bitrate>\\d+\\skb/s).*");
-        Pattern videoStream = Pattern.compile("\\s*Stream\\s#\\d+:\\d+(?<language>.*):\\sVideo:\\s(?<codec>[^,]+),\\s[^,(]*(\\([^,]+(,[^,]+)*\\))?,\\s(?<dimensions>\\d+x\\d+)(\\s.*)?,\\s(?<bitrate>\\d+\\skb/s),.*\\s(?<framerate>\\d+(\\.\\d+)?\\sfps),\\s.*");
-        Pattern audioStream = Pattern.compile("\\s*Stream\\s#\\d+:\\d+(?<language>.*):\\sAudio:\\s(?<codec>[^,]+),\\s(?<frequency>\\d+\\sHz),\\s(?<channel>[^,]+),.*\\s(?<bitrate>\\d+\\skb/s).*");
-        Pattern subtitleStream = Pattern.compile("\\s*Stream\\s#\\d+:\\d+(?<language>.*):\\sSubtitle:\\s(?<codec>[^\\s]+)\\s.*");
-        
-        Map<String, Map<String, String>> stats = new LinkedHashMap<>();
-        
-        Map<String, String> vStats = new LinkedHashMap<>();
-        String vName = StringUtility.spaces(3 * (depth - 1)) + "|-\\ " + dir.getAbsolutePath().replace(videoDir.getParentFile().getAbsolutePath(), "");
-        stats.put(vName, vStats);
-        vStats.put("Name", dir.getName());
-        vStats.put("Size", "0.0 MB");
-        vStats.put("Count", "0");
-        vStats.put("Min Video Bitrate", "9999999 kb/s");
-        vStats.put("Max Video Bitrate", "-9999999 kb/s");
-        vStats.put("Min Audio Bitrate", "9999999 kb/s");
-        vStats.put("Max Audio Bitrate", "-9999999 kb/s");
-        
-        for (File f : Filesystem.getFiles(dir)) {
-            if (f.getName().endsWith("txt") || f.getName().endsWith("ini")) {
-                System.out.println("Not MP4: " + f.getAbsolutePath());
-                continue;
-            }
-            Map<String, String> fStats = new LinkedHashMap<>();
-            String fName = StringUtility.spaces(3 * depth) + "|- " + f.getName();
-            stats.put(fName, fStats);
-            
-            fStats.put("Name", f.getName());
-            fStats.put("Parent", dir.getName());
-            vStats.put("Count", String.valueOf(Integer.parseInt(vStats.get("Count")) + 1));
-            fStats.put("Extension", StringUtility.rSnip(f.getName(), 3));
-            double size = (double) f.length() / (1024 * 1024);
-            fStats.put("Size", df.format(size) + " MB");
-            vStats.put("Size", df.format(Double.parseDouble(StringUtility.rShear(vStats.get("Size"), " MB".length())) + size) + " MB");
-            fStats.put("Streams", "0");
-            fStats.put("Video Streams", "0");
-            fStats.put("Audio Streams", "0");
-            fStats.put("Subtitle Streams", "0");
-            
-            if (!f.getName().endsWith("mp4")) {
-                System.out.println("Not MP4: " + f.getAbsolutePath());
-                continue;
-            }
-            List<String> details = StringUtility.splitLines(ffmpeg("-i \"" + f.getAbsolutePath() + "\""));
-            
-            for (String line : details) {
-                Matcher streamMatcher = stream.matcher(line);
-                Matcher durationMatcher = duration.matcher(line);
-                Matcher videoStreamMatcher = videoStream.matcher(line);
-                Matcher audioStreamMatcher = audioStream.matcher(line);
-                Matcher subtitleStreamMatcher = subtitleStream.matcher(line);
-                if (streamMatcher.matches()) {
-                    fStats.put("Streams", String.valueOf(Integer.parseInt(fStats.get("Streams")) + 1));
-                }
-                
-                try {
-                    if (durationMatcher.matches()) {
-                        fStats.put("Length", durationMatcher.group("length"));
-                        fStats.put("Bitrate", durationMatcher.group("bitrate"));
-                        
-                    } else if (videoStreamMatcher.matches()) {
-                        fStats.put("Video Streams", String.valueOf(Integer.parseInt(fStats.get("Video Streams")) + 1));
-                        fStats.put("Video Codec", videoStreamMatcher.group("codec"));
-                        fStats.put("Dimensions", videoStreamMatcher.group("dimensions"));
-                        fStats.put("Video Bitrate", videoStreamMatcher.group("bitrate"));
-                        fStats.put("Framerate", videoStreamMatcher.group("framerate"));
-                        fStats.put("Video Language", videoStreamMatcher.group("language"));
-                        
-                        int bitrate = Integer.parseInt(videoStreamMatcher.group("bitrate").replace(" kb/s", ""));
-                        int minBitrate = Integer.parseInt(StringUtility.rShear(vStats.get("Min Video Bitrate"), " kb/s".length()));
-                        int maxBitrate = Integer.parseInt(StringUtility.rShear(vStats.get("Max Video Bitrate"), " kb/s".length()));
-                        if (bitrate < minBitrate) {
-                            vStats.put("Min Video Bitrate", bitrate + " kb/s");
-                        }
-                        if (bitrate > maxBitrate) {
-                            vStats.put("Max Video Bitrate", bitrate + " kb/s");
-                        }
-                        
-                    } else if (audioStreamMatcher.matches()) {
-                        fStats.put("Audio Streams", String.valueOf(Integer.parseInt(fStats.get("Audio Streams")) + 1));
-                        fStats.put("Audio Codec", audioStreamMatcher.group("codec"));
-                        fStats.put("Frequency", audioStreamMatcher.group("frequency"));
-                        fStats.put("Channel", audioStreamMatcher.group("channel"));
-                        fStats.put("Audio Bitrate", audioStreamMatcher.group("bitrate"));
-                        fStats.put("Audio Language", audioStreamMatcher.group("language"));
-                        
-                        int bitrate = Integer.parseInt(audioStreamMatcher.group("bitrate").replace(" kb/s", ""));
-                        int minBitrate = Integer.parseInt(StringUtility.rShear(vStats.get("Min Audio Bitrate"), " kb/s".length()));
-                        int maxBitrate = Integer.parseInt(StringUtility.rShear(vStats.get("Max Audio Bitrate"), " kb/s".length()));
-                        if (bitrate < minBitrate) {
-                            vStats.put("Min Audio Bitrate", bitrate + " kb/s");
-                        }
-                        if (bitrate > maxBitrate) {
-                            vStats.put("Max Audio Bitrate", bitrate + " kb/s");
-                        }
-                        
-                    } else if (subtitleStreamMatcher.matches()) {
-                        fStats.put("Subtitle Streams", String.valueOf(Integer.parseInt(fStats.get("Subtitle Streams")) + 1));
-                        fStats.put("Subtitle Codec", subtitleStreamMatcher.group("codec"));
-                        fStats.put("Subtitle Language", subtitleStreamMatcher.group("language"));
-                        
-                    }
-                } catch (Exception e) {
-                    int x = 4;
-                }
-            }
-            
-            if (Integer.parseInt(fStats.get("Streams")) != (Integer.parseInt(fStats.get("Video Streams")) + Integer.parseInt(fStats.get("Audio Streams")) + Integer.parseInt(fStats.get("Subtitle Streams")))) {
-                System.err.println("Error: " + f.getAbsolutePath());
-            }
-        }
-        
-        for (File d : Filesystem.getDirs(dir)) {
-            if (d.getName().equalsIgnoreCase("old") ||
-                    d.getName().equalsIgnoreCase("Youtube")) {
-                continue;
-            }
-            
-            Map<String, Map<String, String>> dStats = produceStatsHelper(d, depth + 1);
-            String dName = StringUtility.spaces(3 * depth) + "|-\\ " + d.getAbsolutePath().replace(videoDir.getParentFile().getAbsolutePath(), "");
-            
-            vStats.put("Size", df.format(Double.parseDouble(StringUtility.rShear(vStats.get("Size"), " MB".length())) + Double.parseDouble(StringUtility.rShear(dStats.get(dName).get("Size"), " MB".length()))) + " MB");
-            vStats.put("Count", df.format(Integer.parseInt(vStats.get("Count")) + Integer.parseInt(dStats.get(dName).get("Count"))));
-            
-            int dMinVideoBitrate = Integer.parseInt(StringUtility.rShear(dStats.get(dName).get("Min Video Bitrate"), " kb/s".length()));
-            int dMaxVideoBitrate = Integer.parseInt(StringUtility.rShear(dStats.get(dName).get("Max Video Bitrate"), " kb/s".length()));
-            int minVideoBitrate = Integer.parseInt(StringUtility.rShear(vStats.get("Min Video Bitrate"), " kb/s".length()));
-            int maxVideoBitrate = Integer.parseInt(StringUtility.rShear(vStats.get("Max Video Bitrate"), " kb/s".length()));
-            if (dMinVideoBitrate < minVideoBitrate) {
-                vStats.put("Min Video Bitrate", dMinVideoBitrate + " kb/s");
-            }
-            if (dMaxVideoBitrate > maxVideoBitrate) {
-                vStats.put("Max Video Bitrate", dMaxVideoBitrate + " kb/s");
-            }
-            
-            int dMinAudioBitrate = Integer.parseInt(StringUtility.rShear(dStats.get(dName).get("Min Audio Bitrate"), " kb/s".length()));
-            int dMaxAudioBitrate = Integer.parseInt(StringUtility.rShear(dStats.get(dName).get("Max Audio Bitrate"), " kb/s".length()));
-            int minAudioBitrate = Integer.parseInt(StringUtility.rShear(vStats.get("Min Audio Bitrate"), " kb/s".length()));
-            int maxAudioBitrate = Integer.parseInt(StringUtility.rShear(vStats.get("Max Audio Bitrate"), " kb/s".length()));
-            if (dMinAudioBitrate < minAudioBitrate) {
-                vStats.put("Min Audio Bitrate", dMinAudioBitrate + " kb/s");
-            }
-            if (dMaxAudioBitrate > maxAudioBitrate) {
-                vStats.put("Max Audio Bitrate", dMaxAudioBitrate + " kb/s");
-            }
-            
-            stats.putAll(dStats);
-        }
-        
-        return stats;
-    }
     
-    private static Map<String, Map<String, String>> produceDirStats() {
-        DecimalFormat df = new DecimalFormat("#.##");
-        final boolean justSize = false;
-        Map<String, Map<String, String>> stats = produceDirStatsHelper(videoDir, 1);
-        
-        List<String> cvsOutput = new ArrayList<>();
-        List<String> output = new ArrayList<>();
-        
-        Map<String, Integer> columnWidths = new HashMap<>();
-        for (Map.Entry<String, Map<String, String>> entry : stats.entrySet()) {
-            columnWidths.putIfAbsent("Key", 0);
-            int keyLength = entry.getKey().length();
-            if (columnWidths.get("Key") < keyLength) {
-                columnWidths.replace("Key", keyLength);
-            }
-            for (Map.Entry<String, String> statEntry : entry.getValue().entrySet()) {
-                columnWidths.putIfAbsent(statEntry.getKey(), 0);
-                int length = (statEntry.getKey() + ": " + statEntry.getValue()).length();
-                if (columnWidths.get(statEntry.getKey()) < length) {
-                    columnWidths.replace(statEntry.getKey(), length);
-                }
-            }
-        }
-        
-        for (Map.Entry<String, Map<String, String>> entry : stats.entrySet()) {
-            String key = entry.getKey();
-            Map<String, String> value = entry.getValue();
-            
-            String cvsLine = "\"" + key + "\"," +
-                    "\"" + (value.containsKey("Size") ? ("Size: " + value.get("Size")) : "") + "\"," +
-                    "\"" + (value.containsKey("Count") ? ("Count: " + value.get("Count")) : "") + "\"," +
-                    "\"" + (value.containsKey("Average Size") ? ("Size: " + value.get("Size")) : "") + "\"";
-            cvsOutput.add(cvsLine);
-            
-            value.put("Size", df.format(Double.parseDouble(StringUtility.rShear(value.get("Size"), " MB".length())) / 1000.0) + " GB");
-            String line;
-            if (justSize) {
-                line = String.format("%-" + columnWidths.get("Key") + "s  " +
-                                "%-" + columnWidths.get("Size") + "s  ",
-                        key,
-                        value.containsKey("Size") ? ("Size: " + value.get("Size")) : "");
-            } else {
-                line = String.format("%-" + columnWidths.get("Key") + "s  " +
-                                "%-" + columnWidths.get("Size") + "s  " +
-                                "%-" + columnWidths.get("Count") + "s  " +
-                                "%-" + columnWidths.get("Average Size") + "s  ",
-                        key,
-                        value.containsKey("Size") ? ("Size: " + value.get("Size")) : "",
-                        value.containsKey("Count") ? ("Count: " + value.get("Count")) : "",
-                        value.containsKey("Average Size") ? ("Average Size: " + value.get("Average Size")) : "");
-            }
-            output.add(line);
-        }
-        Filesystem.writeLines(dirStatsFile, cvsOutput);
-        Filesystem.writeLines(new File(dirStatsFile.getAbsolutePath().replace(".csv", ".txt")), output);
-        
-        return stats;
-    }
+    //Static Methods
     
-    private static Map<String, Map<String, String>> produceDirStatsHelper(File dir, int depth) {
-        DecimalFormat df = new DecimalFormat("#.##");
-        Map<String, Map<String, String>> stats = new LinkedHashMap<>();
+    private static void processDir() {
+        final File dir = workDir;
+        final File out = new File(dir, "new");
+        Filesystem.createDirectory(out);
         
-        Map<String, String> dStats = new LinkedHashMap<>();
-        String dName = StringUtility.spaces(3 * (depth - 1)) + "|-\\ " + dir.getAbsolutePath().replace(videoDir.getParentFile().getAbsolutePath(), "");
-        stats.put(dName, dStats);
-        dStats.put("Size", "0.0 MB");
-        dStats.put("Count", "0");
-        dStats.put("Average Size", "0.0 MB");
         
-        for (File f : Filesystem.getFiles(dir)) {
-            if (f.getName().endsWith("txt") || f.getName().endsWith("ini") || !f.getParentFile().getAbsolutePath().contains("Season")) {
+        //input and output file formats
+        final String inFormat = "mkv";
+        final String outFormat = "mp4";
+        
+        
+        //drop stream types
+        final boolean removeStreamTypes = true;
+        final Map<String, Boolean> saveStreamTypes = new LinkedHashMap<>();
+        saveStreamTypes.put("video", true);
+        saveStreamTypes.put("audio", true);
+        saveStreamTypes.put("subtitle", false);
+        
+        
+        //remove extra streams
+        final boolean removeStreams = false;
+        final Map<String, List<Integer>> saveStreams = new LinkedHashMap<>();
+        saveStreams.put("video", List.of(0));
+        saveStreams.put("audio", List.of(0));
+        saveStreams.put("subtitle", List.of(0));
+        
+        
+        //add subtitles from file
+        final boolean addSubs = false;
+        final boolean requireSubs = false;
+        final String subFormat = "srt";
+        
+        
+        //encode streams
+        final boolean performTranscode = true;
+        final Map<String, String> streamEncoders = new LinkedHashMap<>();
+        
+        streamEncoders.put("video", "copy");
+//        streamEncoders.put("video", "libx265 -crf 26 -preset slower");
+//        streamEncoders.put("video", "libx264 -vf scale=-1:720");
+        
+        streamEncoders.put("audio", "copy");
+//        streamEncoders.put("audio", "aac -ac 6");
+//        streamEncoders.put("audio", "libopus -ac 2");
+        
+        streamEncoders.put("subtitle", "mov_text");
+        
+        
+        //modify target bitrate
+        final boolean adjustBitrate = false;
+        final Map<String, String> targetBitrates = new LinkedHashMap<>();
+        targetBitrates.put("video", "475k");
+        targetBitrates.put("audio", "80k");
+        targetBitrates.put("", "500k");
+        
+        
+        //additional params
+        final String extraInParams = "";
+        final String extraOutParams = "";
+        
+        
+        //flags
+        final boolean allowStreamChanges = true;
+        final boolean allowReencoding = true;
+        final boolean overwriteExisting = false;
+        final boolean printCmd = false;
+        final boolean runFFmpeg = true;
+        
+        
+        //process videos
+        for (File video : Filesystem.getFilesRecursively(dir)) {
+            final File output = new File(video.getAbsolutePath()
+                    .replace(dir.getAbsolutePath(), out.getAbsolutePath())
+                    .replaceAll(("(?<=\\.)" + inFormat + "$"), (((outFormat == null) || outFormat.isEmpty()) ? inFormat : outFormat)));
+            final File subs = new File(video.getParentFile(), video.getName()
+                    .replaceAll(("(?<=\\.)" + inFormat + "$"), subFormat));
+            
+            if (!video.exists() || (output.exists() && !overwriteExisting) || (!subs.exists() && requireSubs) ||
+                    (!inFormat.isEmpty() && !video.getName().endsWith(inFormat)) ||
+                    (outFormat.isEmpty() || !output.getName().endsWith(outFormat)) ||
+                    (!subFormat.isEmpty() && !subs.getName().endsWith(subFormat)) ||
+                    (video.getAbsolutePath().contains("\\new\\") && (!dir.getName().equalsIgnoreCase("new") || (video.getAbsolutePath().contains("\\new\\new\\")))) ||
+                    (!output.getParentFile().exists() && !Filesystem.createDirectory(output.getParentFile()))) {
+                System.out.println("Skipping: " + video.getAbsolutePath());
                 continue;
             }
             
-            double size = (double) f.length() / (1024 * 1024);
-            dStats.put("Count", String.valueOf(Integer.parseInt(dStats.get("Count")) + 1));
-            dStats.put("Size", df.format(Double.parseDouble(StringUtility.rShear(dStats.get("Size"), " MB".length())) + size) + " MB");
-        }
-        
-        for (File d : Filesystem.getDirs(dir)) {
-            if (d.getName().equalsIgnoreCase("old") ||
-                    d.getName().equalsIgnoreCase("Youtube") ||
-                    (depth > 1 && !d.getAbsolutePath().contains("Season"))) {
-                continue;
-            }
+            final String cmd = FFmpeg.buildCmd(
+                    video, extraInParams,
+                    allowStreamChanges,
+                    removeStreamTypes, saveStreamTypes,
+                    removeStreams, saveStreams,
+                    addSubs, subs,
+                    allowReencoding,
+                    performTranscode, streamEncoders,
+                    adjustBitrate, targetBitrates,
+                    extraOutParams, output);
             
-            Map<String, Map<String, String>> fStats = produceDirStatsHelper(d, depth + 1);
-            String fName = StringUtility.spaces(3 * depth) + "|-\\ " + d.getAbsolutePath().replace(videoDir.getParentFile().getAbsolutePath(), "");
-            
-            if (!fStats.isEmpty()) {
-                stats.putAll(fStats);
-                
-                dStats.put("Count", df.format(Integer.parseInt(dStats.get("Count")) + Integer.parseInt(fStats.get(fName).get("Count"))));
-                dStats.put("Size", df.format(Double.parseDouble(StringUtility.rShear(dStats.get("Size"), " MB".length())) + Double.parseDouble(StringUtility.rShear(fStats.get(fName).get("Size"), " MB".length()))) + " MB");
+            if (printCmd) {
+                System.out.println(cmd);
             }
-        }
-        
-        dStats.put("Average Size", df.format(Double.parseDouble(StringUtility.rShear(dStats.get("Size"), " MB".length())) / Integer.parseInt(dStats.get("Count"))) + " MB");
-        
-        if (Integer.parseInt(dStats.get("Count")) == 0) {
-            return new HashMap<>();
-        }
-        return stats;
-    }
-    
-    private static void convertShowToMp4() {
-        String show = "MythBusters";
-        boolean reencode = false;
-        boolean copySubtitles = true;
-        
-        File source = new File(videoDir, "old\\" + show);
-        File dest = new File(videoDir, show);
-        Filesystem.createDirectory(dest);
-        
-        for (File f : Filesystem.getFilesRecursively(source)) {
-            if (f.getAbsolutePath().contains("\\new\\")) {
-                continue;
+            if (runFFmpeg) {
+                FFmpeg.ffmpeg(cmd, true);
             }
-            File output = new File(StringUtility.rShear(f.getAbsolutePath().replace("old\\" + show, show), 4) + ".mp4");
-            if (output.exists()) {
-                continue;
-            }
-            if (!output.getParentFile().exists()) {
-                Filesystem.createDirectory(output.getParentFile());
-            }
-            String cmd = "-y -i \"" + f.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 " + (reencode ? "" : ("-map 0 -map -0:s:1 -map -0:s:2 -c copy " + (copySubtitles ? "-c:s mov_text " : ""))) + "\"" + output.getAbsolutePath() + "\"";
-            ffmpeg(cmd, true);
         }
     }
     
     private static void convertDirToMp4() {
-        File dir = new File("E:\\Downloads\\Videos\\Season 15");
+        File dir = workDir;
         File out = new File(dir, "new");
         Filesystem.createDirectory(out);
         
@@ -541,55 +224,32 @@ public class VideoProcessor {
 //            String params = "-c:v libx265 -c:a copy -c:s mov_text -crf 27";
             
             String cmd = "-y -i \"" + f.getAbsolutePath() + "\" " + baseParams + " " + params + " \"" + output.getAbsolutePath() + "\"";
-            ffmpeg(cmd, true);
+            FFmpeg.ffmpeg(cmd, true);
         }
     }
     
-    private static void processDir() {
-        File dir = new File("F:\\X");
-        File out = new File(dir, "new");
-        Filesystem.createDirectory(out);
+    private static void convertShowToMp4() {
+        String show = "MythBusters";
+        boolean reencode = false;
+        boolean copySubtitles = true;
         
-        String inFormat = ".mp4";
-        String outFormat = ".mp4";
-        String subFormat = ".srt";
-        boolean requireSubs = false;
+        File source = new File(videoDir, "old\\" + show);
+        File dest = new File(videoDir, show);
+        Filesystem.createDirectory(dest);
         
-        for (File f : Filesystem.getFilesRecursively(dir)) {
-            if (f.getAbsolutePath().contains("\\new\\") &&
-                    (!dir.getName().equalsIgnoreCase("new") ||
-                            (f.getAbsolutePath().contains("\\new\\new\\")))) {
+        for (File f : Filesystem.getFilesRecursively(source)) {
+            if (f.getAbsolutePath().contains("\\new\\")) {
                 continue;
             }
-            
-            File newDir = new File(out, f.getParentFile().getAbsolutePath().replace(dir.getAbsolutePath(), ""));
-            if (!newDir.exists()) {
-                Filesystem.createDirectory(newDir);
-            }
-            File output = new File(newDir, StringUtility.rShear(f.getName(), inFormat.length()) + outFormat);
+            File output = new File(StringUtility.rShear(f.getAbsolutePath().replace("old\\" + show, show), 4) + ".mp4");
             if (output.exists()) {
                 continue;
             }
-            
-            if (!f.getName().endsWith(inFormat)) {
-                continue;
+            if (!output.getParentFile().exists()) {
+                Filesystem.createDirectory(output.getParentFile());
             }
-            File subs = new File(f.getParentFile(), f.getName().replace(inFormat, subFormat));
-            boolean hasSubs = subs.exists();
-            if (!hasSubs && requireSubs) {
-                System.out.println("No subs: " + subs.getAbsolutePath());
-                return;
-            }
-            
-            String inParams = "-i \"" + f.getAbsolutePath() + "\"" + (hasSubs ? (" -i \"" + subs.getAbsolutePath() + "\"") : "");
-            String outParams = "\"" + output.getAbsolutePath() + "\"";
-            
-            String baseParams = "-y -map_metadata -1 -map_chapters -1";
-            
-            String params = "-map 0 -c:v libx264 -c:a copy -vf scale=-1:720 -b:v 2000k -maxrate 2000k -bufsize 2000k" + (hasSubs ? " -map 1 -c:s mov_text" : "");
-            
-            String cmd = String.join(" ", inParams, baseParams, params, outParams);
-            ffmpeg(cmd, true);
+            String cmd = "-y -i \"" + f.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 " + (reencode ? "" : ("-map 0 -map -0:s:1 -map -0:s:2 -c copy " + (copySubtitles ? "-c:s mov_text " : ""))) + "\"" + output.getAbsolutePath() + "\"";
+            FFmpeg.ffmpeg(cmd, true);
         }
     }
     
@@ -602,14 +262,17 @@ public class VideoProcessor {
                 continue;
             }
             File output = new File(f.getAbsolutePath().replace("old\\", ""));
+            if (!output.getParentFile().exists()) {
+                Filesystem.createDirectory(output.getParentFile());
+            }
             String cmd = "-y -i \"" + f.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -map 0 -c copy -c:s mov_text \"" + output.getAbsolutePath() + "\"";
-            ffmpeg(cmd, true);
+            FFmpeg.ffmpeg(cmd, true);
         }
     }
     
     private static void stripMetadataAndChapters() {
 //        stripMetadataAndChapters(videoDir);
-        stripMetadataAndChapters(new File("E:\\Downloads\\Videos"));
+        stripMetadataAndChapters(workDir);
     }
     
     private static void stripMetadataAndChaptersInPlace(File dir) {
@@ -618,7 +281,12 @@ public class VideoProcessor {
             if (f.getAbsolutePath().contains("\\old\\")) {
                 continue;
             }
-            Filesystem.move(f, new File(new File(f.getParentFile(), "old"), f.getName()));
+            
+            File newFile = new File(new File(f.getParentFile(), "old"), f.getName());
+            if (!newFile.getParentFile().exists()) {
+                Filesystem.createDirectory(newFile.getParentFile());
+            }
+            Filesystem.move(f, newFile);
         }
         
         List<File> dirs = Filesystem.getDirsRecursively(dir).stream().filter(e -> e.getName().equals("old")).collect(Collectors.toList());
@@ -644,16 +312,19 @@ public class VideoProcessor {
     }
     
     private static void stripMetadataAndChaptersInPlace() {
-        stripMetadataAndChaptersInPlace(new File(videoDir, "Anime"));
+        stripMetadataAndChaptersInPlace(workDir);
     }
     
     private static void addSubtitles() {
-        File dir = new File("E:\\Downloads\\Videos\\Season 15");
+        File dir = workDir;
         File out = new File(dir, "new");
         Filesystem.createDirectory(out);
         
-        List<File> videos = Filesystem.listFiles(dir, x -> x.getName().endsWith(".mp4"));
-        List<File> subtitles = Filesystem.listFiles(dir, x -> x.getName().endsWith(".srt"));
+        String inFormat = ".mkv";
+        String subFormat = ".ass";
+        
+        List<File> videos = Filesystem.listFiles(dir, x -> x.getName().endsWith(inFormat));
+        List<File> subtitles = Filesystem.listFiles(dir, x -> x.getName().endsWith(subFormat));
         if (videos.size() != subtitles.size()) {
             File subsDir = new File(dir, "Subs");
             if (subsDir.exists()) {
@@ -663,7 +334,7 @@ public class VideoProcessor {
                     if (subs.size() == 1) {
                         subtitles.add(subs.get(0));
                     } else {
-                        File subChoice = Stream.of(2, 3, 1, 4).map(i -> i + "_English.srt")
+                        File subChoice = Stream.of(2, 3, 1, 4).map(i -> i + "_English" + subFormat)
                                 .filter(e -> subs.stream().anyMatch(f -> f.getName().equals(e))).findFirst()
                                 .map(e -> new File(subDir, e)).orElse(null);
                         if (subChoice == null) {
@@ -681,28 +352,37 @@ public class VideoProcessor {
         subtitles.sort(Comparator.comparing(File::getName));
         
         for (int i = 0; i < videos.size(); i++) {
-            File output = new File(out, StringUtility.rShear(videos.get(i).getName(), 4) + ".mp4");
+            File output = new File(out, StringUtility.rShear(videos.get(i).getName(), 4) + inFormat);
             if (output.exists()) {
                 continue;
             }
-            String cmd = "-y -i \"" + videos.get(i).getAbsolutePath() + "\" -i \"" + subtitles.get(i).getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 -c:v copy -c:a copy -c:s mov_text \"" + output.getAbsolutePath() + "\"";
-            ffmpeg(cmd, true);
+            String cmd = "-y -i \"" + videos.get(i).getAbsolutePath() + "\" -i \"" + subtitles.get(i).getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 " +
+                    "-map 0 -map -0:s -map 1 " +
+                    "-c:v copy -c:a copy -c:s copy " +
+                    "\"" + output.getAbsolutePath() + "\"";
+            FFmpeg.ffmpeg(cmd, true);
         }
     }
     
     private static void extractSubtitles() {
-        File dir = new File("E:\\Downloads\\Videos\\Season 15");
+        File dir = workDir;
         File out = dir;
         Filesystem.createDirectory(out);
         
-        List<File> videos = Filesystem.listFiles(dir, x -> x.getName().endsWith(".mkv"));
+        String inFormat = ".mkv";
+        String subFormat = ".srt";
         
-        String subParam = "-map 0:s:0";
+        List<File> videos = Filesystem.getFilesRecursively(dir, ".*\\" + inFormat);
+//        List<File> videos = Filesystem.listFiles(dir, x -> x.getName().endsWith(inFormat));
+        
+        String subParam = "-map 0:s:0 -c:s mov_text";
         
         for (File video : videos) {
-            File output = new File(video.getAbsolutePath().replace(".mkv", ".srt"));
+            File output = new File(video.getAbsolutePath().replace(inFormat, subFormat));
             String cmd = "-y -i \"" + video.getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 " + subParam + " \"" + output.getAbsolutePath() + "\"";
-            ffmpeg(cmd, true);
+            FFmpeg.ffmpeg(cmd, true);
+            
+            Filesystem.writeStringToFile(output, Filesystem.readFileToString(output).replace("\\h", ""));
         }
     }
     
@@ -735,8 +415,512 @@ public class VideoProcessor {
             File f = new File("D:\\Temp\\New Folder\\in" + i + ".mp4");
             File f2 = new File("D:\\Temp\\New Folder\\in" + (i + 1) + ".mp4");
             String cmd = "-y -i \"" + f.getAbsolutePath() + "\" -c:v libx265 -crf 18 -c:a aac -c:s mov_text \"" + f2.getAbsolutePath() + "\"";
-            ffmpeg(cmd, true);
+            FFmpeg.ffmpeg(cmd, true);
         }
+    }
+    
+    
+    //Inner Classes
+    
+    private static class FFmpeg {
+        
+        //Static Methods
+        
+        private static String executeFF(String program, String cmd, boolean printOutput) {
+            final String ffCmd = program + " -hide_banner " + cmd;
+            if (printOutput) {
+                System.out.println(ffCmd);
+            }
+            
+            CmdLine.printOutput = printOutput;
+            final String cmdLog = CmdLine.executeCmd(ffCmd);
+            CmdLine.printOutput = false;
+            if (cmdLog.contains("Error") && !ffCmd.contains("Error")) {
+                System.err.println("Error in " + program + ": " + ffCmd);
+            }
+            
+            Filesystem.writeStringToFile(log, cmdLog + "\n" + StringUtility.fillStringOfLength('-', 120) + "\n\n", true);
+            return cmdLog;
+        }
+        
+        public static String ffmpeg(String cmd, boolean printOutput) {
+            return executeFF("ffmpeg", cmd, printOutput);
+        }
+        
+        public static String ffmpeg(String cmd) {
+            return ffmpeg(cmd, false);
+        }
+        
+        public static String ffprobe(String cmd, boolean printOutput) {
+            return executeFF("ffprobe", cmd, printOutput);
+        }
+        
+        public static String ffprobe(String cmd) {
+            return ffprobe(cmd, false);
+        }
+        
+        private static Map<String, Integer> countStreams(File video) {
+            final Map<String, Integer> streamCounts = new HashMap<>();
+            
+            final List<String> streamsProbe = StringUtility.splitLines(ffprobe("-i \"" + video.getAbsolutePath() + "\" -show_streams"));
+            for (String line : streamsProbe) {
+                if (line.startsWith("codec_type=")) {
+                    String type = line.substring(line.indexOf('=') + 1).toLowerCase();
+                    streamCounts.putIfAbsent(type, 0);
+                    streamCounts.replace(type, streamCounts.get(type) + 1);
+                }
+            }
+            return streamCounts;
+        }
+        
+        private static String buildCmd(
+                File in, String extraInParams,
+                boolean allowStreamChanges,
+                boolean removeStreamTypes, Map<String, Boolean> saveStreamTypes,
+                boolean removeStreams, Map<String, List<Integer>> saveStreams,
+                boolean addSubs, File subs,
+                boolean allowReencoding,
+                boolean performTranscode, Map<String, String> streamEncoders,
+                boolean adjustBitrate, Map<String, String> targetBitrates,
+                String extraOutParams, File out) {
+            
+            final String inParams = "-i \"" + in.getAbsolutePath() + "\"" +
+                    (subs.exists() ? (" -i \"" + subs.getAbsolutePath() + "\"") : "");
+            
+            final String baseParams = "-y -map_metadata -1 -map_chapters -1 -strict experimental";
+            
+            final String streamParams = !allowStreamChanges ? "-map 0" : String.join(" ",
+                    !removeStreamTypes ? "-map 0" :
+                            saveStreamTypes.entrySet().stream()
+                                    .map(e -> ("-map " + (e.getValue() ? "" : "-") + "0:" + Character.toLowerCase(e.getKey().charAt(0))))
+                                    .collect(Collectors.joining(" ")),
+                    
+                    !removeStreams ? "" :
+                            countStreams(in).entrySet().stream()
+                                    .flatMap(e -> IntStream.range(0, e.getValue())
+                                            .filter(i -> !saveStreams.getOrDefault(e.getKey().toLowerCase(), Collections.emptyList()).contains(i))
+                                            .mapToObj(i -> ("-map -0:" + Character.toLowerCase(e.getKey().charAt(0)) + ":" + i)))
+                                    .collect(Collectors.joining(" ")),
+                    
+                    !(addSubs && subs.exists()) ? "" : "-map 1 -c:s mov_text"
+            );
+            
+            final String encodeParams = !allowReencoding ? "-c copy" : String.join(" ",
+                    !performTranscode ? "-c copy" :
+                            streamEncoders.entrySet().stream()
+                                    .filter(e -> ((e.getValue() != null) && !e.getValue().isEmpty()))
+                                    .map(e -> ("-c:" + Character.toLowerCase(e.getKey().charAt(0)) + " " + e.getValue()))
+                                    .collect(Collectors.joining(" ")),
+                    
+                    !adjustBitrate ? "" :
+                            targetBitrates.entrySet().stream()
+                                    .filter(e -> ((e.getValue() != null) && !e.getValue().isEmpty()))
+                                    .map(e -> (e.getKey().isEmpty() ? ("-maxrate " + e.getValue() + " -bufsize " + e.getValue()) :
+                                            ("-b:" + Character.toLowerCase(e.getKey().charAt(0)) + " " + e.getValue())))
+                                    .collect(Collectors.joining(" "))
+            );
+            
+            final String outParams = "\"" + out.getAbsolutePath() + "\"";
+            
+            return String.join(" ",
+                            inParams, baseParams, extraInParams,
+                            streamParams, encodeParams, extraOutParams, outParams)
+                    .replaceAll("\\s+", " ").strip();
+        }
+        
+    }
+    
+    private static class Stats {
+        
+        //Static Methods
+        
+        private static Map<String, Map<String, String>> produceStats() {
+            return produceStats(workDir, statsFile, statsSpreadsheet);
+//            return produceStats(videoDir, statsFile, statsSpreadsheet);
+//            return produceStats(new File(videoDir, "Youtube"), statsFile, statsSpreadsheet);
+        }
+        
+        public static Map<String, Map<String, String>> produceStats(File dir, File outputFile, File outputSpreadsheet) {
+            final Map<String, Map<String, String>> stats = produceStatsHelper(dir, 1);
+            final List<String> columns = List.of("Key", "Count", "Size", "Extension", "Length",
+                    "Bitrate", "Streams", "Video Streams", "Audio Streams", "Subtitle Streams",
+                    "Video Codec", "Video Language", "Video Bitrate", "Video Dimensions", "Video Framerate",
+                    "Audio Codec", "Audio Language", "Audio Bitrate", "Audio Frequency", "Audio Layout", "Audio Format",
+                    "Subtitle Codec", "Subtitle Language");
+            
+            validateStats(stats);
+            outputStats(stats, columns, outputFile, outputSpreadsheet);
+            
+            return stats;
+        }
+        
+        private static Map<String, Map<String, String>> produceStatsHelper(File dir, int depth) {
+            final Map<String, Map<String, String>> stats = new LinkedHashMap<>();
+            
+            final Function<Double, String> durationStamp = (Double duration) ->
+                    String.join("", " 0" + ((int) (duration / (60 * 60))),
+                                    ":0" + ((int) ((duration / 60) % 60)),
+                                    ":0" + ((int) (duration % 60)),
+                                    ".0" + ((int) ((duration % 1) * 100)))
+                            .replaceAll("(^|[:.])\\s*0?(\\d{2,})(?!\\d)", "$1$2");
+            final Function<String, Double> durationUnstamp = (String stamp) -> {
+                final String[] parts = stamp.split("[^\\d.]+");
+                return Double.parseDouble(parts[2]) +
+                        (Integer.parseInt(parts[1]) * 60) +
+                        (Integer.parseInt(parts[0]) * (60 * 60));
+            };
+            
+            final Map<String, String> dirStat = new LinkedHashMap<>();
+            final String dirKey = StringUtility.spaces(3 * (depth - 1)) + "|-\\ " + dir.getAbsolutePath().replace(videoDir.getParentFile().getAbsolutePath(), "");
+            stats.put(dirKey, dirStat);
+            
+            dirStat.put("Key", dirKey);
+            dirStat.put("Name", dir.getName());
+            
+            final AtomicInteger count = new AtomicInteger(0);
+            final List<Double> sizes = new ArrayList<>();
+            final List<Double> durations = new ArrayList<>();
+            final Map<String, List<Long>> bitRates = new HashMap<>();
+            streamTypes.forEach(type -> bitRates.put(type, new ArrayList<>()));
+            
+            Filesystem.getFiles(dir).stream()
+                    .filter(e -> videoFormats.contains(e.getName().replaceAll(".+\\.([^.]+)$", "$1").toLowerCase()))
+                    .forEachOrdered(file -> {
+                        
+                        final Map<String, String> videoStats = new LinkedHashMap<>();
+                        final String videoKey = StringUtility.spaces(3 * depth) + "|- " + file.getName();
+                        stats.put(videoKey, videoStats);
+                        
+                        final double videoSize = (double) file.length() / (1024 * 1024);
+                        
+                        videoStats.put("Key", videoKey);
+                        videoStats.put("Name", file.getName());
+                        videoStats.put("Parent", dir.getName());
+                        videoStats.put("Extension", file.getName().replaceAll(".+\\.([^.]+)$", "$1"));
+                        videoStats.put("Size", decimalFormat.format(videoSize) + " MB");
+                        
+                        final Map<String, AtomicInteger> streams = new HashMap<>();
+                        streamTypes.forEach(type -> streams.put(type, new AtomicInteger(0)));
+                        
+                        count.incrementAndGet();
+                        sizes.add(videoSize);
+                        
+                        final List<String> probe = StringUtility.splitLines(FFmpeg.ffprobe("-loglevel quiet -show_streams -show_format \"" + file.getAbsolutePath() + "\""));
+                        
+                        final Map<String, String> streamStats = new LinkedHashMap<>();
+                        final AtomicReference<String> section = new AtomicReference<>("");
+                        final AtomicReference<String> streamType = new AtomicReference<>("");
+                        
+                        probe.forEach(line -> {
+                            if (line.matches("^\\[/?[A-Z_]+]$")) {
+                                final String currentSection = section.get();
+                                final String currentStreamType = streamType.get();
+                                
+                                if (line.equals("[/" + section.get() + "]")) {
+                                    if (currentSection.equals("STREAM") && streamTypes.contains(currentStreamType)) {
+                                        streamStats.forEach((name, value) ->
+                                                videoStats.put((currentStreamType + " " + name), Optional.ofNullable(videoStats.get(currentStreamType + " " + name))
+                                                        .map(e -> (e.contains(" | ") ? "" : "[0] ") + e +
+                                                                " | [" + e.split("\\s\\|\\s", -1).length + "] " + value)
+                                                        .orElse(value)));
+                                        
+                                        streams.get("").incrementAndGet();
+                                        streams.get(currentStreamType).incrementAndGet();
+                                    }
+                                    
+                                    streamStats.clear();
+                                    streamType.set("");
+                                    section.set("");
+                                    
+                                } else if (section.get().isEmpty()) {
+                                    section.set(line.replaceAll("[\\[\\]]", ""));
+                                }
+                                
+                            } else if (!section.get().isEmpty()) {
+                                final String[] lineParts = line.split("=");
+                                final String key = lineParts[0];
+                                final String value = lineParts[1];
+                                
+                                switch (section.get()) {
+                                    case "FORMAT":
+                                        switch (key) {
+                                            case "duration":
+                                                final double duration = Double.parseDouble(value);
+                                                final String durationString = durationStamp.apply(duration);
+                                                videoStats.put("Length", durationString);
+                                                durations.add(duration);
+                                                break;
+                                            
+                                            case "bit_rate":
+                                                if (!value.equals("N/A")) {
+                                                    final long bitRate = (Long.parseLong(value) / 1000);
+                                                    final String bitRateString = bitRate + " kb/s";
+                                                    videoStats.put("Bitrate", bitRateString);
+                                                    bitRates.get("").add(bitRate);
+                                                }
+                                                break;
+                                        }
+                                        break;
+                                    
+                                    case "STREAM":
+                                        switch (key) {
+                                            case "codec_type":
+                                                streamType.set(Character.toUpperCase(value.charAt(0)) + value.substring(1).toLowerCase());
+                                                break;
+                                            
+                                            case "codec_name":
+                                                final String codecName = value;
+                                                streamStats.put("Codec", Optional.ofNullable(streamStats.get("Codec")).map(e -> (codecName + " (" + e + ")")).orElse(codecName));
+                                                break;
+                                            
+                                            case "profile":
+                                                if (!value.equals("unknown")) {
+                                                    final String profile = value;
+                                                    streamStats.put("Codec", Optional.ofNullable(streamStats.get("Codec")).map(e -> (e + " (" + profile + ")")).orElse(profile));
+                                                }
+                                                break;
+                                            
+                                            case "bit_rate":
+                                                if (!value.equals("N/A")) {
+                                                    final long bitRate = (Long.parseLong(value) / 1000);
+                                                    final String bitRateString = bitRate + " kb/s";
+                                                    streamStats.put("Bitrate", bitRateString);
+                                                    bitRates.get(streamType.get()).add(bitRate);
+                                                }
+                                                break;
+                                            
+                                            case "TAG:language":
+                                                final String language = value;
+                                                streamStats.put("Language", language);
+                                                break;
+                                            
+                                            default:
+                                                switch (streamType.get()) {
+                                                    case "Video":
+                                                        switch (key) {
+                                                            case "width":
+                                                                final String width = value;
+                                                                streamStats.put("Dimensions", Optional.ofNullable(streamStats.get("Dimensions")).map(e -> (width + "x" + e)).orElse(width));
+                                                                break;
+                                                            
+                                                            case "height":
+                                                                final String height = value;
+                                                                streamStats.put("Dimensions", Optional.ofNullable(streamStats.get("Dimensions")).map(e -> (e + "x" + height)).orElse(height));
+                                                                break;
+                                                            
+                                                            case "r_frame_rate":
+                                                                final String rFrameRate = decimalFormat.format((double) Integer.parseInt(value.split("/")[0]) / Integer.parseInt(value.split("/")[1])) + " fps";
+                                                                streamStats.put("Framerate", rFrameRate);
+                                                                break;
+                                                        }
+                                                        break;
+                                                    
+                                                    case "Audio":
+                                                        switch (key) {
+                                                            case "sample_rate":
+                                                                final String sampleRate = value + " Hz";
+                                                                streamStats.put("Frequency", sampleRate);
+                                                                break;
+                                                            
+                                                            case "channel_layout":
+                                                                final String channelLayout = value;
+                                                                streamStats.put("Layout", channelLayout);
+                                                                break;
+                                                            
+                                                            case "sample_fmt":
+                                                                final String sampleFmt = value;
+                                                                streamStats.put("Format", sampleFmt);
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                        }
+                                        break;
+                                }
+                            }
+                        });
+                        
+                        if (streams.get("").get() != streamTypes.stream().filter(e -> !e.isEmpty()).map(streams::get).mapToInt(AtomicInteger::get).sum()) {
+                            System.err.println("Error parsing streams: " + file.getAbsolutePath());
+                        }
+                        streams.forEach((type, typeCount) ->
+                                videoStats.put((type + " Streams").trim(), String.valueOf(typeCount)));
+                    });
+            
+            Filesystem.getDirs(dir).stream()
+                    .filter(e -> !e.getName().equalsIgnoreCase("old") &&
+                            (!e.getName().equalsIgnoreCase("Youtube") || dir.getName().equals("Youtube")))
+                    .forEachOrdered(subDir -> {
+                        
+                        final Map<String, Map<String, String>> subDirStats = produceStatsHelper(subDir, depth + 1);
+                        final String subDirKey = StringUtility.spaces(3 * depth) + "|-\\ " + subDir.getAbsolutePath().replace(videoDir.getParentFile().getAbsolutePath(), "");
+                        stats.putAll(subDirStats);
+                        
+                        final int subCount = Integer.parseInt(subDirStats.get(subDirKey).get("Count"));
+                        final double subAverageSize = Double.parseDouble(subDirStats.get(subDirKey).get("Size").replaceAll(".+MB\\s\\((.+)\\)", "$1"));
+                        final double subAverageDuration = durationUnstamp.apply(subDirStats.get(subDirKey).get("Length").replaceAll(".+\\s\\((.+)\\)", "$1"));
+                        final Map<String, Long[]> subBitRates = new HashMap<>();
+                        streamTypes.forEach(type -> subBitRates.put(type,
+                                Arrays.stream(subDirStats.get(subDirKey).get((type + " Bitrate").trim()).split("\\D+")).map(Long::parseLong).toArray(Long[]::new)));
+                        
+                        count.addAndGet(subCount);
+                        if (subCount > 0) {
+                            IntStream.range(0, subCount).forEach(i ->
+                                    sizes.add(subAverageSize));
+                            IntStream.range(0, subCount).forEach(i ->
+                                    durations.add(subAverageDuration));
+                            subBitRates.forEach((type, typeBitRates) -> {
+                                bitRates.get(type).add(typeBitRates[1]);
+                                if (subCount > 1) {
+                                    bitRates.get(type).add(typeBitRates[2]);
+                                    IntStream.range(0, (subCount - 2)).forEach(i ->
+                                            bitRates.get(type).add(typeBitRates[0]));
+                                }
+                            });
+                        }
+                    });
+            
+            dirStat.put("Count", String.valueOf(count));
+            dirStat.put("Size", (decimalFormat.format(sizes.stream().mapToDouble(e -> e).sum()) + " MB" +
+                    " (" + decimalFormat.format((count.get() > 0) ? (sizes.stream().mapToDouble(e -> e).sum() / count.get()) : 0) + ")"));
+            dirStat.put("Length", (durationStamp.apply(durations.stream().mapToDouble(e -> e).sum()) +
+                    " (" + durationStamp.apply((count.get() > 0) ? (durations.stream().mapToDouble(e -> e).sum() / count.get()) : 0) + ")"));
+            bitRates.forEach((type, entries) ->
+                    dirStat.put((type + " Bitrate").trim(), (((count.get() > 0) ? (entries.stream().mapToLong(e -> e).sum() / count.get()) : 0) + " kb/s" +
+                            " [" + entries.stream().mapToLong(e -> e).min().orElse(0) + "," + entries.stream().mapToLong(e -> e).max().orElse(0) + "]")));
+            
+            return stats;
+        }
+        
+        private static Map<String, Map<String, String>> produceDirStats() {
+            return produceDirStats(workDir, dirStatsFile, dirStatsSpreadsheet);
+//            return produceDirStats(videoDir, dirStatsFile, dirStatsSpreadsheet);
+//            return produceDirStats(new File(videoDir, "Youtube"), dirStatsFile, dirStatsSpreadsheet);
+        }
+        
+        public static Map<String, Map<String, String>> produceDirStats(File dir, File outputFile, File outputSpreadsheet) {
+            final Map<String, Map<String, String>> dirStats = produceDirStatsHelper(dir, 1);
+            final List<String> columns = List.of("Key", "Size", "Count", "Average Size");
+            
+            validateStats(dirStats);
+            outputStats(dirStats, columns, outputFile, outputSpreadsheet);
+            
+            return dirStats;
+        }
+        
+        private static Map<String, Map<String, String>> produceDirStatsHelper(File dir, int depth) {
+            final Map<String, Map<String, String>> stats = new LinkedHashMap<>();
+            
+            final Map<String, String> dirStat = new LinkedHashMap<>();
+            final String dirKey = StringUtility.spaces(3 * (depth - 1)) + "|-\\ " + dir.getAbsolutePath().replace(videoDir.getParentFile().getAbsolutePath(), "");
+            stats.put(dirKey, dirStat);
+            
+            dirStat.put("Key", dirKey);
+            dirStat.put("Name", dir.getName());
+            
+            final AtomicInteger count = new AtomicInteger(0);
+            final AtomicLong size = new AtomicLong(0);
+            
+            Filesystem.getFiles(dir).stream()
+                    .filter(e -> videoFormats.contains(e.getName().replaceAll(".+\\.([^.]+)$", "$1").toLowerCase()))
+                    .forEachOrdered(file -> {
+                        count.incrementAndGet();
+                        size.addAndGet(file.length());
+                    });
+            
+            Filesystem.getDirs(dir).stream()
+                    .filter(e -> !e.getName().equalsIgnoreCase("old") &&
+                            (!e.getName().equalsIgnoreCase("Youtube") || dir.getName().equals("Youtube")))
+                    .forEachOrdered(subDir -> {
+                        
+                        final Map<String, Map<String, String>> subDirStats = produceDirStatsHelper(subDir, depth + 1);
+                        final String subDirKey = StringUtility.spaces(3 * depth) + "|-\\ " + subDir.getAbsolutePath().replace(videoDir.getParentFile().getAbsolutePath(), "");
+                        stats.putAll(subDirStats);
+                        
+                        count.addAndGet(Integer.parseInt(subDirStats.get(subDirKey).get("Count")));
+                        size.addAndGet((long) (Double.parseDouble(subDirStats.get(subDirKey).get("Size").replace(" MB", "")) * (1024 * 1024)));
+                    });
+            
+            dirStat.put("Count", String.valueOf(count.get()));
+            dirStat.put("Size", (decimalFormat.format((double) size.get() / (1024 * 1024)) + " MB"));
+            dirStat.put("Average Size", (decimalFormat.format((count.get() > 0) ? ((double) size.get() / (1024 * 1024) / count.get()) : 0) + " MB"));
+            
+            return stats;
+        }
+        
+        private static void validateStats(Map<String, Map<String, String>> stats) {
+            stats.forEach((key, stat) -> {
+                if (stat.containsKey("Count")) {
+                    if (stat.getOrDefault("Count", "0").equals("0")) {
+                        System.out.println(StringUtility.padRight(("Directory is empty:"), 30, ' ') + key);
+                    }
+                    
+                } else {
+                    if (!key.endsWith(".mp4")) {
+                        System.out.println(StringUtility.padRight(("Video Codec not mp4:"), 30, ' ') + key);
+                    }
+                    if (stat.containsKey("Video Codec") && !stat.get("Video Codec").startsWith("hevc")) {
+                        System.out.println(StringUtility.padRight(("Video Codec not h265:"), 30, ' ') + key);
+                    }
+                    
+                    streamTypes.stream().filter(e -> !e.isEmpty()).forEach(streamType -> {
+                        if (stat.getOrDefault((streamType + " Streams"), "0").equals("0")) {
+                            if (!streamType.equals("Subtitle")) {
+                                System.out.println(StringUtility.padRight(("No " + streamType + " Streams:"), 30, ' ') + key);
+                            }
+                        } else {
+                            if (!stat.getOrDefault((streamType + " Streams"), "0").equals("1")) {
+                                System.out.println(StringUtility.padRight(("Multiple " + streamType + " Streams:"), 30, ' ') + key);
+                            }
+                            if (!stat.getOrDefault((streamType + " Language"), "und").matches("^(?:(?:\\[\\d+]\\s+)?(?:eng|und)(?:\\s+\\|\\s+)?)+$")) {
+                                System.out.println(StringUtility.padRight(("Non-English " + streamType + " Stream:"), 30, ' ') + key);
+                            }
+                        }
+                    });
+                }
+            });
+        }
+        
+        private static void outputStats(Map<String, Map<String, String>> stats, List<String> columns, File outputFile, File outputSpreadsheet) {
+            final List<String> txtOutput = new ArrayList<>();
+            final List<String> csvOutput = new ArrayList<>();
+            
+            final Map<String, Integer> columnWidths = new HashMap<>();
+            stats.forEach((key, subStats) -> {
+                columnWidths.put("Key", Math.max(key.length(), columnWidths.getOrDefault("Key", 0)));
+                subStats.forEach((name, value) ->
+                        columnWidths.put(name, Math.max((name + ": " + value).length(), columnWidths.getOrDefault(name, 0))));
+            });
+            
+            csvOutput.add(columns.stream()
+                    .map(e -> ("\"" + e + "\"")).collect(Collectors.joining(",")));
+            
+            stats.forEach((key, stat) -> {
+                txtOutput.add(String.format(
+                        columns.stream()
+                                .map(e -> Optional.ofNullable(columnWidths.get(e))
+                                        .map(i -> -(i + 4)).map(String::valueOf)
+                                        .orElse(""))
+                                .map(e -> ("%" + e + "s")).collect(Collectors.joining()),
+                        columns.stream()
+                                .map(e -> Optional.ofNullable(stat.get(e))
+                                        .map(e2 -> (e.equals("Key") ? e2 : (e + ": " + e2)))
+                                        .orElse(""))
+                                .toArray()));
+                
+                csvOutput.add(columns.stream()
+                        .map(e -> Optional.ofNullable(stat.get(e)).orElse(""))
+                        .map(e -> ("\"" + e + "\"")).collect(Collectors.joining(",")));
+            });
+            
+            if (outputFile != null) {
+                Filesystem.writeLines(outputFile, txtOutput);
+            }
+            if (outputSpreadsheet != null) {
+                Filesystem.writeLines(outputSpreadsheet, csvOutput);
+            }
+        }
+        
     }
     
 }

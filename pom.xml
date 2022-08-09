@@ -20,6 +20,7 @@
         <module>musicPlayer</module>
         <module>halfLifeCalculator</module>
         <module>osrsKeepLoggedIn</module>
+        <module>budgetProcessor</module>
         <module>osrsMerchingStatistics</module>
         <module>piBot</module>
         <module>pictureResizer</module>

@@ -18,6 +18,7 @@
         <module>htmlScraper</module>
         <module>lotteryGuesser</module>
         <module>musicPlayer</module>
+        <module>halfLifeCalculator</module>
         <module>osrsKeepLoggedIn</module>
         <module>osrsMerchingStatistics</module>
         <module>piBot</module>

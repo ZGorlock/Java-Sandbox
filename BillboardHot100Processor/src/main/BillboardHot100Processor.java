@@ -25,6 +25,8 @@ public class BillboardHot100Processor {
     
     private static final File MUSIC_DIR = new File("E:\\Music\\Music");
     
+    private static final File PLAYLIST_DIR = new File("E:\\Music\\Billboard Hot 100");
+    
     private static final File WORK_DIR = new File("E:\\Downloads");
     
     public static void main(String[] args) {
@@ -32,9 +34,10 @@ public class BillboardHot100Processor {
 //        customEdits();
 //        updateTags();
 //        fixOrdering();
+//        combinePlaylists();
     }
     
-    public static void organize() {
+    private static void organize() {
         File dir = new File(WORK_DIR, "a");
         File out = new File(WORK_DIR, "b");
         Filesystem.createDirectory(out);
@@ -118,7 +121,7 @@ public class BillboardHot100Processor {
         }
     }
     
-    public static void customEdits() {
+    private static void customEdits() {
         File dir = new File(WORK_DIR, "b");
         File out = new File(WORK_DIR, "b");
         Filesystem.createDirectory(out);
@@ -198,7 +201,7 @@ public class BillboardHot100Processor {
         }
     }
     
-    public static void updateTags() {
+    private static void updateTags() {
         File dir = new File(WORK_DIR, "b");
         File out = new File(WORK_DIR, "c");
         Filesystem.createDirectory(out);
@@ -243,7 +246,7 @@ public class BillboardHot100Processor {
         }
     }
     
-    public static void fixOrdering() {
+    private static void fixOrdering() {
         File dir = new File(WORK_DIR, "c");
         
         for (File m3u : Filesystem.getFiles(dir)) {
@@ -258,6 +261,22 @@ public class BillboardHot100Processor {
             Filesystem.writeLines(m3u, songs);
         }
         
+    }
+    
+    public static void combinePlaylists() {
+        for (File decadeDir : Filesystem.getDirs(PLAYLIST_DIR)) {
+            
+            File combinedPlaylist = new File(PLAYLIST_DIR, "Best of The " + decadeDir.getName() + ".m3u");
+            
+            List<String> content = new ArrayList<>();
+            for (File yearPlaylist : Filesystem.getFiles(decadeDir)) {
+                content.addAll(Filesystem.readLines(yearPlaylist));
+            }
+            
+            List<String> finalContent = content.stream().filter(e -> !e.isEmpty()).distinct().collect(Collectors.toList());
+            
+            Filesystem.writeLines(combinedPlaylist, finalContent);
+        }
     }
     
 }

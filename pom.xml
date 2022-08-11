@@ -20,6 +20,7 @@
         <module>lotteryGuesser</module>
         <module>musicPlayer</module>
         <module>halfLifeCalculator</module>
+        <module>phoneMusicProcessor</module>
         <module>osrsKeepLoggedIn</module>
         <module>budgetProcessor</module>
         <module>osrsMerchingStatistics</module>

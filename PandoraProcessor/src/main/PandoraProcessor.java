@@ -15,7 +15,7 @@ import commons.list.ListUtility;
 
 public class PandoraProcessor {
     
-    private static final File PANDORA = new File("E:/Music/Pandora");
+    private static final File PANDORA = new File("E:/Music/Playlists/Pandora");
     
     private static final File MUSIC = new File("E:/Music/Music");
     
@@ -29,7 +29,7 @@ public class PandoraProcessor {
         
         List<File> playlists = Filesystem.listFiles(PANDORA, e -> e.getName().endsWith(".m3u"));
         for (File playlist : playlists) {
-            FilesystemMacro.unprependLinesInFile(playlist, "E:\\Music\\Pandora\\New Music\\");
+            FilesystemMacro.unprependLinesInFile(playlist, "E:\\Music\\Playlists\\Pandora\\New Music\\");
             FilesystemMacro.unprependLinesInFile(playlist, "E:\\Music\\Music\\");
             FilesystemMacro.prependLinesInFile(playlist, "E:\\Music\\Music\\");
             

@@ -25,7 +25,7 @@ public class BillboardHot100Processor {
     
     private static final File MUSIC_DIR = new File("E:\\Music\\Music");
     
-    private static final File PLAYLIST_DIR = new File("E:\\Music\\Billboard Hot 100");
+    private static final File PLAYLIST_DIR = new File("E:\\Music\\Playlists\\Billboard Hot 100");
     
     private static final File WORK_DIR = new File("E:\\Downloads");
     

@@ -25,15 +25,15 @@ public class PhoneMusicProcessor {
     private static final File PHONE_PLAYLIST_DIR = new File(PHONE_DIR, "Playlists");
     
     private static final List<String> PLAYLISTS = List.of(
-            "Playlists/The Comet Is Coming",
-            "Pandora/80s Pop Radio",
-            "Pandora/AC DC Radio",
-            "Pandora/Arctic Monkeys Radio",
-            "Pandora/Electric Light Orchestra Radio",
-            "Pandora/Migos Radio",
-            "Pandora/The Black Keys Radio",
-            "Pandora/Tim McGraw Radio",
-            "Pandora/Trap Remix Radio",
+            "Playlists/Artist/The Comet Is Coming",
+            "Playlists/Pandora/80s Pop Radio",
+            "Playlists/Pandora/AC DC Radio",
+            "Playlists/Pandora/Arctic Monkeys Radio",
+            "Playlists/Pandora/Electric Light Orchestra Radio",
+            "Playlists/Pandora/Migos Radio",
+            "Playlists/Pandora/The Black Keys Radio",
+            "Playlists/Pandora/Tim McGraw Radio",
+            "Playlists/Pandora/Trap Remix Radio",
             "Youtube/Pop/Youtube Pop Favorites",
             "Youtube/Trap/Youtube Trap Favorites"
     );

@@ -25,10 +25,10 @@ public class WordleHelper {
     public static void main(String[] args) {
         parseArguments(args);
         
-        final List<String> options = findOptions(pattern);
-        for (String option : options) {
-            System.out.println(option);
-        }
+        final List<String> results = findOptions(pattern);
+//        final List<String> results = Dictionary.wordsOfLengthThatContainAll(5, "G", "D", "B");
+        
+        results.forEach(System.out::println);
     }
     
     
@@ -47,8 +47,7 @@ public class WordleHelper {
         final Pattern wordPattern = getRegexPattern(pattern);
         final List<Character> unplacedLetters = getUnplacedLetters(pattern);
         
-        return Dictionary.wordsOfLength(wordLength).stream()
-                .filter(e -> wordPattern.matcher(e).matches())
+        return Dictionary.wordsOfLengthThatMatch(wordLength, wordPattern.pattern()).stream()
                 .filter(e -> unplacedLetters.stream().allMatch(l -> e.contains(String.valueOf(l))))
                 .collect(Collectors.toList());
     }

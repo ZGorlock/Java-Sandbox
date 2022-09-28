@@ -56,6 +56,8 @@ public class BackupHelper {
         
         backupWindows();
         
+        syncExternalBackup();
+        
         final long endTime = System.currentTimeMillis();
         System.out.println("\n\n\nBackup Complete in " + DateTimeUtility.durationToDurationString(
                 (endTime - startTime), true, false, true));
@@ -458,6 +460,16 @@ public class BackupHelper {
             
             WindowsBackupTools.createSystemImage(backupTarget);
         }
+    }
+    
+    private static void syncExternalBackup() {
+        System.out.println("\n\n\n--- SYNC EXTERNAL BACKUP ---\n");
+        BackupUtil.clearTmpDir();
+        
+        final File localBackupDir = Drive.BACKUP.drive;
+        final File backupDir = Drive.EXTERNAL_BACKUP.drive;
+        
+        BackupUtil.rsyncBackupDir(localBackupDir, backupDir);
     }
     
 }

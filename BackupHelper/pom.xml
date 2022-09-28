@@ -11,5 +11,21 @@
     </parent>
     
     <artifactId>backupHelper</artifactId>
-
+    
+    
+    <properties>
+        <!-- FILESYSTEM -->
+        <rsync4j.version>3.2.3-10</rsync4j.version>
+    </properties>
+    
+    
+    <dependencies>
+        <!-- FILESYSTEM -->
+        <dependency>
+            <groupId>com.github.fracpete</groupId>
+            <artifactId>rsync4j-all</artifactId>
+            <version>${rsync4j.version}</version>
+        </dependency>
+    </dependencies>
+    
 </project>

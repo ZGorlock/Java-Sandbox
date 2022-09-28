@@ -19,7 +19,8 @@ public enum Drive {
     VIRTUAL_MACHINES,
     WORK,
     BACKUP,
-    RECOVERY;
+    RECOVERY,
+    EXTERNAL_BACKUP;
     
     
     //Fields

@@ -39,6 +39,8 @@ public final class BackupUtil {
     
     public static final boolean ASSUME_RECENT_EXISTS = false; //skip scanning for existing monthly backups, and assume one is present
     
+    public static final boolean SKIP_RSYNC = false; //prevents rsync operations
+    
     public static final String INDENT = StringUtility.spaces(4);
     
     public static final String ERROR = StringUtility.fillStringOfLength('*', INDENT.length() / 2) + StringUtility.spaces(INDENT.length() / 2);
@@ -226,6 +228,18 @@ public final class BackupUtil {
     }
     
     /**
+     * Rsyncs a source backup directory to a target backup directory.
+     */
+    public static boolean rsyncBackupDir(File sourceBackupDir, File targetBackupDir) {
+        if (!SKIP_RSYNC) {
+            System.out.println(StringUtility.format("Rsyncing: {} to: {}", Log.logFile(sourceBackupDir), Log.logFile(targetBackupDir)));
+            
+            return Action.rsync(sourceBackupDir, targetBackupDir);
+        }
+        return false;
+    }
+    
+    /**
      * Checks if a monthly backup already exists.
      */
     public static boolean monthlyBackupExists(File backupDir, String baseName) {
@@ -237,7 +251,7 @@ public final class BackupUtil {
                 return true;
                 
             } else if (!Search.getForMonth(backupDir, baseName).isEmpty()) {
-                System.out.println(INDENT + StringUtility.format("Found existing backup from: {}", Log.logStamp(BackupUtil.Search.getNewestDate(backupDir, baseName))));
+                System.out.println(INDENT + StringUtility.format("Found existing backup from: {}", Log.logStamp(Search.getNewestDate(backupDir, baseName))));
                 return true;
             }
             
@@ -429,6 +443,39 @@ public final class BackupUtil {
         
         public static boolean compress(File file, boolean openDir, File target, boolean slow, String password, boolean deleteAfter) {
             return compress(file, openDir, target, slow, password, deleteAfter, true);
+        }
+        
+        public static boolean rsync(File sourceDir, File targetDir, boolean log) {
+            if (!sourceDir.exists()) {
+                if (log) {
+                    System.out.println(INDENT + "Source directory: " + Log.logFile(sourceDir) + " could not be found");
+                }
+                return false;
+            }
+            if (!targetDir.exists()) {
+                if (log) {
+                    System.out.println(INDENT + "Target directory: " + Log.logFile(targetDir) + " could not be found");
+                }
+                return false;
+            }
+            
+            if (SAFE_MODE) {
+                if (log) {
+                    System.out.println(ERROR + StringUtility.format("Rsyncing: {}; skipping in safe mode", Log.logFile(targetDir)));
+                }
+            } else {
+                if (log) {
+                    System.out.println(INDENT + StringUtility.format("Rsyncing: {}", Log.logFile(targetDir)));
+                }
+                if (!TEST_MODE) {
+                    return RsyncUtil.rsync(sourceDir, targetDir);
+                }
+            }
+            return true;
+        }
+        
+        public static boolean rsync(File sourceDir, File targetDir) {
+            return rsync(sourceDir, targetDir, true);
         }
         
         @SuppressWarnings("BusyWait")

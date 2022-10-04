@@ -32,7 +32,9 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import com.google.common.util.concurrent.AtomicDouble;
+import commons.access.CmdLine;
 import commons.access.Filesystem;
+import commons.access.OperatingSystem;
 import commons.lambda.Action;
 import commons.lambda.function.unchecked.UncheckedFunction;
 import commons.lambda.stream.collector.MapCollectors;
@@ -91,8 +93,11 @@ public final class HalfLifeCalculator {
     
     private static void graph(Instant test) {
         FileUtil.saveGraph.accept(Stream.concat(
-                Stream.of(Stream.concat(Stream.of("Time", "Label"), dataSets.stream()
-                        .filter(dataSet -> Objects.nonNull(dataSet.getValue())).map(Map.Entry::getKey)).collect(Collectors.joining(","))),
+                Stream.of(Stream.concat(
+                                Stream.of("Time", "Label"),
+                                dataSets.stream().filter(dataSet -> Objects.nonNull(dataSet.getValue())).map(Map.Entry::getKey)
+                        ).map(StringUtility::quote),
+                        Stream.of("")),
                 Stream.concat(
                                 IntStream.rangeClosed((int) -(GRAPH_START_OFFSET_DAYS / GRAPH_GRADUATION_DAYS), (int) (GRAPH_END_OFFSET_DAYS / GRAPH_GRADUATION_DAYS))
                                         .mapToObj(i -> Map.entry(TimeUtil.addDays.apply(test, (i * GRAPH_GRADUATION_DAYS)).toEpochMilli(), "")),
@@ -101,11 +106,11 @@ public final class HalfLifeCalculator {
                         ).sorted(Map.Entry.comparingByKey()).collect(MapCollectors.toMap(LinkedHashMap.class)).entrySet().stream()
                         .map(graphPoint -> Map.entry(TimeUtil.atMillis.apply(graphPoint.getKey()), graphPoint.getValue()))
                         .map(graphPoint -> Stream.concat(
-                                Stream.of(StringUtility.quote(TimeUtil.formatPrint.apply(graphPoint.getKey())), StringUtility.quote(graphPoint.getValue())),
+                                Stream.of(TimeUtil.formatPrint.apply(graphPoint.getKey()), graphPoint.getValue()).map(StringUtility::quote),
                                 dataSets.stream().filter(dataSet -> Objects.nonNull(dataSet.getValue()))
                                         .map(dataSet -> calculateAt(graphPoint.getKey(), dataSet, (graphPoint.getValue().equals("T")))).map(String::valueOf)
-                        ).collect(Collectors.joining(",")))
-        ).collect(Collectors.toList()));
+                        ))
+        ).map(e -> e.collect(Collectors.joining(","))).collect(Collectors.toList()));
         if (GRAPH_OPEN_AFTER) {
             FileUtil.openGraph.performQuietly();
         }
@@ -166,7 +171,7 @@ public final class HalfLifeCalculator {
         //Functions
         
         static final UnaryOperator<List<String>> cleanLines = (List<String> lines) ->
-                lines.stream().map(e -> e.replaceAll("//.*$", "")).map(String::trim).filter(e -> !e.isEmpty()).collect(Collectors.toList());
+                lines.stream().map(e -> e.replaceAll("(?://|#).*$", "")).map(String::strip).filter(e -> !e.isEmpty()).collect(Collectors.toList());
         
         static final Function<List<String>, List<ImmutablePair<Instant, Double>>> parseData = (List<String> data) ->
                 data.stream().map(e -> e.split("\\|")).flatMap(e ->
@@ -179,8 +184,8 @@ public final class HalfLifeCalculator {
         static final Supplier<Map<Double, String>> loadSchedule = () ->
                 cleanLines.apply(Filesystem.readLines(SCHEDULE_FILE)).stream()
                         .map(e -> e.split(",")).collect(MapCollectors.toMap(LinkedHashMap.class,
-                                e -> Double.parseDouble(e[0].trim()),
-                                e -> e[1].trim()));
+                                e -> Double.parseDouble(e[0].strip()),
+                                e -> e[1].strip()));
         
         static final Supplier<List<ImmutablePair<Instant, Double>>> loadData = () ->
                 parseData.apply(cleanLines.apply(Filesystem.readLines(DATA_FILE)));
@@ -195,14 +200,22 @@ public final class HalfLifeCalculator {
         static final Supplier<Map<String, List<Double>>> loadComponents = () ->
                 cleanLines.apply(Filesystem.readLines(COMPONENTS_FILE)).stream()
                         .map(e -> e.split(",")).collect(MapCollectors.toMap(LinkedHashMap.class,
-                                e -> e[0].trim(),
+                                e -> e[0].strip(),
                                 e -> List.of(Double.parseDouble(e[1]), (Math.log(2) / Double.parseDouble(e[2])), (Double.parseDouble(e[3]) / 3.0))));
         
         static final Consumer<List<String>> saveGraph = (List<String> graphData) ->
                 Filesystem.writeLines(GRAPH_FILE, graphData);
         
-        static final Action openGraph = () ->
+        static final Action openGraph = () -> {
+            final File libreCalcExe = new File("C:/Program Files/LibreOffice/program/scalc.exe");
+            if (OperatingSystem.isWindows() && libreCalcExe.exists()) {
+                CmdLine.executeCmdAsync(StringUtility.quote(libreCalcExe.getAbsolutePath()) +
+                        " -o " + StringUtility.quote(GRAPH_FILE.getAbsolutePath()) +
+                        " --infilter=" + StringUtility.quote("CSV:44,34,0,0,4/2/1/1"));
+            } else {
                 Desktop.getDesktop().open(GRAPH_FILE);
+            }
+        };
         
     }
     

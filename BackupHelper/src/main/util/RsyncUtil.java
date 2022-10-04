@@ -9,7 +9,7 @@ package main.util;
 import java.io.File;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 import com.github.fracpete.processoutput4j.core.StreamingProcessOutputType;
 import com.github.fracpete.processoutput4j.core.StreamingProcessOwner;
@@ -23,12 +23,13 @@ public final class RsyncUtil {
     //Static Methods
     
     public static boolean rsync(File sourceDir, File targetDir) {
-        final Function<File, String> fileArgumentFormatter = (File fileArgument) ->
-                StringUtility.fixFileSeparators(fileArgument.getAbsolutePath()) + "/.";
+        final BiFunction<File, Boolean, String> fileArgumentFormatter = (File fileArgument, Boolean openDir) ->
+                StringUtility.fixFileSeparators(fileArgument.getAbsolutePath()) + (openDir ? "/." : "");
         
         final RSync rsync = new RSync()
-                .source(fileArgumentFormatter.apply(sourceDir))
-                .destination(fileArgumentFormatter.apply(targetDir))
+                .source(fileArgumentFormatter.apply(sourceDir, true))
+                .destination(fileArgumentFormatter.apply(targetDir, true))
+                .excludeFrom(fileArgumentFormatter.apply(BackupUtil.BLACKLIST_FILE, false))
                 .recursive(true).archive(false)
                 .delete(true).deleteAfter(true).force(true)
                 .perms(true).acls(true).owner(true).group(true).times(true).xattrs(true)

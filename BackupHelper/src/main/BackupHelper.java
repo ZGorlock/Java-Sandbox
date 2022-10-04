@@ -7,6 +7,7 @@
 package main;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,7 +85,7 @@ public class BackupHelper {
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "DnD"), List.of("Campaigns", "Tools"));
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Housing"));
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Money"));
-            BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Other"), List.of("Car", "Cat", "Doctor", "Genealogy", "GME", "Music", "PC", "Tesla Coil"));
+            BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Other"), List.of("Car", "Cat", "Doctor", "Genealogy", "Music", "PC", "Tesla Coil"));
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Resume"));
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Work"), List.of("REST"), true);
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Writing"));
@@ -205,7 +206,7 @@ public class BackupHelper {
         final String userName = Filesystem.readFileToString(new File(Project.DATA_DIR, "name-user.txt"));
         
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", backupName));
-        final File backupDir = new File(Drive.BACKUP.drive, Filesystem.generatePath(backupName, BackupUtil.Stamper.stamp("")));
+        final File backupDir = new File(Drive.BACKUP.drive, backupName);
         
         System.out.println("\n--- Backing up Program Data ---\n");
         
@@ -263,8 +264,11 @@ public class BackupHelper {
         
         System.out.println("\n----------------------------\n");
         
-        BackupUtil.syncBackupDir(localBackupDir, backupDir);
-        BackupUtil.cleanBackupDir(backupDir.getParentFile(), 4);
+        final Date backupDate = BackupUtil.Search.getNewestDate(localBackupDir);
+        final File backupDateDir = new File(backupDir, BackupUtil.Stamper.formatDate(backupDate));
+        
+        BackupUtil.syncBackupDir(localBackupDir, backupDateDir);
+        BackupUtil.cleanBackupDir(backupDir, 4);
     }
     
     private static void backupRegistry() {

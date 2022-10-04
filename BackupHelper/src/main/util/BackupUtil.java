@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import commons.access.Filesystem;
 import commons.access.Project;
@@ -45,11 +46,21 @@ public final class BackupUtil {
     
     public static final String ERROR = StringUtility.fillStringOfLength('*', INDENT.length() / 2) + StringUtility.spaces(INDENT.length() / 2);
     
-    public static final List<String> BLACKLIST = List.of(
-            "$RECYCLE.BIN", "System Volume Information",
-            "desktop.ini", "Thumbs.db",
-            "Backup", "Backups", "tmp"
-    );
+    public static final File BLACKLIST_FILE = new File(Project.DATA_DIR, "blacklist.txt");
+    
+    public static final List<String> BLACKLIST = Stream.concat(
+            Stream.of(
+                    "$RECYCLE.BIN", "System Volume Information",
+                    "desktop.ini", "Thumbs.db"
+            ),
+            Filesystem.readLines(BLACKLIST_FILE).stream()
+    ).filter(e -> !StringUtility.isNullOrBlank(e)).distinct().collect(Collectors.toList());
+    
+    static {
+        if (!BLACKLIST_FILE.exists()) {
+            Filesystem.writeLines(BLACKLIST_FILE, BLACKLIST);
+        }
+    }
     
     
     //Static Methods

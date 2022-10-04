@@ -6,139 +6,156 @@
 
 package main;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.awt.image.WritableRaster;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfRect;
-import org.opencv.core.Rect;
-import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.objdetect.CascadeClassifier;
-import org.opencv.videoio.VideoCapture;
+import org.bytedeco.javacv.CanvasFrame;
+import org.bytedeco.javacv.FrameGrabber;
+import org.bytedeco.javacv.OpenCVFrameConverter;
+import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.opencv.opencv_core.MatVector;
+import org.bytedeco.opencv.opencv_core.Rect;
+import org.bytedeco.opencv.opencv_core.RectVector;
+import org.bytedeco.opencv.opencv_core.Scalar;
+import org.bytedeco.opencv.opencv_objdetect.CascadeClassifier;
 
-public class Webcam extends JPanel {
+import static org.bytedeco.opencv.global.opencv_core.CV_8UC1;
+import static org.bytedeco.opencv.global.opencv_imgproc.CV_AA;
+import static org.bytedeco.opencv.global.opencv_imgproc.CV_BGR2GRAY;
+import static org.bytedeco.opencv.global.opencv_imgproc.CV_CHAIN_APPROX_SIMPLE;
+import static org.bytedeco.opencv.global.opencv_imgproc.CV_RETR_LIST;
+import static org.bytedeco.opencv.global.opencv_imgproc.CV_THRESH_BINARY;
+import static org.bytedeco.opencv.global.opencv_imgproc.approxPolyDP;
+import static org.bytedeco.opencv.global.opencv_imgproc.arcLength;
+import static org.bytedeco.opencv.global.opencv_imgproc.cvtColor;
+import static org.bytedeco.opencv.global.opencv_imgproc.drawContours;
+import static org.bytedeco.opencv.global.opencv_imgproc.findContours;
+import static org.bytedeco.opencv.global.opencv_imgproc.rectangle;
+import static org.bytedeco.opencv.global.opencv_imgproc.threshold;
+
+public class Webcam {
     
-    final static int INTERVAL = 50;///you may use interval
+    //Constants
     
-    final static String DETECTOR_DIR = "resources" + File.separator;
+    private static final int INTERVAL = 20;
     
-    static Mat matrix;
+    private static final File CLASSIFIER_DIR = new File("resources");
     
-    static BufferedImage image;
     
-    static final List<CascadeClassifier> detectors = new ArrayList<>();
+    //Static Fields
     
-    static final List<Rect[]> detections = new ArrayList<>();
+    private static final Map<String, CascadeClassifier> classifiers = new LinkedHashMap<>();
     
-    public void loop() throws FileNotFoundException, IOException {
-        while (true) {
+    private static CanvasFrame frame;
+    
+    private static FrameGrabber grabber;
+    
+    private static OpenCVFrameConverter.ToMat converter;
+    
+    
+    //Main Method
+    
+    public static void main(String[] args) throws Exception {
+        try {
+            grabber = FrameGrabber.createDefault(0);
+            converter = new OpenCVFrameConverter.ToMat();
+            
+            frame = new CanvasFrame("Webcam", CanvasFrame.getDefaultGamma() / grabber.getGamma());
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            
+            addClassifier("haarcascade_frontalface_alt.xml");
+            addClassifier("haarcascade_eye.xml");
+            
+            grabber.start();
+            
+            new Webcam().loop();
+            
+        } finally {
+            frame.dispose();
+            grabber.stop();
+        }
+    }
+    
+    
+    //Methods
+    
+    @SuppressWarnings("BusyWait")
+    private void loop() throws Exception {
+        List<Mat> capture;
+        while ((capture = capture()) != null) {
+            detect(capture);
+            display(capture.get(0));
+            
             try {
                 Thread.sleep(INTERVAL);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            } catch (InterruptedException ignored) {
             }
-            
-            captureSnapShot();
-            saveImage();
-            doDetections();
-            this.repaint();
         }
     }
     
-    public BufferedImage captureSnapShot() {
-        VideoCapture capture = new VideoCapture(0);
+    private List<Mat> capture() throws Exception {
+        final Mat snapshot = converter.convert(grabber.grab());
+        if (snapshot == null) {
+            return null;
+        }
         
-        if (capture.isOpened()) {
-            if (capture.read(matrix)) {
-                image = new BufferedImage(matrix.width(),
-                        matrix.height(), BufferedImage.TYPE_3BYTE_BGR);
+        final Mat grayscale = new Mat(snapshot.rows(), snapshot.cols(), CV_8UC1);
+        final Mat threshold = grayscale.clone();
+        final Mat display = snapshot.clone();
+        
+        cvtColor(snapshot, grayscale, CV_BGR2GRAY);
+        threshold(grayscale, threshold, 64, 255, CV_THRESH_BINARY);
+        
+        return List.of(display, snapshot, grayscale, threshold);
+    }
+    
+    private Map<String, List<Rect>> detect(List<Mat> capture) {
+        final Map<String, List<Rect>> detections = new HashMap<>();
+        
+        for (Map.Entry<String, CascadeClassifier> classifier : classifiers.entrySet()) {
+            final List<Rect> classifierDetections = new ArrayList<>();
+            
+            final RectVector detected = new RectVector();
+            classifier.getValue().detectMultiScale(capture.get(2), detected);
+            
+            for (long i = 0; i < detected.size(); i++) {
+                final Rect detection = detected.get(i);
+                classifierDetections.add(detection);
                 
-                WritableRaster raster = image.getRaster();
-                DataBufferByte dataBuffer = (DataBufferByte) raster.getDataBuffer();
-                byte[] data = dataBuffer.getData();
-                matrix.get(0, 0, data);
+                rectangle(capture.get(0), detection, Scalar.RED, 1, CV_AA, 0);
             }
+            detections.put(classifier.getKey(), classifierDetections);
         }
-        return image;
-    }
-    
-    static int i = 0;
-    
-    public static void saveImage() {
-        String file = "snapshot.jpg";
-        i++;
-        Imgcodecs.imwrite(file, matrix);
-    }
-    
-    public void doDetections() {
-        for (int i = 0; i < detectors.size(); i++) {
-            CascadeClassifier detector = detectors.get(i);
-            MatOfRect detected = new MatOfRect();
-            detector.detectMultiScale(matrix, detected);
-            detections.set(i, detected.toArray());
-        }
-    }
-    
-    public static void addDetector(String detector) {
-        detectors.add(new CascadeClassifier(new File(DETECTOR_DIR + detector).getAbsolutePath()));
-        detections.add(new Rect[] {});
-    }
-    
-    public static void main(String args[]) {
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         
-        JFrame window = new JFrame("Webcam");
-        final Webcam webcam = new Webcam();
-        window.setSize(1080, 860);
-        window.add(webcam);
-        window.setLocationRelativeTo(null);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.pack();
-        window.setVisible(true);
+        final MatVector contours = new MatVector();
+        findContours(capture.get(3), contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
         
-        matrix = new Mat();
-        addDetector("haarcascade_frontalface_alt.xml");
-        addDetector("haarcascade_eye.xml");
-        
-        try {
-            webcam.loop();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    @Override
-    public void paintComponent(Graphics g) {
-        if (i > 0) {
-            //super.paint(g);
-            Graphics2D g2d = (Graphics2D) g.create();
-            g2d.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null);
+        for (long i = 0; i < contours.size(); i++) {
+            final Mat contour = contours.get(i);
             
-            for (Rect[] rects : detections) {
-                for (Rect rect : rects) {
-                    Stroke stroke = g2d.getStroke();
-                    g2d.setStroke(new BasicStroke(3.0F));
-                    g2d.setStroke(stroke);
-                    g2d.setColor(Color.RED);
-                    g2d.drawRoundRect(rect.x, rect.y, rect.height, rect.width, 5, 5);
-                }
-            }
+            final Mat points = new Mat();
+            approxPolyDP(contours.get(i), points, (arcLength(contour, true) * 0.02), true);
             
-            g2d.dispose();
+            drawContours(capture.get(0), new MatVector(contour), -1, Scalar.BLUE);
         }
+        
+        return detections;
     }
+    
+    private void display(Mat display) {
+        frame.showImage(converter.convert(display));
+    }
+    
+    
+    //Static Methods
+    
+    private static void addClassifier(String classifier) {
+        classifiers.put(classifier, new CascadeClassifier(new File(CLASSIFIER_DIR, classifier).getAbsolutePath()));
+    }
+    
 }

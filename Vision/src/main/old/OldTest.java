@@ -1,17 +1,17 @@
 /*
- * File:    Test.java
- * Package: main
+ * File:    OldTest.java
+ * Package: main.old
  * Author:  Zachary Gill
  */
 
-package main;
+package main.old;
 
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
 
-public class Test {
+public class OldTest {
     
     // Compulsory
     static {

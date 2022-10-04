@@ -1,0 +1,109 @@
+{
+    "extractor": {
+        "base-directory": "~/Downloads/gallery-dl/",
+        "filename": "{filename}.{extension}",
+        
+        "archive": "~/gallery-dl/archive.sqlite3",
+        
+        "path-restrict": {
+            "\\": "-",
+            "/" : "-",
+            "|" : "-",
+            ":" : "-",
+            "*" : "-",
+            "?" : "-",
+            "\"": "-",
+            "<" : "-",
+            ">" : "-"
+        },
+        
+        "extension-map": {
+            "jpeg": "jpg",
+            "jpe" : "jpg",
+            "jfif": "jpg",
+            "jif" : "jpg",
+            "jfi" : "jpg"
+        },
+        
+        "ugoira": true,
+        "postprocessors": ["ugoira-gif"]
+    },
+    
+    
+    "downloader": {
+        "retries": 3,
+        
+        "ytdl": {
+            "module": "yt_dlp"
+        }
+    },
+    
+    
+    "postprocessor": {
+        "ugoira-gif": {
+            "name": "ugoira",
+            "extension": "gif",
+            "ffmpeg-args": ["-filter_complex", "[0:v] split [a][b];[a] palettegen [p];[b][p] paletteuse"],
+            "repeat-last-frame": false
+        },
+        
+        "ugoira-webm": {
+            "name": "ugoira",
+            "extension": "webm",
+            "ffmpeg-args": ["-c:v", "libvpx-vp9", "-an", "-b:v", "0", "-crf", "30"],
+            "ffmpeg-twopass": true,
+            "ffmpeg-demuxer": "image2"
+        },
+        
+        "ugoira-mp4": {
+            "name": "ugoira",
+            "extension": "mp4",
+            "ffmpeg-args": ["-c:v", "libx264", "-an", "-b:v", "4M", "-preset", "veryslow"],
+            "ffmpeg-twopass": true,
+            "libx264-prevent-odd": true
+        },
+        
+        "ugoira-copy": {
+            "name": "ugoira",
+            "extension": "mkv",
+            "ffmpeg-args": ["-c", "copy"],
+            "libx264-prevent-odd": false,
+            "repeat-last-frame": false
+        }
+    },
+    
+    
+    "output": {
+        "log": {
+            "level": "info",
+            
+            "format": {
+                "debug"  : "\u001b[0;37m{name}: {message}\u001b[0m",
+                "info"   : "\u001b[1;37m{name}: {message}\u001b[0m",
+                "warning": "\u001b[1;33m{name}: {message}\u001b[0m",
+                "error"  : "\u001b[1;31m{name}: {message}\u001b[0m"
+            }
+        },
+        
+        "shorten": "eaw",
+        "ansi": true,
+        
+        "logfile": {
+            "path": "~/gallery-dl/log.txt",
+            "mode": "w",
+            "level": "debug"
+        },
+        
+        "unsupportedfile": {
+            "path": "~/gallery-dl/error.txt",
+            "mode": "a",
+            "format": "{asctime} {message}",
+            "format-date": "%Y-%m-%d-%H-%M-%S"
+        }
+    },
+    
+    
+    "cache": {
+        "file": "~/gallery-dl/cache.sqlite3"
+    }
+}

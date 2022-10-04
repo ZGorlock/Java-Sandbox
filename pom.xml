@@ -13,6 +13,7 @@
         <module>ackermann</module>
         <module>alchBuddy</module>
         <module>dbTest</module>
+        <module>galleryDownloader</module>
         <module>dependencyAnalyzer</module>
         <module>dicingBotSimulator</module>
         <module>webReader</module>

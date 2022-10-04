@@ -15,6 +15,7 @@
         <module>dbTest</module>
         <module>dependencyAnalyzer</module>
         <module>dicingBotSimulator</module>
+        <module>webReader</module>
         <module>dictionaryTest</module>
         <module>htmlScraper</module>
         <module>lotteryGuesser</module>

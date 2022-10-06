@@ -31,11 +31,7 @@
     
     
     "downloader": {
-        "retries": 3,
-        
-        "ytdl": {
-            "module": "yt_dlp"
-        }
+        "retries": 3
     },
     
     

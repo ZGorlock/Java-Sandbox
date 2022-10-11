@@ -28,6 +28,7 @@
         <module>budgetProcessor</module>
         <module>osrsMerchingStatistics</module>
         <module>piBot</module>
+        <module>stableDiffusionRunner</module>
         <module>pictureResizer</module>
         <module>reactionTimeClicker</module>
         <module>sineWaves</module>

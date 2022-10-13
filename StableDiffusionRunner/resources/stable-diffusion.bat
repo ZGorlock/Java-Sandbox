@@ -4,35 +4,19 @@ setlocal
 
 :main
 	call :initSettings
-	call :saveSettings
+	call :initConstants
+	call :saveConfiguration
 	
 	call :setupConda
 	call :runStableDiffusion
 	call :shutdownConda
 	
-    exit
+	goto :end
 
 
 :initSettings
-	:directorySettings
-		set base_drive=%SystemDrive%
-		set base_dir=%UserProfile%\stable-diffusion
-		set conda_dir=%ProgramData%\Miniconda3
-		set model_dir=%base_dir%\model
-		set output_dir=%base_dir%\output
-	
-	:projectSettings
-		set conda_env=ldm
-		set branch_name=stable-diffusion-main
-		set model_file=%model_dir%\sd-v1-4.ckpt
-		set config_file=
-		set use_optimized_script=true
-	
 	:promptSettings
-		set prompt_file=%base_dir%\prompt.txt
-		if exist "%prompt_file%" set /p prompt_file_data=<"%prompt_file%"
 		set prompt_text=
-		if "%prompt_text%"=="" (set pass_prompt_as_file=true) else (set pass_prompt_as_file=false)
 		set guidance_scale=7.5
 	
 	:outputSettings
@@ -54,6 +38,32 @@ setlocal
 		set batch_size=1
 		set cast_precision=autocast
 		set use_laion400m=false
+	
+	exit /b 0
+
+
+:initConstants
+	:pathConstants
+		set base_drive=%SystemDrive%
+		set base_dir=%UserProfile%\stable-diffusion
+		set conda_dir=%ProgramData%\Miniconda3
+		set model_dir=%base_dir%\model
+		set output_dir=%base_dir%\output
+		set config_file=
+		set model_file=%model_dir%\sd-v1-4.ckpt
+		set prompt_file=%base_dir%\prompt.txt
+	
+	:projectConstants
+		set conda_env=ldm
+		set branch_name=stable-diffusion-main
+		set use_optimized_script=true
+	
+	:promptConstants
+		set prompt_file=%base_dir%\prompt.txt
+		if exist "%prompt_file%" set /p prompt_file_data=<"%prompt_file%"
+		if "%prompt_text%"=="" (set pass_prompt_as_file=true) else (set pass_prompt_as_file=false)
+	
+	:environmentConstants
 		set PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:128
 	
 	exit /b 0
@@ -99,7 +109,7 @@ setlocal
 
 
 :setupConda
-    %base_drive% && cd "%base_dir%\%branch_name%"
+	%base_drive% && cd "%base_dir%\%branch_name%"
 	call %conda_dir%\Scripts\activate.bat %conda_env%
 	exit /b 0
 
@@ -110,13 +120,13 @@ setlocal
 	exit /b 0
 
 
-:saveSettings
-	:setTimestamp
+:saveConfiguration
+	:getTimestamp
 		set date_key=%DATE:~-4%%DATE:~4,2%%DATE:~7,2%
 		set time_key=%TIME:~-11,2%%TIME:~-8,2%%TIME:~-5,2%
 		set timestamp=%date_key% %time_key: =0%
 	
-	:writeSettings
+	:printConfiguration
 		set settings_file=%output_dir%\%timestamp%.txt
 		(
 			echo Prompt:       %prompt_text%%prompt_file_data%
@@ -167,3 +177,8 @@ setlocal
 		)
 	)
 	exit /b 0
+
+
+:end
+::	pause
+	exit

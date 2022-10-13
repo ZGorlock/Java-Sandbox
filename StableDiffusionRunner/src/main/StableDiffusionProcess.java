@@ -7,6 +7,10 @@
 package main;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.BiFunction;
+import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
 import commons.access.CmdLine;
@@ -60,14 +64,29 @@ public class StableDiffusionProcess {
     //Methods
     
     public void prepareScript() {
-        Filesystem.writeLines(SCRIPT,
-                Filesystem.readLines(BASE_SCRIPT).stream().map(e -> e
-                                .replaceAll("^(?<indent>\\s*)set prompt_text=(?<oldValue>.*)$", ("$1set prompt_text=" + prompt))
-                                .replaceAll("^(?<indent>\\s*)set guidance_scale=(?<oldValue>.*)$", ("$1set guidance_scale=" + scale))
-                                .replaceAll("^(?<indent>\\s*)set num_iterations=(?<oldValue>.*)$", ("$1set num_iterations=" + iterations))
-                                .replaceAll("^(?<indent>\\s*)set image_width=(?<oldValue>.*)$", ("$1set image_width=" + width))
-                                .replaceAll("^(?<indent>\\s*)set image_height=(?<oldValue>.*)$", ("$1set image_height=" + height)))
-                        .collect(Collectors.toList()));
+        final BiFunction<String, Map.Entry<String, String>, String> fieldReplacer = (String line, Map.Entry<String, String> field) ->
+                line.replaceAll(("(?<=\\s)set\\s" + field.getKey() + "=.*$"), ("set " + field.getKey() + '=' + Matcher.quoteReplacement(field.getValue())));
+        
+        final Map<String, String> configuration = new HashMap<>();
+        configuration.putAll(getFieldMap());
+        configuration.putAll(StableDiffusionConstants.getFieldMap());
+        
+        Filesystem.writeLines(SCRIPT, Filesystem.readLines(BASE_SCRIPT).stream()
+                .map(e -> configuration.entrySet().stream()
+                        .reduce(Map.entry("", e), (line, field) ->
+                                Map.entry("", fieldReplacer.apply(line.getValue(), field)))
+                        .getValue())
+                .collect(Collectors.toList()));
+    }
+    
+    private Map<String, String> getFieldMap() {
+        return Map.of(
+                "prompt_text", prompt,
+                "guidance_scale", String.valueOf(scale),
+                "num_iterations", String.valueOf(iterations),
+                "image_width", String.valueOf(width),
+                "image_height", String.valueOf(height)
+        );
     }
     
     public void execute() throws Exception {

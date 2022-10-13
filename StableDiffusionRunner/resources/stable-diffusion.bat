@@ -15,10 +15,10 @@ setlocal
 
 :initSettings
 	:directorySettings
-		set base_drive=C:
+		set base_drive=%SystemDrive%
 		set base_dir=%UserProfile%\stable-diffusion
-		set conda_dir=C:\python\Miniconda3
-		set model_dir=F:\Datasets\Neural Networks\Stable Diffusion
+		set conda_dir=%ProgramData%\Miniconda3
+		set model_dir=%base_dir%\model
 		set output_dir=%base_dir%\output
 	
 	:projectSettings

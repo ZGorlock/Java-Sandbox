@@ -401,7 +401,7 @@ public class BackupHelper {
         
         final String backupName = "Devices";
         
-        final File localDir = new File(Drive.CODING.drive, backupName);
+        final File localDir = new File(Drive.VIRTUAL_MACHINES.drive, backupName);
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", backupName));
         final File backupDir = new File(Drive.BACKUP.drive, backupName);
         

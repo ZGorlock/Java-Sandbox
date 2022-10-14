@@ -18,7 +18,7 @@ public class PhoneMusicProcessor {
     
     private static final File MUSIC_DIR = new File("E:\\Music");
     
-    private static final File PHONE_DIR = new File("F:\\Devices\\Phone\\Phone Music");
+    private static final File PHONE_DIR = new File("G:\\Devices\\Phone\\Phone Music");
     
     private static final File PHONE_MUSIC_DIR = new File(PHONE_DIR, "Music");
     

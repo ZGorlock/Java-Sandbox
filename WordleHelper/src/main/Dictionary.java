@@ -269,4 +269,31 @@ public class Dictionary {
         }
     }
     
+    public static List<String> unscrambleSequenceOfLength(int wordLength, String scrambledSequence, boolean partial) {
+        return unscrambleSequenceFromList(wordsOfLength(wordLength), scrambledSequence, partial);
+    }
+    
+    public static List<String> unscrambleSequenceOfLength(int wordLength, String scrambledSequence) {
+        return unscrambleSequenceOfLength(wordLength, scrambledSequence, false);
+    }
+    
+    public static List<String> unscrambleSequence(String scrambledSequence, boolean partial) {
+        return unscrambleSequenceFromList(DICTIONARY, scrambledSequence, partial);
+    }
+    
+    public static List<String> unscrambleSequence(String scrambledSequence) {
+        return unscrambleSequenceOfLength(scrambledSequence.length(), scrambledSequence, false);
+    }
+    
+    public static List<String> unscrambleSequenceFromList(List<String> options, String scrambledSequence, boolean partial) {
+        return options.stream()
+                .map(e -> Map.entry(e, e.length() -
+                        scrambledSequence.chars().mapToObj(i -> String.valueOf((char) i))
+                                .reduce(e, (s, c) -> s.replaceFirst(Pattern.quote(c), "")).length()))
+                .filter(e -> (partial || (e.getValue() == 0)))
+                .sorted((o1, o2) -> Integer.compare(o2.getValue(), o1.getValue()))
+                .map(e -> e.getValue() + ": " + e.getKey())
+                .collect(Collectors.toList());
+    }
+    
 }

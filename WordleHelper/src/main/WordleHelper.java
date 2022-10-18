@@ -26,7 +26,8 @@ public class WordleHelper {
         parseArguments(args);
         
         final List<String> results = findOptions(pattern);
-//        final List<String> results = Dictionary.wordsOfLengthThatContainAll(5, "G", "D", "B");
+//        final List<String> results = Dictionary.wordsOfLengthThatContainAll(wordLength, "G", "D", "B");
+//        final List<String> results = Dictionary.unscrambleSequenceOfLength(wordLength, "WYPCBM", true);
         
         results.forEach(System.out::println);
     }

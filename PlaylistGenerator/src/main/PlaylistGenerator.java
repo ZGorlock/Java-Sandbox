@@ -8,7 +8,6 @@ package main;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -17,13 +16,14 @@ import common.StringUtility;
 
 public class PlaylistGenerator {
     
-    public static final File videoDir = new File("E:\\Videos");
+    public static final File showsDir = new File("E:\\Videos\\Shows");
+    
+    public static final File animeDir = new File("E:\\Videos\\Anime");
     
     public static void main(String[] args) {
-        List<String> skipDirs = Arrays.asList("Youtube", "Anime", "Short Films", "To Watch");
-        List<File> shows = Filesystem.listFiles(videoDir,
-                e -> e.isDirectory() && !skipDirs.contains(e.getName()));
-        shows.addAll(Filesystem.getDirs(new File(videoDir, "Anime")));
+        final List<File> shows = new ArrayList<>();
+        shows.addAll(Filesystem.getDirs(showsDir));
+        shows.addAll(Filesystem.getDirs(animeDir));
         
         for (File show : shows) {
             String playlistPath = show.getAbsolutePath() + '\\';

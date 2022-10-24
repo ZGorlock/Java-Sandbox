@@ -38,7 +38,8 @@ public class VideoProcessor {
     
     public static final File videoDir = new File("E:\\Videos");
     
-    public static final File workDir = videoDir;//new File("D:\\Work");
+    public static final File workDir = videoDir;
+//    public static final File workDir = new File("D:\\Work");
     
     public static final File log = new File("log/" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + ".txt");
     
@@ -67,15 +68,15 @@ public class VideoProcessor {
 
 //        stripMetadataAndChapters();
 //        stripMetadataAndChaptersInPlace();
-
-//        addSubtitles();
+        
+        addSubtitles();
 //        extractSubtitles();
 
 //        makePlaylists();
 //        lossTest();
         
-        Stats.produceStats();
-        Stats.produceDirStats();
+//        Stats.produceStats();
+//        Stats.produceDirStats();
     }
     
     
@@ -320,8 +321,8 @@ public class VideoProcessor {
         File out = new File(dir, "new");
         Filesystem.createDirectory(out);
         
-        String inFormat = ".mkv";
-        String subFormat = ".ass";
+        String inFormat = ".mp4";
+        String subFormat = ".srt";
         
         List<File> videos = Filesystem.listFiles(dir, x -> x.getName().endsWith(inFormat));
         List<File> subtitles = Filesystem.listFiles(dir, x -> x.getName().endsWith(subFormat));
@@ -357,8 +358,8 @@ public class VideoProcessor {
                 continue;
             }
             String cmd = "-y -i \"" + videos.get(i).getAbsolutePath() + "\" -i \"" + subtitles.get(i).getAbsolutePath() + "\" -map_metadata -1 -map_chapters -1 " +
-                    "-map 0 -map -0:s -map 1 " +
-                    "-c:v copy -c:a copy -c:s copy " +
+                    "-map 0 -map 1 " +
+                    "-c:v copy -c:a copy -c:s mov_text " +
                     "\"" + output.getAbsolutePath() + "\"";
             FFmpeg.ffmpeg(cmd, true);
         }

@@ -37,7 +37,7 @@ public class VideoRenamer {
     
     //Constants
     
-    public static final File VIDEO_DIR = new File("E:\\Videos");
+    public static final File VIDEO_DIR = new File("E:\\Videos\\Shows");
     
     public static final File DATA_DIR = new File("data");
     
@@ -329,7 +329,7 @@ public class VideoRenamer {
                             .replace(":", " -")
                             .replaceAll("-(\\d+)", "$1");
                     type = (pageTitle.matches("(?i)List\\s+of\\s+" + activeShow.get() + "(?:\\s+\\(.+\\))?\\s+episodes")) ? 1 :
-                            (pageTitle.matches("(?i)" + activeShow.get() + "(?:\\s+\\(.+\\))?")) ? 2 : -1;
+                            (pageTitle.matches("(?i)(?:[^\\-]+\\s-\\s)?" + activeShow.get() + "(?:\\s+\\(.+\\))?")) ? 2 : -1;
                     
                     if (type == -1) {
                         throw new RuntimeException("Parser failed to determine Wikipedia page type");

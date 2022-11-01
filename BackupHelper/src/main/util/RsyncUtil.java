@@ -31,7 +31,7 @@ public final class RsyncUtil {
                 .destination(fileArgumentFormatter.apply(targetDir, true))
                 .excludeFrom(fileArgumentFormatter.apply(BackupUtil.BLACKLIST_FILE, false))
                 .recursive(true).archive(false)
-                .delete(true).deleteAfter(true).force(true)
+                .delete(true).deleteDuring(true).force(true)
                 .perms(true).acls(true).owner(true).group(true).times(true).xattrs(true)
                 .progress(false).itemizeChanges(true).verbose(false);
         
@@ -82,7 +82,7 @@ public final class RsyncUtil {
         
         @Override
         public synchronized boolean processLog(String log, boolean error) {
-//            System.out.println(log);
+            System.out.println(log);
             if (!processing.get()) {
                 actions.incrementAndGet();
             } else if (!error) {

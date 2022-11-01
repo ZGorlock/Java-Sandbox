@@ -41,6 +41,7 @@ public class BackupHelper {
         backupMaven();
         
         backupRunelite();
+        backupStableDiffusion();
         
         backupData();
         backupRegistry();
@@ -85,7 +86,7 @@ public class BackupHelper {
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "DnD"), List.of("Campaigns", "Tools"));
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Housing"));
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Money"));
-            BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Other"), List.of("Car", "Cat", "Doctor", "Genealogy", "Music", "PC", "Tesla Coil"));
+            BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Other"), List.of("Car", "Cat", "Genealogy", "Health", "Music", "PC", "Tesla Coil"));
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Resume"));
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Work"), List.of("REST"), true);
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Writing"));
@@ -194,6 +195,33 @@ public class BackupHelper {
         BackupUtil.syncBackupDir(localBackupDir, backupDir, backupName);
     }
     
+    private static void backupStableDiffusion() {
+        System.out.println("\n\n\n--- STABLE DIFFUSION ---\n");
+        BackupUtil.clearTmpDir();
+        
+        final String backupName = "StableDiffusion";
+        
+        final String userName = Filesystem.readFileToString(new File(Project.DATA_DIR, "name-user.txt"));
+        
+        final File localDir = new File(Drive.BOOT.drive, Filesystem.generatePath("Users", userName, "stable-diffusion"));
+        final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", "Backups"));
+        final File backupDir = new File(Drive.BACKUP.drive, "Backups");
+        
+        if (!BackupUtil.monthlyBackupExists(localBackupDir, backupName)) {
+            
+            final File stableDiffusionCache = new File(Filesystem.getTemporaryDirectory(), backupName);
+            BackupUtil.makeBackupCache(stableDiffusionCache);
+            
+            BackupUtil.addToBackupCache(stableDiffusionCache, localDir, true, List.of("sd-model"), true);
+            
+            final File stableDiffusionBackup = BackupUtil.compressBackupCache(stableDiffusionCache, BackupUtil.Stamper.stamp(backupName));
+            BackupUtil.commitBackup(localBackupDir, stableDiffusionBackup);
+            BackupUtil.cleanBackupDir(localBackupDir, backupName, 1);
+        }
+        
+        BackupUtil.syncBackupDir(localBackupDir, backupDir, backupName);
+    }
+    
     private static void backupData() {
         System.out.println("\n\n\n--- DATA ---\n");
         BackupUtil.clearTmpDir();
@@ -255,7 +283,7 @@ public class BackupHelper {
             final File userDataCache = new File(Filesystem.getTemporaryDirectory(), userDataName);
             BackupUtil.makeBackupCache(userDataCache);
             
-            BackupUtil.addToBackupCache(userDataCache, userDataLocalDir, true, List.of(".m2", ".runelite", "AppData", "Downloads", "jagexcache"), true);
+            BackupUtil.addToBackupCache(userDataCache, userDataLocalDir, true, List.of(".m2", ".runelite", "AppData", "Downloads", "jagexcache", "stable-diffusion"), true);
             
             final File userDataBackup = BackupUtil.compressBackupCache(userDataCache, BackupUtil.Stamper.stamp(userDataName));
             BackupUtil.commitBackup(localBackupDir, userDataBackup, true);
@@ -441,7 +469,7 @@ public class BackupHelper {
             BackupUtil.addToBackupCache(workPcCache, localDir, true, List.of(localBackupDir.getName()), true);
             BackupUtil.addToBackupCache(workPcCache, localDiskDir, true, List.of(localDiskBackupDir.getName()), true);
             
-            final File workPcBackup = BackupUtil.compressBackupCache(workPcCache, BackupUtil.Stamper.stamp(name).replace("-", " - "), false, password);
+            final File workPcBackup = BackupUtil.compressBackupCache(workPcCache, BackupUtil.Stamper.stamp(name), false, password);
             BackupUtil.commitBackup(localBackupDir, workPcBackup);
             BackupUtil.cleanBackupDir(localBackupDir, name, 4);
         }

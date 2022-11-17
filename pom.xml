@@ -11,6 +11,7 @@
     
     <modules>
         <module>ackermann</module>
+        <module>imageTextTagger</module>
         <module>alchBuddy</module>
         <module>dbTest</module>
         <module>galleryDownloader</module>

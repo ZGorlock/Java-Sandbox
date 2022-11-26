@@ -23,6 +23,8 @@ public class Dictionary {
     
     //Constants
     
+    public static final boolean USE_ONLY_WORDLE_SOLUTIONS = false;
+    
     public static final List<String> DICTIONARY = loadWords();
     
     public static final String LETTERS = IntStream.rangeClosed('A', 'Z')
@@ -53,7 +55,8 @@ public class Dictionary {
     
     private static List<String> loadWords() {
         try {
-            return FileUtils.readLines(new File("resources", "dictionary.txt"), StandardCharsets.UTF_8).stream()
+            return FileUtils.readLines(new File("resources",
+                            (USE_ONLY_WORDLE_SOLUTIONS ? "wordle-solutions.txt" : "dictionary.txt")), StandardCharsets.UTF_8).stream()
                     .map(String::toUpperCase)
                     .collect(Collectors.toList());
         } catch (Exception e) {

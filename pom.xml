@@ -12,6 +12,7 @@
     <modules>
         <module>marketAnalyzer</module>
         <module>ackermann</module>
+        <module>perceptualImageMatcher</module>
         <module>alchBuddy</module>
         <module>dbTest</module>
         <module>galleryDownloader</module>

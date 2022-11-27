@@ -10,8 +10,8 @@
     <packaging>pom</packaging>
     
     <modules>
+        <module>marketAnalyzer</module>
         <module>ackermann</module>
-        <module>imageTextTagger</module>
         <module>alchBuddy</module>
         <module>dbTest</module>
         <module>galleryDownloader</module>
@@ -75,6 +75,7 @@
         
         <!-- JSON -->
         <json-simple.version>1.1.1</json-simple.version>
+        <jackson-databind.version>2.14.1</jackson-databind.version>
         
         <!-- LOGGING -->
         <slf4j.version>1.7.32</slf4j.version>
@@ -87,6 +88,7 @@
         <big-math.version>2.1.0</big-math.version>
     
         <!-- INTERNET -->
+        <httpclient.version>4.5.13</httpclient.version>
         <jsoup.version>1.14.2</jsoup.version>
         
         <!-- HOTKEYS -->
@@ -129,6 +131,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-databind.version}</version>
+        </dependency>
         
         <!-- LOGGING -->
         <dependency>
@@ -168,6 +175,11 @@
         </dependency>
     
         <!-- INTERNET -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>

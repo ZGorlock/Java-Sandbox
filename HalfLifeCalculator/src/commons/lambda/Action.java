@@ -13,6 +13,14 @@ package commons.lambda;
 @FunctionalInterface
 public interface Action {
     
+    //Constants
+    
+    /**
+     * The null Action.
+     */
+    Action NULL = () -> {};
+    
+    
     //Methods
     
     /**

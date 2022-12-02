@@ -10,49 +10,52 @@
     <packaging>pom</packaging>
     
     <modules>
-        <module>marketAnalyzer</module>
         <module>ackermann</module>
-        <module>perceptualImageMatcher</module>
         <module>alchBuddy</module>
+        <module>animeDownloadProcessor</module>
+        <module>backupHelper</module>
+        <module>bicBugsLister</module>
+        <module>billboardHot100Processor</module>
+        <module>budgetProcessor</module>
         <module>dbTest</module>
-        <module>galleryDownloader</module>
         <module>dependencyAnalyzer</module>
         <module>dicingBotSimulator</module>
-        <module>webReader</module>
         <module>dictionaryTest</module>
-        <module>htmlScraper</module>
-        <module>lotteryGuesser</module>
-        <module>musicPlayer</module>
+        <module>galleryDownloader</module>
         <module>halfLifeCalculator</module>
-        <module>phoneMusicProcessor</module>
-        <module>backupHelper</module>
+        <module>homePictureOrganizer</module>
+        <module>homeVideoSplitter</module>
+        <module>htmlScraper</module>
+        <module>imageTextTagger</module>
+        <module>interviewTest</module>
+        <module>lotteryGuesser</module>
+        <module>marketAnalyzer</module>
+        <module>md5Cracker</module>
+        <module>musicPlayer</module>
         <module>osrsKeepLoggedIn</module>
-        <module>budgetProcessor</module>
         <module>osrsMerchingStatistics</module>
+        <module>pandoraProcessor</module>
+        <module>perceptualImageMatcher</module>
+        <module>phoneMusicProcessor</module>
         <module>piBot</module>
-        <module>stableDiffusionRunner</module>
         <module>pictureResizer</module>
+        <module>playlistGenerator</module>
         <module>reactionTimeClicker</module>
+        <module>regexpTrie</module>
         <module>sineWaves</module>
         <module>sphinx4test</module>
+        <module>spotifyPlaylistCreator</module>
+        <module>stableDiffusionRunner</module>
         <module>stackOverflow</module>
+        <module>subredditLister</module>
         <module>ttsTest</module>
+        <module>videoProcessor</module>
         <module>videoRenamer</module>
         <module>vision</module>
-        <module>videoProcessor</module>
-        <module>wavDecoder</module>
-        <module>regexpTrie</module>
         <module>vmdkProcessor</module>
-        <module>homeVideoSplitter</module>
-        <module>bicBugsLister</module>
-        <module>pandoraProcessor</module>
-        <module>animeDownloadProcessor</module>
-        <module>playlistGenerator</module>
-        <module>md5Cracker</module>
-        <module>homePictureOrganizer</module>
-        <module>billboardHot100Processor</module>
-        <module>spotifyPlaylistCreator</module>
-        <module>subredditLister</module>
+        <module>wavDecoder</module>
+        <module>webReader</module>
+        <module>wordleHelper</module>
     </modules>
     
     

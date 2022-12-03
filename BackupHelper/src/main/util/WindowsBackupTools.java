@@ -19,27 +19,34 @@ import java.util.regex.Pattern;
 import commons.access.CmdLine;
 import commons.io.console.ProgressBar;
 import commons.object.string.StringUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class WindowsBackupTools {
+    
+    //Logger
+    
+    private static final Logger logger = LoggerFactory.getLogger(WindowsBackupTools.class);
+    
     
     //Static Methods
     
     public static void exportRegistry(File regFile) {
-        System.out.println("Exporting registry...");
+        logger.info("Exporting registry...");
         if (!BackupUtil.TEST_MODE) {
             CmdLine.executeCmd("regedit /e " + StringUtility.quote(regFile.getAbsolutePath()));
         }
     }
     
     public static void createManifest(File location, File manifestFile) {
-        System.out.println(StringUtility.format("Creating manifest of {}...", StringUtility.quote(location.getAbsolutePath(), true)));
+        logger.info(StringUtility.format("Creating manifest of {}...", StringUtility.quote(location.getAbsolutePath(), true)));
         if (!BackupUtil.TEST_MODE) {
             CmdLine.executeCmd("dir " + StringUtility.quote(location.getAbsolutePath()) + " /s /b > " + StringUtility.quote(manifestFile.getAbsolutePath()));
         }
     }
     
     public static void createSystemImage(String backupTarget) {
-        System.out.println("Creating system image...");
+        logger.info("Creating system image...");
         if (!BackupUtil.TEST_MODE) {
             CmdLine.executeCmd("wbadmin start backup" +
                             " -backupTarget:" + backupTarget +
@@ -73,10 +80,10 @@ public final class WindowsBackupTools {
     
     public static boolean monthlyBackupExists(String backupTarget) {
         if (BackupUtil.CHECK_RECENT) {
-            System.out.println("Checking for existing monthly system backup");
+            logger.debug("Checking for existing monthly system backup");
             
             if (BackupUtil.ASSUME_RECENT_EXISTS) {
-                System.out.println(BackupUtil.ERROR + "Assuming existing backup was found");
+                logger.warn(BackupUtil.ERROR + "Assuming existing backup was found");
                 return true;
                 
             } else {
@@ -84,12 +91,12 @@ public final class WindowsBackupTools {
                 final Date latestBackupDate = backupDates.stream().sorted(Comparator.naturalOrder()).limit(1).findFirst().orElse(null);
                 
                 if (((latestBackupDate != null) && (latestBackupDate.compareTo(BackupUtil.Stamper.ONE_MONTH_AGO) >= 0))) {
-                    System.out.println(BackupUtil.INDENT + StringUtility.format("Found existing backup from: {}", BackupUtil.Log.logStamp(latestBackupDate)));
+                    logger.debug(BackupUtil.INDENT + StringUtility.format("Found existing backup from: {}", BackupUtil.Log.logStamp(latestBackupDate)));
                     return true;
                 }
             }
             
-            System.out.println(BackupUtil.INDENT + "No existing backup found");
+            logger.debug(BackupUtil.INDENT + "No existing backup found");
         }
         return false;
     }

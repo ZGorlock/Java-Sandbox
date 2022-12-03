@@ -18,14 +18,25 @@ import commons.time.DateTimeUtility;
 import main.util.BackupUtil;
 import main.util.Drive;
 import main.util.WindowsBackupTools;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BackupHelper {
+    
+    //Logger
+    
+    private static final Logger logger = LoggerFactory.getLogger(BackupHelper.class);
+    
+    static {
+        System.setProperty("logback.configurationFile", new File(Project.RESOURCES_DIR, "logback.xml").getAbsolutePath());
+    }
+    
     
     //Main Methods
     
     public static void main(String[] args) throws Exception {
         final long startTime = System.currentTimeMillis();
-        System.out.println("" +
+        logger.info("" +
                 "  ____             _                  _   _      _                 \n" +
                 " | __ )  __ _  ___| | ___   _ _ __   | | | | ___| |_ __   ___ _ __ \n" +
                 " |  _ \\ / _` |/ __| |/ / | | | '_ \\  | |_| |/ _ \\ | '_ \\ / _ \\ '__|\n" +
@@ -61,7 +72,7 @@ public class BackupHelper {
         syncExternalBackup();
         
         final long endTime = System.currentTimeMillis();
-        System.out.println("\n\n\nBackup Complete in " + DateTimeUtility.durationToDurationString(
+        logger.info("\n\n\nBackup Complete in " + DateTimeUtility.durationToDurationString(
                 (endTime - startTime), true, false, true));
     }
     
@@ -69,7 +80,7 @@ public class BackupHelper {
     //Static Methods
     
     private static void backupDocuments() {
-        System.out.println("\n\n\n--- DOCUMENTS ---\n");
+        logger.info("\n\n\n--- DOCUMENTS ---\n");
         BackupUtil.clearTmpDir();
         
         final String backupName = "Documents";
@@ -100,7 +111,7 @@ public class BackupHelper {
     }
     
     private static void backupSpecimens() {
-        System.out.println("\n\n\n--- SPECIMENS ---\n");
+        logger.info("\n\n\n--- SPECIMENS ---\n");
         BackupUtil.clearTmpDir();
         
         final String backupName = "Specimens";
@@ -120,7 +131,7 @@ public class BackupHelper {
     }
     
     private static void backupCoding() {
-        System.out.println("\n\n\n--- CODING ---\n");
+        logger.info("\n\n\n--- CODING ---\n");
         BackupUtil.clearTmpDir();
         
         final String backupName = "Coding";
@@ -131,7 +142,7 @@ public class BackupHelper {
         
         for (String language : List.of("C", "C#", "C++", "Github", "Haskell", "HTML", "Java", "Javascript", "Python", "QB64", "VB")) {
             
-            System.out.println("\n--- Backing up " + language + " ---\n");
+            logger.info("\n--- Backing up " + language + " ---\n");
             
             if (!BackupUtil.monthlyBackupExists(localBackupDir, language)) {
                 
@@ -142,14 +153,14 @@ public class BackupHelper {
                 BackupUtil.cleanBackupDir(localBackupDir, language, 1);
             }
             
-            System.out.println("\n-------------------" + StringUtility.fillStringOfLength('-', language.length()) + "\n");
+            logger.info("\n-------------------" + StringUtility.fillStringOfLength('-', language.length()) + "\n");
         }
         
         BackupUtil.syncBackupDir(localBackupDir, backupDir);
     }
     
     private static void backupMaven() {
-        System.out.println("\n\n\n--- MAVEN ---\n");
+        logger.info("\n\n\n--- MAVEN ---\n");
         BackupUtil.clearTmpDir();
         
         final String backupName = "Maven";
@@ -171,7 +182,7 @@ public class BackupHelper {
     }
     
     private static void backupRunelite() {
-        System.out.println("\n\n\n--- RUNELITE ---\n");
+        logger.info("\n\n\n--- RUNELITE ---\n");
         BackupUtil.clearTmpDir();
         
         final String backupName = "RuneLite";
@@ -196,7 +207,7 @@ public class BackupHelper {
     }
     
     private static void backupStableDiffusion() {
-        System.out.println("\n\n\n--- STABLE DIFFUSION ---\n");
+        logger.info("\n\n\n--- STABLE DIFFUSION ---\n");
         BackupUtil.clearTmpDir();
         
         final String backupName = "StableDiffusion";
@@ -223,7 +234,7 @@ public class BackupHelper {
     }
     
     private static void backupData() {
-        System.out.println("\n\n\n--- DATA ---\n");
+        logger.info("\n\n\n--- DATA ---\n");
         BackupUtil.clearTmpDir();
         
         final String backupName = "Data";
@@ -236,7 +247,7 @@ public class BackupHelper {
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", backupName));
         final File backupDir = new File(Drive.BACKUP.drive, backupName);
         
-        System.out.println("\n--- Backing up Program Data ---\n");
+        logger.info("\n--- Backing up Program Data ---\n");
         
         if (!BackupUtil.monthlyBackupExists(localBackupDir, programDataName)) {
             
@@ -252,9 +263,9 @@ public class BackupHelper {
             BackupUtil.cleanBackupDir(localBackupDir, programDataName, 1);
         }
         
-        System.out.println("\n-------------------------------\n");
+        logger.info("\n-------------------------------\n");
         
-        System.out.println("\n--- Backing up App Data ---\n");
+        logger.info("\n--- Backing up App Data ---\n");
         
         if (!BackupUtil.monthlyBackupExists(localBackupDir, appDataName)) {
             
@@ -272,9 +283,9 @@ public class BackupHelper {
             BackupUtil.cleanBackupDir(localBackupDir, appDataName, 1);
         }
         
-        System.out.println("\n---------------------------\n");
+        logger.info("\n---------------------------\n");
         
-        System.out.println("\n--- Backing up User Data ---\n");
+        logger.info("\n--- Backing up User Data ---\n");
         
         if (!BackupUtil.monthlyBackupExists(localBackupDir, userDataName)) {
             
@@ -290,7 +301,7 @@ public class BackupHelper {
             BackupUtil.cleanBackupDir(localBackupDir, userDataName, 1);
         }
         
-        System.out.println("\n----------------------------\n");
+        logger.info("\n----------------------------\n");
         
         final Date backupDate = BackupUtil.Search.getNewestDate(localBackupDir);
         final File backupDateDir = new File(backupDir, BackupUtil.Stamper.formatDate(backupDate));
@@ -300,7 +311,7 @@ public class BackupHelper {
     }
     
     private static void backupRegistry() {
-        System.out.println("\n\n\n--- REGISTRY ---\n");
+        logger.info("\n\n\n--- REGISTRY ---\n");
         BackupUtil.clearTmpDir();
         
         final String backupName = "Registry";
@@ -323,7 +334,7 @@ public class BackupHelper {
     }
     
     private static void backupManifest() {
-        System.out.println("\n\n\n--- MANIFEST ---\n");
+        logger.info("\n\n\n--- MANIFEST ---\n");
         BackupUtil.clearTmpDir();
         
         final String backupName = "Manifest";
@@ -349,7 +360,7 @@ public class BackupHelper {
     }
     
     private static void backupRecoveryDrive() {
-        System.out.println("\n\n\n--- RECOVERY DRIVE ---\n");
+        logger.info("\n\n\n--- RECOVERY DRIVE ---\n");
         BackupUtil.clearTmpDir();
         
         final String backupName = "Recovery";
@@ -376,7 +387,7 @@ public class BackupHelper {
     }
     
     private static void backupSavedData() {
-        System.out.println("\n\n\n--- SAVED DATA ---\n");
+        logger.info("\n\n\n--- SAVED DATA ---\n");
         BackupUtil.clearTmpDir();
         
         final String backupName = "Data";
@@ -388,7 +399,7 @@ public class BackupHelper {
     }
     
     private static void backupSavedSettings() {
-        System.out.println("\n\n\n--- SAVED SETTINGS ---\n");
+        logger.info("\n\n\n--- SAVED SETTINGS ---\n");
         BackupUtil.clearTmpDir();
         
         final String backupName = "Settings";
@@ -400,7 +411,7 @@ public class BackupHelper {
     }
     
     private static void backupUtilities() {
-        System.out.println("\n\n\n--- UTILITIES ---\n");
+        logger.info("\n\n\n--- UTILITIES ---\n");
         BackupUtil.clearTmpDir();
         
         final String backupName = "Utilities";
@@ -412,7 +423,7 @@ public class BackupHelper {
     }
     
     private static void backupTweaks() {
-        System.out.println("\n\n\n--- TWEAKS ---\n");
+        logger.info("\n\n\n--- TWEAKS ---\n");
         BackupUtil.clearTmpDir();
         
         final String backupName = "Tweaks";
@@ -424,7 +435,7 @@ public class BackupHelper {
     }
     
     private static void backupDevices() {
-        System.out.println("\n\n\n--- DEVICES ---\n");
+        logger.info("\n\n\n--- DEVICES ---\n");
         BackupUtil.clearTmpDir();
         
         final String backupName = "Devices";
@@ -447,7 +458,7 @@ public class BackupHelper {
     }
     
     private static void backupWorkPC() {
-        System.out.println("\n\n\n--- WORK PC ---\n");
+        logger.info("\n\n\n--- WORK PC ---\n");
         BackupUtil.clearTmpDir();
         
         final String backupName = "Work PC";
@@ -479,7 +490,7 @@ public class BackupHelper {
     }
     
     private static void backupWindows() {
-        System.out.println("\n\n\n--- WINDOWS ---\n");
+        logger.info("\n\n\n--- WINDOWS ---\n");
         BackupUtil.clearTmpDir();
         
         final String backupName = "Windows";
@@ -495,7 +506,7 @@ public class BackupHelper {
     }
     
     private static void syncExternalBackup() {
-        System.out.println("\n\n\n--- SYNC EXTERNAL BACKUP ---\n");
+        logger.info("\n\n\n--- SYNC EXTERNAL BACKUP ---\n");
         BackupUtil.clearTmpDir();
         
         final File localBackupDir = Drive.BACKUP.drive;

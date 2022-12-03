@@ -27,8 +27,15 @@ import commons.access.Project;
 import commons.lambda.stream.collector.MapCollectors;
 import commons.object.collection.ListUtility;
 import commons.object.string.StringUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class BackupUtil {
+    
+    //Logger
+    
+    private static final Logger logger = LoggerFactory.getLogger(BackupUtil.class);
+    
     
     //Constants
     
@@ -71,7 +78,7 @@ public final class BackupUtil {
     public static File makeBackupCache(File backupCache) {
         final File backupCacheDir = backupCache.getAbsoluteFile();
         
-        System.out.println(StringUtility.format("Creating backup cache: {}", Log.logFile(backupCache)));
+        logger.debug(StringUtility.format("Creating backup cache: {}", Log.logFile(backupCache)));
         
         Action.mkdir(backupCacheDir);
         
@@ -86,7 +93,7 @@ public final class BackupUtil {
      * Adds files to a backup cache.
      */
     public static void addToBackupCache(File backupCache, List<File> files) {
-        System.out.println(StringUtility.format("Adding: {} to: {}", Log.logFile(files), Log.logFile(backupCache)));
+        logger.trace(StringUtility.format("Adding: {} to: {}", Log.logFile(files), Log.logFile(backupCache)));
         
         for (File file : files) {
             if (ListUtility.containsIgnoreCase(BLACKLIST, file.getName())) {
@@ -141,7 +148,7 @@ public final class BackupUtil {
         final File archive = new File(backupCache.getParentFile(), (archiveName + ".rar")).getAbsoluteFile();
         final boolean deleteAfter = backupCache.getAbsolutePath().replace("\\", "/").matches("^.*/Sandbox/BackupHelper/tmp/.*$");
         
-        System.out.println(StringUtility.format("Compressing: {} to: {}", Log.logFile(backupCache), Log.logFile(archive)));
+        logger.debug(StringUtility.format("Compressing: {} to: {}", Log.logFile(backupCache), Log.logFile(archive)));
         
         Action.compress(backupCache, openDir, archive, slow, password, deleteAfter);
         
@@ -176,7 +183,7 @@ public final class BackupUtil {
      * Copies or moves a backup to a backup location.
      */
     public static void commitBackup(File backupDir, File backup, boolean saveCopy) {
-        System.out.println(StringUtility.format("Committing: {} to: {}", Log.logFile(backup), Log.logFile(backupDir)));
+        logger.debug(StringUtility.format("Committing: {} to: {}", Log.logFile(backup), Log.logFile(backupDir)));
         
         final File backupSave = new File(backupDir, backup.getName()).getAbsoluteFile();
         if (saveCopy) {
@@ -194,11 +201,11 @@ public final class BackupUtil {
      * Cleans old backups from a backup directory.
      */
     public static void cleanBackupDir(File backupDir, String baseName, int numberToKeep) {
-        System.out.println(StringUtility.format("Cleaning{} backups in: {}", Log.logBaseName(baseName), Log.logFile(backupDir)));
+        logger.debug(StringUtility.format("Cleaning{} backups in: {}", Log.logBaseName(baseName), Log.logFile(backupDir)));
         
         final List<File> existingBackups = Search.list(backupDir, baseName);
         if (existingBackups.size() > numberToKeep) {
-            System.out.println(INDENT + StringUtility.format("More than {}{} backups found in: {}", numberToKeep, Log.logBaseName(baseName), Log.logFile(backupDir)));
+            logger.debug(INDENT + StringUtility.format("More than {}{} backups found in: {}", numberToKeep, Log.logBaseName(baseName), Log.logFile(backupDir)));
             
             for (int i = 0; i < (existingBackups.size() - numberToKeep); i++) {
                 final File extraBackup = existingBackups.get(i);
@@ -215,7 +222,7 @@ public final class BackupUtil {
      * Synchronizes a source backup directory to a target backup directory.
      */
     public static void syncBackupDir(File sourceBackupDir, File targetBackupDir, String baseName) {
-        System.out.println(StringUtility.format("Synchronizing: {} to: {}", Log.logFile(sourceBackupDir), Log.logFile(targetBackupDir)));
+        logger.debug(StringUtility.format("Synchronizing: {} to: {}", Log.logFile(sourceBackupDir), Log.logFile(targetBackupDir)));
         
         for (File source : Filesystem.getFilesRecursively(sourceBackupDir, f -> (StringUtility.isNullOrBlank(baseName) || Stamper.baseName(f).equals(baseName)))) {
             final File backup = new File(source.getAbsolutePath().replace(sourceBackupDir.getAbsolutePath(), targetBackupDir.getAbsolutePath())).getAbsoluteFile();
@@ -243,7 +250,7 @@ public final class BackupUtil {
      */
     public static boolean rsyncBackupDir(File sourceBackupDir, File targetBackupDir) {
         if (!SKIP_RSYNC) {
-            System.out.println(StringUtility.format("Rsyncing: {} to: {}", Log.logFile(sourceBackupDir), Log.logFile(targetBackupDir)));
+            logger.debug(StringUtility.format("Rsyncing: {} to: {}", Log.logFile(sourceBackupDir), Log.logFile(targetBackupDir)));
             
             return Action.rsync(sourceBackupDir, targetBackupDir);
         }
@@ -255,18 +262,18 @@ public final class BackupUtil {
      */
     public static boolean monthlyBackupExists(File backupDir, String baseName) {
         if (CHECK_RECENT) {
-            System.out.println(StringUtility.format("Checking for existing monthly{} backup in: {}", Log.logBaseName(baseName), Log.logFile(backupDir)));
+            logger.debug(StringUtility.format("Checking for existing monthly{} backup in: {}", Log.logBaseName(baseName), Log.logFile(backupDir)));
             
             if (ASSUME_RECENT_EXISTS) {
-                System.out.println(ERROR + "Assuming existing backup was found");
+                logger.warn(ERROR + "Assuming existing backup was found");
                 return true;
                 
             } else if (!Search.getForMonth(backupDir, baseName).isEmpty()) {
-                System.out.println(INDENT + StringUtility.format("Found existing backup from: {}", Log.logStamp(Search.getNewestDate(backupDir, baseName))));
+                logger.debug(INDENT + StringUtility.format("Found existing backup from: {}", Log.logStamp(Search.getNewestDate(backupDir, baseName))));
                 return true;
             }
             
-            System.out.println(INDENT + "No existing backup found");
+            logger.debug(INDENT + "No existing backup found");
         }
         return false;
     }
@@ -290,16 +297,16 @@ public final class BackupUtil {
             final boolean update = target.exists();
             if (SAFE_MODE && target.exists()) {
                 if (log) {
-                    System.out.println(ERROR + StringUtility.format("Already exists: {}; skipping in safe mode", Log.logFile(target)));
+                    logger.warn(ERROR + StringUtility.format("Already exists: {}; skipping in safe mode", Log.logFile(target)));
                 }
             } else {
                 if (log) {
-                    System.out.println(INDENT + StringUtility.format("{}: {}", (update ? "Updating" : "Copying"), Log.logFile(file, false)));
+                    logger.trace(INDENT + StringUtility.format("{}: {}", (update ? "Updating" : "Copying"), Log.logFile(file, false)));
                 }
                 if (!TEST_MODE) {
                     if (!Filesystem.copy(file, target, true)) {
                         if (log) {
-                            System.out.println(INDENT + ERROR + StringUtility.format("Failed to {}: {}", (update ? "update" : "copy"), Log.logFile(file)));
+                            logger.error(INDENT + ERROR + StringUtility.format("Failed to {}: {}", (update ? "update" : "copy"), Log.logFile(file)));
                         }
                         return false;
                     }
@@ -320,7 +327,7 @@ public final class BackupUtil {
                 Files.copy(source.toPath(), target.toPath(), StandardCopyOption.COPY_ATTRIBUTES, StandardCopyOption.REPLACE_EXISTING);
             } catch (Exception e) {
                 if (log) {
-                    System.out.println(INDENT + ERROR + StringUtility.format("Failed to {}: {}", (update ? "update" : "copy"), Log.logFile(source)));
+                    logger.error(INDENT + ERROR + StringUtility.format("Failed to {}: {}", (update ? "update" : "copy"), Log.logFile(source)));
                 }
                 success = false;
             }
@@ -339,16 +346,16 @@ public final class BackupUtil {
         public static boolean move(File file, File target, boolean log) {
             if (SAFE_MODE && target.exists()) {
                 if (log) {
-                    System.out.println(ERROR + StringUtility.format("Already exists: {}; skipping in safe mode", Log.logFile(target)));
+                    logger.warn(ERROR + StringUtility.format("Already exists: {}; skipping in safe mode", Log.logFile(target)));
                 }
             } else {
                 if (log) {
-                    System.out.println(INDENT + StringUtility.format("Moving: {}", Log.logFile(file, false)));
+                    logger.trace(INDENT + StringUtility.format("Moving: {}", Log.logFile(file, false)));
                 }
                 if (!TEST_MODE) {
                     if (!Filesystem.move(file, target, true)) {
                         if (log) {
-                            System.out.println(INDENT + ERROR + StringUtility.format("Failed to move: {}", Log.logFile(file)));
+                            logger.error(INDENT + ERROR + StringUtility.format("Failed to move: {}", Log.logFile(file)));
                         }
                         return false;
                     }
@@ -365,11 +372,11 @@ public final class BackupUtil {
             if (file.exists()) {
                 if (SAFE_MODE) {
                     if (log) {
-                        System.out.println(ERROR + StringUtility.format("Deleting: {}; skipping in safe mode", Log.logFile(file, false)));
+                        logger.warn(ERROR + StringUtility.format("Deleting: {}; skipping in safe mode", Log.logFile(file, false)));
                     }
                 } else {
                     if (log) {
-                        System.out.println(INDENT + StringUtility.format("Deleting: {}", Log.logFile(file, false)));
+                        logger.trace(INDENT + StringUtility.format("Deleting: {}", Log.logFile(file, false)));
                     }
                     if (!TEST_MODE) {
                         return doDelete(file, false);
@@ -403,7 +410,7 @@ public final class BackupUtil {
                     Files.delete(file.toPath());
                 } catch (Exception e2) {
                     if (log) {
-                        System.out.println(INDENT + ERROR + StringUtility.format("Failed to delete: {}", Log.logFile(file)));
+                        logger.error(INDENT + ERROR + StringUtility.format("Failed to delete: {}", Log.logFile(file)));
                     }
                     success = false;
                 }
@@ -418,12 +425,12 @@ public final class BackupUtil {
         public static boolean mkdir(File file, boolean log) {
             if (!file.exists()) {
                 if (log) {
-                    System.out.println(INDENT + StringUtility.format("Creating: {}", Log.logFile(file, false)));
+                    logger.trace(INDENT + StringUtility.format("Creating: {}", Log.logFile(file, false)));
                 }
                 if (!TEST_MODE) {
                     if (!Filesystem.createDirectory(file)) {
                         if (log) {
-                            System.out.println(ERROR + StringUtility.format("Failed to create: {}", Log.logFile(file)));
+                            logger.error(ERROR + StringUtility.format("Failed to create: {}", Log.logFile(file)));
                         }
                         return false;
                     }
@@ -439,11 +446,11 @@ public final class BackupUtil {
         public static boolean compress(File file, boolean openDir, File target, boolean slow, String password, boolean deleteAfter, boolean log) {
             if (SAFE_MODE && target.exists()) {
                 if (log) {
-                    System.out.println(ERROR + StringUtility.format("Already exists: {}; skipping in safe mode", Log.logFile(target)));
+                    logger.warn(ERROR + StringUtility.format("Already exists: {}; skipping in safe mode", Log.logFile(target)));
                 }
             } else {
                 if (log) {
-                    System.out.println(INDENT + StringUtility.format("Compressing: {}", Log.logFile(target, false)));
+                    logger.trace(INDENT + StringUtility.format("Compressing: {}", Log.logFile(target, false)));
                 }
                 if (!TEST_MODE) {
                     RarUtil.archiveFile(file, openDir, target, slow, password, deleteAfter);
@@ -459,24 +466,24 @@ public final class BackupUtil {
         public static boolean rsync(File sourceDir, File targetDir, boolean log) {
             if (!sourceDir.exists()) {
                 if (log) {
-                    System.out.println(INDENT + "Source directory: " + Log.logFile(sourceDir) + " could not be found");
+                    logger.error(INDENT + "Source directory: " + Log.logFile(sourceDir) + " could not be found");
                 }
                 return false;
             }
             if (!targetDir.exists()) {
                 if (log) {
-                    System.out.println(INDENT + "Target directory: " + Log.logFile(targetDir) + " could not be found");
+                    logger.error(INDENT + "Target directory: " + Log.logFile(targetDir) + " could not be found");
                 }
                 return false;
             }
             
             if (SAFE_MODE) {
                 if (log) {
-                    System.out.println(ERROR + StringUtility.format("Rsyncing: {}; skipping in safe mode", Log.logFile(targetDir)));
+                    logger.warn(ERROR + StringUtility.format("Rsyncing: {}; skipping in safe mode", Log.logFile(targetDir)));
                 }
             } else {
                 if (log) {
-                    System.out.println(INDENT + StringUtility.format("Rsyncing: {}", Log.logFile(targetDir)));
+                    logger.trace(INDENT + StringUtility.format("Rsyncing: {}", Log.logFile(targetDir)));
                 }
                 if (!TEST_MODE) {
                     return RsyncUtil.rsync(sourceDir, targetDir);

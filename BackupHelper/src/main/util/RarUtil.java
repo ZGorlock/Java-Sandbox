@@ -21,8 +21,15 @@ import commons.access.Filesystem;
 import commons.io.console.ProgressBar;
 import commons.math.number.BoundUtility;
 import commons.object.string.StringUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class RarUtil {
+    
+    //Logger
+    
+    private static final Logger logger = LoggerFactory.getLogger(RarUtil.class);
+    
     
     //Static Methods
     
@@ -42,7 +49,7 @@ public final class RarUtil {
         } finally {
             if (!archive.getAbsolutePath().equalsIgnoreCase(tmpArchive.getAbsolutePath())) {
                 if (!Filesystem.moveFile(tmpArchive, archive)) {
-                    System.out.println(BackupUtil.ERROR + StringUtility.format("Failed to move: {} to: {}", StringUtility.quote(tmpArchive.getAbsolutePath(), true), StringUtility.quote(archive.getAbsolutePath(), true)));
+                    logger.error(BackupUtil.ERROR + StringUtility.format("Failed to move: {} to: {}", StringUtility.quote(tmpArchive.getAbsolutePath(), true), StringUtility.quote(archive.getAbsolutePath(), true)));
                 }
             }
             progressBar.complete();

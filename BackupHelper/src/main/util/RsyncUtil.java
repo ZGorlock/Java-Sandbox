@@ -17,8 +17,15 @@ import com.github.fracpete.processoutput4j.output.StreamingProcessOutput;
 import com.github.fracpete.rsync4j.RSync;
 import commons.io.console.ProgressBar;
 import commons.object.string.StringUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class RsyncUtil {
+    
+    //Logger
+    
+    private static final Logger logger = LoggerFactory.getLogger(RsyncUtil.class);
+    
     
     //Static Methods
     
@@ -82,7 +89,7 @@ public final class RsyncUtil {
         
         @Override
         public synchronized boolean processLog(String log, boolean error) {
-            System.out.println(log);
+            logger.trace(log);
             if (!processing.get()) {
                 actions.incrementAndGet();
             } else if (!error) {

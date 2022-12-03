@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -43,11 +44,13 @@ public final class BackupUtil {
     
     public static final boolean SAFE_MODE = false; //prevent file deletion
     
-    public static final boolean CHECK_RECENT = true; //scan for existing monthly backup before reprocessing
+    public static final boolean CHECK_RECENT = true; //scan for existing recent backup before reprocessing
     
-    public static final boolean ASSUME_RECENT_EXISTS = false; //skip scanning for existing monthly backups, and assume one is present
+    public static final boolean ASSUME_RECENT_EXISTS = false; //skip scanning for existing recent backups, and assume one is present
     
-    public static final boolean SKIP_RSYNC = false; //prevents rsync operations
+    public static final boolean SKIP_RSYNC = false; //prevent rsync operations
+    
+    public static final int RECENT_PERIOD_DAYS = 25; //the maximum number of days ago to consider a backup recent
     
     public static final String INDENT = StringUtility.spaces(4);
     
@@ -258,28 +261,28 @@ public final class BackupUtil {
     }
     
     /**
-     * Checks if a monthly backup already exists.
+     * Checks if a recent backup already exists.
      */
-    public static boolean monthlyBackupExists(File backupDir, String baseName) {
+    public static boolean recentBackupExists(File backupDir, String baseName) {
         if (CHECK_RECENT) {
-            logger.debug(StringUtility.format("Checking for existing monthly{} backup in: {}", Log.logBaseName(baseName), Log.logFile(backupDir)));
+            logger.debug(StringUtility.format("Checking for recent{} backup in: {}", Log.logBaseName(baseName), Log.logFile(backupDir)));
             
             if (ASSUME_RECENT_EXISTS) {
-                logger.warn(ERROR + "Assuming existing backup was found");
+                logger.warn(ERROR + "Assuming recent backup was found");
                 return true;
                 
-            } else if (!Search.getForMonth(backupDir, baseName).isEmpty()) {
-                logger.debug(INDENT + StringUtility.format("Found existing backup from: {}", Log.logStamp(Search.getNewestDate(backupDir, baseName))));
+            } else if (!Search.getRecent(backupDir, baseName).isEmpty()) {
+                logger.debug(INDENT + StringUtility.format("Found recent backup from: {}", Log.logStamp(Search.getNewestDate(backupDir, baseName))));
                 return true;
             }
             
-            logger.debug(INDENT + "No existing backup found");
+            logger.debug(INDENT + "No recent backup found");
         }
         return false;
     }
     
-    public static boolean monthlyBackupExists(File backupDir) {
-        return monthlyBackupExists(backupDir, null);
+    public static boolean recentBackupExists(File backupDir) {
+        return recentBackupExists(backupDir, null);
     }
     
     public static boolean clearTmpDir() {
@@ -522,11 +525,16 @@ public final class BackupUtil {
         
         public static final String DATE_STAMP = DATE_STAMP_FORMAT.format(DATE);
         
-        public static final Date ONE_WEEK_AGO = Date.from(Stamper.DATE.toInstant().minus(7, ChronoUnit.DAYS));
+        public static final Function<Integer, Date> N_DAYS_AGO = (Integer days) ->
+                Date.from(Stamper.DATE.toInstant().minus(days, ChronoUnit.DAYS));
         
-        public static final Date ONE_MONTH_AGO = Date.from(Stamper.DATE.toInstant().minus(30, ChronoUnit.DAYS));
+        public static final Date ONE_WEEK_AGO = N_DAYS_AGO.apply(7);
         
-        public static final Date ONE_YEAR_AGO = Date.from(Stamper.DATE.toInstant().minus(365, ChronoUnit.DAYS));
+        public static final Date ONE_MONTH_AGO = N_DAYS_AGO.apply(30);
+        
+        public static final Date ONE_YEAR_AGO = N_DAYS_AGO.apply(365);
+        
+        public static final Date RECENT = N_DAYS_AGO.apply(RECENT_PERIOD_DAYS);
         
         
         //Static Methods
@@ -667,21 +675,29 @@ public final class BackupUtil {
             return search(backupDir, null, startDate, endDate);
         }
         
-        public static File find(File backupDir, String baseName, Date date) {
+        public static List<File> find(File backupDir, String baseName, Date date) {
             return map(backupDir, baseName).entrySet().stream()
                     .filter(e -> Stamper.formatDate(e.getKey()).equals(Stamper.formatDate(date)))
-                    .findFirst().map(Map.Entry::getValue).orElse(null);
+                    .map(Map.Entry::getValue).collect(Collectors.toList());
         }
         
-        public static File find(File backupDir, Date date) {
+        public static List<File> find(File backupDir, Date date) {
             return find(backupDir, null, date);
         }
         
-        public static File getForToday(File backupDir, String baseName) {
+        public static List<File> getForLastNDays(File backupDir, String baseName, int days) {
+            return search(backupDir, baseName, Stamper.N_DAYS_AGO.apply(days), Stamper.DATE);
+        }
+        
+        public static List<File> getForLastNDays(File backupDir, int days) {
+            return getForLastNDays(backupDir, null, days);
+        }
+        
+        public static List<File> getForToday(File backupDir, String baseName) {
             return find(backupDir, baseName, Stamper.DATE);
         }
         
-        public static File getForToday(File backupDir) {
+        public static List<File> getForToday(File backupDir) {
             return getForToday(backupDir, null);
         }
         
@@ -707,6 +723,20 @@ public final class BackupUtil {
         
         public static List<File> getForYear(File backupDir) {
             return getForYear(backupDir, null);
+        }
+        
+        public static List<File> getRecent(File backupDir, String baseName) {
+            return search(backupDir, baseName, Stamper.RECENT, Stamper.DATE);
+        }
+        
+        public static List<File> getRecent(File backupDir) {
+            return getRecent(backupDir, null);
+        }
+        
+        public static boolean isRecent(Date date) {
+            return Optional.ofNullable(date)
+                    .map(BackupUtil.Stamper.RECENT::compareTo)
+                    .map(i -> (i <= 0)).orElse(false);
         }
         
     }

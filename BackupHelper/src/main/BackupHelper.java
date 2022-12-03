@@ -89,7 +89,7 @@ public class BackupHelper {
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", "Backups"));
         final File backupDir = new File(Drive.BACKUP.drive, "Backups");
         
-        if (!BackupUtil.monthlyBackupExists(localBackupDir, backupName)) {
+        if (!BackupUtil.recentBackupExists(localBackupDir, backupName)) {
             
             final File documentsCache = new File(Filesystem.getTemporaryDirectory(), backupName);
             BackupUtil.makeBackupCache(documentsCache);
@@ -120,7 +120,7 @@ public class BackupHelper {
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", "Backups"));
         final File backupDir = new File(Drive.BACKUP.drive, "Backups");
         
-        if (!BackupUtil.monthlyBackupExists(localBackupDir, backupName)) {
+        if (!BackupUtil.recentBackupExists(localBackupDir, backupName)) {
             
             final File specimensBackup = BackupUtil.compressBackupCache(localDir, BackupUtil.Stamper.stamp(backupName));
             BackupUtil.commitBackup(localBackupDir, specimensBackup);
@@ -144,7 +144,7 @@ public class BackupHelper {
             
             logger.info("\n--- Backing up " + language + " ---\n");
             
-            if (!BackupUtil.monthlyBackupExists(localBackupDir, language)) {
+            if (!BackupUtil.recentBackupExists(localBackupDir, language)) {
                 
                 final File languageLocalDir = new File(localDir, language);
                 
@@ -171,7 +171,7 @@ public class BackupHelper {
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", "Backups"));
         final File backupDir = new File(Drive.BACKUP.drive, "Backups");
         
-        if (!BackupUtil.monthlyBackupExists(localBackupDir, backupName)) {
+        if (!BackupUtil.recentBackupExists(localBackupDir, backupName)) {
             
             final File mavenBackup = BackupUtil.compressBackupCache(localDir, BackupUtil.Stamper.stamp(backupName));
             BackupUtil.commitBackup(localBackupDir, mavenBackup);
@@ -191,7 +191,7 @@ public class BackupHelper {
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", "Backups"));
         final File backupDir = new File(Drive.BACKUP.drive, "Backups");
         
-        if (!BackupUtil.monthlyBackupExists(localBackupDir, backupName)) {
+        if (!BackupUtil.recentBackupExists(localBackupDir, backupName)) {
             
             final File runeliteCache = new File(Filesystem.getTemporaryDirectory(), backupName);
             BackupUtil.makeBackupCache(runeliteCache);
@@ -218,7 +218,7 @@ public class BackupHelper {
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", "Backups"));
         final File backupDir = new File(Drive.BACKUP.drive, "Backups");
         
-        if (!BackupUtil.monthlyBackupExists(localBackupDir, backupName)) {
+        if (!BackupUtil.recentBackupExists(localBackupDir, backupName)) {
             
             final File stableDiffusionCache = new File(Filesystem.getTemporaryDirectory(), backupName);
             BackupUtil.makeBackupCache(stableDiffusionCache);
@@ -249,7 +249,7 @@ public class BackupHelper {
         
         logger.info("\n--- Backing up Program Data ---\n");
         
-        if (!BackupUtil.monthlyBackupExists(localBackupDir, programDataName)) {
+        if (!BackupUtil.recentBackupExists(localBackupDir, programDataName)) {
             
             final File programDataLocalDir = new File(Drive.BOOT.drive, programDataName);
             
@@ -267,7 +267,7 @@ public class BackupHelper {
         
         logger.info("\n--- Backing up App Data ---\n");
         
-        if (!BackupUtil.monthlyBackupExists(localBackupDir, appDataName)) {
+        if (!BackupUtil.recentBackupExists(localBackupDir, appDataName)) {
             
             final File appDataLocalDir = new File(Drive.BOOT.drive, Filesystem.generatePath("Users", userName, appDataName));
             
@@ -287,7 +287,7 @@ public class BackupHelper {
         
         logger.info("\n--- Backing up User Data ---\n");
         
-        if (!BackupUtil.monthlyBackupExists(localBackupDir, userDataName)) {
+        if (!BackupUtil.recentBackupExists(localBackupDir, userDataName)) {
             
             final File userDataLocalDir = new File(Drive.BOOT.drive, Filesystem.generatePath("Users", userName));
             
@@ -319,7 +319,7 @@ public class BackupHelper {
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", backupName));
         final File backupDir = new File(Drive.BACKUP.drive, backupName);
         
-        if (!BackupUtil.monthlyBackupExists(localBackupDir)) {
+        if (!BackupUtil.recentBackupExists(localBackupDir)) {
             
             final File registryCacheEntry = new File(Filesystem.getTemporaryDirectory(), BackupUtil.Stamper.stamp(".reg"));
             BackupUtil.makeBackupCache(registryCacheEntry.getParentFile());
@@ -342,7 +342,7 @@ public class BackupHelper {
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", backupName));
         final File backupDir = new File(Drive.BACKUP.drive, backupName);
         
-        if (!BackupUtil.monthlyBackupExists(localBackupDir)) {
+        if (!BackupUtil.recentBackupExists(localBackupDir)) {
             
             final File manifestCache = new File(Filesystem.getTemporaryDirectory(), backupName);
             BackupUtil.makeBackupCache(manifestCache);
@@ -371,7 +371,7 @@ public class BackupHelper {
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", "Backups"));
         final File backupDir = new File(Drive.BACKUP.drive, "Backups");
         
-        if (!BackupUtil.monthlyBackupExists(localBackupDir, backupName)) {
+        if (!BackupUtil.recentBackupExists(localBackupDir, backupName)) {
             
             final File recoveryCache = new File(Filesystem.getTemporaryDirectory(), backupName);
             BackupUtil.makeBackupCache(recoveryCache);
@@ -472,7 +472,7 @@ public class BackupHelper {
         final File localDiskBackupDir = new File(localDiskDir, "Backup");
         final File backupDir = new File(Drive.BACKUP.drive, backupName);
         
-        if (!BackupUtil.monthlyBackupExists(localBackupDir, name)) {
+        if (!BackupUtil.recentBackupExists(localBackupDir, name)) {
             
             final File workPcCache = new File(Filesystem.getTemporaryDirectory(), name);
             BackupUtil.makeBackupCache(workPcCache);
@@ -499,7 +499,7 @@ public class BackupHelper {
         
         final File backupDir = new File(Drive.BACKUP.drive, backupName);
         
-        if (!WindowsBackupTools.monthlyBackupExists(backupTarget)) {
+        if (!WindowsBackupTools.recentSystemImageExists(backupTarget)) {
             
             WindowsBackupTools.createSystemImage(backupTarget);
         }

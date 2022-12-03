@@ -78,25 +78,25 @@ public final class WindowsBackupTools {
         return backupDates;
     }
     
-    public static boolean monthlyBackupExists(String backupTarget) {
+    public static boolean recentSystemImageExists(String backupTarget) {
         if (BackupUtil.CHECK_RECENT) {
-            logger.debug("Checking for existing monthly system backup");
+            logger.debug("Checking for recent system image");
             
             if (BackupUtil.ASSUME_RECENT_EXISTS) {
-                logger.warn(BackupUtil.ERROR + "Assuming existing backup was found");
+                logger.warn(BackupUtil.ERROR + "Assuming recent system image was found");
                 return true;
                 
             } else {
                 final List<Date> backupDates = systemImageBackupDates(backupTarget);
                 final Date latestBackupDate = backupDates.stream().sorted(Comparator.naturalOrder()).limit(1).findFirst().orElse(null);
                 
-                if (((latestBackupDate != null) && (latestBackupDate.compareTo(BackupUtil.Stamper.ONE_MONTH_AGO) >= 0))) {
-                    logger.debug(BackupUtil.INDENT + StringUtility.format("Found existing backup from: {}", BackupUtil.Log.logStamp(latestBackupDate)));
+                if (BackupUtil.Search.isRecent(latestBackupDate)) {
+                    logger.debug(BackupUtil.INDENT + StringUtility.format("Found recent system image from: {}", BackupUtil.Log.logStamp(latestBackupDate)));
                     return true;
                 }
             }
             
-            logger.debug(BackupUtil.INDENT + "No existing backup found");
+            logger.debug(BackupUtil.INDENT + "No recent system image found");
         }
         return false;
     }

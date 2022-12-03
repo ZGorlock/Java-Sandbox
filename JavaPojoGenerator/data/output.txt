@@ -1,0 +1,285 @@
+    
+    
+    //Fields
+    
+    /**
+     * The Metadata of the Entity.
+     */
+    public EntityMetadata metadata;
+    
+    /**
+     * The url of the Entity.
+     */
+    public String url;
+    
+    /**
+     * The title of the Entity.
+     */
+    public String title;
+    
+    /**
+     * The description of the Entity.
+     */
+    public String description;
+    
+    /**
+     * The privacy status of the Entity.
+     */
+    public String status;
+    
+    /**
+     * The string representing the date the Entity was uploaded.
+     */
+    public String dateString;
+    
+    /**
+     * The date the Entity was uploaded.
+     */
+    public LocalDateTime date;
+    
+    /**
+     * The Tag List of the Entity.
+     */
+    public TagList tags;
+    
+    /**
+     * The Topic List of the Entity.
+     */
+    public TopicList topics;
+    
+    /**
+     * The Statistics of the Entity.
+     */
+    public Statistics stats;
+    
+    /**
+     * The Thumbnail Set of the Entity.
+     */
+    public ThumbnailSet thumbnails;
+    
+    /**
+     * The html used to embed the player of the Entity.
+     */
+    public String embeddedPlayer;
+    
+    
+    //Getters
+    
+    /**
+     * Returns the Metadata of the Entity.
+     *
+     * @return The Metadata of the Entity.
+     */
+    public EntityMetadata getMetadata() {
+        return metadata;
+    }
+    
+    /**
+     * Returns the url of the Entity.
+     *
+     * @return The url of the Entity.
+     */
+    public String getUrl() {
+        return url;
+    }
+    
+    /**
+     * Returns the title of the Entity.
+     *
+     * @return The title of the Entity.
+     */
+    public String getTitle() {
+        return title;
+    }
+    
+    /**
+     * Returns the description of the Entity.
+     *
+     * @return The description of the Entity.
+     */
+    public String getDescription() {
+        return description;
+    }
+    
+    /**
+     * Returns the privacy status of the Entity.
+     *
+     * @return The privacy status of the Entity.
+     */
+    public String getStatus() {
+        return status;
+    }
+    
+    /**
+     * Returns the string representing the date the Entity was uploaded.
+     *
+     * @return The string representing the date the Entity was uploaded.
+     */
+    public String getDateString() {
+        return dateString;
+    }
+    
+    /**
+     * Returns the date the Entity was uploaded.
+     *
+     * @return The date the Entity was uploaded.
+     */
+    public LocalDateTime getDate() {
+        return date;
+    }
+    
+    /**
+     * Returns the Tag List of the Entity.
+     *
+     * @return The Tag List of the Entity.
+     */
+    public TagList getTags() {
+        return tags;
+    }
+    
+    /**
+     * Returns the Topic List of the Entity.
+     *
+     * @return The Topic List of the Entity.
+     */
+    public TopicList getTopics() {
+        return topics;
+    }
+    
+    /**
+     * Returns the Statistics of the Entity.
+     *
+     * @return The Statistics of the Entity.
+     */
+    public Statistics getStats() {
+        return stats;
+    }
+    
+    /**
+     * Returns the Thumbnail Set of the Entity.
+     *
+     * @return The Thumbnail Set of the Entity.
+     */
+    public ThumbnailSet getThumbnails() {
+        return thumbnails;
+    }
+    
+    /**
+     * Returns the html used to embed the player of the Entity.
+     *
+     * @return The html used to embed the player of the Entity.
+     */
+    public String getEmbeddedPlayer() {
+        return embeddedPlayer;
+    }
+    
+    
+    //Setters
+    
+    /**
+     * Sets the Metadata of the Entity.
+     *
+     * @param metadata The Metadata of the Entity.
+     */
+    public void setMetadata(EntityMetadata metadata) {
+        this.metadata = metadata;
+    }
+    
+    /**
+     * Sets the url of the Entity.
+     *
+     * @param url The url of the Entity.
+     */
+    public void setUrl(String url) {
+        this.url = url;
+    }
+    
+    /**
+     * Sets the title of the Entity.
+     *
+     * @param title The title of the Entity.
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    
+    /**
+     * Sets the description of the Entity.
+     *
+     * @param description The description of the Entity.
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+    /**
+     * Sets the privacy status of the Entity.
+     *
+     * @param status The privacy status of the Entity.
+     */
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    /**
+     * Sets the string representing the date the Entity was uploaded.
+     *
+     * @param dateString The string representing the date the Entity was uploaded.
+     */
+    public void datevoid
+        this.dateString = dateString;
+    }
+    
+    /**
+     * Sets the date the Entity was uploaded.
+     *
+     * @param date The date the Entity was uploaded.
+     */
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+    
+    /**
+     * Sets the Tag List of the Entity.
+     *
+     * @param tags The Tag List of the Entity.
+     */
+    public void setTags(TagList tags) {
+        this.tags = tags;
+    }
+    
+    /**
+     * Sets the Topic List of the Entity.
+     *
+     * @param topics The Topic List of the Entity.
+     */
+    public void setTopics(TopicList topics) {
+        this.topics = topics;
+    }
+    
+    /**
+     * Sets the Statistics of the Entity.
+     *
+     * @param stats The Statistics of the Entity.
+     */
+    public void setStats(Statistics stats) {
+        this.stats = stats;
+    }
+    
+    /**
+     * Sets the Thumbnail Set of the Entity.
+     *
+     * @param thumbnails The Thumbnail Set of the Entity.
+     */
+    public void setThumbnails(ThumbnailSet thumbnails) {
+        this.thumbnails = thumbnails;
+    }
+    
+    /**
+     * Sets the html used to embed the player of the Entity.
+     *
+     * @param embeddedPlayer The html used to embed the player of the Entity.
+     */
+    public void setEmbeddedPlayer(String embeddedPlayer) {
+        this.embeddedPlayer = embeddedPlayer;
+    }

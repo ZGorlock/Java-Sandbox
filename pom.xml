@@ -28,6 +28,7 @@
         <module>htmlScraper</module>
         <module>imageTextTagger</module>
         <module>interviewTest</module>
+        <module>javaPojoGenerator</module>
         <module>lotteryGuesser</module>
         <module>marketAnalyzer</module>
         <module>md5Cracker</module>

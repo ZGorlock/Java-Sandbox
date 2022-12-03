@@ -1,0 +1,61 @@
+
+    
+    /**
+     * The Metadata of the Entity.
+     */
+    public EntityMetadata metadata;
+    
+    /**
+     * The url of the Entity.
+     */
+    public String url;
+    
+    /**
+     * The title of the Entity.
+     */
+    public String title;
+    
+    /**
+     * The description of the Entity.
+     */
+    public String description;
+    
+    /**
+     * The privacy status of the Entity.
+     */
+    public String status;
+    
+    /**
+     * The string representing the date the Entity was uploaded.
+     */
+    public String dateString;
+    
+    /**
+     * The date the Entity was uploaded.
+     */
+    public LocalDateTime date;
+    
+    /**
+     * The Tag List of the Entity.
+     */
+    public TagList tags;
+    
+    /**
+     * The Topic List of the Entity.
+     */
+    public TopicList topics;
+    
+    /**
+     * The Statistics of the Entity.
+     */
+    public Statistics stats;
+    
+    /**
+     * The Thumbnail Set of the Entity.
+     */
+    public ThumbnailSet thumbnails;
+    
+    /**
+     * The html used to embed the player of the Entity.
+     */
+    public String embeddedPlayer;

@@ -37,10 +37,11 @@ public final class RsyncUtil {
                 .source(fileArgumentFormatter.apply(sourceDir, true))
                 .destination(fileArgumentFormatter.apply(targetDir, true))
                 .excludeFrom(fileArgumentFormatter.apply(BackupUtil.BLACKLIST_FILE, false))
-                .recursive(true).archive(false)
+                .recursive(true).links(true).hardLinks(true)
                 .delete(true).deleteDuring(true).force(true)
-                .perms(true).acls(true).owner(true).group(true).times(true).xattrs(true)
-                .progress(false).itemizeChanges(true).verbose(false);
+                .times(true).perms(true).devices(true).specials(true)
+                .group(true).owner(true).executability(true).chmod("ugo=rwX")
+                .progress(false).itemizeChanges(true).verbose(true);
         
         final RsyncProgressBar progressBar = new RsyncProgressBar(sourceDir, targetDir);
         final StreamingProcessOutput processOutput = new StreamingProcessOutput(progressBar);

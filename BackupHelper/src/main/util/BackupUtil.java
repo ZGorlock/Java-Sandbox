@@ -54,7 +54,7 @@ public final class BackupUtil {
     
     public static final boolean ASSUME_RECENT_EXISTS = false; //skip scanning for existing recent backups, and assume one is present
     
-    public static final boolean SKIP_RSYNC = false; //prevent rsync operations
+    public static final boolean USE_RSYNC = false; //use rsync instead of sync to external backup
     
     public static final int RECENT_PERIOD_DAYS = 25; //the maximum number of days ago to consider a backup recent
     
@@ -278,12 +278,9 @@ public final class BackupUtil {
      * Rsyncs a source backup directory to a target backup directory.
      */
     public static boolean rsyncBackupDir(File sourceBackupDir, File targetBackupDir) {
-        if (!SKIP_RSYNC) {
-            logger.debug(StringUtility.format("Rsyncing: {} to: {}", Log.logFile(sourceBackupDir), Log.logFile(targetBackupDir)));
-            
-            return Action.rsync(sourceBackupDir, targetBackupDir);
-        }
-        return false;
+        logger.debug(StringUtility.format("Rsyncing: {} to: {}", Log.logFile(sourceBackupDir), Log.logFile(targetBackupDir)));
+        
+        return Action.rsync(sourceBackupDir, targetBackupDir);
     }
     
     /**

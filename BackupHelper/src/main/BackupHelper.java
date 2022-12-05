@@ -512,7 +512,11 @@ public class BackupHelper {
         final File localBackupDir = Drive.BACKUP.drive;
         final File backupDir = Drive.EXTERNAL_BACKUP.drive;
         
-        BackupUtil.rsyncBackupDir(localBackupDir, backupDir);
+        if (BackupUtil.USE_RSYNC) {
+            BackupUtil.rsyncBackupDir(localBackupDir, backupDir);
+        } else {
+            BackupUtil.syncBackupDir(localBackupDir, backupDir);
+        }
     }
     
 }

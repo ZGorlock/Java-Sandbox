@@ -13,13 +13,18 @@ import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -28,6 +33,7 @@ import commons.access.Project;
 import commons.lambda.stream.collector.MapCollectors;
 import commons.object.collection.ListUtility;
 import commons.object.string.StringUtility;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -224,28 +230,48 @@ public final class BackupUtil {
     /**
      * Synchronizes a source backup directory to a target backup directory.
      */
-    public static void syncBackupDir(File sourceBackupDir, File targetBackupDir, String baseName) {
+    public static void syncBackupDir(File sourceBackupDir, File targetBackupDir, String baseName, List<String> fileExclusions) {
         logger.debug(StringUtility.format("Synchronizing: {} to: {}", Log.logFile(sourceBackupDir), Log.logFile(targetBackupDir)));
         
-        for (File source : Filesystem.getFilesRecursively(sourceBackupDir, f -> (StringUtility.isNullOrBlank(baseName) || Stamper.baseName(f).equals(baseName)))) {
-            final File backup = new File(source.getAbsolutePath().replace(sourceBackupDir.getAbsolutePath(), targetBackupDir.getAbsolutePath())).getAbsoluteFile();
-            if (!backup.exists()) {
-                Action.copy(source, backup);
-            } else if (source.isFile() && (Filesystem.dateCompare(backup, source) < 0)) {
-                Action.copy(source, backup);
-            }
-        }
+        final Predicate<File> isTarget = (File file) ->
+                Optional.ofNullable(baseName).filter(e -> !e.isBlank())
+                        .map(e -> Stamper.baseName(file).equals(e))
+                        .orElse(true);
         
-        for (File backup : Filesystem.getFilesAndDirsRecursively(targetBackupDir, f -> (StringUtility.isNullOrBlank(baseName) || Stamper.baseName(f).equals(baseName)))) {
-            final File source = new File(backup.getAbsolutePath().replace(targetBackupDir.getAbsolutePath(), sourceBackupDir.getAbsolutePath())).getAbsoluteFile();
-            if (!source.exists()) {
-                Action.delete(backup);
-            }
-        }
+        final Predicate<File> isExcluded = (File file) ->
+                Stream.concat(BLACKLIST.stream(), Optional.ofNullable(fileExclusions).stream().flatMap(Collection::stream))
+                        .anyMatch(e -> file.getAbsolutePath().replace("\\", "/")
+                                .matches("^.*/" + Pattern.quote(e) + "(?:/.*)?$"));
+        
+        final BiFunction<File, Map.Entry<File, File>, File> fileMapper = (File file, Map.Entry<File, File> dirChange) ->
+                new File(file.getAbsolutePath().replace(dirChange.getKey().getAbsolutePath(), dirChange.getValue().getAbsolutePath())).getAbsoluteFile();
+        final UnaryOperator<File> mapToSource = (File backup) ->
+                fileMapper.apply(backup, Map.entry(targetBackupDir, sourceBackupDir));
+        final UnaryOperator<File> mapToBackup = (File source) ->
+                fileMapper.apply(source, Map.entry(sourceBackupDir, targetBackupDir));
+        
+        Filesystem.getFilesAndDirsRecursively(sourceBackupDir).stream()
+                .map(e -> Map.entry(e, mapToBackup.apply(e)))
+                .filter(e -> (isTarget.test(e.getKey()) && !isExcluded.test(e.getKey())))
+                .filter(e -> (!e.getValue().exists() || (e.getKey().isFile() && FileUtils.isFileNewer(e.getKey(), e.getValue()))))
+                .forEach(e -> Action.copy(e.getKey(), e.getValue()));
+        
+        Filesystem.getFilesAndDirsRecursively(targetBackupDir).stream()
+                .map(e -> Map.entry(mapToSource.apply(e), e))
+                .filter(e -> ((isTarget.test(e.getValue()) && !e.getKey().exists()) || isExcluded.test(e.getValue())))
+                .forEach(e -> Action.delete(e.getValue()));
+    }
+    
+    public static void syncBackupDir(File sourceBackupDir, File targetBackupDir, List<String> fileExclusions) {
+        syncBackupDir(sourceBackupDir, targetBackupDir, null, fileExclusions);
+    }
+    
+    public static void syncBackupDir(File sourceBackupDir, File targetBackupDir, String baseName) {
+        syncBackupDir(sourceBackupDir, targetBackupDir, baseName, List.of());
     }
     
     public static void syncBackupDir(File sourceBackupDir, File targetBackupDir) {
-        syncBackupDir(sourceBackupDir, targetBackupDir, null);
+        syncBackupDir(sourceBackupDir, targetBackupDir, List.of());
     }
     
     /**

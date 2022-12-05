@@ -431,7 +431,7 @@ public class BackupHelper {
         final File localDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", backupName));
         final File backupDir = new File(Drive.BACKUP.drive, backupName);
         
-        BackupUtil.syncBackupDir(localDir, backupDir);
+        BackupUtil.syncBackupDir(localDir, backupDir, List.of(".git", "README.md"));
     }
     
     private static void backupDevices() {

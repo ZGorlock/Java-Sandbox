@@ -51,7 +51,7 @@ public class BackupHelper {
         backupCoding();
         backupMaven();
         
-        backupRunelite();
+        backupRuneScape();
         backupStableDiffusion();
         
         backupData();
@@ -140,7 +140,7 @@ public class BackupHelper {
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", backupName));
         final File backupDir = new File(Drive.BACKUP.drive, backupName);
         
-        for (String language : List.of("C", "C#", "C++", "Github", "Haskell", "HTML", "Java", "Javascript", "Python", "QB64", "VB")) {
+        for (String language : List.of("C", "C#", "C++", "Haskell", "HTML", "Java", "Javascript", "Python", "QB64", "VB")) {
             
             logger.info("\n--- Backing up " + language + " ---\n");
             
@@ -181,25 +181,25 @@ public class BackupHelper {
         BackupUtil.syncBackupDir(localBackupDir, backupDir, backupName);
     }
     
-    private static void backupRunelite() {
-        logger.info("\n\n\n--- RUNELITE ---\n");
+    private static void backupRuneScape() {
+        logger.info("\n\n\n--- RUNESCAPE ---\n");
         BackupUtil.clearTmpDir();
         
-        final String backupName = "RuneLite";
+        final String backupName = "RuneScape";
         
-        final File localDir = new File(Drive.GAMES.drive, Filesystem.generatePath(backupName, ".runelite"));
+        final File localDir = new File(Drive.GAMES.drive, Filesystem.generatePath("RuneScape"));
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", "Backups"));
         final File backupDir = new File(Drive.BACKUP.drive, "Backups");
         
         if (!BackupUtil.recentBackupExists(localBackupDir, backupName)) {
             
-            final File runeliteCache = new File(Filesystem.getTemporaryDirectory(), backupName);
-            BackupUtil.makeBackupCache(runeliteCache);
+            final File runeScapeCache = new File(Filesystem.getTemporaryDirectory(), backupName);
+            BackupUtil.makeBackupCache(runeScapeCache);
             
-            BackupUtil.addToBackupCache(runeliteCache, localDir, true, List.of("jagexcache", "jagexcache1", "repository2", "jagex_cl_oldschool_LIVE.dat", "jagex_cl_oldschool_LIVE1.dat", "random.dat"), true);
+            BackupUtil.addToBackupCache(runeScapeCache, localDir, true);
             
-            final File runeliteBackup = BackupUtil.compressBackupCache(runeliteCache, BackupUtil.Stamper.stamp(backupName));
-            BackupUtil.commitBackup(localBackupDir, runeliteBackup);
+            final File runeScapeBackup = BackupUtil.compressBackupCache(runeScapeCache, BackupUtil.Stamper.stamp(backupName));
+            BackupUtil.commitBackup(localBackupDir, runeScapeBackup);
             BackupUtil.cleanBackupDir(localBackupDir, backupName, 1);
         }
         
@@ -214,7 +214,7 @@ public class BackupHelper {
         
         final String userName = Filesystem.readFileToString(new File(Project.DATA_DIR, "name-user.txt"));
         
-        final File localDir = new File(Drive.BOOT.drive, Filesystem.generatePath("Users", userName, "stable-diffusion"));
+        final File localDir = new File(Drive.BOOT.drive, Filesystem.generatePath("Users", userName, ".stable-diffusion"));
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", "Backups"));
         final File backupDir = new File(Drive.BACKUP.drive, "Backups");
         
@@ -294,7 +294,7 @@ public class BackupHelper {
             final File userDataCache = new File(Filesystem.getTemporaryDirectory(), userDataName);
             BackupUtil.makeBackupCache(userDataCache);
             
-            BackupUtil.addToBackupCache(userDataCache, userDataLocalDir, true, List.of(".m2", ".runelite", "AppData", "Downloads", "jagexcache", "stable-diffusion"), true);
+            BackupUtil.addToBackupCache(userDataCache, userDataLocalDir, true, List.of(".m2", ".runelite", "AppData", "Downloads", ".stable-diffusion"), true);
             
             final File userDataBackup = BackupUtil.compressBackupCache(userDataCache, BackupUtil.Stamper.stamp(userDataName));
             BackupUtil.commitBackup(localBackupDir, userDataBackup, true);

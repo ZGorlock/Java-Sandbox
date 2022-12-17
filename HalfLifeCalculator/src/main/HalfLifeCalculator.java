@@ -10,9 +10,15 @@ import java.awt.Desktop;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -39,6 +45,7 @@ import commons.lambda.function.checked.CheckedRunnable;
 import commons.lambda.function.unchecked.UncheckedFunction;
 import commons.lambda.stream.collector.MapCollectors;
 import commons.lambda.stream.mapper.Mappers;
+import commons.object.collection.ListUtility;
 import commons.object.string.StringUtility;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
@@ -48,29 +55,63 @@ public final class HalfLifeCalculator {
     
     private static final String TEST = "";
     
-    private static final boolean COMPARE = true;
+    private static final boolean DATA = true;
     
-    private static final List<String> ALT = List.of();
+    private static final boolean BASE = true;
     
-    private static final boolean GRAPH = true;
+    private static final boolean ALT = false;
     
-    private static final int GRAPH_START_OFFSET_DAYS = 4;
+    private static final List<List<String>> ALT_DATA = List.of(
+            List.of("~|10X", "~|5"),
+            List.of("~|10")
+    );
     
-    private static final int GRAPH_END_OFFSET_DAYS = 3;
-    
-    private static final double GRAPH_GRADUATION_DAYS = 1.0 / 72.0;
+    private static final GraphMode GRAPH = GraphMode.RANGE;
     
     private static final boolean GRAPH_OPEN_AFTER = true;
     
     
+    //Enums
+    
+    private enum GraphMode {
+        OFF(false, 1, 0, 0, false),
+        DETAIL(true, 720, 0, 1, false),
+        FRAME(true, 360, 1, 1, false),
+        RANGE(true, 288, 3, 3, true),
+        TREND(true, 144, 7, 3, true);
+        
+        final boolean enabled;
+        
+        final double graduation;
+        
+        final int prefix;
+        
+        final int suffix;
+        
+        final boolean divider;
+        
+        GraphMode(boolean enabled, int scale, int prefix, int suffix, boolean divider) {
+            this.enabled = enabled;
+            this.graduation = 1.0 / scale;
+            this.prefix = prefix;
+            this.suffix = suffix;
+            this.divider = divider;
+        }
+        
+    }
+    
+    
     //Static Fields
     
-    private static final List<ImmutablePair<String, List<ImmutablePair<Instant, Double>>>> dataSets = List.of(
-            new ImmutablePair<>("A", FileUtil.loadData.get()),
-            new ImmutablePair<>("B", FileUtil.loadAltData.get()),
-            new ImmutablePair<>("C", FileUtil.loadComparison.get()));
+    private static final List<ImmutablePair<String, List<ImmutablePair<Instant, Double>>>> dataSets = Stream.of(
+                    Stream.of(new ImmutablePair<>("A", FileUtil.loadData.get())),
+                    IntStream.range(0, ALT_DATA.size()).mapToObj(i -> new ImmutablePair<>(Character.toString('B' + i), FileUtil.loadAltData.apply(ALT_DATA.get(i)))),
+                    Stream.of(new ImmutablePair<>("#", FileUtil.loadBaseData.get())))
+            .flatMap(e -> e)
+            .filter(Objects::nonNull).filter(e -> (e.getValue() != null))
+            .collect(Collectors.toList());
     
-    private static final Map<String, List<Double>> components = FileUtil.loadComponents.get();
+    private static final Map<String, List<Double>> species = FileUtil.loadSpecies.get();
     
     private static final Instant test = TimeUtil.parse.apply(TEST);
     
@@ -78,7 +119,7 @@ public final class HalfLifeCalculator {
     //Main Method
     
     public static void main(String[] args) {
-        (GRAPH ? graph : run).accept(test);
+        (GRAPH.enabled ? graph : run).accept(test);
     }
     
     
@@ -87,11 +128,11 @@ public final class HalfLifeCalculator {
     private static final BiConsumer<String, Map<String, AtomicDouble>> printTotals = (String set, Map<String, AtomicDouble> totals) ->
             System.out.print(totals.entrySet().stream()
                     .sorted(Map.Entry.comparingByKey())
-                    .map(total -> ((total.getKey().isEmpty() && COMPARE) ? set : total.getKey()) +
+                    .map(total -> ((total.getKey().isEmpty() && (BASE || ALT)) ? set : total.getKey()) +
                             Optional.of(total.getValue()).map(AtomicDouble::get)
                                     .map(value -> Stream.of(value, (total.getKey().isEmpty() ? null : (value / (totals.get("").get() - value))))).orElse(Stream.empty())
                                     .filter(Objects::nonNull).map(new DecimalFormat("00.00")::format)
-                                    .collect(Collectors.joining(" : ", ((!total.getKey().isEmpty() || COMPARE) ? " - " : ""), ""))
+                                    .collect(Collectors.joining(" : ", ((!total.getKey().isEmpty() || (BASE || ALT)) ? " - " : ""), ""))
                     ).collect(Collectors.joining("  |  ", "", System.lineSeparator()))
                     .replaceAll("(?s)^\\s+$", ""));
     
@@ -99,12 +140,12 @@ public final class HalfLifeCalculator {
             Optional.of(dataSet.getValue().stream()
                             .filter(data -> data.getKey().isBefore(test.getKey()))
                             .map(data -> Map.entry(((test.getKey().toEpochMilli() - data.getKey().toEpochMilli()) / (double) TimeUnit.HOURS.toMillis(1)), data.getValue()))
-                            .reduce(components.keySet().stream().collect(MapCollectors.mapEachTo(() -> new AtomicDouble(0.0))),
+                            .reduce(species.keySet().stream().collect(MapCollectors.mapEachTo(() -> new AtomicDouble(0.0))),
                                     (totals, data) -> Mappers.perform(totals, endTotals ->
-                                            components.forEach((componentName, component) -> endTotals.get(componentName).addAndGet(
-                                                    ((0.80 * (data.getValue() * component.get(0)) * component.get(2)) /
-                                                            (component.get(2) - component.get(1))) *
-                                                            (Math.pow(Math.E, (-component.get(1) * data.getKey())) - Math.pow(Math.E, (-component.get(2) * data.getKey())))))),
+                                            species.forEach((speciesName, species) -> endTotals.get(speciesName).addAndGet(
+                                                    ((0.80 * (data.getValue() * species.get(0)) * species.get(2)) /
+                                                            (species.get(2) - species.get(1))) *
+                                                            (Math.pow(Math.E, (-species.get(1) * data.getKey())) - Math.pow(Math.E, (-species.get(2) * data.getKey())))))),
                                     (totals, total) -> totals))
                     .map(Mappers.forEach(totals -> totals.put("", new AtomicDouble(totals.values().stream().mapToDouble(AtomicDouble::get).sum()))))
                     .map(Mappers.forEach(totals -> printTotals.accept(dataSet.getKey(), (test.getValue().equals("T") ? totals : Map.of()))))
@@ -113,21 +154,26 @@ public final class HalfLifeCalculator {
     private static final Consumer<Instant> graph = (Instant test) ->
             FileUtil.saveGraph.accept(Stream.concat(
                     Stream.of(Stream.concat(
-                                    Stream.of("Time", "Label"),
+                                    Stream.of("Time", "Label", (GRAPH.divider ? "~" : null)).filter(Objects::nonNull),
                                     dataSets.stream().filter(dataSet -> Objects.nonNull(dataSet.getValue())).map(Map.Entry::getKey)
                             ).map(StringUtility::quote),
                             Stream.of("")),
                     Stream.concat(
-                                    IntStream.rangeClosed((int) -(GRAPH_START_OFFSET_DAYS / GRAPH_GRADUATION_DAYS), (int) (GRAPH_END_OFFSET_DAYS / GRAPH_GRADUATION_DAYS))
-                                            .mapToObj(i -> Map.entry(TimeUtil.addDays.apply(test, (i * GRAPH_GRADUATION_DAYS)).toEpochMilli(), "")),
-                                    IntStream.rangeClosed(-GRAPH_START_OFFSET_DAYS, GRAPH_END_OFFSET_DAYS)
+                                    IntStream.rangeClosed((int) -(GRAPH.prefix / GRAPH.graduation), (int) (GRAPH.suffix / GRAPH.graduation))
+                                            .mapToObj(i -> Map.entry(TimeUtil.addDays.apply(test, (i * GRAPH.graduation)).toEpochMilli(), "")),
+                                    IntStream.rangeClosed(-GRAPH.prefix, GRAPH.suffix)
                                             .mapToObj(i -> Map.entry(TimeUtil.addDays.apply(test, i).toEpochMilli(), ("T" + ((i != 0) ? (((i > 0) ? "+" : "") + i) : ""))))
                             ).sorted(Map.Entry.comparingByKey()).collect(MapCollectors.toMap(LinkedHashMap.class)).entrySet().stream()
                             .map(graphPoint -> Map.entry(TimeUtil.atMillis.apply(graphPoint.getKey()), graphPoint.getValue()))
                             .map(graphPoint -> Stream.concat(
                                     Stream.of(TimeUtil.print.apply(graphPoint.getKey()), graphPoint.getValue()).map(StringUtility::quote),
-                                    dataSets.stream().filter(dataSet -> Objects.nonNull(dataSet.getValue()))
-                                            .map(dataSet -> calculateAt.apply(graphPoint, dataSet)).map(String::valueOf)
+                                    Optional.of(dataSets.stream().filter(dataSet -> Objects.nonNull(dataSet.getValue()))
+                                                    .map(dataSet -> calculateAt.apply(graphPoint, dataSet)).collect(Collectors.toList()))
+                                            .map(e -> !GRAPH.divider ? e : ListUtility.addAndGet(e, 0, e.stream()
+                                                    .filter(e2 -> !graphPoint.getValue().isEmpty())
+                                                    .mapToDouble(e2 -> e2).max().orElse(0.0)))
+                                            .stream().flatMap(Collection::stream)
+                                            .map(String::valueOf)
                             ))
             ).map(e -> e.collect(Collectors.joining(","))).collect(Collectors.toList()));
     
@@ -146,7 +192,7 @@ public final class HalfLifeCalculator {
         
         static final File DATA_FILE = new File(DATA_DIR, "data.txt");
         
-        static final File COMPONENTS_FILE = new File(DATA_DIR, "components.txt");
+        static final File SPECIES_FILE = new File(DATA_DIR, "species.txt");
         
         static final File SCHEDULE_FILE = new File(DATA_DIR, "schedule.txt");
         
@@ -171,7 +217,7 @@ public final class HalfLifeCalculator {
                 data.stream().filter(Objects::nonNull).filter(e -> !e.isBlank())
                         .map(e -> e.replace("~", (TimeUtil.format.apply(TimeUtil.now.get())) + "|"))
                         .map(e -> e.split("\\|+")).flatMap(e ->
-                                (e[1].contains("X") ? IntStream.of(0, 4) : (IntStream.of(0))).boxed()
+                                IntStream.of(0, (e[1].contains("X") ? 4 : 0)).boxed().distinct()
                                         .map((UncheckedFunction<Integer, ImmutablePair<Instant, Double>>) delay ->
                                                 new ImmutablePair<>(TimeUtil.addHours.apply(TimeUtil.parse.apply(e[0]), delay),
                                                         (Double.parseDouble(e[1].replace("X", "")) / (e[1].contains("X") ? 2.0 : 1.0)))))
@@ -180,29 +226,29 @@ public final class HalfLifeCalculator {
         static final Supplier<Map<Double, String>> loadSchedule = () ->
                 readData.apply(SCHEDULE_FILE).stream()
                         .map(e -> e.split(",")).collect(MapCollectors.toMap(LinkedHashMap.class,
-                                e -> Double.parseDouble(e[0].strip()),
+                                e -> ((double) TimeUtil.parseTime.apply(e[0].strip()).toSecondOfDay() / TimeUnit.HOURS.toSeconds(1)),
                                 e -> e[1].strip()));
         
         static final Supplier<List<ImmutablePair<Instant, Double>>> loadData = () ->
-                parseData.apply(readData.apply(DATA_FILE));
+                !DATA ? null : parseData.apply(readData.apply(DATA_FILE));
         
-        static final Supplier<List<ImmutablePair<Instant, Double>>> loadAltData = () ->
-                (!COMPARE || ALT.isEmpty()) ? null : parseData.apply(
+        static final Function<List<String>, List<ImmutablePair<Instant, Double>>> loadAltData = (List<String> alt) ->
+                (!ALT || alt.isEmpty()) ? null : parseData.apply(
                         Stream.concat(
-                                ALT.stream().map(e -> e.replace("~", TimeUtil.format.apply(TimeUtil.now.get()))),
+                                alt.stream().map(e -> e.replace("~", TimeUtil.format.apply(TimeUtil.now.get()))),
                                 readData.apply(DATA_FILE).stream()
                         ).collect(Collectors.toList()));
         
-        static final Supplier<List<ImmutablePair<Instant, Double>>> loadComparison = () ->
-                !COMPARE ? null : parseData.apply(
+        static final Supplier<List<ImmutablePair<Instant, Double>>> loadBaseData = () ->
+                !BASE ? null : parseData.apply(
                         IntStream.rangeClosed(-30, 30)
-                                .mapToObj(i -> TimeUtil.addDays.apply(TimeUtil.startOfToday.get(), i))
+                                .mapToObj(i -> TimeUtil.addDays.apply(TimeUtil.localStartOfToday.get(), i))
                                 .flatMap(day -> loadSchedule.get().entrySet().stream()
                                         .map(e -> TimeUtil.format.apply(TimeUtil.addHours.apply(day, e.getKey())) + '|' + e.getValue()))
                                 .collect(Collectors.toList()));
         
-        static final Supplier<Map<String, List<Double>>> loadComponents = () ->
-                readData.apply(COMPONENTS_FILE).stream()
+        static final Supplier<Map<String, List<Double>>> loadSpecies = () ->
+                readData.apply(SPECIES_FILE).stream()
                         .map(e -> e.split(",")).collect(MapCollectors.toMap(LinkedHashMap.class,
                                 e -> e[0].strip(),
                                 e -> List.of(Double.parseDouble(e[1]), (Math.log(2) / Double.parseDouble(e[2])), (Double.parseDouble(e[3]) / 3.0))));
@@ -228,21 +274,53 @@ public final class HalfLifeCalculator {
         
         //Constants
         
-        static final DateTimeFormatter STAMP_FORMAT = DateTimeFormatter.ofPattern("yyyyMMdd-HHmm").withZone(ZoneOffset.systemDefault());
+        static final ZoneId UTC = ZoneOffset.UTC;
         
-        static final DateTimeFormatter PRINT_FORMAT = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm").withZone(ZoneOffset.systemDefault());
+        static final ZoneId LOCAL = ZoneOffset.systemDefault();
+        
+        static final DateTimeFormatter STAMP_FORMAT = DateTimeFormatter.ofPattern("yyyyMMdd-HHmm").withZone(LOCAL);
+        
+        static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyyMMdd").withZone(LOCAL);
+        
+        static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HHmm").withZone(LOCAL);
+        
+        static final DateTimeFormatter PRINT_FORMAT = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm").withZone(LOCAL);
         
         
         //Static Functions
         
         static final Supplier<Instant> now = Instant::now;
         
+        static final Supplier<LocalDate> date = LocalDate::now;
+        
+        static final Supplier<LocalTime> time = LocalTime::now;
+        
+        static final Supplier<LocalDateTime> datetime = LocalDateTime::now;
+        
+        static final BiFunction<Instant, ZoneId, ZonedDateTime> toZone = ZonedDateTime::ofInstant;
+        
+        static final Function<Instant, ZonedDateTime> toUtc = (Instant instant) ->
+                toZone.apply(instant, UTC);
+        
+        static final Function<Instant, ZonedDateTime> toLocal = (Instant instant) ->
+                toZone.apply(instant, LOCAL);
+        
         static final Function<Long, Instant> atMillis = Instant::ofEpochMilli;
         
-        static final UncheckedFunction<String, Instant> parse = (String string) ->
-                Optional.ofNullable(string).filter(e -> !e.isBlank())
-                        .map(e -> STAMP_FORMAT.withZone(ZoneOffset.systemDefault()).parse(string, Instant::from))
+        static final UncheckedFunction<String, Instant> parse = (String stamp) ->
+                Optional.ofNullable(stamp).filter(e -> !e.isBlank())
+                        .map(e -> STAMP_FORMAT.parse(stamp, Instant::from))
                         .orElseGet(now);
+        
+        static final Function<String, LocalDate> parseDate = (String dateStamp) ->
+                Optional.ofNullable(dateStamp).filter(e -> !e.isBlank())
+                        .map(e -> LocalDate.parse(e, DATE_FORMAT))
+                        .orElseGet(date);
+        
+        static final Function<String, LocalTime> parseTime = (String timeStamp) ->
+                Optional.ofNullable(timeStamp).filter(e -> !e.isBlank())
+                        .map(e -> LocalTime.parse(e, TIME_FORMAT))
+                        .orElseGet(time);
         
         static final UncheckedFunction<Instant, String> format = (Instant instant) ->
                 STAMP_FORMAT.format(Optional.ofNullable(instant).orElseGet(now));
@@ -263,13 +341,25 @@ public final class HalfLifeCalculator {
                 instant.truncatedTo(ChronoUnit.DAYS);
         
         static final UnaryOperator<Instant> endOfDay = (Instant instant) ->
-                addDays.apply(startOfDay.apply(instant), 1);
+                startOfDay.apply(addDays.apply(instant, 1));
         
         static final Supplier<Instant> startOfToday = () ->
                 startOfDay.apply(now.get());
         
         static final Supplier<Instant> endOfToday = () ->
                 endOfDay.apply(now.get());
+        
+        static final UnaryOperator<Instant> localStartOfDay = (Instant instant) ->
+                ZonedDateTime.ofInstant(instant, LOCAL).toLocalDate().atStartOfDay(LOCAL).toInstant();
+        
+        static final UnaryOperator<Instant> localEndOfDay = (Instant instant) ->
+                localStartOfDay.apply(addDays.apply(instant, 1));
+        
+        static final Supplier<Instant> localStartOfToday = () ->
+                localStartOfDay.apply(now.get());
+        
+        static final Supplier<Instant> localEndOfToday = () ->
+                localEndOfDay.apply(now.get());
         
     }
     

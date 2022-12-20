@@ -66,7 +66,7 @@ public final class HalfLifeCalculator {
             List.of("~|10")
     );
     
-    private static final GraphMode GRAPH = GraphMode.RANGE;
+    private static final GraphMode GRAPH = GraphMode.FRAME;
     
     private static final boolean GRAPH_OPEN_AFTER = true;
     
@@ -75,10 +75,12 @@ public final class HalfLifeCalculator {
     
     private enum GraphMode {
         OFF(false, 1, 0, 0, false),
-        DETAIL(true, 720, 0, 1, false),
-        FRAME(true, 360, 1, 1, false),
-        RANGE(true, 288, 3, 3, true),
-        TREND(true, 144, 7, 3, true);
+        DETAIL(true, 576, 1, 1, true),      //1152
+        FRAME(true, 360, 2, 2, true),       //1440
+        RANGE(true, 288, 3, 3, true),       //1728
+        TREND(true, 144, 5, 3, true),       //1152
+        FORECAST(true, 360, 0, 3, false),   //1080
+        BACKCAST(true, 360, 3, 0, false);   //1080
         
         final boolean enabled;
         

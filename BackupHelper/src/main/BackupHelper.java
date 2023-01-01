@@ -509,13 +509,17 @@ public class BackupHelper {
         logger.info("\n\n\n--- SYNC EXTERNAL BACKUP ---\n");
         BackupUtil.clearTmpDir();
         
-        final File localBackupDir = Drive.BACKUP.drive;
-        final File backupDir = Drive.EXTERNAL_BACKUP.drive;
+        final File localBackup = Drive.BACKUP.drive;
+        final File backup = Drive.EXTERNAL_BACKUP.drive;
         
-        if (BackupUtil.USE_RSYNC) {
-            BackupUtil.rsyncBackupDir(localBackupDir, backupDir);
-        } else {
-            BackupUtil.syncBackupDir(localBackupDir, backupDir);
+        for (File localBackupDir : Filesystem.getDirs(localBackup)) {
+            final File backupDir = new File(backup, localBackupDir.getName());
+            
+            if (BackupUtil.USE_RSYNC) {
+                BackupUtil.rsyncBackupDir(localBackupDir, backupDir);
+            } else {
+                BackupUtil.syncBackupDir(localBackupDir, backupDir);
+            }
         }
     }
     

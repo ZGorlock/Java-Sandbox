@@ -117,7 +117,7 @@ public class BillboardHot100Processor {
             
             System.out.println("Done " + d.getName());
             int yearDone = 1;
-//            break;
+            break;
         }
     }
     
@@ -210,16 +210,40 @@ public class BillboardHot100Processor {
             for (File song : Filesystem.getFiles(artist)) {
                 File moved = new File(new File(out, artist.getName()), song.getName());
                 Filesystem.createFile(moved);
-                FFmpeg.addMetadata(song, new FFmpeg.MediaInfo.MetadataTags((LinkedHashMap<String, String>)
-                        MapUtility.mapOf(LinkedHashMap.class,
-                                new ImmutablePair<>("title", song.getName()),
-                                new ImmutablePair<>("artist", artist.getName()),
-                                new ImmutablePair<>("album", "Billboard Hot 100"),
-                                new ImmutablePair<>("track", null),
-                                new ImmutablePair<>("disc", null)
-                        )), moved);
+                FFmpeg.addMetadata(song, MapUtility.mapOf(LinkedHashMap.class,
+                        new ImmutablePair<>(
+                                FFmpeg.Identifier.Global.get(),
+                                new FFmpeg.MediaInfo.MetadataTags((LinkedHashMap<String, String>) MapUtility.mapOf(LinkedHashMap.class,
+                                        new ImmutablePair<>("title", song.getName()),
+                                        new ImmutablePair<>("artist", artist.getName()),
+//                                        new ImmutablePair<>("album", "Billboard Hot 100"),
+                                        new ImmutablePair<>("track", null),
+                                        new ImmutablePair<>("disc", null),
+                                        new ImmutablePair<>("Credits", null),
+                                        new ImmutablePair<>("publisher", null),
+                                        new ImmutablePair<>("comment", null),
+                                        new ImmutablePair<>("compilation", null),
+                                        new ImmutablePair<>("performer", null),
+                                        new ImmutablePair<>("copyright", null),
+                                        new ImmutablePair<>("encoded_by", null),
+                                        new ImmutablePair<>("Provider", null),
+                                        new ImmutablePair<>("TEXT", null),
+                                        new ImmutablePair<>("TMED", null),
+                                        new ImmutablePair<>("RELEASECOUNTRY", null),
+                                        new ImmutablePair<>("TIT1", null),
+                                        new ImmutablePair<>("Uploader", null)))
+                        ),
+                        new ImmutablePair<>(
+                                FFmpeg.Identifier.of("v:0"),
+                                new FFmpeg.MediaInfo.MetadataTags((LinkedHashMap<String, String>) MapUtility.mapOf(LinkedHashMap.class,
+                                        new ImmutablePair<>("title", "Album cover"),
+                                        new ImmutablePair<>("comment", "Cover (front)")))
+                        )
+                ), moved);
                 System.out.println("Done " + moved.getAbsolutePath());
+//                break;
             }
+//            break;
         }
         
         for (File m3u : Filesystem.getFiles(dir)) {

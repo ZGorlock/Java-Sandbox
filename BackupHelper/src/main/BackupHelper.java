@@ -426,12 +426,15 @@ public class BackupHelper {
         logger.info("\n\n\n--- TWEAKS ---\n");
         BackupUtil.clearTmpDir();
         
+        final String localName = "WindowsTweaks";
         final String backupName = "Tweaks";
         
-        final File localDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", backupName));
+        final File localDir = new File(Drive.CODING.drive, Filesystem.generatePath("Other", localName));
+        final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", backupName));
         final File backupDir = new File(Drive.BACKUP.drive, backupName);
         
-        BackupUtil.syncBackupDir(localDir, backupDir, List.of(".git", "README.md"));
+        BackupUtil.syncBackupDir(localDir, localBackupDir, List.of(".git", "README.md"));
+        BackupUtil.syncBackupDir(localBackupDir, backupDir);
     }
     
     private static void backupDevices() {

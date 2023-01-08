@@ -95,9 +95,11 @@ public class BackupHelper {
             BackupUtil.makeBackupCache(documentsCache);
             
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "DnD"), List.of("Campaigns", "Tools"));
+            BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Health"));
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Housing"));
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Money"));
-            BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Other"), List.of("Car", "Cat", "Genealogy", "Health", "Music", "PC", "Tesla Coil"));
+            BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Other"), List.of("Car", "Cat", "Genealogy", "Music", "Tesla Coil"));
+            BackupUtil.addToBackupCache(documentsCache, new File(localDir, "PC"));
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Resume"));
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Work"), List.of("REST"), true);
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Writing"));

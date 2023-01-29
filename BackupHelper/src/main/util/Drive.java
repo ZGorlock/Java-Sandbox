@@ -37,4 +37,11 @@ public enum Drive {
         this.drive = new File(driveLetter + ":/");
     }
     
+    
+    //Methods
+    
+    public boolean available() {
+        return drive.exists();
+    }
+    
 }

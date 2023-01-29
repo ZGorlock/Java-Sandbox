@@ -17,6 +17,7 @@ import commons.object.string.StringUtility;
 import commons.time.DateTimeUtility;
 import main.util.BackupUtil;
 import main.util.Drive;
+import main.util.PropertyUtil;
 import main.util.WindowsBackupTools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,13 +37,17 @@ public class BackupHelper {
     
     public static void main(String[] args) throws Exception {
         final long startTime = System.currentTimeMillis();
-        logger.info("" +
+        logger.info("\n" +
                 "  ____             _                  _   _      _                 \n" +
                 " | __ )  __ _  ___| | ___   _ _ __   | | | | ___| |_ __   ___ _ __ \n" +
                 " |  _ \\ / _` |/ __| |/ / | | | '_ \\  | |_| |/ _ \\ | '_ \\ / _ \\ '__|\n" +
                 " | |_) | (_| | (__|   <| |_| | |_) | |  _  |  __/ | |_) |  __/ |   \n" +
                 " |____/ \\__,_|\\___|_|\\_\\\\__,_| .__/  |_| |_|\\___|_| .__/ \\___|_|   \n" +
                 "                             |_|                  |_|              ");
+        
+        if (BackupUtil.EXTERNAL_BACKUP_TYPE != BackupUtil.ExternalBackupType.PRESERVE) {
+            syncExternalBackup();
+        }
         
         backupDocuments();
         
@@ -69,7 +74,9 @@ public class BackupHelper {
         
         backupWindows();
         
-        syncExternalBackup();
+        if (BackupUtil.EXTERNAL_BACKUP_TYPE != BackupUtil.ExternalBackupType.DUPLICATE) {
+            syncExternalBackup();
+        }
         
         final long endTime = System.currentTimeMillis();
         logger.info("\n\n\nBackup Complete in " + DateTimeUtility.durationToDurationString(
@@ -106,8 +113,8 @@ public class BackupHelper {
             
             final File documentsBackup = BackupUtil.compressBackupCache(documentsCache, BackupUtil.Stamper.stamp(backupName));
             BackupUtil.commitBackup(localBackupDir, documentsBackup);
-            BackupUtil.cleanBackupDir(localBackupDir, backupName, 1);
         }
+        BackupUtil.cleanBackupDir(localBackupDir, backupName, 1);
         
         BackupUtil.syncBackupDir(localBackupDir, backupDir, backupName);
     }
@@ -126,8 +133,8 @@ public class BackupHelper {
             
             final File specimensBackup = BackupUtil.compressBackupCache(localDir, BackupUtil.Stamper.stamp(backupName));
             BackupUtil.commitBackup(localBackupDir, specimensBackup);
-            BackupUtil.cleanBackupDir(localBackupDir, backupName, 1);
         }
+        BackupUtil.cleanBackupDir(localBackupDir, backupName, 1);
         
         BackupUtil.syncBackupDir(localBackupDir, backupDir, backupName);
     }
@@ -152,8 +159,8 @@ public class BackupHelper {
                 
                 final File languageBackup = BackupUtil.compressBackupCache(languageLocalDir, BackupUtil.Stamper.stamp(language));
                 BackupUtil.commitBackup(localBackupDir, languageBackup);
-                BackupUtil.cleanBackupDir(localBackupDir, language, 1);
             }
+            BackupUtil.cleanBackupDir(localBackupDir, language, 1);
             
             logger.info("\n-------------------" + StringUtility.fillStringOfLength('-', language.length()) + "\n");
         }
@@ -167,7 +174,7 @@ public class BackupHelper {
         
         final String backupName = "Maven";
         
-        final String userName = Filesystem.readFileToString(new File(Project.DATA_DIR, "name-user.txt"));
+        final String userName = PropertyUtil.readProperty("name-user.txt");
         
         final File localDir = new File(Drive.BOOT.drive, Filesystem.generatePath("Users", userName, ".m2"));
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", "Backups"));
@@ -177,8 +184,8 @@ public class BackupHelper {
             
             final File mavenBackup = BackupUtil.compressBackupCache(localDir, BackupUtil.Stamper.stamp(backupName));
             BackupUtil.commitBackup(localBackupDir, mavenBackup);
-            BackupUtil.cleanBackupDir(localBackupDir, backupName, 1);
         }
+        BackupUtil.cleanBackupDir(localBackupDir, backupName, 1);
         
         BackupUtil.syncBackupDir(localBackupDir, backupDir, backupName);
     }
@@ -202,8 +209,8 @@ public class BackupHelper {
             
             final File runeScapeBackup = BackupUtil.compressBackupCache(runeScapeCache, BackupUtil.Stamper.stamp(backupName));
             BackupUtil.commitBackup(localBackupDir, runeScapeBackup);
-            BackupUtil.cleanBackupDir(localBackupDir, backupName, 1);
         }
+        BackupUtil.cleanBackupDir(localBackupDir, backupName, 1);
         
         BackupUtil.syncBackupDir(localBackupDir, backupDir, backupName);
     }
@@ -214,7 +221,7 @@ public class BackupHelper {
         
         final String backupName = "StableDiffusion";
         
-        final String userName = Filesystem.readFileToString(new File(Project.DATA_DIR, "name-user.txt"));
+        final String userName = PropertyUtil.readProperty("name-user.txt");
         
         final File localDir = new File(Drive.BOOT.drive, Filesystem.generatePath("Users", userName, ".stable-diffusion"));
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", "Backups"));
@@ -229,8 +236,8 @@ public class BackupHelper {
             
             final File stableDiffusionBackup = BackupUtil.compressBackupCache(stableDiffusionCache, BackupUtil.Stamper.stamp(backupName));
             BackupUtil.commitBackup(localBackupDir, stableDiffusionBackup);
-            BackupUtil.cleanBackupDir(localBackupDir, backupName, 1);
         }
+        BackupUtil.cleanBackupDir(localBackupDir, backupName, 1);
         
         BackupUtil.syncBackupDir(localBackupDir, backupDir, backupName);
     }
@@ -244,7 +251,7 @@ public class BackupHelper {
         final String appDataName = "AppData";
         final String userDataName = "User";
         
-        final String userName = Filesystem.readFileToString(new File(Project.DATA_DIR, "name-user.txt"));
+        final String userName = PropertyUtil.readProperty("name-user.txt");
         
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", backupName));
         final File backupDir = new File(Drive.BACKUP.drive, backupName);
@@ -262,8 +269,8 @@ public class BackupHelper {
             
             final File programDataBackup = BackupUtil.compressBackupCache(programDataCache, BackupUtil.Stamper.stamp(programDataName));
             BackupUtil.commitBackup(localBackupDir, programDataBackup, true);
-            BackupUtil.cleanBackupDir(localBackupDir, programDataName, 1);
         }
+        BackupUtil.cleanBackupDir(localBackupDir, programDataName, 1);
         
         logger.info("\n-------------------------------\n");
         
@@ -282,8 +289,8 @@ public class BackupHelper {
             
             final File appDataBackup = BackupUtil.compressBackupCache(appDataCache, BackupUtil.Stamper.stamp(appDataName));
             BackupUtil.commitBackup(localBackupDir, appDataBackup);
-            BackupUtil.cleanBackupDir(localBackupDir, appDataName, 1);
         }
+        BackupUtil.cleanBackupDir(localBackupDir, appDataName, 1);
         
         logger.info("\n---------------------------\n");
         
@@ -300,8 +307,8 @@ public class BackupHelper {
             
             final File userDataBackup = BackupUtil.compressBackupCache(userDataCache, BackupUtil.Stamper.stamp(userDataName));
             BackupUtil.commitBackup(localBackupDir, userDataBackup, true);
-            BackupUtil.cleanBackupDir(localBackupDir, userDataName, 1);
         }
+        BackupUtil.cleanBackupDir(localBackupDir, userDataName, 1);
         
         logger.info("\n----------------------------\n");
         
@@ -365,9 +372,14 @@ public class BackupHelper {
         logger.info("\n\n\n--- RECOVERY DRIVE ---\n");
         BackupUtil.clearTmpDir();
         
+        if (!Drive.RECOVERY.available()) {
+            logger.warn(BackupUtil.ERROR + "Drive: " + Drive.RECOVERY.driveLetter + " is not available");
+            return;
+        }
+        
         final String backupName = "Recovery";
         
-        final String password = Filesystem.readFileToString(new File(Project.DATA_DIR, "pass-recovery.txt"));
+        final String password = PropertyUtil.readProperty("pass-recovery.txt");
         
         final File localDir = Drive.RECOVERY.drive;
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", "Backups"));
@@ -382,8 +394,8 @@ public class BackupHelper {
             
             final File recoveryBackup = BackupUtil.compressBackupCache(recoveryCache, true, BackupUtil.Stamper.stamp(backupName), false, password);
             BackupUtil.commitBackup(localBackupDir, recoveryBackup);
-            BackupUtil.cleanBackupDir(localBackupDir, backupName, 1);
         }
+        BackupUtil.cleanBackupDir(localBackupDir, backupName, 1);
         
         BackupUtil.syncBackupDir(localBackupDir, backupDir, backupName);
     }
@@ -449,13 +461,21 @@ public class BackupHelper {
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", backupName));
         final File backupDir = new File(Drive.BACKUP.drive, backupName);
         
-        for (File deviceTypeDir : Filesystem.getDirs(localDir)) {
-            for (File deviceDir : Filesystem.getDirs(new File(deviceTypeDir, "Backups"))) {
+        for (File deviceTypeDir : BackupUtil.getSubDirs(localDir)) {
+            for (File deviceDir : BackupUtil.getSubDirs(new File(deviceTypeDir, "Backups"))) {
+                
+                logger.info("\n--- Backing up " + deviceDir.getName() + " ---\n");
                 
                 final File deviceLocalDir = Optional.ofNullable(BackupUtil.Search.getNewest(deviceDir)).orElse(deviceDir);
                 final File deviceLocalBackupDir = new File(localBackupDir, Filesystem.generatePath(deviceTypeDir.getName(), deviceDir.getName()));
                 
+                if (deviceTypeDir.getName().equals("Phone")) {
+                    BackupUtil.cleanBackupDir(deviceDir, 6);
+                }
+                
                 BackupUtil.syncBackupDir(deviceLocalDir, deviceLocalBackupDir);
+                
+                logger.info("\n-------------------" + StringUtility.fillStringOfLength('-', deviceDir.getName().length()) + "\n");
             }
         }
         
@@ -468,8 +488,8 @@ public class BackupHelper {
         
         final String backupName = "Work PC";
         
-        final String name = Filesystem.readFileToString(new File(Project.DATA_DIR, "name-workPc.txt"));
-        final String password = Filesystem.readFileToString(new File(Project.DATA_DIR, "pass-workPc.txt"));
+        final String name = PropertyUtil.readProperty("name-workPc.txt");
+        final String password = PropertyUtil.readProperty("pass-workPc.txt");
         
         final File localDir = new File(Drive.VIRTUAL_MACHINES.drive, backupName);
         final File localDiskDir = Drive.WORK.drive;
@@ -487,8 +507,8 @@ public class BackupHelper {
             
             final File workPcBackup = BackupUtil.compressBackupCache(workPcCache, BackupUtil.Stamper.stamp(name), false, password);
             BackupUtil.commitBackup(localBackupDir, workPcBackup);
-            BackupUtil.cleanBackupDir(localBackupDir, name, 4);
         }
+        BackupUtil.cleanBackupDir(localBackupDir, name, 4);
         
         BackupUtil.syncBackupDir(localBackupDir, localDiskBackupDir, name);
         BackupUtil.syncBackupDir(localBackupDir, backupDir, name);
@@ -514,10 +534,15 @@ public class BackupHelper {
         logger.info("\n\n\n--- SYNC EXTERNAL BACKUP ---\n");
         BackupUtil.clearTmpDir();
         
+        if (!Drive.EXTERNAL_BACKUP.available()) {
+            logger.warn(BackupUtil.ERROR + "Drive: " + Drive.EXTERNAL_BACKUP.driveLetter + " is not available");
+            return;
+        }
+        
         final File localBackup = Drive.BACKUP.drive;
         final File backup = Drive.EXTERNAL_BACKUP.drive;
         
-        for (File localBackupDir : Filesystem.getDirs(localBackup)) {
+        for (File localBackupDir : BackupUtil.getSubDirs(localBackup)) {
             final File backupDir = new File(backup, localBackupDir.getName());
             
             if (BackupUtil.USE_RSYNC) {

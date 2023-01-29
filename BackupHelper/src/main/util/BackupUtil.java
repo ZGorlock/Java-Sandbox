@@ -13,18 +13,13 @@ import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.UnaryOperator;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -33,7 +28,6 @@ import commons.access.Project;
 import commons.lambda.stream.collector.MapCollectors;
 import commons.object.collection.ListUtility;
 import commons.object.string.StringUtility;
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,6 +52,8 @@ public final class BackupUtil {
     
     public static final int RECENT_PERIOD_DAYS = 25; //the maximum number of days ago to consider a backup recent
     
+    public static final ExternalBackupType EXTERNAL_BACKUP_TYPE = ExternalBackupType.PRESERVE; //how to use the external backup drive
+    
     public static final String INDENT = StringUtility.spaces(4);
     
     public static final String ERROR = StringUtility.fillStringOfLength('*', INDENT.length() / 2) + StringUtility.spaces(INDENT.length() / 2);
@@ -69,7 +65,7 @@ public final class BackupUtil {
                     "$RECYCLE.BIN", "System Volume Information",
                     "desktop.ini", "Thumbs.db"
             ),
-            Filesystem.readLines(BLACKLIST_FILE).stream()
+            PropertyUtil.readPropertyList(BLACKLIST_FILE.getName()).stream()
     ).filter(e -> !StringUtility.isNullOrBlank(e)).distinct().collect(Collectors.toList());
     
     static {
@@ -79,19 +75,26 @@ public final class BackupUtil {
     }
     
     
+    //Enums
+    
+    public enum ExternalBackupType {
+        PRESERVE, //store the previous month's backup
+        DUPLICATE, //store another copy of this month's backup
+        NONE //do not use
+    }
+    
+    
     //Static Methods
     
     /**
      * Creates a backup cache directory.
      */
     public static File makeBackupCache(File backupCache) {
-        final File backupCacheDir = backupCache.getAbsoluteFile();
-        
         logger.debug(StringUtility.format("Creating backup cache: {}", Log.logFile(backupCache)));
         
-        Action.mkdir(backupCacheDir);
+        Action.mkdir(backupCache);
         
-        return backupCacheDir;
+        return backupCache.getAbsoluteFile();
     }
     
     public static File makeBackupCache(File backupCacheLocation, String backupCacheName) {
@@ -153,15 +156,19 @@ public final class BackupUtil {
     /**
      * Compresses a backup cache.
      */
-    public static File compressBackupCache(File backupCache, boolean openDir, String archiveName, boolean slow, String password) {
-        final File archive = new File(backupCache.getParentFile(), (archiveName + ".rar")).getAbsoluteFile();
-        final boolean deleteAfter = backupCache.getAbsolutePath().replace("\\", "/").matches("^.*/Sandbox/BackupHelper/tmp/.*$");
-        
+    public static File compressBackupCache(File backupCache, boolean openDir, File archive, boolean slow, String password, boolean deleteAfter) {
         logger.debug(StringUtility.format("Compressing: {} to: {}", Log.logFile(backupCache), Log.logFile(archive)));
         
         Action.compress(backupCache, openDir, archive, slow, password, deleteAfter);
         
         return archive;
+    }
+    
+    public static File compressBackupCache(File backupCache, boolean openDir, String archiveName, boolean slow, String password) {
+        final File archive = new File(backupCache.getParentFile(), (archiveName + ".rar")).getAbsoluteFile();
+        final boolean deleteAfter = backupCache.getAbsolutePath().replace("\\", "/").contains("/Sandbox/BackupHelper/tmp/");
+        
+        return compressBackupCache(backupCache, openDir, archive, slow, password, deleteAfter);
     }
     
     public static File compressBackupCache(File backupCache, String archiveName, boolean slow, String password) {
@@ -212,6 +219,11 @@ public final class BackupUtil {
     public static void cleanBackupDir(File backupDir, String baseName, int numberToKeep) {
         logger.debug(StringUtility.format("Cleaning{} backups in: {}", Log.logBaseName(baseName), Log.logFile(backupDir)));
         
+        if ((baseName != null) && baseName.isEmpty()) {
+            logger.warn(ERROR + "Attempted to clean backups using an empty search name, to search all backups use null instead");
+            return;
+        }
+        
         final List<File> existingBackups = Search.list(backupDir, baseName);
         if (existingBackups.size() > numberToKeep) {
             logger.debug(INDENT + StringUtility.format("More than {}{} backups found in: {}", numberToKeep, Log.logBaseName(baseName), Log.logFile(backupDir)));
@@ -230,36 +242,10 @@ public final class BackupUtil {
     /**
      * Synchronizes a source backup directory to a target backup directory.
      */
-    public static void syncBackupDir(File sourceBackupDir, File targetBackupDir, String baseName, List<String> fileExclusions) {
+    public static boolean syncBackupDir(File sourceBackupDir, File targetBackupDir, String baseName, List<String> fileExclusions) {
         logger.debug(StringUtility.format("Synchronizing: {} to: {}", Log.logFile(sourceBackupDir), Log.logFile(targetBackupDir)));
         
-        final Predicate<File> isTarget = (File file) ->
-                Optional.ofNullable(baseName).filter(e -> !e.isBlank())
-                        .map(e -> Stamper.baseName(file).equals(e))
-                        .orElse(true);
-        
-        final Predicate<File> isExcluded = (File file) ->
-                Stream.concat(BLACKLIST.stream(), Optional.ofNullable(fileExclusions).stream().flatMap(Collection::stream))
-                        .anyMatch(e -> file.getAbsolutePath().replace("\\", "/")
-                                .matches("^.*/" + Pattern.quote(e) + "(?:/.*)?$"));
-        
-        final BiFunction<File, Map.Entry<File, File>, File> fileMapper = (File file, Map.Entry<File, File> dirChange) ->
-                new File(file.getAbsolutePath().replace(dirChange.getKey().getAbsolutePath(), dirChange.getValue().getAbsolutePath())).getAbsoluteFile();
-        final UnaryOperator<File> mapToSource = (File backup) ->
-                fileMapper.apply(backup, Map.entry(targetBackupDir, sourceBackupDir));
-        final UnaryOperator<File> mapToBackup = (File source) ->
-                fileMapper.apply(source, Map.entry(sourceBackupDir, targetBackupDir));
-        
-        Filesystem.getFilesAndDirsRecursively(sourceBackupDir).stream()
-                .map(e -> Map.entry(e, mapToBackup.apply(e)))
-                .filter(e -> (isTarget.test(e.getKey()) && !isExcluded.test(e.getKey())))
-                .filter(e -> (!e.getValue().exists() || (e.getKey().isFile() && FileUtils.isFileNewer(e.getKey(), e.getValue()))))
-                .forEach(e -> Action.copy(e.getKey(), e.getValue()));
-        
-        Filesystem.getFilesAndDirsRecursively(targetBackupDir).stream()
-                .map(e -> Map.entry(mapToSource.apply(e), e))
-                .filter(e -> ((isTarget.test(e.getValue()) && !e.getKey().exists()) || isExcluded.test(e.getValue())))
-                .forEach(e -> Action.delete(e.getValue()));
+        return Action.sync(sourceBackupDir, targetBackupDir, baseName, fileExclusions);
     }
     
     public static void syncBackupDir(File sourceBackupDir, File targetBackupDir, List<String> fileExclusions) {
@@ -306,6 +292,10 @@ public final class BackupUtil {
     
     public static boolean recentBackupExists(File backupDir) {
         return recentBackupExists(backupDir, null);
+    }
+    
+    public static List<File> getSubDirs(File dir) {
+        return Filesystem.getDirs(dir, f -> !ListUtility.containsIgnoreCase(BLACKLIST, f.getName()));
     }
     
     public static boolean clearTmpDir() {
@@ -470,6 +460,13 @@ public final class BackupUtil {
         }
         
         public static boolean compress(File file, boolean openDir, File target, boolean slow, String password, boolean deleteAfter, boolean log) {
+            if (!file.exists()) {
+                if (log) {
+                    logger.error(ERROR + "File: " + Log.logFile(file) + " could not be found");
+                }
+                return false;
+            }
+            
             if (SAFE_MODE && target.exists()) {
                 if (log) {
                     logger.warn(ERROR + StringUtility.format("Already exists: {}; skipping in safe mode", Log.logFile(target)));
@@ -489,16 +486,40 @@ public final class BackupUtil {
             return compress(file, openDir, target, slow, password, deleteAfter, true);
         }
         
-        public static boolean rsync(File sourceDir, File targetDir, boolean log) {
+        public static boolean sync(File sourceDir, File targetDir, String baseName, List<String> fileExclusions, boolean log) {
             if (!sourceDir.exists()) {
                 if (log) {
-                    logger.error(INDENT + "Source directory: " + Log.logFile(sourceDir) + " could not be found");
+                    logger.error(ERROR + "Source directory: " + Log.logFile(sourceDir) + " could not be found");
                 }
                 return false;
             }
             if (!targetDir.exists()) {
                 if (log) {
-                    logger.error(INDENT + "Target directory: " + Log.logFile(targetDir) + " could not be found");
+                    logger.error(ERROR + "Target directory: " + Log.logFile(targetDir) + " could not be found");
+                }
+                return false;
+            }
+            
+            if (!TEST_MODE) {
+                return SyncUtil.sync(sourceDir, targetDir, baseName, fileExclusions);
+            }
+            return true;
+        }
+        
+        public static boolean sync(File sourceDir, File targetDir, String baseName, List<String> fileExclusions) {
+            return sync(sourceDir, targetDir, baseName, fileExclusions, true);
+        }
+        
+        public static boolean rsync(File sourceDir, File targetDir, boolean log) {
+            if (!sourceDir.exists()) {
+                if (log) {
+                    logger.error(ERROR + "Source directory: " + Log.logFile(sourceDir) + " could not be found");
+                }
+                return false;
+            }
+            if (!targetDir.exists()) {
+                if (log) {
+                    logger.error(ERROR + "Target directory: " + Log.logFile(targetDir) + " could not be found");
                 }
                 return false;
             }

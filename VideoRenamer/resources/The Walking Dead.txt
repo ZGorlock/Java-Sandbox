@@ -167,11 +167,11 @@ S11E13 - Warlords
 S11E14 - The Rotten Core
 S11E15 - Trust
 S11E16 - Acts of God
-S11E17 - TBA
-S11E18 - TBA
-S11E19 - TBA
-S11E20 - TBA
-S11E21 - TBA
-S11E22 - TBA
-S11E23 - TBA
-S11E24 - TBA
+S11E17 - Lockdown
+S11E18 - A New Deal
+S11E19 - Variant
+S11E20 - What's Been Lost
+S11E21 - Outpost 22
+S11E22 - Faith
+S11E23 - Family
+S11E24 - Rest in Peace

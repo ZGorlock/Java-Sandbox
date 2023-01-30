@@ -71,6 +71,7 @@ public class VideoProcessor {
         
         addSubtitles();
 //        extractSubtitles();
+//        collectFilesFromDownloads();
 
 //        makePlaylists();
 //        lossTest();
@@ -385,6 +386,43 @@ public class VideoProcessor {
             
             Filesystem.writeStringToFile(output, Filesystem.readFileToString(output).replace("\\h", ""));
         }
+    }
+    
+    private static void collectFilesFromDownloads(File downloadsDir) {
+        File source = new File(downloadsDir, "old");
+        File dest = new File(downloadsDir.getAbsolutePath());
+        
+        for (File downloadDir : Filesystem.getDirs(source)) {
+            List<File> downloadFiles = Filesystem.getFilesRecursively(downloadDir);
+            
+            List<File> videos = Filesystem.getFilesRecursively(downloadDir, ".*\\.(?:mp4|mkv)");
+            List<File> subs = Filesystem.getFilesRecursively(downloadDir, ".*\\.(?:srt)");
+            if (videos.size() != 1) {
+                System.err.println("Skipping " + downloadDir.getName() + " because of video issue");
+                continue;
+            }
+            if (subs.size() != 1) {
+                System.err.println("Skipping " + downloadDir.getName() + " because of video issue");
+                continue;
+            }
+            
+            File downloadVideo = videos.get(0);
+            File downloadSub = subs.get(0);
+        
+            String videoType = downloadVideo.getName().replaceAll(".*(\\.[^.]+)$", "$1");
+            String subsType = downloadSub.getName().replaceAll(".*(\\.[^.]+)$", "$1");
+            
+            File outputVideo = new File(dest, downloadDir.getName() + videoType);
+            File outputSub = new File(dest, downloadDir.getName() + subsType);
+        
+            Filesystem.copyFile(downloadVideo, outputVideo, false);
+            Filesystem.copyFile(downloadSub, outputSub, false);
+        }
+    }
+    
+    private static void collectFilesFromDownloads() {
+        collectFilesFromDownloads(workDir);
+//        collectFilesFromDownloads(new File("E:\\Downloads\\a"));
     }
     
     private static void makePlaylists() {

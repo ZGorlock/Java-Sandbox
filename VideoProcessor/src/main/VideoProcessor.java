@@ -349,8 +349,8 @@ public class VideoProcessor {
             }
         }
         
-        videos.sort(Comparator.comparing(File::getName));
-        subtitles.sort(Comparator.comparing(File::getName));
+        videos.sort(Comparator.comparing(File::getAbsolutePath));
+        subtitles.sort(Comparator.comparing(File::getAbsolutePath));
         
         for (int i = 0; i < videos.size(); i++) {
             File output = new File(out, StringUtility.rShear(videos.get(i).getName(), 4) + inFormat);

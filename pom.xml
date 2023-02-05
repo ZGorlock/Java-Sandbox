@@ -17,6 +17,7 @@
         <module>bicBugsLister</module>
         <module>billboardHot100Processor</module>
         <module>budgetProcessor</module>
+        <module>clipboardAccumulator</module>
         <module>dbTest</module>
         <module>dependencyAnalyzer</module>
         <module>dicingBotSimulator</module>

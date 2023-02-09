@@ -1,79 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/Ackermann/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Ackermann/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Ackermann/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/AlchBuddy/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/AlchBuddy/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/AlchBuddy/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/AnimeDownloadProcessor/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/AnimeDownloadProcessor/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/AnimeDownloadProcessor/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/BackupHelper/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/BackupHelper/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/BicBugsLister/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/BicBugsLister/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/BicBugsLister/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/BillboardHot100Processor/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/BillboardHot100Processor/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/BillboardHot100Processor/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/BudgetProcessor/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/BudgetProcessor/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ClipboardAccumulator/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ClipboardAccumulator/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/DBTest/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/DBTest/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/DBTest/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/DependencyAnalyzer/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/DependencyAnalyzer/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/DicingBotSimulator/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/DicingBotSimulator/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/DicingBotSimulator/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/DictionaryTest/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/DictionaryTest/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/DictionaryTest/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/GalleryDownloader/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/GalleryDownloader/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/HalfLifeCalculator/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/HalfLifeCalculator/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/HomePictureOrganizer/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/HomePictureOrganizer/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/HomePictureOrganizer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/HomeVideoSplitter/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/HomeVideoSplitter/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/HomeVideoSplitter/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/HtmlScraper/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/HtmlScraper/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/HtmlScraper/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ImageTextTagger/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ImageTextTagger/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/InterviewTest/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/InterviewTest/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/InterviewTest/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/JavaPojoGenerator/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/JavaPojoGenerator/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/LotteryGuesser/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/LotteryGuesser/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/LotteryGuesser/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MarketAnalyzer/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MarketAnalyzer/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MD5Cracker/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/MD5Cracker/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/MD5Cracker/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MusicPlayer/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/MusicPlayer/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/MusicPlayer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/OsrsKeepLoggedIn/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/OsrsKeepLoggedIn/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/OsrsKeepLoggedIn/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/OsrsMerchingStatistics/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/OsrsMerchingStatistics/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/OsrsMerchingStatistics/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/PandoraProcessor/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/PandoraProcessor/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/PandoraProcessor/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/PerceptualImageMatcher/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/PerceptualImageMatcher/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/PhoneMusicProcessor/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/PhoneMusicProcessor/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/PhoneMusicProcessor/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/PiBot/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/PiBot/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/PiBot/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/PictureResizer/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/PictureResizer/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/PictureResizer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/PlaylistGenerator/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/PlaylistGenerator/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/PlaylistGenerator/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ReactionTimeClicker/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ReactionTimeClicker/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/ReactionTimeClicker/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/RegexpTrie/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/RegexpTrie/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/RegexpTrie/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SineWaves/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SineWaves/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/SineWaves/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Sphinx4Test/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Sphinx4Test/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Sphinx4Test/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SpotifyPlaylistCreator/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SpotifyPlaylistCreator/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/SpotifyPlaylistCreator/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/StableDiffusionRunner/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/StableDiffusionRunner/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/StackOverflow/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/StackOverflow/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/StackOverflow/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SubredditLister/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SubredditLister/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/SubredditLister/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/TTSTest/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/TTSTest/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/TTSTest/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/VideoProcessor/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/VideoProcessor/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/VideoProcessor/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/VideoRenamer/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/VideoRenamer/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/VideoRenamer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Vision/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Vision/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Vision/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/VmdkProcessor/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/VmdkProcessor/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/VmdkProcessor/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/WavDecoder/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/WavDecoder/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/WavDecoder/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/WebReader/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/WebReader/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/WordleHelper/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/WordleHelper/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

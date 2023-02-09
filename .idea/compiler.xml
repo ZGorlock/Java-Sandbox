@@ -6,89 +6,59 @@
         <sourceOutputDir name="bin/generated-sources/annotations" />
         <sourceTestOutputDir name="bin/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="dbTest" />
-        <module name="StackOverflow" />
-        <module name="phoneMusicProcessor" />
-        <module name="animeDownloadProcessor" />
-        <module name="Sphinx4test" />
-        <module name="VideoProcessor" />
+        <module name="ackermann" />
         <module name="alchBuddy" />
-        <module name="sphinx4test" />
-        <module name="lotteryGuesser" />
-        <module name="halfLifeCalculator" />
-        <module name="homePictureOrganizer" />
-        <module name="BicBugsLister" />
+        <module name="animeDownloadProcessor" />
+        <module name="backupHelper" />
         <module name="bicBugsLister" />
         <module name="billboardHot100Processor" />
-        <module name="spotifyPlaylistCreator" />
-        <module name="InterviewTest" />
-        <module name="TTSTest" />
+        <module name="budgetProcessor" />
+        <module name="clipboardAccumulator" />
+        <module name="dbTest" />
+        <module name="dependencyAnalyzer" />
+        <module name="dicingBotSimulator" />
         <module name="dictionaryTest" />
-        <module name="playlistGenerator" />
-        <module name="Ackermann" />
+        <module name="galleryDownloader" />
+        <module name="halfLifeCalculator" />
+        <module name="homePictureOrganizer" />
+        <module name="homeVideoSplitter" />
+        <module name="htmlScraper" />
+        <module name="imageTextTagger" />
+        <module name="interviewTest" />
+        <module name="javaPojoGenerator" />
+        <module name="lotteryGuesser" />
+        <module name="marketAnalyzer" />
+        <module name="md5Cracker" />
+        <module name="musicPlayer" />
+        <module name="osrsKeepLoggedIn" />
         <module name="osrsMerchingStatistics" />
+        <module name="pandoraProcessor" />
+        <module name="perceptualImageMatcher" />
+        <module name="phoneMusicProcessor" />
+        <module name="piBot" />
+        <module name="pictureResizer" />
+        <module name="playlistGenerator" />
+        <module name="reactionTimeClicker" />
+        <module name="regexpTrie" />
+        <module name="sineWaves" />
+        <module name="sphinx4test" />
+        <module name="spotifyPlaylistCreator" />
+        <module name="stableDiffusionRunner" />
+        <module name="stackOverflow" />
+        <module name="subredditLister" />
+        <module name="ttsTest" />
+        <module name="videoProcessor" />
         <module name="videoRenamer" />
         <module name="vision" />
-        <module name="Vision" />
-        <module name="HtmlScraper" />
-        <module name="VideoRenamer" />
-        <module name="wavDecoder" />
-        <module name="subredditLister" />
-        <module name="OsrsMerchingStatistics" />
-        <module name="stackOverflow" />
-        <module name="htmlScraper" />
-        <module name="homeVideoSplitter" />
-        <module name="musicPlayer" />
-        <module name="dependencyAnalyzer" />
-        <module name="sineWaves" />
-        <module name="piBot" />
-        <module name="BicBugsLister" />
-        <module name="ackermann" />
-        <module name="billboardHot100Processor" />
-        <module name="osrsKeepLoggedIn" />
-        <module name="reactionTimeClicker" />
-        <module name="interviewTest" />
-        <module name="PictureResizer" />
-        <module name="DBTest" />
-        <module name="ttsTest" />
-        <module name="MusicPlayer" />
-        <module name="md5Cracker" />
-        <module name="pandoraProcessor" />
-        <module name="dicingBotSimulator" />
-        <module name="DictionaryTest" />
         <module name="vmdkProcessor" />
-        <module name="Vision" />
-        <module name="videoProcessor" />
-        <module name="HtmlScraper" />
-        <module name="VideoRenamer" />
-        <module name="pictureResizer" />
-        <module name="regexpTrie" />
-        <module name="budgetProcessor" />
+        <module name="wavDecoder" />
+        <module name="webReader" />
+        <module name="wordleHelper" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="AlchBuddy" target="1.8" />
-      <module name="animeDownloader" target="13" />
-      <module name="backupHelper" target="13" />
-      <module name="BicBugsLister" target="13" />
-      <module name="colorChecker" target="13" />
-      <module name="DicingBotSimulator" target="1.8" />
-      <module name="keylistener" target="1.8" />
-      <module name="Keylistener" target="1.8" />
-      <module name="LotteryGuesser" target="1.8" />
-      <module name="OsrsKeepLoggedIn" target="1.8" />
-      <module name="PiBot" target="1.8" />
-      <module name="ReactionTimeClicker" target="1.8" />
-      <module name="RegexpTrie" target="1.8" />
-      <module name="SineWaves" target="1.8" />
-      <module name="WavDecoder" target="1.8" />
-      <module name="websiteGenerator" target="13" />
+      <module name="InterviewTest" target="1.8" />
+      <module name="Sandbox" target="13" />
     </bytecodeTargetLevel>
-  </component>
-  <component name="JavacSettings">
-    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="InterviewTest" options="" />
-      <module name="interviewTest" options="" />
-    </option>
   </component>
 </project>

@@ -98,7 +98,7 @@
         
         <!-- INTERNET -->
         <httpclient.version>4.5.13</httpclient.version>
-        <jsoup.version>1.14.2</jsoup.version>
+        <jsoup.version>1.15.3</jsoup.version>
         
         <!-- HOTKEYS -->
         <jnativehook.version>2.1.0</jnativehook.version>

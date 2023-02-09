@@ -13,16 +13,22 @@
     <artifactId>dictionaryTest</artifactId>
     
     
+    <properties>
+        <extjwnl.version>1.9.2</extjwnl.version>
+        <extjwnl-data-wn31.version>1.2</extjwnl-data-wn31.version>
+    </properties>
+    
+    
     <dependencies>
         <dependency>
             <groupId>net.sf.extjwnl</groupId>
             <artifactId>extjwnl</artifactId>
-            <version>1.9.2</version>
+            <version>${extjwnl.version}</version>
         </dependency>
         <dependency>
             <groupId>net.sf.extjwnl</groupId>
             <artifactId>extjwnl-data-wn31</artifactId>
-            <version>1.2</version>
+            <version>${extjwnl-data-wn31.version}</version>
         </dependency>
     </dependencies>
 

@@ -13,62 +13,12 @@
     <artifactId>alchBuddy</artifactId>
     
     
-    <properties>
-        <!-- JAVA -->
-        <java.version>1.8</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <dependency.locations.enabled>false</dependency.locations.enabled>
-        
-        <!-- MAVEN -->
-        <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
-        <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
-        <maven-dependency-plugin.version>3.0.0</maven-dependency-plugin.version>
-        <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
-        <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
-        <maven-clean-plugin.version>3.0.0</maven-clean-plugin.version>
-        
-        <!-- JSON -->
-        <json-simple.version>1.1.1</json-simple.version>
-    </properties>
-    
-    
-    <dependencies>
-        <!-- JSON -->
-        <dependency>
-            <groupId>com.googlecode.json-simple</groupId>
-            <artifactId>json-simple</artifactId>
-            <version>${json-simple.version}</version>
-        </dependency>
-    </dependencies>
-    
-    
     <build>
-        <directory>${project.basedir}/bin</directory>
-        <finalName>${project.artifactId}</finalName>
-        
-        <sourceDirectory>${project.basedir}/src</sourceDirectory>
-        <outputDirectory>${project.basedir}/bin/classes</outputDirectory>
-        
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${maven-compiler-plugin.version}</version>
-                    <configuration>
-                        <source>${java.version}</source>
-                        <target>${java.version}</target>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-        
         <plugins>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <outputDirectory>${project.basedir}/bin</outputDirectory>
+                    <outputDirectory>${project.build.directory}</outputDirectory>
                     <finalName>AlchBuddy</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                     <attach>false</attach>
@@ -93,4 +43,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

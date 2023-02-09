@@ -13,35 +13,17 @@
     <artifactId>dbTest</artifactId>
     
     
+    <properties>
+        <derby.version>10.14.2.0</derby.version>
+    </properties>
+    
+    
     <dependencies>
-        <!-- DATABASE -->
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derby</artifactId>
-            <version>10.14.2.0</version>
+            <version>${derby.version}</version>
         </dependency>
     </dependencies>
-    
-    
-    <build>
-        <directory>${project.basedir}/bin</directory>
-        
-        <sourceDirectory>${project.basedir}/src</sourceDirectory>
-        <outputDirectory>${project.basedir}/bin/classes</outputDirectory>
-        
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${maven-compiler-plugin.version}</version>
-                    <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
 
 </project>

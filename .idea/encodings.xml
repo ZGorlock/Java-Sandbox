@@ -39,14 +39,15 @@
     <file url="file://$PROJECT_DIR$/ImageTextTagger/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/InterviewTest/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/InterviewTest/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/InterviewTest/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/JavaPojoGenerator/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/JavaPojoGenerator/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/LotteryGuesser/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/LotteryGuesser/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/MarketAnalyzer/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/MarketAnalyzer/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/MD5Cracker/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/MD5Cracker/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MarketAnalyzer/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MarketAnalyzer/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/MusicPlayer/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/MusicPlayer/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/OsrsKeepLoggedIn/resources" charset="UTF-8" />
@@ -97,6 +98,7 @@
     <file url="file://$PROJECT_DIR$/WebReader/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/WordleHelper/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/WordleHelper/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>

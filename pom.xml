@@ -9,6 +9,7 @@
     <version>1.0</version>
     <packaging>pom</packaging>
     
+    
     <modules>
         <module>ackermann</module>
         <module>alchBuddy</module>
@@ -62,18 +63,23 @@
     
     
     <properties>
-        <!-- JAVA -->
-        <java.version>1.8</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <dependency.locations.enabled>false</dependency.locations.enabled>
+        <!-- BUILD  -->
+        <build.jdk>13</build.jdk>
+        <build.mvn>3.8.6</build.mvn>
+        <build.enc>UTF-8</build.enc>
         
-        <!-- MAVEN -->
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
-        <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
+        <maven.compiler.release>${build.jdk}</maven.compiler.release>
+        <maven.compiler.source>${build.jdk}</maven.compiler.source>
+        <maven.compiler.target>${build.jdk}</maven.compiler.target>
+        <maven.compiler.testRelease>${build.jdk}</maven.compiler.testRelease>
+        <maven.compiler.testSource>${build.jdk}</maven.compiler.testSource>
+        <maven.compiler.testTarget>${build.jdk}</maven.compiler.testTarget>
         
-        <!-- COMMONS -->
+        <project.build.sourceEncoding>${build.enc}</project.build.sourceEncoding>
+        <project.resource.sourceEncoding>${build.enc}</project.resource.sourceEncoding>
+        <project.reporting.outputEncoding>${build.enc}</project.reporting.outputEncoding>
+        
+        <!-- DEPENDENCIES -->
         <commons-io.version>2.7</commons-io.version>
         <commons-codec.version>1.12</commons-codec.version>
         <commons-text.version>1.9</commons-text.version>
@@ -87,12 +93,9 @@
         <slf4j.version>1.7.32</slf4j.version>
         <logback.version>1.2.9</logback.version>
         
-        <!-- DATABASE -->
-        <derby.version>10.12.1.1</derby.version>
-    
         <!-- MATH -->
         <big-math.version>2.1.0</big-math.version>
-    
+        
         <!-- INTERNET -->
         <httpclient.version>4.5.13</httpclient.version>
         <jsoup.version>1.14.2</jsoup.version>
@@ -166,20 +169,13 @@
             </exclusions>
         </dependency>
         
-        <!-- DATABASE -->
-        <dependency>
-            <groupId>org.apache.derby</groupId>
-            <artifactId>derby</artifactId>
-            <version>${derby.version}</version>
-        </dependency>
-    
         <!-- MATH -->
         <dependency>
             <groupId>ch.obermuhlner</groupId>
             <artifactId>big-math</artifactId>
             <version>${big-math.version}</version>
         </dependency>
-    
+        
         <!-- INTERNET -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -191,13 +187,6 @@
             <artifactId>jsoup</artifactId>
             <version>${jsoup.version}</version>
         </dependency>
-        
-        <!-- HOTKEYS -->
-        <dependency>
-            <groupId>com.1stleg</groupId>
-            <artifactId>jnativehook</artifactId>
-            <version>${jnativehook.version}</version>
-        </dependency>
     </dependencies>
     
     
@@ -207,30 +196,11 @@
         
         <sourceDirectory>${project.basedir}/src</sourceDirectory>
         <outputDirectory>${project.basedir}/bin/classes</outputDirectory>
-        
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${maven-compiler-plugin.version}</version>
-                    <configuration>
-                        <source>${java.version}</source>
-                        <target>${java.version}</target>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-clean-plugin</artifactId>
-                    <version>${maven-clean-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-install-plugin</artifactId>
-                    <version>${maven-install-plugin.version}</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/resources</directory>
+            </resource>
+        </resources>
     </build>
 
 </project>

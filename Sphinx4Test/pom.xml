@@ -13,39 +13,24 @@
     <artifactId>sphinx4test</artifactId>
     
     
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-    
-    
     <properties>
-        <!-- SPEECH INPUT -->
-        <sphinx4.version>1.0.0</sphinx4.version>
+        <sphinx4.version>5prealpha-SNAPSHOT</sphinx4.version>
     </properties>
     
     
     <dependencies>
-        <!-- SPEECH INPUT -->
         <dependency>
             <groupId>edu.cmu.sphinx</groupId>
             <artifactId>sphinx4-core</artifactId>
-            <version>5prealpha-SNAPSHOT</version>
+            <version>${sphinx4.version}</version>
         </dependency>
         <dependency>
             <groupId>edu.cmu.sphinx</groupId>
             <artifactId>sphinx4-data</artifactId>
-            <version>5prealpha-SNAPSHOT</version>
+            <version>${sphinx4.version}</version>
         </dependency>
     </dependencies>
+    
     
     <repositories>
         <repository>

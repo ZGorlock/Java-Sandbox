@@ -105,6 +105,14 @@ public final class HalfLifeCalculator {
     
     //Static Fields
     
+    private static final Instant test = TimeUtil.parse.apply(TEST);
+    
+    private static final Instant minBound = TimeUtil.addDays.apply(TimeUtil.localStartOfDay.apply(test), -30);
+    
+    private static final Instant maxBound = TimeUtil.addDays.apply(TimeUtil.localStartOfDay.apply(test), 30);
+    
+    private static final Map<String, List<Double>> species = FileUtil.loadSpecies.get();
+    
     private static final List<ImmutablePair<String, List<ImmutablePair<Instant, Double>>>> dataSets = Stream.of(
                     Stream.of(new ImmutablePair<>("A", FileUtil.loadData.get())),
                     IntStream.range(0, ALT_DATA.size()).mapToObj(i -> new ImmutablePair<>(Character.toString('B' + i), FileUtil.loadAltData.apply(ALT_DATA.get(i)))),
@@ -112,10 +120,6 @@ public final class HalfLifeCalculator {
             .flatMap(e -> e)
             .filter(Objects::nonNull).filter(e -> (e.getValue() != null))
             .collect(Collectors.toList());
-    
-    private static final Map<String, List<Double>> species = FileUtil.loadSpecies.get();
-    
-    private static final Instant test = TimeUtil.parse.apply(TEST);
     
     
     //Main Method
@@ -141,6 +145,7 @@ public final class HalfLifeCalculator {
     private static final BiFunction<Map.Entry<Instant, String>, Map.Entry<String, List<ImmutablePair<Instant, Double>>>, Double> calculateAt = (Map.Entry<Instant, String> test, Map.Entry<String, List<ImmutablePair<Instant, Double>>> dataSet) ->
             Optional.of(dataSet.getValue().stream()
                             .filter(data -> data.getKey().isBefore(test.getKey()))
+                            .filter(data -> data.getKey().isAfter(minBound)).filter(data -> data.getKey().isBefore(maxBound))
                             .map(data -> Map.entry(((test.getKey().toEpochMilli() - data.getKey().toEpochMilli()) / (double) TimeUnit.HOURS.toMillis(1)), data.getValue()))
                             .reduce(species.keySet().stream().collect(MapCollectors.mapEachTo(() -> new AtomicDouble(0.0))),
                                     (totals, data) -> Mappers.perform(totals, endTotals ->
@@ -243,8 +248,7 @@ public final class HalfLifeCalculator {
         
         static final Supplier<List<ImmutablePair<Instant, Double>>> loadBaseData = () ->
                 !BASE ? null : parseData.apply(
-                        IntStream.rangeClosed(-30, 30)
-                                .mapToObj(i -> TimeUtil.addDays.apply(TimeUtil.localStartOfToday.get(), i))
+                        Stream.iterate(minBound, e -> !e.isAfter(maxBound), e -> TimeUtil.addDays.apply(e, 1))
                                 .flatMap(day -> loadSchedule.get().entrySet().stream()
                                         .map(e -> TimeUtil.format.apply(TimeUtil.addHours.apply(day, e.getKey())) + '|' + e.getValue()))
                                 .collect(Collectors.toList()));

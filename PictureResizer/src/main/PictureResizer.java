@@ -6,7 +6,6 @@
 
 package main;
 
-import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
@@ -16,8 +15,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.file.attribute.FileTime;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.imageio.IIOImage;
@@ -31,24 +33,38 @@ import javax.imageio.stream.ImageOutputStream;
 
 import common.Filesystem;
 import common.ImageMetadataUtility;
+import common.StringUtility;
 
 public class PictureResizer {
     
     //Constants
     
+    private static final File DATA_DIR = new File("data");
+    
+    private static final File TMP_DIR = new File("tmp");
+    
+    private static final File WORK_DIR = new File(Filesystem.getUserDirectory(), "Desktop/New Folder");
+    
+    private static final String BACKUP_NAME = "original";
+    
+    private static final List<String> PICTURE_TYPES = Arrays.asList("jpg", "jpeg", "png", "gif", "bmp", "tif", "tiff");
+    
+    
+    //Static Fields
+    
     private static final boolean preserveMetadata = false; //when inactive, file dates will be preserved if preserveDates is enabled but 'Date Taken' will not
     
     private static final boolean preserveDates = true; //when active, file dates will be preserved but 'Date Taken' will not
     
+    private static final boolean preserveOrientation = true; //when active, and if metadata is not being preserved, pictures will be rotated to fix the orientation described by their metadata
+    
+    private static final boolean printMetadata = false;
+    
     private static final boolean saveBackup = true;
     
-    private static final boolean limitDimensions = false; //aspect ratio will be preserved
+    private static final boolean crop = false; //occurs before scaling; aspect ratio will not be preserved
     
-    private static final int maxDimension = 3072;
-    
-    private static final boolean crop = false;
-    
-    private static final int cropOffTop = 31;
+    private static final int cropOffTop = 0;
     
     private static final int cropOffLeft = 0;
     
@@ -56,30 +72,38 @@ public class PictureResizer {
     
     private static final int cropOffBottom = 0;
     
-    private static final List<String> pictureTypes = Arrays.asList("jpg", "jpeg", "png", "gif", "bmp", "tif", "tiff");
+    private static final boolean scale = false; //occurs after cropping and before limiting dimensions
     
-    private static final File dataDir = new File("data");
+    private static final double scaleWidth = 1.0;
     
-    private static final File tmpDir = new File("tmp");
+    private static final double scaleHeight = 1.0;
     
-    private static final File directory = new File("C:/Users/Zack/Desktop/New folder");
+    private static final boolean limitDimensions = false; //occurs after cropping and scaling; aspect ratio will be preserved
     
-    private static final File backupDir = new File(directory, "original");
+    private static final int limitMaxWidth = 0;
+    
+    private static final int limitMaxHeight = 0;
+    
+    private static final int limitMaxDimension = 0; //when non-zero the minimum of this and either cropMaxWidth and cropMaxHeight with be used for that dimension
     
     
     //Main Method
     
     public static void main(String[] args) throws Exception {
-        processPictures(getPictures(directory));
+        final List<File> pictures = getPictures();
+        processPictures(pictures);
     }
     
     
-    //Methods
+    //Static Methods
     
-    private static List<File> getPictures(File directory) throws Exception {
-        return Filesystem.getFilesRecursively(directory != null ? directory : dataDir).stream()
-                .filter(e -> !e.getAbsolutePath().matches(".*[\\\\/]" + backupDir.getName() + "[\\\\/].*"))
-                .filter(e -> pictureTypes.contains(Filesystem.getFileType(e).toLowerCase()))
+    @SuppressWarnings("ConstantValue")
+    private static List<File> getPictures() throws Exception {
+        return Stream.of(DATA_DIR, WORK_DIR)
+                .filter(Objects::nonNull).filter(File::exists)
+                .map(Filesystem::getFilesRecursively).flatMap(Collection::stream)
+                .filter(e -> !e.getAbsolutePath().matches("(?i).*[\\\\/]" + BACKUP_NAME + "[\\\\/].*"))
+                .filter(e -> PICTURE_TYPES.contains(Filesystem.getFileType(e).toLowerCase()))
                 .collect(Collectors.toList());
     }
     
@@ -97,50 +121,55 @@ public class PictureResizer {
         });
     }
     
+    @SuppressWarnings("ConstantValue")
     private static void prepareDirectories() throws Exception {
-        if (Stream.of(tmpDir, dataDir).anyMatch(dir ->
-                (dir.getAbsolutePath().matches("[A-Z]:[\\\\/]" + directory.getName()) || (!dir.exists() && !Filesystem.createDirectory(dir))))) {
-            System.err.println("Failed to create directories");
-            throw new Exception();
-        }
+        Stream.of(TMP_DIR, DATA_DIR).filter(Objects::nonNull)
+                .filter(dir -> !Filesystem.createDirectory(dir))
+                .forEach(dir -> {
+                    System.err.println("Failed to create directory: " + dir.getAbsolutePath());
+                    throw new RuntimeException();
+                });
         
         if (saveBackup) {
-            if (!backupDir.exists()) {
-                if (!Filesystem.createDirectory(backupDir)) {
-                    System.err.println("Failed to create backup directory: " + backupDir.getAbsolutePath());
-                    throw new Exception();
-                }
-            } else {
-                final File oldBackupDir = new File(backupDir.getParentFile(), "old");
-                final File saveOldBackupDir = new File(backupDir, backupDir.getName());
-                Filesystem.rename(backupDir, oldBackupDir);
-                Filesystem.moveDirectory(oldBackupDir, saveOldBackupDir);
-            }
+            Stream.of(DATA_DIR, WORK_DIR).filter(Objects::nonNull)
+                    .filter(File::exists).map(e -> new File(e, BACKUP_NAME))
+                    .forEach(backupDir -> {
+                        if (!backupDir.exists()) {
+                            if (!Filesystem.createDirectory(backupDir)) {
+                                System.err.println("Failed to create backup directory: " + backupDir.getAbsolutePath());
+                                throw new RuntimeException();
+                            }
+                        } else {
+                            final File oldBackupDir = new File(backupDir.getParentFile(), "old");
+                            final File saveOldBackupDir = new File(backupDir, backupDir.getName());
+                            Filesystem.rename(backupDir, oldBackupDir);
+                            Filesystem.moveDirectory(oldBackupDir, saveOldBackupDir);
+                        }
+                    });
         }
     }
     
     private static void processPicture(File picture) throws Exception {
         final String type = Filesystem.getFileType(picture).toLowerCase();
-        final File tmp = new File(tmpDir, picture.getName().replaceAll("(?<=\\.)[^.]+$", type));
+        final File tmp = new File(TMP_DIR, picture.getName().replaceAll("(?<=\\.)[^.]+$", type));
         final File output = new File(picture.getParentFile(), tmp.getName());
         
         if (saveBackup) {
             backupImage(picture);
         }
         
+        printMetadata("Input", picture);
         if (preserveMetadata) {
             processPicturePreserveMetadata(picture, tmp);
         } else {
             processPictureLoseMetadata(picture, tmp);
         }
+        printMetadata("Output", tmp);
         
         replaceImage(picture, tmp, output);
     }
     
     private static void processPicturePreserveMetadata(File source, File target) throws Exception {
-        //System.out.println("INPUT METADATA:");
-        //printMetadata(source);
-        
         try (FileInputStream fileInputStream = new FileInputStream(source);
              FileOutputStream fileOutputStream = new FileOutputStream(target)) {
             
@@ -154,7 +183,7 @@ public class PictureResizer {
             final BufferedImage originalImage = reader.read(0);
             imageInputStream.flush();
             
-            final BufferedImage image = preProcessImage(originalImage);
+            final BufferedImage image = prepareImage(source, false);
             
             final ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(fileOutputStream);
             final ImageWriter writer = ImageIO.getImageWriter(reader);
@@ -167,65 +196,145 @@ public class PictureResizer {
             writer.dispose();
             imageOutputStream.flush();
         }
-        
-        //System.out.println("OUTPUT METADATA:");
-        //printMetadata(target);
     }
     
     private static void processPictureLoseMetadata(File source, File target) throws Exception {
         final BufferedImage originalImage = ImageIO.read(source);
+        final BufferedImage image = prepareImage(source);
         
-        final BufferedImage image = preProcessImage(originalImage);
         ImageIO.write(image, Filesystem.getFileType(source).toLowerCase(), target);
     }
     
-    private static BufferedImage preProcessImage(BufferedImage image) {
+    private static BufferedImage prepareImage(File picture, boolean orient) throws Exception {
+        BufferedImage image = ImageIO.read(picture);
+        if (orient) {
+            image = orient(image, getMetadataTag(picture, "Exif IFD0", "Orientation"));
+        }
         if (crop) {
-            image = cropImage(image);
+            image = crop(image);
+        }
+        if (scale) {
+            image = scale(image);
         }
         if (limitDimensions) {
-            image = scaleImage(image, maxDimension, maxDimension);
+            image = limitDimensions(image);
         }
         return image;
     }
     
-    private static BufferedImage cropImage(BufferedImage image, Rectangle rect) {
-        final BufferedImage cropped = new BufferedImage((int) rect.getWidth(), (int) rect.getHeight(), image.getType());
-        final Graphics g = cropped.getGraphics();
-        g.drawImage(image, 0, 0, (int) rect.getWidth(), (int) rect.getHeight(), (int) rect.getX(), (int) rect.getY(), (int) (rect.getX() + rect.getWidth()), (int) (rect.getY() + rect.getHeight()), null);
-        g.dispose();
-        return cropped;
+    private static BufferedImage prepareImage(File picture) throws Exception {
+        return prepareImage(picture, preserveOrientation);
     }
     
-    private static BufferedImage cropImage(BufferedImage image) {
-        final Rectangle rect = new Rectangle(cropOffLeft, cropOffTop,
-                (image.getWidth() - cropOffLeft - cropOffRight), (image.getHeight() - cropOffTop - cropOffBottom));
+    public static BufferedImage cropImage(BufferedImage image, Rectangle rect) {
+        final int newWidth = (int) rect.getWidth();
+        final int newHeight = (int) rect.getHeight();
+        
+        final AffineTransform transform = new AffineTransform();
+        transform.translate((int) -rect.getMinX(), (int) -rect.getMinY());
+        final AffineTransformOp transformOp = new AffineTransformOp(transform, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+        
+        final BufferedImage cropped = new BufferedImage(newWidth, newHeight, image.getType());
+        return transformOp.filter(image, cropped);
+    }
+    
+    public static BufferedImage cropImage(BufferedImage image, int cropOffLeft, int cropOffTop, int cropOffRight, int cropOffBottom) {
+        final Rectangle rect = new Rectangle(
+                cropOffLeft, cropOffTop,
+                (image.getWidth() - cropOffLeft - cropOffRight),
+                (image.getHeight() - cropOffTop - cropOffBottom));
+        
         return cropImage(image, rect);
     }
     
-    public static BufferedImage scaleImage(BufferedImage image, double scale) {
-        if ((scale <= 0.0) || (scale >= 1.0)) {
+    private static BufferedImage crop(BufferedImage image) {
+        return cropImage(image, cropOffLeft, cropOffTop, cropOffRight, cropOffBottom);
+    }
+    
+    public static BufferedImage scaleImage(BufferedImage image, double scaleX, double scaleY) {
+        if ((scaleX <= 0.0) || (scaleY <= 0.0)) {
             return image;
         }
         
+        final int newWidth = (int) (image.getWidth() * scaleX);
+        final int newHeight = (int) (image.getHeight() * scaleY);
+        
         final AffineTransform transform = new AffineTransform();
-        transform.scale(scale, scale);
+        transform.scale(scaleX, scaleY);
         final AffineTransformOp transformOp = new AffineTransformOp(transform, AffineTransformOp.TYPE_BICUBIC);
         
-        final BufferedImage scaled = new BufferedImage((int) (image.getWidth() * scale), (int) (image.getHeight() * scale), image.getType());
+        final BufferedImage scaled = new BufferedImage(newWidth, newHeight, image.getType());
         return transformOp.filter(image, scaled);
     }
     
-    public static BufferedImage scaleImage(BufferedImage image, int maxWidth, int maxHeight) {
-        if ((image.getWidth() <= maxWidth) && (image.getHeight() <= maxHeight)) {
-            return image;
-        }
+    public static BufferedImage scaleImage(BufferedImage image, double scale) {
+        return scaleImage(image, scale, scale);
+    }
+    
+    private static BufferedImage scale(BufferedImage image) {
+        return scaleImage(image, scaleWidth, scaleHeight);
+    }
+    
+    private static BufferedImage limitDimensions(BufferedImage image) {
+        final int maxWidth = Math.min(((limitMaxWidth > 0) ? limitMaxWidth : Integer.MAX_VALUE), ((limitMaxDimension > 0) ? limitMaxDimension : Integer.MAX_VALUE));
+        final int maxHeight = Math.min(((limitMaxHeight > 0) ? limitMaxHeight : Integer.MAX_VALUE), ((limitMaxDimension > 0) ? limitMaxDimension : Integer.MAX_VALUE));
         
-        double scale = Math.min(((double) maxWidth / image.getWidth()), ((double) maxHeight / image.getHeight()));
+        final double scale = Math.min(((double) maxWidth / image.getWidth()), ((double) maxHeight / image.getHeight()));
         return scaleImage(image, scale);
     }
     
+    public static BufferedImage rotateImage(BufferedImage image, int quadrants) {
+        final int newWidth = (((quadrants % 2) == 0) ? image.getWidth() : image.getHeight());
+        final int newHeight = (((quadrants % 2) == 0) ? image.getHeight() : image.getWidth());
+        
+        final AffineTransform transform = new AffineTransform();
+        transform.translate((newWidth / 2.0), (newHeight / 2.0));
+        transform.quadrantRotate(quadrants);
+        transform.translate((-image.getWidth() / 2.0), (-image.getHeight() / 2.0));
+        final AffineTransformOp transformOp = new AffineTransformOp(transform, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+        
+        final BufferedImage rotated = new BufferedImage(newWidth, newHeight, image.getType());
+        return transformOp.filter(image, rotated);
+    }
+    
+    public static BufferedImage flipImage(BufferedImage image, boolean horizontally, boolean vertically) {
+        final int newWidth = image.getWidth();
+        final int newHeight = image.getHeight();
+        
+        final AffineTransform transform = new AffineTransform();
+        transform.translate((newWidth / 2.0), (newHeight / 2.0));
+        transform.scale((horizontally ? -1 : 1), (vertically ? -1 : 1));
+        transform.translate((-image.getWidth() / 2.0), (-image.getHeight() / 2.0));
+        final AffineTransformOp transformOp = new AffineTransformOp(transform, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+        
+        final BufferedImage flipped = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
+        return transformOp.filter(image, flipped);
+    }
+    
+    private static BufferedImage orient(BufferedImage image, ImageMetadataUtility.MetadataTag orientationTag) {
+        if (orientationTag == null) {
+            return image;
+        }
+        
+        final String data = orientationTag.value.toUpperCase().replaceAll(".*\\(\\s*|\\s*\\).*", "");
+        final String mirror = data.contains("MIRROR") ? data.replaceAll(".*MIRROR\\s(\\w+).*", "$1") : "";
+        final String rotate = data.contains("ROTATE") ? ((data.contains("CCW") ? "-" : "") + data.replaceAll(".*ROTATE\\s(\\d+).*", "$1")) : "";
+        
+        BufferedImage oriented = image;
+        if (!mirror.isEmpty() && !mirror.contains(" ")) {
+            final boolean horizontal = mirror.contains("HORIZONTAL");
+            final boolean vertical = mirror.contains("VERTICAL");
+            oriented = flipImage(oriented, horizontal, vertical);
+        }
+        if (!rotate.isEmpty() && !rotate.contains(" ")) {
+            final int rotation = (Integer.parseInt(rotate) / 90);
+            oriented = rotateImage(image, rotation);
+        }
+        return oriented;
+    }
+    
     private static void backupImage(File picture) throws Exception {
+        final File backupDir = new File(picture.getParentFile(), BACKUP_NAME);
         final File backup = new File(backupDir, picture.getName());
         if (!Filesystem.copyFile(picture, backup)) {
             System.err.println("Failed to create backup: " + backup.getAbsolutePath());
@@ -242,9 +351,31 @@ public class PictureResizer {
         Filesystem.move(tmp, target, true);
     }
     
-    private static void printMetadata(File picture) throws Exception {
-        final List<ImageMetadataUtility.MetadataTag> metadataTags = ImageMetadataUtility.getMetadata(picture);
-        metadataTags.forEach(System.out::println);
+    public static ImageMetadataUtility.MetadataTag getMetadataTag(File picture, String directory, String name) {
+        return ImageMetadataUtility.getMetadataTag(picture, directory, name);
+    }
+    
+    public static List<ImageMetadataUtility.MetadataTag> getMetadata(File picture) {
+        return ImageMetadataUtility.getMetadata(picture);
+    }
+    
+    private static void printMetadata(String title, File picture) {
+        if (printMetadata) {
+            System.out.println(StringUtility.spaces(4) + title + " Metadata:");
+            getMetadata(picture).stream()
+                    .map(String::valueOf).map(e -> (StringUtility.spaces(8) + e))
+                    .forEach(System.out::println);
+        }
+    }
+    
+    private static List<File> findPicturesWithOrientationMetadata(File dir) {
+        return Filesystem.getFilesRecursively(dir).stream()
+                .filter(file -> PICTURE_TYPES.contains(Filesystem.getFileType(file).toLowerCase()))
+                .filter(picture -> Optional.ofNullable(getMetadataTag(picture, "Exif IFD0", "Orientation"))
+                        .map(e -> e.value)
+                        .filter(e -> !e.contains("Unknown")).filter(e -> !e.contains("(0)"))
+                        .map(e -> !e.isBlank()).orElse(false))
+                .collect(Collectors.toList());
     }
     
 }

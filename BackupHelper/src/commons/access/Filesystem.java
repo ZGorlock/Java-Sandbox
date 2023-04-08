@@ -12,6 +12,8 @@ import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -1515,10 +1517,12 @@ public final class Filesystem {
     /**
      * Reads a file out to a string.
      *
-     * @param file The file to read.
+     * @param file     The file to read.
+     * @param encoding The file encoding.
      * @return The contents of the file as a string.
+     * @see FileUtils#readFileToString(File, Charset)
      */
-    public static String readFileToString(File file) {
+    public static String readFileToString(File file, Charset encoding) {
         if (logFilesystem()) {
             logger.trace("Filesystem: Reading file to string: {}", StringUtility.fileString(file));
         }
@@ -1536,7 +1540,7 @@ public final class Filesystem {
         }
         
         try {
-            return FileUtils.readFileToString(file, "UTF-8");
+            return FileUtils.readFileToString(file, encoding);
         } catch (IOException ignored) {
             if (logFilesystem()) {
                 logger.trace("Filesystem: Unable to read file to string: {}", StringUtility.fileString(file));
@@ -1546,10 +1550,22 @@ public final class Filesystem {
     }
     
     /**
+     * Reads a file out to a string.
+     *
+     * @param file The file to read.
+     * @return The contents of the file as a string.
+     * @see #readFileToString(File, Charset)
+     */
+    public static String readFileToString(File file) {
+        return readFileToString(file, StandardCharsets.UTF_8);
+    }
+    
+    /**
      * Reads a file out to a byte array.
      *
      * @param file The file to read.
      * @return The contents of the file as a byte array.
+     * @see FileUtils#readFileToByteArray(File)
      */
     public static byte[] readFileToByteArray(File file) {
         if (logFilesystem()) {
@@ -1581,10 +1597,12 @@ public final class Filesystem {
     /**
      * Reads a file out to a list of lines.
      *
-     * @param file The file to read.
+     * @param file     The file to read.
+     * @param encoding The file encoding.
      * @return The contents of the file as a list of strings.
+     * @see FileUtils#readLines(File, Charset)
      */
-    public static List<String> readLines(File file) {
+    public static List<String> readLines(File file, Charset encoding) {
         if (logFilesystem()) {
             logger.trace("Filesystem: Reading lines from file: {}", StringUtility.fileString(file));
         }
@@ -1602,7 +1620,7 @@ public final class Filesystem {
         }
         
         try {
-            return FileUtils.readLines(file, "UTF-8");
+            return FileUtils.readLines(file, encoding);
         } catch (IOException ignored) {
             if (logFilesystem()) {
                 logger.trace("Filesystem: Unable to read lines from file: {}", StringUtility.fileString(file));
@@ -1612,14 +1630,27 @@ public final class Filesystem {
     }
     
     /**
+     * Reads a file out to a list of lines.
+     *
+     * @param file The file to read.
+     * @return The contents of the file as a list of strings.
+     * @see #readLines(File, Charset)
+     */
+    public static List<String> readLines(File file) {
+        return readLines(file, StandardCharsets.UTF_8);
+    }
+    
+    /**
      * Writes a string to a file.
      *
-     * @param file   The file to write to.
-     * @param data   The string to write to the file.
-     * @param append The flag indicating whether to append to the file or not.
+     * @param file     The file to write to.
+     * @param data     The string to write to the file.
+     * @param append   The flag indicating whether to append to the file or not.
+     * @param encoding The file encoding.
      * @return Whether the write was successful or not.
+     * @see FileUtils#writeStringToFile(File, String, Charset, boolean)
      */
-    public static boolean writeStringToFile(File file, String data, boolean append) {
+    public static boolean writeStringToFile(File file, String data, boolean append, Charset encoding) {
         if (logFilesystem()) {
             logger.trace("Filesystem: Writing string to file: {}", StringUtility.fileString(file));
         }
@@ -1634,7 +1665,7 @@ public final class Filesystem {
         }
         
         try {
-            FileUtils.writeStringToFile(file, data, "UTF-8", append);
+            FileUtils.writeStringToFile(file, data, encoding, append);
             return true;
         } catch (IOException ignored) {
             if (logFilesystem()) {
@@ -1642,6 +1673,32 @@ public final class Filesystem {
             }
             return false;
         }
+    }
+    
+    /**
+     * Writes a string to a file.
+     *
+     * @param file     The file to write to.
+     * @param data     The string to write to the file.
+     * @param encoding The file encoding.
+     * @return Whether the write was successful or not.
+     * @see #writeStringToFile(File, String, boolean, Charset)
+     */
+    public static boolean writeStringToFile(File file, String data, Charset encoding) {
+        return writeStringToFile(file, data, false, encoding);
+    }
+    
+    /**
+     * Writes a string to a file.
+     *
+     * @param file   The file to write to.
+     * @param data   The string to write to the file.
+     * @param append The flag indicating whether to append to the file or not.
+     * @return Whether the write was successful or not.
+     * @see #writeStringToFile(File, String, boolean, Charset)
+     */
+    public static boolean writeStringToFile(File file, String data, boolean append) {
+        return writeStringToFile(file, data, append, StandardCharsets.UTF_8);
     }
     
     /**
@@ -1663,6 +1720,7 @@ public final class Filesystem {
      * @param data   The byte array to write to the file.
      * @param append The flag indicating whether to append to the file or not.
      * @return Whether the write was successful or not.
+     * @see FileUtils#writeByteArrayToFile(File, byte[], boolean)
      */
     public static boolean writeByteArrayToFile(File file, byte[] data, boolean append) {
         if (logFilesystem()) {
@@ -1704,12 +1762,14 @@ public final class Filesystem {
     /**
      * Writes string lines from a collections to a file.
      *
-     * @param file   The file to write to.
-     * @param lines  The collection of lines to be written.
-     * @param append The flag indicating whether to append to the file or not.
+     * @param file     The file to write to.
+     * @param lines    The collection of lines to be written.
+     * @param append   The flag indicating whether to append to the file or not.
+     * @param encoding The file encoding.
      * @return Whether the write was successful or not.
+     * @see FileUtils#writeLines(File, String, Collection, boolean)
      */
-    public static boolean writeLines(File file, Collection<String> lines, boolean append) {
+    public static boolean writeLines(File file, Collection<String> lines, boolean append, Charset encoding) {
         if (logFilesystem()) {
             logger.trace("Filesystem: Writing lines to file: {}", StringUtility.fileString(file));
         }
@@ -1732,6 +1792,32 @@ public final class Filesystem {
             }
             return false;
         }
+    }
+    
+    /**
+     * Writes string lines from a collections to a file.
+     *
+     * @param file     The file to write to.
+     * @param lines    The collection of lines to be written.
+     * @param encoding The file encoding.
+     * @return Whether the write was successful or not.
+     * @see #writeLines(File, Collection, boolean, Charset)
+     */
+    public static boolean writeLines(File file, Collection<String> lines, Charset encoding) {
+        return writeLines(file, lines, false, encoding);
+    }
+    
+    /**
+     * Writes string lines from a collections to a file.
+     *
+     * @param file   The file to write to.
+     * @param lines  The collection of lines to be written.
+     * @param append The flag indicating whether to append to the file or not.
+     * @return Whether the write was successful or not.
+     * @see #writeLines(File, Collection, boolean, Charset)
+     */
+    public static boolean writeLines(File file, Collection<String> lines, boolean append) {
+        return writeLines(file, lines, append, StandardCharsets.UTF_8);
     }
     
     /**

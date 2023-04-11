@@ -34,7 +34,7 @@ public class ClipboardAccumulator {
     
     private static final boolean FILE = true;
     
-    private static final boolean CMD = true;
+    private static final boolean CMD = false;
     
     private static final boolean FILTER = true;
     

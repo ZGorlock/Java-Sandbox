@@ -309,7 +309,7 @@ public final class BackupUtil {
         
         //Static Methods
         
-        public static boolean copy(File file, File target, boolean log) {
+        public static boolean copy(File file, File target, boolean log, boolean logPath) {
             final boolean update = target.exists();
             if (SAFE_MODE && target.exists()) {
                 if (log) {
@@ -317,7 +317,7 @@ public final class BackupUtil {
                 }
             } else {
                 if (log) {
-                    logger.trace(INDENT + StringUtility.format("{}: {}", (update ? "Updating" : "Copying"), Log.logFile(file, false)));
+                    logger.trace(INDENT + StringUtility.format("{}: {}", (update ? "Updating" : "Copying"), Log.logFile(file, logPath)));
                 }
                 if (!TEST_MODE) {
                     if (!Filesystem.copy(file, target, true)) {
@@ -330,6 +330,10 @@ public final class BackupUtil {
                 }
             }
             return true;
+        }
+        
+        public static boolean copy(File file, File target, boolean log) {
+            return copy(file, target, log, true);
         }
         
         public static boolean copy(File file, File target) {
@@ -359,14 +363,14 @@ public final class BackupUtil {
             return doCopy(source, target, true);
         }
         
-        public static boolean move(File file, File target, boolean log) {
+        public static boolean move(File file, File target, boolean log, boolean logPath) {
             if (SAFE_MODE && target.exists()) {
                 if (log) {
                     logger.warn(ERROR + StringUtility.format("Already exists: {}; skipping in safe mode", Log.logFile(target)));
                 }
             } else {
                 if (log) {
-                    logger.trace(INDENT + StringUtility.format("Moving: {}", Log.logFile(file, false)));
+                    logger.trace(INDENT + StringUtility.format("Moving: {}", Log.logFile(file, logPath)));
                 }
                 if (!TEST_MODE) {
                     if (!Filesystem.move(file, target, true)) {
@@ -380,19 +384,23 @@ public final class BackupUtil {
             return true;
         }
         
+        public static boolean move(File file, File target, boolean log) {
+            return move(file, target, log, true);
+        }
+        
         public static boolean move(File file, File target) {
             return move(file, target, true);
         }
         
-        public static boolean delete(File file, boolean log) {
+        public static boolean delete(File file, boolean log, boolean logPath) {
             if (file.exists()) {
                 if (SAFE_MODE) {
                     if (log) {
-                        logger.warn(ERROR + StringUtility.format("Deleting: {}; skipping in safe mode", Log.logFile(file, false)));
+                        logger.warn(ERROR + StringUtility.format("Deleting: {}; skipping in safe mode", Log.logFile(file, logPath)));
                     }
                 } else {
                     if (log) {
-                        logger.trace(INDENT + StringUtility.format("Deleting: {}", Log.logFile(file, false)));
+                        logger.trace(INDENT + StringUtility.format("Deleting: {}", Log.logFile(file, logPath)));
                     }
                     if (!TEST_MODE) {
                         return doDelete(file, false);
@@ -400,6 +408,10 @@ public final class BackupUtil {
                 }
             }
             return true;
+        }
+        
+        public static boolean delete(File file, boolean log) {
+            return delete(file, log, true);
         }
         
         public static boolean delete(File file) {
@@ -438,10 +450,10 @@ public final class BackupUtil {
             return doDelete(file, true);
         }
         
-        public static boolean mkdir(File file, boolean log) {
+        public static boolean mkdir(File file, boolean log, boolean logPath) {
             if (!file.exists()) {
                 if (log) {
-                    logger.trace(INDENT + StringUtility.format("Creating: {}", Log.logFile(file, false)));
+                    logger.trace(INDENT + StringUtility.format("Creating: {}", Log.logFile(file, logPath)));
                 }
                 if (!TEST_MODE) {
                     if (!Filesystem.createDirectory(file)) {
@@ -455,11 +467,15 @@ public final class BackupUtil {
             return true;
         }
         
+        public static boolean mkdir(File file, boolean log) {
+            return mkdir(file, log, true);
+        }
+        
         public static boolean mkdir(File file) {
             return mkdir(file, true);
         }
         
-        public static boolean compress(File file, boolean openDir, File target, boolean slow, String password, boolean deleteAfter, boolean log) {
+        public static boolean compress(File file, boolean openDir, File target, boolean slow, String password, boolean deleteAfter, boolean log, boolean logPath) {
             if (!file.exists()) {
                 if (log) {
                     logger.error(ERROR + "File: " + Log.logFile(file) + " could not be found");
@@ -473,13 +489,17 @@ public final class BackupUtil {
                 }
             } else {
                 if (log) {
-                    logger.trace(INDENT + StringUtility.format("Compressing: {}", Log.logFile(target, false)));
+                    logger.trace(INDENT + StringUtility.format("Compressing: {}", Log.logFile(target, logPath)));
                 }
                 if (!TEST_MODE) {
                     RarUtil.archiveFile(file, openDir, target, slow, password, deleteAfter);
                 }
             }
             return true;
+        }
+        
+        public static boolean compress(File file, boolean openDir, File target, boolean slow, String password, boolean deleteAfter, boolean log) {
+            return compress(file, openDir, target, slow, password, deleteAfter, log, true);
         }
         
         public static boolean compress(File file, boolean openDir, File target, boolean slow, String password, boolean deleteAfter) {
@@ -494,10 +514,7 @@ public final class BackupUtil {
                 return false;
             }
             if (!targetDir.exists()) {
-                if (log) {
-                    logger.error(ERROR + "Target directory: " + Log.logFile(targetDir) + " could not be found");
-                }
-                return false;
+                mkdir(targetDir, log);
             }
             
             if (!TEST_MODE) {

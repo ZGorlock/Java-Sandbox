@@ -387,10 +387,19 @@ public class BackupHelper {
         
         if (!BackupUtil.recentBackupExists(localBackupDir, backupName)) {
             
+            final File recoveryManifestCache = new File(Filesystem.getTemporaryDirectory(), (backupName + "-manifest"));
+            BackupUtil.makeBackupCache(recoveryManifestCache);
+            
+            final File recoveryManifestEntry = new File(recoveryManifestCache, BackupUtil.Stamper.stamp("manifest.txt"));
+            WindowsBackupTools.createManifest(localDir, recoveryManifestEntry);
+            
+            final File recoveryManifestDir = new File(localDir, Filesystem.generatePath(".index", "manifest"));
+            BackupUtil.commitBackup(recoveryManifestDir, recoveryManifestEntry);
+            
             final File recoveryCache = new File(Filesystem.getTemporaryDirectory(), backupName);
             BackupUtil.makeBackupCache(recoveryCache);
             
-            BackupUtil.addToBackupCache(recoveryCache, localDir, true);
+            BackupUtil.addToBackupCache(recoveryCache, localDir, true, List.of("Videos"), true);
             
             final File recoveryBackup = BackupUtil.compressBackupCache(recoveryCache, true, BackupUtil.Stamper.stamp(backupName), false, password);
             BackupUtil.commitBackup(localBackupDir, recoveryBackup);

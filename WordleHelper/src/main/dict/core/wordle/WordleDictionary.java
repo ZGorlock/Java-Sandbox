@@ -1,22 +1,26 @@
 /*
  * File:    WordleDictionary.java
- * Package: main.dict.base
+ * Package: main.dict.core.wordle
  * Author:  Zachary Gill
  */
 
-package main.dict.base;
+package main.dict.core.wordle;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public abstract class WordleDictionary extends BaseDictionary {
+import main.dict.core.base.BaseDictionary;
+
+public abstract class WordleDictionary extends BaseDictionary implements WordleDictionaryInterface {
     
     //Methods
     
+    @Override
     public abstract int getWordLength();
     
+    @Override
     public List<String> findOptions(String pattern) {
         final Pattern wordPattern = getRegexPattern(pattern);
         final List<Character> unplacedLetters = getUnplacedLetters(pattern);

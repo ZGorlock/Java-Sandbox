@@ -8,8 +8,8 @@ package main.dict;
 
 import java.util.List;
 
-import main.dict.base.StandardDictionary;
-import main.dict.base.WordleDictionary;
+import main.dict.core.standard.StandardDictionary;
+import main.dict.core.wordle.WordleDictionary;
 
 public class CustomWordleDictionary extends WordleDictionary {
     

@@ -8,7 +8,7 @@ package main.dict;
 
 import java.util.List;
 
-import main.dict.base.StandardDictionary;
+import main.dict.core.standard.StandardDictionary;
 
 public class EnglishDictionary extends StandardDictionary {
     

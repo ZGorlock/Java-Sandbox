@@ -1,10 +1,10 @@
 /*
  * File:    BaseDictionary.java
- * Package: main.dict.base
+ * Package: main.dict.core.base
  * Author:  Zachary Gill
  */
 
-package main.dict.base;
+package main.dict.core.base;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
@@ -20,7 +20,7 @@ import java.util.stream.IntStream;
 
 import org.apache.commons.io.FileUtils;
 
-public abstract class BaseDictionary {
+public abstract class BaseDictionary implements BaseDictionaryInterface {
     
     //Constants
     
@@ -48,6 +48,7 @@ public abstract class BaseDictionary {
     
     //Methods
     
+    @Override
     public final void load() {
         if (loaded.compareAndSet(false, true)) {
             words.addAll(loadLexicon());
@@ -55,6 +56,7 @@ public abstract class BaseDictionary {
         }
     }
     
+    @Override
     public abstract String getDictName();
     
     public File getDictFile() {
@@ -78,84 +80,104 @@ public abstract class BaseDictionary {
                 .collect(Collectors.toList());
     }
     
+    @Override
     public List<String> alphabet() {
         return alphabet;
     }
     
+    @Override
     public String charset() {
         return String.join("", alphabet());
     }
     
+    @Override
     public String charsetToken() {
         return charset().replaceAll("^(.).*(.)$", "[$1-$2]");
     }
     
+    @Override
     public List<String> words() {
         return words;
     }
     
+    @Override
     public List<String> wordsThatContain(String search) {
         return words().stream().filter(e -> e.contains(search)).collect(Collectors.toList());
     }
     
+    @Override
     public List<String> wordsThatDoNotContain(String search) {
         return words().stream().filter(e -> e.contains(search)).collect(Collectors.toList());
     }
     
+    @Override
     public List<String> wordsThatContainAll(String... search) {
         return words().stream().filter(e -> Arrays.stream(search).allMatch(e::contains)).collect(Collectors.toList());
     }
     
+    @Override
     public List<String> wordsThatContainAny(String... search) {
         return words().stream().filter(e -> Arrays.stream(search).anyMatch(e::contains)).collect(Collectors.toList());
     }
     
+    @Override
     public List<String> wordsThatContainNone(String... search) {
         return words().stream().filter(e -> Arrays.stream(search).noneMatch(e::contains)).collect(Collectors.toList());
     }
     
+    @Override
     public List<String> wordsThatStartWith(String search) {
         return words().stream().filter(e -> e.startsWith(search)).collect(Collectors.toList());
     }
     
+    @Override
     public List<String> wordsThatStartWithAny(String... search) {
         return words().stream().filter(e -> Arrays.stream(search).anyMatch(e::startsWith)).collect(Collectors.toList());
     }
     
+    @Override
     public List<String> wordsThatDoNotStartWith(String search) {
         return words().stream().filter(e -> !e.startsWith(search)).collect(Collectors.toList());
     }
     
+    @Override
     public List<String> wordsThatDoNotStartWithAny(String... search) {
         return words().stream().filter(e -> Arrays.stream(search).noneMatch(e::startsWith)).collect(Collectors.toList());
     }
     
+    @Override
     public List<String> wordsThatEndWith(String search) {
         return words().stream().filter(e -> e.endsWith(search)).collect(Collectors.toList());
     }
     
+    @Override
     public List<String> wordsThatEndWithAny(String... search) {
         return words().stream().filter(e -> Arrays.stream(search).anyMatch(e::endsWith)).collect(Collectors.toList());
     }
     
+    @Override
     public List<String> wordsThatDoNotEndWith(String search) {
         return words().stream().filter(e -> !e.endsWith(search)).collect(Collectors.toList());
     }
     
+    @Override
     public List<String> wordsThatDoNotEndWithAny(String... search) {
         return words().stream().filter(e -> Arrays.stream(search).noneMatch(e::endsWith)).collect(Collectors.toList());
     }
     
+    @Override
     public List<String> wordsThatMatch(String regexSearch) {
         final Pattern regexPattern = Pattern.compile(regexSearch);
         return words().stream().filter(e -> regexPattern.matcher(e).matches()).collect(Collectors.toList());
     }
     
+    @Override
     public List<String> wordsThatDoNotMatch(String regexSearch) {
         final Pattern regexPattern = Pattern.compile(regexSearch);
         return words().stream().filter(e -> !regexPattern.matcher(e).matches()).collect(Collectors.toList());
     }
     
+    @Override
     public List<String> sequencesOfLength(int sequenceLength) {
         return sequencesOfLength.computeIfAbsent(sequenceLength,
                 i -> {
@@ -165,28 +187,33 @@ public abstract class BaseDictionary {
                 });
     }
     
+    @Override
     public List<String> illegalSequencesOfLength(int sequenceLength) {
         final List<String> sequencesOfLength = sequencesOfLength(sequenceLength);
         return illegalSequencesOfLength.computeIfAbsent(sequenceLength,
                 i -> sequencesOfLength.stream().filter(e -> words().stream().noneMatch(e2 -> e2.contains(e))).collect(Collectors.toList()));
     }
     
+    @Override
     public List<String> illegalStartingSequencesOfLength(int sequenceLength) {
         final List<String> sequencesOfLength = sequencesOfLength(sequenceLength);
         return illegalStartingSequencesOfLength.computeIfAbsent(sequenceLength,
                 i -> sequencesOfLength.stream().filter(e -> words().stream().noneMatch(e2 -> e2.startsWith(e))).collect(Collectors.toList()));
     }
     
+    @Override
     public List<String> illegalEndingSequencesOfLength(int sequenceLength) {
         final List<String> sequencesOfLength = sequencesOfLength(sequenceLength);
         return illegalEndingSequencesOfLength.computeIfAbsent(sequenceLength,
                 i -> sequencesOfLength.stream().filter(e -> words().stream().noneMatch(e2 -> e2.endsWith(e))).collect(Collectors.toList()));
     }
     
+    @Override
     public List<String> unscrambleSequence(String scrambledSequence, boolean partial) {
         return unscrambleSequenceFromList(words(), scrambledSequence, partial);
     }
     
+    @Override
     public List<String> unscrambleSequence(String scrambledSequence) {
         return unscrambleSequence(scrambledSequence, false);
     }

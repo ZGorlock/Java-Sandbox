@@ -6,7 +6,7 @@
 
 package main.dict;
 
-import main.dict.base.WordleDictionary;
+import main.dict.core.wordle.WordleDictionary;
 
 public class WordleGuessDictionary extends WordleDictionary {
     

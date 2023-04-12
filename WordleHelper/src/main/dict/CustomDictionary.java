@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
-import main.dict.base.StandardDictionary;
+import main.dict.core.standard.StandardDictionary;
 
 public class CustomDictionary extends StandardDictionary {
     

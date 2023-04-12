@@ -10,10 +10,19 @@ import java.util.List;
 
 import main.dict.CustomWordleDictionary;
 import main.dict.EnglishDictionary;
-import main.dict.WordleGuessDictionary;
-import main.dict.base.WordleDictionary;
+import main.dict.WordleSolutionDictionary;
+import main.dict.core.wordle.WordleDictionary;
 
 public class WordleHelper {
+    
+    //Static Functions
+    
+    private static WordleDictionary DEFAULT_DICTIONARY =
+            new WordleSolutionDictionary();
+//            new WordleGuessDictionary();
+//            new OriginalWordleSolutionDictionary();
+//            new OriginalWordleGuessDictionary();
+    
     
     //Static Fields
     
@@ -47,8 +56,8 @@ public class WordleHelper {
                 pattern = args[0];
         }
         
-        if ((wordLength == null) || (wordLength == WordleGuessDictionary.WORD_LENGTH)) {
-            dictionary = new WordleGuessDictionary();
+        if ((wordLength == null) || (wordLength == DEFAULT_DICTIONARY.getWordLength())) {
+            dictionary = DEFAULT_DICTIONARY;
         } else {
             dictionary = new CustomWordleDictionary(wordLength, new EnglishDictionary());
         }

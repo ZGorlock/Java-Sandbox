@@ -59,14 +59,13 @@ public final class HalfLifeCalculator {
     
     private static final boolean BASE = true;
     
-    private static final boolean ALT = false;
+    private static final boolean ALT = true;
     
     private static final List<List<String>> ALT_DATA = List.of(
-            List.of("~|10X", "~|5"),
-            List.of("~|10")
+            List.of("")
     );
     
-    private static final GraphMode GRAPH = GraphMode.FRAME;
+    private static final GraphMode GRAPH = GraphMode.DETAIL;
     
     private static final boolean GRAPH_OPEN_AFTER = true;
     
@@ -75,12 +74,12 @@ public final class HalfLifeCalculator {
     
     private enum GraphMode {
         OFF(false, 1, 0, 0, false),
-        DETAIL(true, 576, 1, 1, true),      //1152
-        FRAME(true, 360, 2, 2, true),       //1440
-        RANGE(true, 288, 3, 3, true),       //1728
-        TREND(true, 144, 5, 3, true),       //1152
-        FORECAST(true, 360, 0, 3, false),   //1080
-        BACKCAST(true, 360, 3, 0, false);   //1080
+        DETAIL(true, 480, 1, 1, true),      // 2/480 ( 960) @ 3/60
+        FRAME(true, 360, 2, 2, true),       // 4/360 (1440) @ 4/60
+        RANGE(true, 240, 3, 3, true),       // 6/240 (1440) @ 6/60
+        TREND(true, 180, 5, 3, true),       // 8/180 (1440) @ 8/60
+        FORECAST(true, 360, 0, 3, false),   // 3/360 (1080) @ 4/60
+        BACKCAST(true, 360, 3, 0, false);   // 3/360 (1080) @ 4/60
         
         final boolean enabled;
         
@@ -115,7 +114,8 @@ public final class HalfLifeCalculator {
     
     private static final List<ImmutablePair<String, List<ImmutablePair<Instant, Double>>>> dataSets = Stream.of(
                     Stream.of(new ImmutablePair<>("A", FileUtil.loadData.get())),
-                    IntStream.range(0, ALT_DATA.size()).mapToObj(i -> new ImmutablePair<>(Character.toString('B' + i), FileUtil.loadAltData.apply(ALT_DATA.get(i)))),
+                    IntStream.range(0, ALT_DATA.size()).mapToObj(i -> new ImmutablePair<>(Character.toString('B' + i), FileUtil.loadAltData.apply(
+                            ALT_DATA.get(i).stream().filter(e -> !StringUtility.isNullOrBlank(e)).collect(Collectors.toList())))),
                     Stream.of(new ImmutablePair<>("#", FileUtil.loadBaseData.get())))
             .flatMap(e -> e)
             .filter(Objects::nonNull).filter(e -> (e.getValue() != null))

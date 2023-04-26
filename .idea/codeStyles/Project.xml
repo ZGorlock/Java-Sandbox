@@ -36,6 +36,10 @@
       <option name="HTML_KEEP_LINE_BREAKS" value="false" />
       <option name="HTML_KEEP_LINE_BREAKS_IN_TEXT" value="false" />
     </HTMLCodeStyleSettings>
+    <JSON>
+      <option name="OBJECT_WRAPPING" value="0" />
+      <option name="ARRAY_WRAPPING" value="0" />
+    </JSON>
     <JavaCodeStyleSettings>
       <option name="REPLACE_INSTANCEOF_AND_CAST" value="true" />
       <option name="ALIGN_MULTILINE_ANNOTATION_PARAMETERS" value="true" />
@@ -80,6 +84,14 @@
       <option name="WHILE_BRACE_FORCE" value="3" />
       <option name="FOR_BRACE_FORCE" value="3" />
       <indentOptions>
+        <option name="KEEP_INDENTS_ON_EMPTY_LINES" value="true" />
+      </indentOptions>
+    </codeStyleSettings>
+    <codeStyleSettings language="JSON">
+      <option name="KEEP_BLANK_LINES_IN_CODE" value="3" />
+      <indentOptions>
+        <option name="INDENT_SIZE" value="4" />
+        <option name="USE_TAB_CHARACTER" value="true" />
         <option name="KEEP_INDENTS_ON_EMPTY_LINES" value="true" />
       </indentOptions>
     </codeStyleSettings>

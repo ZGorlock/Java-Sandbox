@@ -80,6 +80,8 @@ public class GroupCalendarScheduler {
     
     private static final int minimumSlot = 4 * INTERVALS_PER_HOUR; //4 hours
     
+    private static final int slotBorder = INTERVALS_PER_HOUR / 2; //30 minutes
+    
     private static final List<DayOfWeek> daysAllowed = List.of(
             DayOfWeek.SUNDAY
 //            , DayOfWeek.MONDAY
@@ -399,7 +401,7 @@ public class GroupCalendarScheduler {
         }
         
         public boolean isValidLength() {
-            return getDuration() >= (minimumSlot * INTERVAL_MS);
+            return getDuration() >= ((minimumSlot + (2L * slotBorder)) * INTERVAL_MS);
         }
         
         public boolean isAvailable() {

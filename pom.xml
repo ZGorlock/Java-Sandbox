@@ -38,6 +38,7 @@
         <module>MusicPlayer</module>
         <module>OsrsKeepLoggedIn</module>
         <module>OsrsMerchingStatistics</module>
+        <module>PadUtil</module>
         <module>PandoraProcessor</module>
         <module>PerceptualImageMatcher</module>
         <module>PhoneMusicProcessor</module>

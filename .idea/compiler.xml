@@ -35,6 +35,7 @@
         <module name="osrsMerchingStatistics" />
         <module name="pandoraProcessor" />
         <module name="perceptualImageMatcher" />
+        <module name="padUtil" />
         <module name="phoneMusicProcessor" />
         <module name="piBot" />
         <module name="pictureResizer" />

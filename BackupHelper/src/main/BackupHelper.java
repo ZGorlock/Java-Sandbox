@@ -105,9 +105,11 @@ public class BackupHelper {
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Health"));
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Housing"));
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Money"));
-            BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Other"), List.of("Car", "Cat", "Genealogy", "Music", "Tesla Coil"));
+            BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Other"), List.of("Car", "Cat", "Music", "Other", "Smelting", "Tesla Coil", "Wish List"));
+            BackupUtil.addToBackupCache(documentsCache, new File(localDir, "PaD"));
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "PC"));
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Resume"));
+            BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Runescape"));
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Work"), List.of("REST"), true);
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Writing"));
             

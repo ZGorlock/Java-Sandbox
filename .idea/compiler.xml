@@ -55,6 +55,7 @@
         <module name="vmdkProcessor" />
         <module name="wavDecoder" />
         <module name="webReader" />
+        <module name="websiteBuilder" />
         <module name="wordleHelper" />
       </profile>
     </annotationProcessing>

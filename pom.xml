@@ -60,6 +60,7 @@
         <module>VmdkProcessor</module>
         <module>WavDecoder</module>
         <module>WebReader</module>
+        <module>WebsiteBuilder</module>
         <module>WordleHelper</module>
     </modules>
     

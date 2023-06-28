@@ -24,6 +24,7 @@
         <module name="homePictureOrganizer" />
         <module name="homeVideoSplitter" />
         <module name="htmlScraper" />
+        <module name="imageSlicer" />
         <module name="imageTextTagger" />
         <module name="interviewTest" />
         <module name="javaPojoGenerator" />

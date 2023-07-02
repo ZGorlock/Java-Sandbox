@@ -29,6 +29,7 @@
         <module>HomePictureOrganizer</module>
         <module>HomeVideoSplitter</module>
         <module>HtmlScraper</module>
+        <module>Huffman</module>
         <module>ImageSlicer</module>
         <module>ImageTextTagger</module>
         <module>InterviewTest</module>

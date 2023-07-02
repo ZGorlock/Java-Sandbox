@@ -24,6 +24,7 @@
         <module name="homePictureOrganizer" />
         <module name="homeVideoSplitter" />
         <module name="htmlScraper" />
+        <module name="huffman" />
         <module name="imageSlicer" />
         <module name="imageTextTagger" />
         <module name="interviewTest" />

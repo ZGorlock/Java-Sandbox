@@ -132,12 +132,12 @@ public class VideoRenamer {
                 "<h[34]>(?:<span\\s+id=\"[^\"]+\"></span>)?" +
                 "<span\\s+class=\"mw-headline\"\\s+id=\"[^\"]+\">" + seasonTitlePattern + "(?:\\s*<span(?:\\s[^<>]+?)?>.*</span>)*</span>.*");
         
-        final Pattern episodeSeqPattern = Pattern.compile("(?<sequence>\\d+(?:(?:[-–+]|<hr\\s*/>)\\d+)*)");
+        final Pattern episodeSeqPattern = Pattern.compile("(?<sequence>\\d+(?:(?:[-–+]|<hr\\s*/?>)\\d+)*)");
         final Pattern episodeNumPattern = Pattern.compile("(?<episode>.+?)");
         final Pattern episodeTitlePattern = Pattern.compile("(?<title>.+?)");
         final Pattern episodePattern = Pattern.compile(".*" +
-                "<th\\s+scope=\"row\"\\s+rowspan=\"\\d+\"\\s+id=\"[^\"]+\"\\s+style=\"text-align:\\w+\">" + episodeSeqPattern + "</th>" +
-                "(?:<td\\s+(?:style=\"text-align:\\w+\"|rowspan=\"\\d+\")>" + episodeNumPattern + "</td>)?" +
+                "<th(?:\\s+scope=\"row\"|\\s+rowspan=\"\\d+\"|\\s+id=\"[^\"]+\"|\\s+style=\"text-align:\\w+\"){4}>" + episodeSeqPattern + "</th>" +
+                "(?:<td(?:\\s+style=\"text-align:\\w+\"|\\s+rowspan=\"\\d+\")>" + episodeNumPattern + "</td>)?+" +
                 "<td\\s+class=\"summary\"(?:\\s+rowspan=\"\\d+\")?\\s+style=\"text-align:\\w+\">" + episodeTitlePattern + "</td>.*");
         
         final List<String> episodes = new ArrayList<>();

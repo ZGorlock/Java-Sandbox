@@ -89,7 +89,7 @@ public final class StringUtility {
      * @return A list of all the tokens of the passed string.
      */
     public static List<String> tokenize(String str, String delim) {
-        String[] lines = str.split(delim);
+        String[] lines = str.split(delim, -1);
         return new ArrayList<>(Arrays.asList(lines));
     }
     

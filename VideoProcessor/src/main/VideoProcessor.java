@@ -23,11 +23,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import common.CmdLine;
+import common.DateTimeUtility;
 import common.Filesystem;
 import common.StringUtility;
 
@@ -61,23 +64,25 @@ public class VideoProcessor {
     //Main Method
     
     public static void main(String[] args) {
-//        processDir();
-
-//        convertDirToMp4();
-//        convertShowToMp4();
-
-//        stripMetadataAndChapters();
-//        stripMetadataAndChaptersInPlace();
+        //processDir();
         
-        addSubtitles();
-//        extractSubtitles();
-//        collectFilesFromDownloads();
-
-//        makePlaylists();
-//        lossTest();
+        //convertDirToMp4();
+        //convertShowToMp4();
         
-//        Stats.produceStats();
-//        Stats.produceDirStats();
+        //stripMetadataAndChapters();
+        //stripMetadataAndChaptersInPlace();
+        
+        //addSubtitles();
+        //extractSubtitles();
+        //convertSubtitlesToSrt();
+        //adjustSubtitles();
+        //collectFilesFromDownloads();
+        
+        //makePlaylists();
+        //lossTest();
+        
+        Stats.produceStats();
+        Stats.produceDirStats();
     }
     
     
@@ -99,7 +104,7 @@ public class VideoProcessor {
         final Map<String, Boolean> saveStreamTypes = new LinkedHashMap<>();
         saveStreamTypes.put("video", true);
         saveStreamTypes.put("audio", true);
-        saveStreamTypes.put("subtitle", false);
+        saveStreamTypes.put("subtitle", true);
         
         
         //remove extra streams
@@ -111,7 +116,7 @@ public class VideoProcessor {
         
         
         //add subtitles from file
-        final boolean addSubs = false;
+        final boolean addSubs = true;
         final boolean requireSubs = false;
         final String subFormat = "srt";
         
@@ -148,7 +153,7 @@ public class VideoProcessor {
         final boolean allowStreamChanges = true;
         final boolean allowReencoding = true;
         final boolean overwriteExisting = false;
-        final boolean printCmd = false;
+        final boolean printCmd = true;
         final boolean runFFmpeg = true;
         
         
@@ -219,8 +224,8 @@ public class VideoProcessor {
 //            String params = "-c:a copy -c:s mov_text -b:v 2400k";
 //            String params = "-c:v libx265 -c:a copy -c:s mov_text";
 //            String params = "-c:v libx264 -c:a copy -crf 20";
-            String params = "-c:v copy -c:a copy";
-//            String params = "-c:v copy -c:a copy -c:s mov_text";
+//            String params = "-c:v copy -c:a copy";
+            String params = "-c:v copy -c:a copy -c:s mov_text";
 //            String params = "-c:v copy -c:a aac -c:s mov_text";
 //            String params = "-c:v libx264 -c:a copy -c:s mov_text -crf 26";
 //            String params = "-c:v libx265 -c:a copy -c:s mov_text -crf 27";
@@ -388,6 +393,63 @@ public class VideoProcessor {
         }
     }
     
+    private static void convertSubtitlesToSrt() {
+        File dir = workDir;
+        File out = dir;
+        Filesystem.createDirectory(out);
+        
+        String inFormat = ".sup";
+        String outFormat = ".srt";
+        
+        List<File> hdmvPgsSubs = Filesystem.getFilesRecursively(dir, ".*\\" + inFormat);
+        
+        String conversionParams = "/fps:25";
+        
+        for (File hdmvPgsSub : hdmvPgsSubs) {
+            File output = new File(hdmvPgsSub.getAbsolutePath().replace(inFormat, outFormat));
+            String cmd = "subedit /convert \"" + hdmvPgsSub.getAbsolutePath() + "\" subrip " + conversionParams;
+            final String cmdLog = CmdLine.executeCmd(cmd);
+        }
+    }
+    
+    private static void adjustSubtitles() {
+        adjustSubtitles(new File("E:\\Downloads\\New Folder\\a.srt"), -3850, new File("E:\\Downloads\\New Folder\\b.srt"));
+//        adjustSubtitles(new File(workDir, "subs.srt"), 5000, new File(workDir, "subs.new.srt"));
+    }
+    
+    private static void adjustSubtitles(File subFile, int shiftMs, File outFile) {
+        List<String> adjustedLines = new ArrayList<>();
+        
+        final Pattern timeRangePattern = Pattern.compile("(?<start>\\d{2}:\\d{2}:\\d{2}[,.]\\d{3})\\s-->\\s(?<end>\\d{2}:\\d{2}:\\d{2}[,.]\\d{3})");
+        
+        List<String> subLines = Filesystem.readLines(subFile);
+        for (String subLine : subLines) {
+            
+            Matcher timeRangeMatcher = timeRangePattern.matcher(subLine);
+            if (!timeRangeMatcher.matches()) {
+                adjustedLines.add(subLine);
+                continue;
+            }
+            
+            String start = timeRangeMatcher.group("start").replace(",", ".");
+            String end = timeRangeMatcher.group("end").replace(",", ".");
+            
+            long startTime = DateTimeUtility.durationStampToDuration(start);
+            long endTime = DateTimeUtility.durationStampToDuration(end);
+            
+            startTime += shiftMs;
+            endTime += shiftMs;
+            
+            String adjustedStart = DateTimeUtility.durationToDurationStamp(Math.max(startTime, 0));
+            String adjustedEnd = DateTimeUtility.durationToDurationStamp(Math.max(endTime, 0));
+            
+            String adjustedTimeRange = adjustedStart + " --> " + adjustedEnd;
+            adjustedLines.add(adjustedTimeRange);
+        }
+        
+        Filesystem.writeLines(outFile, adjustedLines);
+    }
+    
     private static void collectFilesFromDownloads(File downloadsDir) {
         File source = new File(downloadsDir, "old");
         File dest = new File(downloadsDir.getAbsolutePath());
@@ -408,13 +470,13 @@ public class VideoProcessor {
             
             File downloadVideo = videos.get(0);
             File downloadSub = subs.get(0);
-        
+            
             String videoType = downloadVideo.getName().replaceAll(".*(\\.[^.]+)$", "$1");
             String subsType = downloadSub.getName().replaceAll(".*(\\.[^.]+)$", "$1");
             
             File outputVideo = new File(dest, downloadDir.getName() + videoType);
             File outputSub = new File(dest, downloadDir.getName() + subsType);
-        
+            
             Filesystem.copyFile(downloadVideo, outputVideo, false);
             Filesystem.copyFile(downloadSub, outputSub, false);
         }
@@ -899,7 +961,7 @@ public class VideoProcessor {
                         System.out.println(StringUtility.padRight(("Video Codec not mp4:"), 30, ' ') + key);
                     }
                     if (stat.containsKey("Video Codec") && !stat.get("Video Codec").startsWith("hevc")) {
-                        System.out.println(StringUtility.padRight(("Video Codec not h265:"), 30, ' ') + key);
+                        //System.out.println(StringUtility.padRight(("Video Codec not h265:"), 30, ' ') + key);
                     }
                     
                     streamTypes.stream().filter(e -> !e.isEmpty()).forEach(streamType -> {

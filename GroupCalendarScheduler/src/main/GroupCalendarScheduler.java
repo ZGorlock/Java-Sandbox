@@ -11,19 +11,25 @@ import java.io.FileInputStream;
 import java.nio.file.Files;
 import java.time.DayOfWeek;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Period;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
@@ -82,27 +88,39 @@ public class GroupCalendarScheduler {
     
     private static final int slotBorder = INTERVALS_PER_HOUR / 2; //30 minutes
     
-    private static final List<DayOfWeek> daysAllowed = List.of(
-            DayOfWeek.SUNDAY
-//            , DayOfWeek.MONDAY
-//            , DayOfWeek.TUESDAY
-//            , DayOfWeek.WEDNESDAY
-//            , DayOfWeek.THURSDAY
-            , DayOfWeek.FRIDAY
-            , DayOfWeek.SATURDAY
-    );
+    private static final boolean checkWeekdays = true;
+    
+    private static final boolean checkWeekends = true;
+    
+    private static final List<DayOfWeek> daysAllowed = Stream.of(null
+            , (checkWeekends ? DayOfWeek.SUNDAY : null)
+            , (checkWeekdays ? DayOfWeek.MONDAY : null)
+            , (checkWeekdays ? DayOfWeek.TUESDAY : null)
+            , (checkWeekdays ? DayOfWeek.WEDNESDAY : null)
+            , (checkWeekdays ? DayOfWeek.THURSDAY : null)
+            , (checkWeekdays ? DayOfWeek.FRIDAY : null)
+            , (checkWeekends ? DayOfWeek.SATURDAY : null)
+    ).filter(Objects::nonNull).collect(Collectors.toList());
     
     private static final int earliestTime = 9 * INTERVALS_PER_HOUR; //9:00 AM
     
     private static final int latestTime = 22 * INTERVALS_PER_HOUR; //10:00 PM
     
-    private static final String startDate = "2023-04-01";
+    private static final TemporalAmount searchRange = Period.ofMonths(1);
     
-    private static final String endDate = "2023-05-01";
+    //private static final String startDate = "2023-04-01";
+    private static final String startDate = LocalDate.now(ZONE_ID).atStartOfDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    
+    //private static final String endDate = "2023-05-01";
+    private static final String endDate = LocalDate.now(ZONE_ID).atStartOfDay().plus(searchRange).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     
     private static final DateTime startTime = DateTime.parseRfc3339(startDate + "T00:00:00" + TIMEZONE_OFFSET + ":00");
     
     private static final DateTime endTime = DateTime.parseRfc3339(endDate + "T00:00:00" + TIMEZONE_OFFSET + ":00");
+    
+    private static final boolean printSlots = true;
+    
+    private static final boolean printWeekSeparators = true;
     
     
     //Main Method
@@ -279,14 +297,30 @@ public class GroupCalendarScheduler {
     }
     
     private static void print() {
+        if (!printSlots) {
+            return;
+        }
+        
         final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEE MM/dd/yyyy").withZone(ZONE_ID);
         final DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm").withZone(ZONE_ID);
+        final DateTimeFormatter weekFormat = DateTimeFormatter.ofPattern("w").withZone(ZONE_ID);
         
         System.out.println("┌" + "─".repeat(48) + "┐");
+        
+        int currentWeek = 0;
         
         for (Slot slot : availableSlots) {
             final Instant start = Instant.ofEpochMilli(slot.start.getValue());
             final Instant end = Instant.ofEpochMilli(slot.end.getValue());
+            
+            if (printWeekSeparators) {
+                final DayOfWeek day = start.atZone(ZONE_ID).getDayOfWeek();
+                final int week = Integer.parseInt(weekFormat.format(start)) - ((day == DayOfWeek.SUNDAY) ? 1 : 0);
+                if ((week != currentWeek) && (currentWeek > 0)) {
+                    System.out.printf("│ %s   |   %s   |  %s │%n", "-".repeat(14), "-".repeat(14), "-".repeat(5));
+                }
+                currentWeek = week;
+            }
             
             System.out.printf("│ %s   |   %s -> %s   |  %4.1fh │%n",
                     dateFormat.format(start), timeFormat.format(start), timeFormat.format(end), slot.getHours());

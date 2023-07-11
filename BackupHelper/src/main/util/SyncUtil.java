@@ -8,6 +8,7 @@ package main.util;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,8 @@ import java.util.stream.Stream;
 import commons.access.Filesystem;
 import commons.io.console.ProgressBar;
 import commons.lambda.stream.mapper.Mappers;
+import commons.object.collection.ListUtility;
+import commons.object.string.StringUtility;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,15 +50,11 @@ public final class SyncUtil {
     }
     
     public static boolean syncMonitored(File sourceDir, File targetDir, String baseName, List<String> fileExclusions) {
-        final List<Map.Entry<File, File>> additions = findAdditions(sourceDir, targetDir, baseName, fileExclusions);
-        final List<Map.Entry<File, File>> removals = findRemovals(sourceDir, targetDir, baseName, fileExclusions);
-        
-        final List<Map.Entry<File, File>> actions = Stream.of(additions, removals)
-                .flatMap(Collection::stream).collect(Collectors.toList());
-        
+        final List<Map.Entry<File, File>> actions = determineSyncPlan(sourceDir, targetDir, baseName, fileExclusions);
         if (actions.isEmpty()) {
             return true;
         }
+        
         final ProgressBar progressBar = USE_PROGRESS_BAR ? new ProgressBar(targetDir.getName(), actions.size()) : null;
         
         boolean success = false;
@@ -80,6 +79,38 @@ public final class SyncUtil {
         }
         
         return success;
+    }
+    
+    public static List<Map.Entry<File, File>> determineSyncPlan(File sourceDir, File targetDir, String baseName, List<String> fileExclusions) {
+        final List<Map.Entry<File, File>> additions = findAdditions(sourceDir, targetDir, baseName, fileExclusions);
+        final List<Map.Entry<File, File>> removals = findRemovals(sourceDir, targetDir, baseName, fileExclusions);
+        
+        return Stream.of(additions, removals)
+                .flatMap(Collection::stream).collect(Collectors.toList());
+    }
+    
+    public static void printSyncPlan(File sourceDir, File targetDir, String baseName, List<String> fileExclusions) {
+        System.out.println("Source:     " + sourceDir.getAbsolutePath());
+        System.out.println("Target:     " + targetDir.getAbsolutePath());
+        if (!StringUtility.isNullOrBlank(baseName)) {
+            System.out.println("Base Name:  " + targetDir.getAbsolutePath());
+        }
+        if (!ListUtility.isNullOrEmpty(fileExclusions)) {
+            System.out.println("Exclusions: " + fileExclusions.stream().collect(Collectors.joining(", ", "[", "]")));
+        }
+        
+        final List<Map.Entry<File, File>> actions = determineSyncPlan(sourceDir, targetDir, baseName, fileExclusions);
+        for (Map.Entry<File, File> action : actions) {
+            if (action.getKey().exists()) {
+                if (action.getValue().exists()) {
+                    System.out.println("    Modified: " + action.getValue().getAbsolutePath());
+                } else {
+                    System.out.println("    Added:    " + action.getValue().getAbsolutePath());
+                }
+            } else {
+                System.out.println("    Removed:  " + action.getValue().getAbsolutePath());
+            }
+        }
     }
     
     private static boolean performAdditions(File sourceDir, File targetDir, String baseName, List<String> fileExclusions) {
@@ -142,10 +173,10 @@ public final class SyncUtil {
     }
     
     public static boolean isExcluded(File file, List<String> fileExclusions) {
-        return Stream.of(BackupUtil.BLACKLIST, fileExclusions)
+        return Stream.of(BackupUtil.BLACKLIST, Optional.ofNullable(fileExclusions).orElseGet(Collections::emptyList))
                 .filter(Objects::nonNull).flatMap(Collection::stream)
                 .anyMatch(e -> file.getAbsolutePath().replace("\\", "/")
-                        .matches("^.*/" + Pattern.quote(e) + "(?:/.*)?$"));
+                        .matches("(?i)^(?:.*/)?" + Pattern.quote(e) + "(?:/.*)?$"));
     }
     
 }

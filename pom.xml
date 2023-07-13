@@ -23,6 +23,7 @@
         <module>DependencyAnalyzer</module>
         <module>DicingBotSimulator</module>
         <module>DictionaryTest</module>
+        <module>EBookRenamer</module>
         <module>GalleryDownloader</module>
         <module>GroupCalendarScheduler</module>
         <module>HalfLifeCalculator</module>

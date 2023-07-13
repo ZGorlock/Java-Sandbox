@@ -18,6 +18,7 @@
         <module name="dependencyAnalyzer" />
         <module name="dicingBotSimulator" />
         <module name="dictionaryTest" />
+        <module name="eBookRenamer" />
         <module name="galleryDownloader" />
         <module name="groupCalendarScheduler" />
         <module name="halfLifeCalculator" />

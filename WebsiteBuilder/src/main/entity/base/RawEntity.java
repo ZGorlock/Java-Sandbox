@@ -48,7 +48,7 @@ public abstract class RawEntity extends Entity {
                 super.doCleanName(),
                 FIX_NAME.auto() && fixName(),
                 FIX_FORMAT.auto() && fixFormat()
-        ).anyMatch(e -> e);
+        ).reduce(Boolean.FALSE, Boolean::logicalOr);
     }
     
     public boolean fixName() {
@@ -89,7 +89,7 @@ public abstract class RawEntity extends Entity {
                 super.doCleanFile(),
                 REMOVE_DUPLICATES.auto() && removeDuplicates(),
                 CLEAN_ENTITY_FILE.auto() && cleanEntityFile()
-        ).anyMatch(e -> e);
+        ).reduce(Boolean.FALSE, Boolean::logicalOr);
     }
     
     public boolean removeDuplicates() {

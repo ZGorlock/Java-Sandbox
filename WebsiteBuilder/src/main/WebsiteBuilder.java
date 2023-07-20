@@ -12,6 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 import commons.access.Filesystem;
@@ -63,27 +64,26 @@ public class WebsiteBuilder {
     //Main Methods
     
     public static void main(String[] args) throws Exception {
+        System.out.println("Done");
+
 //        final Map<String, String> usersLinkMap = parseUsers(new File(Project.TMP_DIR, "users.html"));
-//        final Map<String, Optional<File>> userShortcuts = Shortcut.createShortcuts(
-//                LocationUtil.getLocation(0xc45f, 0x19c1), usersLinkMap);
+//        final Map<String, Optional<File>> userShortcuts = Shortcut.createShortcuts(LocationUtil.getLocation(0xc45f, 0x19c1), usersLinkMap);
 
-//        final Map<String, String> seriesLinkMap = parseSeriesList(new File(Project.TMP_DIR, "seriesList.html"))
-//                .entrySet().stream()
-//                .filter(e -> !e.getKey().matches(VariableUtil.get(0x919a)))
-//                .sorted(Map.Entry.comparingByKey()).collect(MapCollectors.toLinkedHashMap());
+//        final Map<String, String> redditIndexLinkMap = parseRedditIndex(new File(Project.TMP_DIR, "redditIndex.html"));
+//        final Map<String, Optional<File>> redditIndexShortcuts = Shortcut.createShortcuts(LocationUtil.getLocation(0xc45f, 0x11ee, 0x26d5), redditIndexLinkMap);
 
+//        final Map<String, String> seriesLinkMap = parseSeriesList(new File(Project.TMP_DIR, "seriesList.html"));
 //        fixSeriesFolderNames(LocationUtil.getLocation(0x4df6, 0xe7e1));
 
-//        PictureAlbum a = PictureAlbum.loadAlbum(LocationUtil.getLocation(0x06a7, 0x2709));
-        
-        final List<SubredditRegistry> subredditLibraries = loadSubredditRegistry();
-        final List<PictureAlbum> galleries = loadGalleries();
-        final List<ClipLibrary> clipLibraries = loadClipLibraries();
+//        PictureAlbum a = PictureAlbum.loadAlbum(LocationUtil.getLocation(0x06a7, 0xa356));
+//        ClipLibrary l = ClipLibrary.loadLibrary(LocationUtil.getLocation(0x06a7, 0x4df6));
+//        SubredditRegistry r = SubredditRegistry.loadRegistry(LocationUtil.getLocation(0x06a7, 0xc45f));
 
-//        ClipLibrary clipLibrary = clipLibraries.get(0);
-//        for (int i = 0; i < 10; i++) {
-//            System.out.println(clipLibrary.generateTitleInLexicon());
-//        }
+//        final List<PictureAlbum> galleries = loadGalleries();
+//        final List<ClipLibrary> clipLibraries = loadClipLibraries();
+//        final List<SubredditRegistry> subredditLibraries = loadSubredditRegistry();
+
+//        IntStream.range(0, 10).mapToObj(i -> clipLibraries.get(0).generateTitleInLexicon()).forEach(System.out::println);
         
         System.out.println("Done");
     }
@@ -139,7 +139,33 @@ public class WebsiteBuilder {
     }
     
     private static Map<String, String> parseSeriesList(File html) {
-        return parseHtmlLinkMap(html, VariableUtil.get(0x2c09), VariableUtil.get(0xd8ab));
+        return parseHtmlLinkMap(html, VariableUtil.get(0x2c09), VariableUtil.get(0xd8ab))
+                .entrySet().stream()
+                .filter(e -> !e.getKey().matches(VariableUtil.get(0x919a)))
+                .sorted(Map.Entry.comparingByKey()).collect(MapCollectors.toLinkedHashMap());
+    }
+    
+    private static Map<String, String> parseRedditIndex(File html) {
+        final Stack<String> path = new Stack<>();
+        return Optional.ofNullable(html).map(Filesystem::readFileToString).map(Jsoup::parse)
+                .map(e -> e.selectFirst(VariableUtil.get(0xe09b)))
+                .map(index -> index.children().select("h1, h2, h3, h4, h5, " + VariableUtil.get(0x631d)))
+                .stream().flatMap(Collection::stream)
+                .map(e -> (e.tagName().replaceAll("\\d", "").equals("h") ? "./".repeat(Integer.parseInt(e.tagName().replaceAll("\\D", ""))) : "") +
+                        e.ownText().replaceAll("/r/", ""))
+                .filter(e -> {
+                    if (e.startsWith("./")) {
+                        while (path.size() >= e.replaceAll("[^/]", "").length()) {
+                            path.pop();
+                        }
+                        path.push(e.replaceAll("^(\\./)+", ""));
+                        return false;
+                    }
+                    return true;
+                })
+                .map(e -> path.stream().collect(Collectors.joining("/", "", ("/" + e))))
+                .map(e -> Map.entry(e, (VariableUtil.get(0x916d) + e.substring(e.lastIndexOf('/') + 1))))
+                .collect(MapCollectors.toLinkedHashMap());
     }
     
     private static SeriesInfo fetchSeriesInfo(String seriesUrl) {

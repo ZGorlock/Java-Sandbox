@@ -28,7 +28,7 @@ public class Subreddit extends Shortcut {
     
     public static final Permission CHECK_HEALTH = Permission.AUTO;
     
-    public static final Permission CHECK_HEALTH_AGAIN = Permission.DENY;
+    public static final Permission CHECK_HEALTH_AGAIN = Permission.ALLOW;
     
     public static final Permission MOVE_BANNED = Permission.AUTO;
     
@@ -90,7 +90,7 @@ public class Subreddit extends Shortcut {
         return Stream.of(
                 super.doCleanFile(),
                 CHECK_HEALTH.auto() && checkHealth()
-        ).anyMatch(e -> e);
+        ).reduce(Boolean.FALSE, Boolean::logicalOr);
     }
     
     public boolean checkHealth() {

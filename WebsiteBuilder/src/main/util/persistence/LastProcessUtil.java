@@ -35,8 +35,10 @@ public class LastProcessUtil {
     
     //Static Methods
     
-    public static Date getLastProcessDate(Class<? extends Entity> type) {
-        return lastProcessMap.get(Optional.ofNullable(type).map(Class::getSimpleName).orElse(""));
+    public static Optional<Date> getLastProcessDate(Class<? extends Entity> type) {
+        return Optional.ofNullable(type)
+                .map(Class::getSimpleName)
+                .map(lastProcessMap::get);
     }
     
 }

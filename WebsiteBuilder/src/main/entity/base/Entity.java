@@ -155,7 +155,7 @@ public abstract class Entity {
         return Stream.of(
                 CLEAN_NAME.auto() && cleanName(),
                 CLEAN_FILE.auto() && cleanFile()
-        ).anyMatch(e -> e);
+        ).reduce(Boolean.FALSE, Boolean::logicalOr);
     }
     
     protected boolean cleanName() {
@@ -190,7 +190,7 @@ public abstract class Entity {
     
     @SuppressWarnings("ConstantValue")
     protected boolean permitProcessing(boolean permitDuplicateProcessing) {
-        return (!WebsiteBuilder.SAFE_MODE || WebsiteBuilder.TEST_MODE) &&
+        return (WebsiteBuilder.TEST_MODE || !WebsiteBuilder.SAFE_MODE) &&
                 (WebsiteBuilder.REPROCESS_ALL || permitDuplicateProcessing || needsProcessing());
     }
     
@@ -199,8 +199,11 @@ public abstract class Entity {
     }
     
     protected boolean needsProcessing(Class<? extends Entity> type, boolean defaultAutoClean) {
-        return Optional.ofNullable(LastProcessUtil.getLastProcessDate(type))
-                .flatMap(last -> Optional.ofNullable(Filesystem.getLastModifiedTime(getSource())).map(last::before))
+        return Optional.ofNullable(type)
+                .flatMap(LastProcessUtil::getLastProcessDate)
+                .flatMap(last -> Optional.ofNullable(getSource())
+                        .map(Filesystem::getLastModifiedTime)
+                        .map(last::before))
                 .orElse(defaultAutoClean);
     }
     

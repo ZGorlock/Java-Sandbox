@@ -61,7 +61,7 @@ public class SubredditMulti extends Subreddit {
                 super.doCleanFile(),
                 DELETE_EMPTY.auto() && deleteEmpty(),
                 AUTO_BUILD.auto() && autoBuild()
-        ).anyMatch(e -> e);
+        ).reduce(Boolean.FALSE, Boolean::logicalOr);
     }
     
     public boolean deleteEmpty() {

@@ -6,6 +6,8 @@
 
 package main;
 
+import java.io.File;
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -18,10 +20,13 @@ import main.model.site.github.GithubRepo;
 import main.model.site.reddit.RedditSubreddit;
 import main.model.site.target.TargetItem;
 import main.model.site.walmart.WalmartItem;
+import main.util.WebDownloadUtil;
 
 public class WebReader {
     
     public static void main(String[] args) throws Exception {
+//        downloadTest();
+
 //        amazonItemTest();
 //        walmartItemTest();
 //        targetItemTest();
@@ -116,6 +121,28 @@ public class WebReader {
         loader.apply("https://www.amazon.com/dp/B09MF26PV4?ref=ppx_yo2ov_dt_b_product_details&th=1");
         loader.apply("B07G568VWT");
         loader.apply("https://www.amazon.com/Microwave-Dishwasher-Lightweight-anti-fallen-Non-Toxic/dp/B07QVQ15Z3");
+    }
+    
+    private static void downloadTest() throws Exception {
+        final String html = WebDownloadUtil.read("https://en.wikipedia.org/wiki/Cat");
+        
+        final File fileHtml = WebDownloadUtil.download("https://en.wikipedia.org/wiki/Cat");
+        final File fileJpg1 = WebDownloadUtil.download("https://upload.wikimedia.org/wikipedia/commons/2/25/Siam_lilacpoint.jpg");
+        final File fileJpg2 = WebDownloadUtil.download("https://upload.wikimedia.org/wikipedia/commons/5/53/Sheba1.JPG", new File("tmp/test.jpg"));
+        
+        final List<File> listJpg = WebDownloadUtil.download(
+                List.of("https://upload.wikimedia.org/wikipedia/commons/1/15/Cat_August_2010-4.jpg",
+                        "https://upload.wikimedia.org/wikipedia/commons/9/9b/Gustav_chocolate.jpg",
+                        "https://upload.wikimedia.org/wikipedia/commons/6/68/Orange_tabby_cat_sitting_on_fallen_leaves-Hisashi-01A.jpg",
+                        "https://upload.wikimedia.org/wikipedia/commons/2/25/Siam_lilacpoint.jpg",
+                        "https://upload.wikimedia.org/wikipedia/commons/b/b6/Felis_catus-cat_on_snow.jpg",
+                        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Sheba1.JPG/600px-Sheba1.JPG"),
+                new File("tmp/jpg"));
+        
+        WebDownloadUtil.download(new File("C:\\Users\\Zack\\Downloads\\AudioBNC Dataset\\filelist-wav.txt"), new File("tmp/recording/"));
+        WebDownloadUtil.download(new File("C:\\Users\\Zack\\Desktop\\New folder\\b.txt"), new File("tmp/i/"));
+        
+        int test = 4;
     }
     
 }

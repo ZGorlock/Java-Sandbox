@@ -46,7 +46,11 @@ public final class BackupUtil {
     
     public static final boolean CHECK_RECENT = true; //scan for existing recent backup before reprocessing
     
+    public static final boolean CHECK_MODIFIED = true; //scan to check if any files have been modified since the last backup before reprocessing (will not recognize deletions, use carefully)
+    
     public static final boolean ASSUME_RECENT_EXISTS = false; //skip scanning for existing recent backups, and assume one is present
+    
+    public static final boolean ASSUME_MODIFIED = false; //skip scanning to check if any files have been modified, and assume they have
     
     public static final boolean USE_RSYNC = false; //use rsync instead of sync to external backup
     
@@ -267,6 +271,45 @@ public final class BackupUtil {
         logger.debug(StringUtility.format("Rsyncing: {} to: {}", Log.logFile(sourceBackupDir), Log.logFile(targetBackupDir)));
         
         return Action.rsync(sourceBackupDir, targetBackupDir);
+    }
+    
+    /**
+     * Checks if a backup is needed.
+     */
+    public static boolean modifiedSinceLastBackup(File localDir, File backupDir, String baseName) {
+        if (CHECK_MODIFIED) {
+            logger.debug(StringUtility.format("Checking for modifications in: {} since last{} backup", Log.logFile(localDir), Log.logBaseName(baseName)));
+            
+            if (ASSUME_MODIFIED) {
+                logger.warn(ERROR + "Assuming recent modifications exist");
+                return true;
+                
+            } else {
+                
+                final Date previousBackupDate = Search.getNewestDate(backupDir, baseName);
+                if (previousBackupDate == null) {
+                    logger.debug(INDENT + StringUtility.format("No previous{} backup exists", Log.logBaseName(baseName)));
+                    return true;
+                } else {
+                    logger.debug(INDENT + StringUtility.format("Previous{} backup was made on: {}", Log.logBaseName(baseName), Log.logStamp(previousBackupDate)));
+                }
+                
+                final Date lastModified = Filesystem.getFilesRecursively(localDir).stream()
+                        .map(Filesystem::getLastModifiedTime)
+                        .filter(Objects::nonNull).distinct()
+                        .sorted(Comparator.reverseOrder())
+                        .limit(1).findFirst().orElse(null);
+                if (lastModified == null) {
+                    logger.warn(ERROR + "Error determining last modification date in: {}; skipping backup", Log.logFile(localDir));
+                    return false;
+                } else {
+                    logger.debug(INDENT + StringUtility.format("Last modification in: {} was made on: {}", Log.logFile(localDir), Log.logStamp(lastModified)));
+                }
+                
+                return lastModified.after(previousBackupDate);
+            }
+        }
+        return false;
     }
     
     /**

@@ -96,7 +96,7 @@ public class BackupHelper {
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", "Backups"));
         final File backupDir = new File(Drive.BACKUP.drive, "Backups");
         
-        if (!BackupUtil.recentBackupExists(localBackupDir, backupName)) {
+        if (!BackupUtil.recentBackupExists(localBackupDir, backupName) && BackupUtil.modifiedSinceLastBackup(localDir, localBackupDir, backupName)) {
             
             final File documentsCache = new File(Filesystem.getTemporaryDirectory(), backupName);
             BackupUtil.makeBackupCache(documentsCache);
@@ -131,7 +131,7 @@ public class BackupHelper {
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", "Backups"));
         final File backupDir = new File(Drive.BACKUP.drive, "Backups");
         
-        if (!BackupUtil.recentBackupExists(localBackupDir, backupName)) {
+        if (!BackupUtil.recentBackupExists(localBackupDir, backupName) && BackupUtil.modifiedSinceLastBackup(localDir, localBackupDir, backupName)) {
             
             final File specimensBackup = BackupUtil.compressBackupCache(localDir, BackupUtil.Stamper.stamp(backupName));
             BackupUtil.commitBackup(localBackupDir, specimensBackup);
@@ -155,9 +155,9 @@ public class BackupHelper {
             
             logger.info("\n--- Backing up " + language + " ---\n");
             
-            if (!BackupUtil.recentBackupExists(localBackupDir, language)) {
-                
-                final File languageLocalDir = new File(localDir, language);
+            final File languageLocalDir = new File(localDir, language);
+            
+            if (!BackupUtil.recentBackupExists(localBackupDir, language) && BackupUtil.modifiedSinceLastBackup(languageLocalDir, localBackupDir, language)) {
                 
                 final File languageBackup = BackupUtil.compressBackupCache(languageLocalDir, BackupUtil.Stamper.stamp(language));
                 BackupUtil.commitBackup(localBackupDir, languageBackup);
@@ -229,7 +229,7 @@ public class BackupHelper {
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", "Backups"));
         final File backupDir = new File(Drive.BACKUP.drive, "Backups");
         
-        if (!BackupUtil.recentBackupExists(localBackupDir, backupName)) {
+        if (!BackupUtil.recentBackupExists(localBackupDir, backupName) && BackupUtil.modifiedSinceLastBackup(localDir, localBackupDir, backupName)) {
             
             final File stableDiffusionCache = new File(Filesystem.getTemporaryDirectory(), backupName);
             BackupUtil.makeBackupCache(stableDiffusionCache);
@@ -458,7 +458,7 @@ public class BackupHelper {
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", backupName));
         final File backupDir = new File(Drive.BACKUP.drive, backupName);
         
-        BackupUtil.syncBackupDir(localDir, localBackupDir, List.of(".git", "README.md"));
+        BackupUtil.syncBackupDir(localDir, localBackupDir, List.of(".git", ".idea", "README.md"));
         BackupUtil.syncBackupDir(localBackupDir, backupDir);
     }
     

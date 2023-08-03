@@ -133,12 +133,13 @@ public class VideoRenamer {
                 "<span\\s+class=\"mw-headline\"\\s+id=\"[^\"]+\">" + seasonTitlePattern + "(?:\\s*<span(?:\\s[^<>]+?)?>.*</span>)*</span>.*");
         
         final Pattern episodeSeqPattern = Pattern.compile("(?<sequence>\\d+(?:(?:[-–+]|<hr\\s*/?>)\\d+)*)");
+        final Pattern episodeCountPattern = Pattern.compile("(?<count>\\d+)");
         final Pattern episodeNumPattern = Pattern.compile("(?<episode>.+?)");
         final Pattern episodeTitlePattern = Pattern.compile("(?<title>.+?)");
         final Pattern episodePattern = Pattern.compile(".*" +
                 "<th(?:\\s+scope=\"row\"|\\s+rowspan=\"\\d+\"|\\s+id=\"[^\"]+\"|\\s+style=\"text-align:\\w+\"){4}>" + episodeSeqPattern + "</th>" +
                 "(?:<td(?:\\s+style=\"text-align:\\w+\"|\\s+rowspan=\"\\d+\")>" + episodeNumPattern + "</td>)?+" +
-                "<td\\s+class=\"summary\"(?:\\s+rowspan=\"\\d+\")?\\s+style=\"text-align:\\w+\">" + episodeTitlePattern + "</td>.*");
+                "<td\\s+class=\"summary\"(?:\\s+rowspan=\"" + episodeCountPattern + "\")?\\s+style=\"text-align:\\w+\">" + episodeTitlePattern + "</td>.*");
         
         final List<String> episodes = new ArrayList<>();
         final Map<String, Boolean> episodeCache = new HashMap<>();
@@ -176,6 +177,7 @@ public class VideoRenamer {
                 final Matcher episodeMatcher = episodePattern.matcher(line);
                 if (episodeMatcher.matches()) {
                     final String sequenceMatch = episodeMatcher.group("sequence");
+                    final String episodeCount = episodeMatcher.group("count");
                     final String episodeMatch = episodeMatcher.group("episode");
                     final String titleMatch = episodeMatcher.group("title");
                     
@@ -187,17 +189,29 @@ public class VideoRenamer {
                     }
                     
                     final List<String> titleParts = Arrays.stream(titleMatch.strip()
-                                    .replaceAll("(?:</?(?:a|br|hr|link|span|style)(?:\\s.+?(?:>[^<]+</style)?)?>)", "")
+                                    .replaceAll("<span\\s+title=\"\\w+-language\\s+text\">[^<]+</span>", "")
+                                    .replaceAll("<abbr\\s+title=\"translation\">[^<]+</abbr>", "")
+                                    .replaceAll("</?(?:a|br|hr|link|span|style)(?:\\s.+?(?:>[^<]+</style)?)?>", "")
                                     .replaceAll("\"([^()\"]+\\S)\\(([^()\"]+)\\)\"", "\"$1-$2\"")
                                     .replaceAll("\"([^()\"]+)\\s\\(([^()\"]+)\\)\\s([^()\"]+)\"", "\"$1 '$2' $3\"")
                                     .split("\"\"|\\s+\\("))
-                            .map(String::strip).map(e -> e.replaceAll("^[(\"]+\\s*|\\s*[\")]+$", ""))
+                            .map(String::strip)
+                            .map(e -> e.replaceAll("^[(\"]+\\s*|\\s*[\")]+$", ""))
+                            .map(e -> e.replaceAll("^&#\\d+;", ""))
+                            .filter(e -> !e.isBlank())
                             .collect(Collectors.toList());
                     
                     final List<Integer> episodeSet = Arrays.stream(
                                     Optional.ofNullable(episodeMatch).orElse(sequenceMatch).strip().split("\\D+"))
                             .map(Integer::parseInt)
                             .collect(Collectors.toList());
+                    
+                    final int extraCount = Optional.ofNullable(episodeCount).map(Integer::parseInt).map(e -> (e - 1)).orElse(0);
+                    if ((episodeSet.size() == 1) && (extraCount > 0)) {
+                        for (int extraEpisode = 1; extraEpisode <= extraCount; extraEpisode++) {
+                            episodeSet.add(episodeSet.get(0) + extraEpisode);
+                        }
+                    }
                     
                     if (titleParts.isEmpty() || titleParts.size() > 2) {
                         throw new RuntimeException("Parse found invalid title: '" + titleMatch + "'");

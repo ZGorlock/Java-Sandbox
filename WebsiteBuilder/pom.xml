@@ -25,5 +25,5 @@
             <version>${webp-imageio.version}</version>
         </dependency>
     </dependencies>
-    
+
 </project>

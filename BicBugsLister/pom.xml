@@ -11,29 +11,5 @@
     </parent>
     
     <artifactId>bicBugsLister</artifactId>
-    
-    
-    <properties>
-        <!-- JAVA -->
-        <java.version>13</java.version>
-        <maven.compiler.release>13</maven.compiler.release>
-        <maven.compiler.source>13</maven.compiler.source>
-        <maven.compiler.target>13</maven.compiler.target>
-    </properties>
-    
-    
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-text</artifactId>
-            <version>1.10.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.15.3</version>
-        </dependency>
-    </dependencies>
-
 
 </project>

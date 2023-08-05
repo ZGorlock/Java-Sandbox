@@ -27,5 +27,5 @@
             <version>${rsync4j.version}</version>
         </dependency>
     </dependencies>
-    
+
 </project>

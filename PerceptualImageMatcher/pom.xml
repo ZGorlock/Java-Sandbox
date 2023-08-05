@@ -25,5 +25,5 @@
             <version>${jimagehash.version}</version>
         </dependency>
     </dependencies>
-    
+
 </project>

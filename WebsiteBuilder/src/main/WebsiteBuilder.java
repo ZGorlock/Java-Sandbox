@@ -64,7 +64,7 @@ public class WebsiteBuilder {
     //Main Methods
     
     public static void main(String[] args) throws Exception {
-        System.out.println("Done");
+        System.out.println("Start");
 
 //        final Map<String, String> usersLinkMap = parseUsers(new File(Project.TMP_DIR, "users.html"));
 //        final Map<String, Optional<File>> userShortcuts = Shortcut.createShortcuts(LocationUtil.getLocation(0xc45f, 0x19c1), usersLinkMap);

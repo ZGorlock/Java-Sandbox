@@ -1,5 +1,5 @@
 /*
- * File:    EBookRenamer.java
+ * File:    EBookProcessor.java
  * Package: main
  * Author:  Zachary Gill
  */
@@ -22,7 +22,7 @@ import main.ebook.EbookMetadata;
 import main.ebook.EbookUtils;
 import main.util.FilenameUtil;
 
-public class EBookRenamer {
+public class EBookProcessor {
     
     //Constants
     
@@ -66,7 +66,7 @@ public class EBookRenamer {
                 .collect(Collectors.groupingBy(e -> e.getParentFile().getName()));
         
         List<File> ebooksTodo = ebooksMap.values().stream()
-                .map(EBookRenamer::pickPreferred)
+                .map(EBookProcessor::pickPreferred)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
         

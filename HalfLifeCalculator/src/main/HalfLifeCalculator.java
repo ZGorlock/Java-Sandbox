@@ -113,10 +113,12 @@ public final class HalfLifeCalculator {
     private static final Map<String, List<Double>> species = FileUtil.loadSpecies.get();
     
     private static final List<ImmutablePair<String, List<ImmutablePair<Instant, Double>>>> dataSets = Stream.of(
-                    Stream.of(new ImmutablePair<>("A", FileUtil.loadData.get())),
-                    IntStream.range(0, ALT_DATA.size()).mapToObj(i -> new ImmutablePair<>(Character.toString('B' + i), FileUtil.loadAltData.apply(
-                            ALT_DATA.get(i).stream().filter(e -> !StringUtility.isNullOrBlank(e)).collect(Collectors.toList())))),
-                    Stream.of(new ImmutablePair<>("#", FileUtil.loadBaseData.get())))
+                    Stream.of(new ImmutablePair<>("A",
+                            !DATA ? null : FileUtil.loadData.get())),
+                    IntStream.range(0, ALT_DATA.size()).mapToObj(i -> new ImmutablePair<>(Character.toString('B' + i),
+                            !ALT ? null : FileUtil.loadAltData.apply(ALT_DATA.get(i).stream().filter(e -> !StringUtility.isNullOrBlank(e)).collect(Collectors.toList())))),
+                    Stream.of(new ImmutablePair<>("#",
+                            !BASE ? null : FileUtil.loadBaseData.get())))
             .flatMap(e -> e)
             .filter(Objects::nonNull).filter(e -> (e.getValue() != null))
             .collect(Collectors.toList());
@@ -227,7 +229,7 @@ public final class HalfLifeCalculator {
                                 IntStream.of(0, (e[1].contains("X") ? 4 : 0)).boxed().distinct()
                                         .map((UncheckedFunction<Integer, ImmutablePair<Instant, Double>>) delay ->
                                                 new ImmutablePair<>(TimeUtil.addHours.apply(TimeUtil.parse.apply(e[0]), delay),
-                                                        (Double.parseDouble(e[1].replace("X", "")) / (e[1].contains("X") ? 2.0 : 1.0)))))
+                                                        (Double.parseDouble(e[1].replaceAll("[A-Z]", "")) / (e[1].contains("X") ? 2.0 : 1.0)))))
                         .sorted(Comparator.comparing(o -> o.left)).collect(Collectors.toList());
         
         static final Supplier<Map<Double, String>> loadSchedule = () ->

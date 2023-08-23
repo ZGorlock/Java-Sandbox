@@ -42,6 +42,7 @@
         <module name="piBot" />
         <module name="pictureResizer" />
         <module name="playlistGenerator" />
+        <module name="qrCodeTest" />
         <module name="reactionTimeClicker" />
         <module name="regexpTrie" />
         <module name="sineWaves" />

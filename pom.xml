@@ -47,6 +47,7 @@
         <module>PiBot</module>
         <module>PictureResizer</module>
         <module>PlaylistGenerator</module>
+        <module>QRCodeTest</module>
         <module>ReactionTimeClicker</module>
         <module>RegexpTrie</module>
         <module>SineWaves</module>

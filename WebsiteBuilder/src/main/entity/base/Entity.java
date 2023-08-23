@@ -226,29 +226,52 @@ public abstract class Entity {
         }
     }
     
-    public void rename(File newSource) {
+    public boolean rename(File newSource) {
         System.err.println(StringUtility.format("Renaming: '{}' to '{}'", getSource().getAbsolutePath(), newSource.getAbsolutePath()));
-        renameQuietly(newSource);
+        return renameQuietly(newSource);
     }
     
-    public void renameQuietly(File newSource) {
+    public boolean rename(String newFilename) {
+        return rename(new File(getParentFile(), newFilename));
+    }
+    
+    public boolean renameQuietly(File newSource) {
         if (!WebsiteBuilder.TEST_MODE) {
+            if (newSource.getAbsolutePath().equals(getSource().getAbsolutePath())) {
+                return false;
+            }
             if (Filesystem.safeReplace(getSource(), newSource)) {
                 init(newSource);
+                return true;
             }
         }
+        return false;
     }
     
-    public void move(File newSource) {
+    public boolean renameQuietly(String newFilename) {
+        return renameQuietly(new File(getParentFile(), newFilename));
+    }
+    
+    public boolean move(File newSource) {
         System.err.println(StringUtility.format("Moving: '{}' to '{}'", getSource().getAbsolutePath(), newSource.getAbsolutePath()));
-        moveQuietly(newSource);
+        return moveQuietly(newSource);
     }
     
-    public void moveQuietly(File newSource) {
+    public boolean move(String newFilename) {
+        return move(new File(getParentFile(), newFilename));
+    }
+    
+    public boolean moveQuietly(File newSource) {
         if (!WebsiteBuilder.TEST_MODE) {
             Filesystem.move(getSource(), newSource);
             init(newSource);
+            return true;
         }
+        return false;
+    }
+    
+    public boolean moveQuietly(String newFilename) {
+        return moveQuietly(new File(getParentFile(), newFilename));
     }
     
     public boolean replace(File tmpSource, File newSource) {
@@ -260,6 +283,10 @@ public abstract class Entity {
     
     public boolean replace(File newSource) {
         return replace(newSource, getSource());
+    }
+    
+    public boolean replace(String newFilename) {
+        return replace(new File(getParentFile(), newFilename));
     }
     
     public boolean replaceQuietly(File tmpFile, File newSource) {
@@ -277,6 +304,10 @@ public abstract class Entity {
     
     public boolean replaceQuietly(File tmpSource) {
         return replaceQuietly(tmpSource, getSource());
+    }
+    
+    public boolean replaceQuietly(String newFilename) {
+        return replaceQuietly(new File(getParentFile(), newFilename));
     }
     
     public void delete() {

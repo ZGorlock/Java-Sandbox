@@ -58,11 +58,16 @@ public abstract class Video extends RawEntity {
     protected boolean doFixName() {
         boolean result = false;
         if (FILENAME_SPACES.denied() && getFileName().contains(" ")) {
-            rename(new File(getParentFile(), getFileName().replaceAll("\\s+", "_")));
-            result = true;
+            result |= rename(getFileName().replaceAll("\\s+", "_"));
         }
         if (isMobile()) {
             System.err.println(StringUtility.format("Mobile file detected: '{}'", getSource().getAbsolutePath()));
+        }
+        if (getFileName().matches(".*\\.mov\\d*\\..*")) {
+            result |= rename(getFileName().replaceAll("\\.mov\\d*\\.", "."));
+        }
+        if (getFileName().matches("^(imgur_[^_]+)_.*(\\.[^.]+)$")) {
+            result |= rename(getFileName().replace(" ", "_").replaceAll("^(imgur_[^_]+)_.*(\\.[^.]+)$", "$1$2"));
         }
         return result;
     }

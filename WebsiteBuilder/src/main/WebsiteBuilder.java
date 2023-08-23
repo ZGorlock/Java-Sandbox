@@ -65,24 +65,24 @@ public class WebsiteBuilder {
     
     public static void main(String[] args) throws Exception {
         System.out.println("Start");
-
+        
 //        final Map<String, String> usersLinkMap = parseUsers(new File(Project.TMP_DIR, "users.html"));
 //        final Map<String, Optional<File>> userShortcuts = Shortcut.createShortcuts(LocationUtil.getLocation(0xc45f, 0x19c1), usersLinkMap);
-
+        
 //        final Map<String, String> redditIndexLinkMap = parseRedditIndex(new File(Project.TMP_DIR, "redditIndex.html"));
 //        final Map<String, Optional<File>> redditIndexShortcuts = Shortcut.createShortcuts(LocationUtil.getLocation(0xc45f, 0x11ee, 0x26d5), redditIndexLinkMap);
-
+        
 //        final Map<String, String> seriesLinkMap = parseSeriesList(new File(Project.TMP_DIR, "seriesList.html"));
 //        fixSeriesFolderNames(LocationUtil.getLocation(0x4df6, 0xe7e1));
-
+        
 //        PictureAlbum a = PictureAlbum.loadAlbum(LocationUtil.getLocation(0x06a7, 0xa356));
 //        ClipLibrary l = ClipLibrary.loadLibrary(LocationUtil.getLocation(0x06a7, 0x4df6));
 //        SubredditRegistry r = SubredditRegistry.loadRegistry(LocationUtil.getLocation(0x06a7, 0xc45f));
-
+        
 //        final List<PictureAlbum> galleries = loadGalleries();
 //        final List<ClipLibrary> clipLibraries = loadClipLibraries();
 //        final List<SubredditRegistry> subredditLibraries = loadSubredditRegistry();
-
+        
 //        IntStream.range(0, 10).mapToObj(i -> clipLibraries.get(0).generateTitleInLexicon()).forEach(System.out::println);
         
         System.out.println("Done");

@@ -69,20 +69,28 @@ public abstract class Image extends RawEntity {
     protected boolean doFixName() {
         boolean result = false;
         if (FILENAME_SPACES.denied() && getFileName().contains(" ")) {
-            rename(new File(getParentFile(), getFileName().replaceAll("\\s+", "_")));
-            result = true;
+            result |= rename(getFileName().replaceAll("\\s+", "_"));
         }
         
-        if (getFileName().startsWith("__")) {
-            if (isSample()) {
-                System.err.println(StringUtility.format("Sample file detected: '{}'", getSource().getAbsolutePath()));
+        if (isSample()) {
+            System.err.println(StringUtility.format("Sample file detected: '{}'", getSource().getAbsolutePath()));
+            if (getFileName().startsWith("__")) {
                 if (UPGRADE_SAMPLE.auto() && upgradeSample()) {
-                    rename(new File(getParentFile(), getFileName().replaceAll("^_+", "").replaceFirst("__", VariableUtil.get(0x2f4d))));
-                    result = true;
+                    result |= rename(getFileName().replaceAll("^_+", "").replaceFirst("__", VariableUtil.get(0x2f4d)));
                 }
             } else {
-                rename(new File(getParentFile(), getFileName().replaceAll("^_+", "")));
+                result |= rename(getFileName().replaceAll("^sample[_\\-\\s]", ""));
             }
+        }
+        
+        if (getFileName().matches(".*\\.pic[^.]*\\..*")) {
+            result |= rename(getFileName().replaceAll("\\.pic(?:small|large)?\\d*\\.", "."));
+        }
+        if (getFileName().matches(".*\\.mov\\d*\\..*")) {
+            result |= rename(getFileName().replaceAll("\\.mov\\d*\\.", "."));
+        }
+        if (getFileName().matches("^(imgur_[^_]+)_.*(\\.[^.]+)$")) {
+            result |= rename(getFileName().replace(" ", "_").replaceAll("^(imgur_[^_]+)_.*(\\.[^.]+)$", "$1$2"));
         }
         
         return result;
@@ -126,7 +134,7 @@ public abstract class Image extends RawEntity {
     }
     
     protected boolean isSample() {
-        return getFileName().matches("(?i)(?:^|.*[\\W_])" + VariableUtil.get(0x164a) + "[\\W_].*$");
+        return getFileName().matches("(?i)(?:^|.*[\\W_\\-])" + VariableUtil.get(0x164a) + "[\\W_\\-].*$");
     }
     
     public boolean upgradeSample() {
@@ -145,10 +153,10 @@ public abstract class Image extends RawEntity {
         try {
             final String fileName = getFileName();
             final String title = fileName
-                    .replaceAll(("(?i)" + VariableUtil.get(0x164a) + "(?!\\.)[\\W_]"), "");
+                    .replaceAll(("(?i)" + VariableUtil.get(0x164a) + "(?!\\.)[\\W_\\-]"), "");
             final String hash = fileName
-                    .replaceAll(("(?i)(?:^|.*[\\W_])([0-9a-f]{4,})[\\W_]" + VariableUtil.get(0x164a) + "[\\W_].*$"), "$1")
-                    .replaceAll("(?i)(?:^|.*[\\W_])" + VariableUtil.get(0x164a) + "[\\W_]([0-9a-f]{4,})[\\W_].*$", "$1");
+                    .replaceAll(("(?i)(?:^|.*[\\W_\\-])([0-9a-f]{4,})[\\W_]" + VariableUtil.get(0x164a) + "[\\W_\\-].*$"), "$1")
+                    .replaceAll("(?i)(?:^|.*[\\W_\\-])" + VariableUtil.get(0x164a) + "[\\W_\\-]([0-9a-f]{4,})[\\W_\\-].*$", "$1");
             
             String url;
             if (fileName.startsWith("__")) {

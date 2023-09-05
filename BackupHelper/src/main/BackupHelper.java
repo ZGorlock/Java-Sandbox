@@ -151,7 +151,7 @@ public class BackupHelper {
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", backupName));
         final File backupDir = new File(Drive.BACKUP.drive, backupName);
         
-        for (String language : List.of("C", "C#", "C++", "Haskell", "HTML", "Java", "Javascript", "Python", "QB64", "VB")) {
+        for (String language : List.of("C", "C#", "C++", "Haskell", "HTML", "Java", "Javascript", "Other", "Python", "QB64", "VB")) {
             
             logger.info("\n--- Backing up " + language + " ---\n");
             
@@ -225,18 +225,13 @@ public class BackupHelper {
         
         final String userName = PropertyUtil.readProperty("name-user.txt");
         
-        final File localDir = new File(Drive.BOOT.drive, Filesystem.generatePath("Users", userName, ".stable-diffusion"));
+        final File localDir = new File(Drive.GAMES.drive, Filesystem.generatePath("Stable Diffusion", "Stable Diffusion"));
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", "Backups"));
         final File backupDir = new File(Drive.BACKUP.drive, "Backups");
         
         if (!BackupUtil.recentBackupExists(localBackupDir, backupName) && BackupUtil.modifiedSinceLastBackup(localDir, localBackupDir, backupName)) {
             
-            final File stableDiffusionCache = new File(Filesystem.getTemporaryDirectory(), backupName);
-            BackupUtil.makeBackupCache(stableDiffusionCache);
-            
-            BackupUtil.addToBackupCache(stableDiffusionCache, localDir, true, List.of("sd-model"), true);
-            
-            final File stableDiffusionBackup = BackupUtil.compressBackupCache(stableDiffusionCache, BackupUtil.Stamper.stamp(backupName));
+            final File stableDiffusionBackup = BackupUtil.compressBackupFromSource(localDir, BackupUtil.Stamper.stamp(backupName));
             BackupUtil.commitBackup(localBackupDir, stableDiffusionBackup);
         }
         BackupUtil.cleanBackupDir(localBackupDir, backupName, 1);
@@ -305,7 +300,7 @@ public class BackupHelper {
             final File userDataCache = new File(Filesystem.getTemporaryDirectory(), userDataName);
             BackupUtil.makeBackupCache(userDataCache);
             
-            BackupUtil.addToBackupCache(userDataCache, userDataLocalDir, true, List.of(".m2", ".runelite", "AppData", "Downloads", ".stable-diffusion"), true);
+            BackupUtil.addToBackupCache(userDataCache, userDataLocalDir, true, List.of(".m2", ".runelite", "AppData", "Downloads"), true);
             
             final File userDataBackup = BackupUtil.compressBackupCache(userDataCache, BackupUtil.Stamper.stamp(userDataName));
             BackupUtil.commitBackup(localBackupDir, userDataBackup, true);
@@ -358,7 +353,8 @@ public class BackupHelper {
             final File manifestCache = new File(Filesystem.getTemporaryDirectory(), backupName);
             BackupUtil.makeBackupCache(manifestCache);
             
-            for (Drive drive : Drive.values()) {
+            for (Drive drive : List.of(Drive.BOOT, Drive.GAMES, Drive.STORAGE, Drive.CODING, Drive.VIRTUAL_MACHINES, Drive.WORK, Drive.BACKUP, Drive.EXTERNAL_BACKUP)) {
+                
                 final File manifestEntry = new File(manifestCache, BackupUtil.Stamper.stamp(drive.driveLetter + ".txt"));
                 WindowsBackupTools.createManifest(drive.drive, manifestEntry);
             }

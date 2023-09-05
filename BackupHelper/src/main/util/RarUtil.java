@@ -314,7 +314,7 @@ public final class RarUtil {
     
     //Static Methods
     
-    public static boolean archiveFile(File source, boolean openDir, File archive, boolean slow, String password, boolean deleteAfter) {
+    public static boolean archiveFile(File source, boolean openDir, File archive, boolean slow, String password, boolean preserveLinks, boolean deleteAfter) {
         final List<File> sourceFiles = (source.isDirectory() && openDir) ? Filesystem.getFilesAndDirs(source) : List.of(source);
         final File archiveFile = Optional.ofNullable(archive).orElseGet(() -> new File(source.getParentFile(), source.getName().replaceAll("(?<=\\.)[^.]+$", ArchiveFormat.RAR.getFormat())));
         final File outputDir = Optional.of(archiveFile).map(File::getParentFile).filter(Filesystem::createDirectory).orElse(null);
@@ -326,13 +326,13 @@ public final class RarUtil {
                 CompressionMethod.BEST.getMethod(), DictionarySize.M_64.getSize(), HashType.CRC32.getFlag(), null,
                 8, (slow ? 1 : -1), (slow ? 100 : 0), true, true,
                 false, true, null,
-                false, true, true, -1,
+                preserveLinks, preserveLinks, true, -1,
                 true, true, true,
                 deleteAfter, true, false,
                 password, true,
                 LogMode.FILES.getFlag(), true, true);
         
-        final ProgressBar progressBar = new ArchivingProgressBar(source, archiveFile, logFile);
+        final ProgressBar progressBar = new ArchivingProgressBar(source, archiveFile, logFile, preserveLinks);
         try {
             logger.trace(cmd);
             final String response = CmdLine.executeCmd(cmd, true, progressBar);
@@ -345,6 +345,10 @@ public final class RarUtil {
             progressBar.complete(true);
         }
         return !progressBar.isFailed();
+    }
+    
+    public static void archiveFile(File source, boolean openDir, File archive, boolean slow, String password, boolean preserveLinks) {
+        archiveFile(source, openDir, archive, slow, password, preserveLinks, false);
     }
     
     public static void archiveFile(File source, boolean openDir, File archive, boolean slow, String password) {
@@ -472,12 +476,12 @@ public final class RarUtil {
         
         //Constructors
         
-        public ArchivingProgressBar(File source, File archive, File logFile) {
+        public ArchivingProgressBar(File source, File archive, File logFile, boolean preserveLinks) {
             super(archive.getName(), 1);
             
             this.source = source;
             this.archive = archive;
-            this.contents = calculateContents(source, archive);
+            this.contents = calculateContents(source, archive, preserveLinks);
             this.logFile = logFile;
             this.logCache = new ArrayList<>();
             
@@ -493,6 +497,10 @@ public final class RarUtil {
             });
             this.thread.scheduleAtFixedRate(() ->
                     processLog(""), 0, 100, TimeUnit.MILLISECONDS);
+        }
+        
+        public ArchivingProgressBar(File source, File archive, File logFile) {
+            this(source, archive, logFile, false);
         }
         
         
@@ -542,14 +550,19 @@ public final class RarUtil {
         
         //Static Methods
         
-        private static Contents calculateContents(File source, File archive) {
-            final List<File> fileContents = source.isDirectory() ? Filesystem.getFilesAndDirsRecursively(source) : List.of(source);
+        private static Contents calculateContents(File source, File archive, boolean preserveLinks) {
+            final List<File> fileContents = source.isDirectory() ? Filesystem.getFilesRecursively(source) : List.of(source);
             
             final Contents contents = new Contents(source, archive);
             fileContents.stream()
+                    .filter(file -> (!preserveLinks || !Filesystem.isRedirected(file)))
                     .map(Contents.Content::new)
                     .forEachOrdered(contents::add);
             return contents;
+        }
+        
+        private static Contents calculateContents(File source, File archive) {
+            return calculateContents(source, archive, false);
         }
         
         
@@ -672,7 +685,7 @@ public final class RarUtil {
             //Setters
             
             public synchronized void setProcessed(File file, boolean processed) {
-                Optional.ofNullable(file).map(this::get).ifPresent(e -> e.setProcessed(processed));
+                setProcessed(file.getPath(), processed);
             }
             
             public synchronized void setProcessed(File file) {
@@ -680,7 +693,15 @@ public final class RarUtil {
             }
             
             public synchronized void setProcessed(String path, boolean processed) {
-                Optional.ofNullable(path).map(this::get).ifPresent(e -> e.setProcessed(processed));
+                if (path == null) {
+                    return;
+                }
+                
+                Optional.of(path).map(this::get).ifPresent(e -> e.setProcessed(processed));
+                if (new File(path).isDirectory()) {
+                    stream().filter(e -> e.path.replace("\\", "/").startsWith(path + "/"))
+                            .forEach(e -> e.setProcessed(processed));
+                }
             }
             
             public synchronized void setProcessed(String path) {

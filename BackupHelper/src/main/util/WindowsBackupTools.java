@@ -17,6 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import commons.access.CmdLine;
+import commons.access.Filesystem;
 import commons.io.console.ProgressBar;
 import commons.object.string.StringUtility;
 import org.slf4j.Logger;
@@ -38,11 +39,29 @@ public final class WindowsBackupTools {
         }
     }
     
-    public static void createManifest(File location, File manifestFile) {
-        logger.info(StringUtility.format("Creating manifest of {}...", StringUtility.quote(location.getAbsolutePath(), true)));
+    public static boolean createManifest(File location, File manifestFile) {
+        logger.info(StringUtility.format("Creating manifest of {}...", BackupUtil.Log.logFile(location)));
         if (!BackupUtil.TEST_MODE) {
             CmdLine.executeCmd("dir " + StringUtility.quote(location.getAbsolutePath()) + " /s /b > " + StringUtility.quote(manifestFile.getAbsolutePath()));
+            return manifestFile.exists() && filterManifestExclusions(manifestFile);
         }
+        return true;
+    }
+    
+    public static boolean filterManifestExclusions(File manifestFile) {
+        if (BackupUtil.FILTER_MANIFEST) {
+            logger.debug(BackupUtil.INDENT + "Filtering exclusions from manifest: {}...", BackupUtil.Log.logFile(manifestFile, false));
+            
+            if (!manifestFile.exists()) {
+                logger.warn(BackupUtil.ERROR + "Manifest: {} could not be found", BackupUtil.Log.logFile(manifestFile, false));
+                return false;
+                
+            } else {
+                return Filesystem.writeLines(manifestFile,
+                        BackupUtil.filterExcluded(Filesystem.readLines(manifestFile)));
+            }
+        }
+        return true;
     }
     
     public static void createSystemImage(String backupTarget) {

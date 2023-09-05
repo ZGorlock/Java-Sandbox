@@ -54,6 +54,8 @@ public final class BackupUtil {
     
     public static final boolean USE_RSYNC = false; //use rsync instead of sync to external backup
     
+    public static final boolean FILTER_MANIFEST = true; //filter to exclude certain paths from the manifest
+    
     public static final int RECENT_PERIOD_DAYS = 25; //the maximum number of days ago to consider a backup recent
     
     public static final ExternalBackupType EXTERNAL_BACKUP_TYPE = ExternalBackupType.PRESERVE; //how to use the external backup drive
@@ -62,14 +64,24 @@ public final class BackupUtil {
     
     public static final String ERROR = StringUtility.fillStringOfLength('*', INDENT.length() / 2) + StringUtility.spaces(INDENT.length() / 2);
     
+    public static final List<String> GLOBAL_SKIP = List.of(
+            "$RECYCLE.BIN", "$Recycle.Bin",
+            "System Volume Information",
+            "desktop.ini", "Thumbs.db"
+    );
+    
     public static final File BLACKLIST_FILE = new File(Project.DATA_DIR, "blacklist.txt");
     
+    public static final File EXCLUSION_FILE = new File(Project.DATA_DIR, "exclusion.txt");
+    
     public static final List<String> BLACKLIST = Stream.concat(
-            Stream.of(
-                    "$RECYCLE.BIN", "System Volume Information",
-                    "desktop.ini", "Thumbs.db"
-            ),
+            GLOBAL_SKIP.stream(),
             PropertyUtil.readPropertyList(BLACKLIST_FILE.getName()).stream()
+    ).filter(e -> !StringUtility.isNullOrBlank(e)).distinct().collect(Collectors.toList());
+    
+    public static final List<String> EXCLUSION = Stream.concat(
+            GLOBAL_SKIP.stream(),
+            PropertyUtil.readPropertyList(EXCLUSION_FILE.getName()).stream()
     ).filter(e -> !StringUtility.isNullOrBlank(e)).distinct().collect(Collectors.toList());
     
     static {
@@ -109,15 +121,14 @@ public final class BackupUtil {
      * Adds files to a backup cache.
      */
     public static void addToBackupCache(File backupCache, List<File> files) {
-        logger.trace(StringUtility.format("Adding: {} to: {}", Log.logFile(files), Log.logFile(backupCache)));
+        final List<File> sourceFiles = filterBlacklisted(files);
         
-        for (File file : files) {
-            if (ListUtility.containsIgnoreCase(BLACKLIST, file.getName())) {
-                continue;
-            }
+        logger.trace(StringUtility.format("Adding: {} to: {}", Log.logFileSet(sourceFiles), Log.logFile(backupCache)));
+        
+        for (File sourceFile : sourceFiles) {
             
-            final File backupFile = new File(backupCache, file.getName()).getAbsoluteFile();
-            Action.copy(file, backupFile);
+            final File backupFile = new File(backupCache, sourceFile.getName()).getAbsoluteFile();
+            Action.copy(sourceFile, backupFile);
         }
     }
     
@@ -160,19 +171,28 @@ public final class BackupUtil {
     /**
      * Compresses a backup cache.
      */
-    public static File compressBackupCache(File backupCache, boolean openDir, File archive, boolean slow, String password, boolean deleteAfter) {
+    public static File compressBackupCache(File backupCache, boolean openDir, File archive, boolean slow, String password, boolean preserveLinks, boolean deleteAfter) {
         logger.debug(StringUtility.format("Compressing: {} to: {}", Log.logFile(backupCache), Log.logFile(archive)));
         
-        Action.compress(backupCache, openDir, archive, slow, password, deleteAfter);
+        Action.compress(backupCache, openDir, archive, slow, password, preserveLinks, deleteAfter);
         
         return archive;
     }
     
-    public static File compressBackupCache(File backupCache, boolean openDir, String archiveName, boolean slow, String password) {
+    public static File compressBackupCache(File backupCache, boolean openDir, String archiveName, boolean slow, String password, boolean preserveLinks, boolean deleteAfter) {
         final File archive = new File(backupCache.getParentFile(), (archiveName + ".rar")).getAbsoluteFile();
+        
+        return compressBackupCache(backupCache, openDir, archive, slow, password, preserveLinks, deleteAfter);
+    }
+    
+    public static File compressBackupCache(File backupCache, boolean openDir, String archiveName, boolean slow, String password, boolean preserveLinks) {
         final boolean deleteAfter = backupCache.getAbsolutePath().replace("\\", "/").contains("/Sandbox/BackupHelper/tmp/");
         
-        return compressBackupCache(backupCache, openDir, archive, slow, password, deleteAfter);
+        return compressBackupCache(backupCache, openDir, archiveName, slow, password, preserveLinks, deleteAfter);
+    }
+    
+    public static File compressBackupCache(File backupCache, boolean openDir, String archiveName, boolean slow, String password) {
+        return compressBackupCache(backupCache, openDir, archiveName, slow, password, false);
     }
     
     public static File compressBackupCache(File backupCache, String archiveName, boolean slow, String password) {
@@ -197,6 +217,47 @@ public final class BackupUtil {
     
     public static File compressBackupCache(File backupCache) {
         return compressBackupCache(backupCache, backupCache.getName().replaceAll("\\..+$", ""));
+    }
+    
+    /**
+     * Compresses a backup directly from the local source.
+     */
+    public static File compressBackupFromSource(File localDir, boolean openDir, File archive, boolean slow, String password, boolean preserveLinks) {
+        return compressBackupCache(localDir, openDir, archive, slow, password, preserveLinks, false);
+    }
+    
+    public static File compressBackupFromSource(File localDir, boolean openDir, String archiveName, boolean slow, String password, boolean preserveLinks) {
+        final File archive = new File(localDir.getParentFile(), (archiveName + ".rar")).getAbsoluteFile();
+        
+        return compressBackupFromSource(localDir, openDir, archive, slow, password, preserveLinks);
+    }
+    
+    public static File compressBackupFromSource(File localDir, boolean openDir, String archiveName, boolean slow, String password) {
+        return compressBackupFromSource(localDir, openDir, archiveName, slow, password, true);
+    }
+    
+    public static File compressBackupFromSource(File backupCache, String archiveName, boolean slow, String password) {
+        return compressBackupFromSource(backupCache, false, archiveName, slow, password);
+    }
+    
+    public static File compressBackupFromSource(File backupCache, boolean openDir, String archiveName, boolean slow) {
+        return compressBackupFromSource(backupCache, openDir, archiveName, slow, null);
+    }
+    
+    public static File compressBackupFromSource(File backupCache, boolean openDir, String archiveName) {
+        return compressBackupFromSource(backupCache, openDir, archiveName, false);
+    }
+    
+    public static File compressBackupFromSource(File backupCache, String archiveName, boolean slow) {
+        return compressBackupFromSource(backupCache, false, archiveName, slow);
+    }
+    
+    public static File compressBackupFromSource(File backupCache, String archiveName) {
+        return compressBackupFromSource(backupCache, archiveName, false);
+    }
+    
+    public static File compressBackupFromSource(File backupCache) {
+        return compressBackupFromSource(backupCache, backupCache.getName().replaceAll("\\..+$", ""));
     }
     
     /**
@@ -339,6 +400,20 @@ public final class BackupUtil {
     
     public static List<File> getSubDirs(File dir) {
         return Filesystem.getDirs(dir, f -> !ListUtility.containsIgnoreCase(BLACKLIST, f.getName()));
+    }
+    
+    public static List<File> filterBlacklisted(List<File> fileSet) {
+        return fileSet.stream()
+                .filter(Objects::nonNull)
+                .filter(f -> !ListUtility.containsIgnoreCase(BLACKLIST, f.getName()))
+                .collect(Collectors.toList());
+    }
+    
+    public static List<String> filterExcluded(List<String> entrySet) {
+        return entrySet.stream()
+                .filter(e -> !StringUtility.isNullOrBlank(e))
+                .filter(e -> BackupUtil.EXCLUSION.stream().noneMatch(e::contains))
+                .collect(Collectors.toList());
     }
     
     public static boolean clearTmpDir() {
@@ -518,11 +593,16 @@ public final class BackupUtil {
             return mkdir(file, true);
         }
         
-        public static boolean compress(File file, boolean openDir, File target, boolean slow, String password, boolean deleteAfter, boolean log, boolean logPath) {
+        public static boolean compress(File file, boolean openDir, File target, boolean slow, String password, boolean preserveLinks, boolean deleteAfter, boolean log, boolean logPath) {
             if (!file.exists()) {
                 if (log) {
                     logger.error(ERROR + "File: " + Log.logFile(file) + " could not be found");
                 }
+                return false;
+            }
+            
+            if (deleteAfter && !file.getAbsolutePath().replace("\\", "/").contains("/Sandbox/BackupHelper/tmp/")) {
+                logger.error(ERROR + "File: " + Log.logFile(file) + " should not be deleted");
                 return false;
             }
             
@@ -535,18 +615,18 @@ public final class BackupUtil {
                     logger.trace(INDENT + StringUtility.format("Compressing: {}", Log.logFile(target, logPath)));
                 }
                 if (!TEST_MODE) {
-                    RarUtil.archiveFile(file, openDir, target, slow, password, deleteAfter);
+                    RarUtil.archiveFile(file, openDir, target, slow, password, preserveLinks, deleteAfter);
                 }
             }
             return true;
         }
         
-        public static boolean compress(File file, boolean openDir, File target, boolean slow, String password, boolean deleteAfter, boolean log) {
-            return compress(file, openDir, target, slow, password, deleteAfter, log, true);
+        public static boolean compress(File file, boolean openDir, File target, boolean slow, String password, boolean preserveLinks, boolean deleteAfter, boolean log) {
+            return compress(file, openDir, target, slow, password, preserveLinks, deleteAfter, log, true);
         }
         
-        public static boolean compress(File file, boolean openDir, File target, boolean slow, String password, boolean deleteAfter) {
-            return compress(file, openDir, target, slow, password, deleteAfter, true);
+        public static boolean compress(File file, boolean openDir, File target, boolean slow, String password, boolean preserveLinks, boolean deleteAfter) {
+            return compress(file, openDir, target, slow, password, preserveLinks, deleteAfter, true);
         }
         
         public static boolean sync(File sourceDir, File targetDir, String baseName, List<String> fileExclusions, boolean log) {
@@ -857,9 +937,15 @@ public final class BackupUtil {
             return logFile(file, true);
         }
         
-        public static String logFile(List<File> files) {
-            return files.stream().map(Log::logFile)
+        public static String logFileSet(List<File> files, boolean filter) {
+            return files.stream()
+                    .filter(e -> (!filter || !ListUtility.containsIgnoreCase(BLACKLIST, e.getName())))
+                    .map(Log::logFile)
                     .collect(Collectors.joining(", ", ((files.size() == 1) ? "" : "[ "), ((files.size() == 1) ? "" : " ]")));
+        }
+        
+        public static String logFileSet(List<File> files) {
+            return logFileSet(files, false);
         }
         
         public static String logBaseName(String baseName, boolean leadingSpace) {

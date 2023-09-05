@@ -16,8 +16,10 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,12 +30,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
+import commons.lambda.function.checked.CheckedFunction;
+import commons.lambda.function.checked.CheckedPredicate;
 import commons.log.CommonsLogging;
 import commons.object.string.StringUtility;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -464,7 +472,7 @@ public final class Filesystem {
                     }
                 }
                 
-                FileUtils.copyDirectory(dirSrc, dirDest); //copies directory to destination directory path
+                FileUtils.copyDirectory(dirSrc, dirDest, File::canRead); //copies directory to destination directory path
             }
             return true;
         } catch (IOException ignored) {
@@ -1117,7 +1125,19 @@ public final class Filesystem {
      * @return Whether the file or directory exists, or not.
      */
     public static boolean exists(File file) {
-        return file.exists();
+        return Optional.ofNullable(file)
+                .map(File::exists)
+                .orElse(false);
+    }
+    
+    /**
+     * Determines if a file or directory does not exist or not.
+     *
+     * @param file The file or directory.
+     * @return Whether the file or directory does not exist, or not.
+     */
+    public static boolean notExists(File file) {
+        return !exists(file);
     }
     
     /**
@@ -1941,32 +1961,6 @@ public final class Filesystem {
     }
     
     /**
-     * Returns a system temporary directory.
-     *
-     * @return A system temporary directory.
-     */
-    public static File getTempDirectory() {
-        String path = FileUtils.getTempDirectoryPath();
-        if (path != null) {
-            return new File(path);
-        }
-        return null;
-    }
-    
-    /**
-     * Returns the current user's directory.
-     *
-     * @return The current user's directory.
-     */
-    public static File getUserDirectory() {
-        String path = FileUtils.getUserDirectoryPath();
-        if (path != null) {
-            return new File(path);
-        }
-        return null;
-    }
-    
-    /**
      * Creates a symbolic link.
      *
      * @param target The target of the symbolic link.
@@ -1999,13 +1993,248 @@ public final class Filesystem {
     }
     
     /**
-     * Tests if a file is a symbolic link.
+     * Returns the name of a file.
+     *
+     * @param file The file.
+     * @return The name of the file.
+     */
+    public static String getName(File file) {
+        return Optional.ofNullable(file)
+                .map(File::getName)
+                .orElse(null);
+    }
+    
+    /**
+     * Returns the file type of a file.
+     *
+     * @param file The file.
+     * @return The file type of the file.
+     */
+    public static String getFileType(File file) {
+        return Optional.ofNullable(file)
+                .map(Filesystem::getName)
+                .map(FilenameUtils::getExtension)
+                .orElse(null);
+    }
+    
+    /**
+     * Returns the parent file of a file.
+     *
+     * @param file The file.
+     * @return The parent file of the file.
+     */
+    public static File getParentFile(File file) {
+        return Optional.ofNullable(file)
+                .map(File::getParentFile)
+                .orElse(null);
+    }
+    
+    /**
+     * Returns the absolute form of a file.
+     *
+     * @param file The file.
+     * @return The absolute form of the file.
+     */
+    public static File getAbsoluteFile(File file) {
+        return Optional.ofNullable(file)
+                .map(File::getAbsoluteFile)
+                .orElse(null);
+    }
+    
+    /**
+     * Returns the canonical form of a file.
+     *
+     * @param file The file.
+     * @return The canonical form of the file.
+     */
+    public static File getCanonicalFile(File file) {
+        return Optional.ofNullable(file)
+                .map((CheckedFunction<File, File>) File::getCanonicalFile)
+                .orElse(null);
+    }
+    
+    /**
+     * Returns the absolute path of a file.
+     *
+     * @param file The file.
+     * @return The absolute path of the file.
+     */
+    public static String getAbsolutePath(File file) {
+        return Optional.ofNullable(file)
+                .map(File::getAbsolutePath)
+                .orElse(null);
+    }
+    
+    /**
+     * Returns the path representation of a file.
+     *
+     * @param file The file.
+     * @return The path representation of the file.
+     */
+    public static Path toPath(File file) {
+        return Optional.ofNullable(file)
+                .map(File::toPath)
+                .orElse(null);
+    }
+    
+    /**
+     * Returns the absolute path representation of a file.
+     *
+     * @param file The file.
+     * @return The absolute path representation of the file.
+     */
+    public static Path toAbsolutePath(File file) {
+        return Optional.ofNullable(file)
+                .map(Filesystem::toPath)
+                .map(Path::toAbsolutePath)
+                .orElse(null);
+    }
+    
+    /**
+     * Returns the real path representation of a file.
+     *
+     * @param file The file.
+     * @return The real path representation of the file.
+     */
+    public static Path toRealPath(File file) {
+        return Optional.ofNullable(file)
+                .map(Filesystem::toAbsolutePath)
+                .map((CheckedFunction<Path, Path>) Path::toRealPath)
+                .orElse(null);
+    }
+    
+    /**
+     * Determines if a file satisfies a condition.
+     *
+     * @param file          The file.
+     * @param pathCondition The condition to use to test the file.
+     * @return Whether the file satisfies the specified condition or not.
+     */
+    private static boolean testFileCondition(File file, CheckedPredicate<Path> pathCondition) {
+        return Optional.ofNullable(file)
+                .map(Filesystem::toAbsolutePath)
+                .map(pathCondition::test)
+                .orElse(false);
+    }
+    
+    /**
+     * Determines if a file represents a file.
+     *
+     * @param file The file.
+     * @return Whether the file represents a file or not.
+     */
+    public static boolean isFile(File file) {
+        return testFileCondition(file, Files::isRegularFile);
+    }
+    
+    /**
+     * Determines if a file represents a directory.
+     *
+     * @param file The file.
+     * @return Whether the file represents a directory or not.
+     */
+    public static boolean isDir(File file) {
+        return testFileCondition(file, Files::isDirectory);
+    }
+    
+    /**
+     * Determines if a file is a symbolic link.
      *
      * @param file The file.
      * @return Whether the file is a symbolic link or not.
      */
     public static boolean isSymbolicLink(File file) {
-        return Files.isSymbolicLink(Paths.get(file.getAbsolutePath()));
+        return testFileCondition(file, Files::isSymbolicLink);
+    }
+    
+    /**
+     * Determines if a file is a junction.
+     *
+     * @param file The file.
+     * @return Whether the file is a junction or not.
+     */
+    public static boolean isJunction(File file) {
+        return isDir(file) && isRedirected(file) && !isSymbolicLink(file);
+    }
+    
+    /**
+     * Determines if a file is a relocated.
+     *
+     * @param file The file.
+     * @return Whether the file is a relocated or not.
+     */
+    public static boolean isRedirected(File file) {
+        return !toPath(file).equals(toRealPath(file));
+    }
+    
+    /**
+     * Determines if a file is readable by the application.
+     *
+     * @param file The file.
+     * @return Whether the file is readable by the application or not.
+     */
+    public static boolean isReadable(File file) {
+        return testFileCondition(file, Files::isReadable);
+    }
+    
+    /**
+     * Determines if a file is writable by the application.
+     *
+     * @param file The file.
+     * @return Whether the file is writable by the application or not.
+     */
+    public static boolean isWritable(File file) {
+        return testFileCondition(file, Files::isWritable);
+    }
+    
+    /**
+     * Determines if a file is executable by the application.
+     *
+     * @param file The file.
+     * @return Whether the file is executable by the application or not.
+     */
+    public static boolean isExecutable(File file) {
+        return testFileCondition(file, Files::isExecutable);
+    }
+    
+    /**
+     * Determines if a file is hidden.
+     *
+     * @param file The file.
+     * @return Whether the file is hidden or not.
+     */
+    public static boolean isHidden(File file) {
+        return testFileCondition(file, Files::isHidden);
+    }
+    
+    /**
+     * Reads the attributes from a file.
+     *
+     * @param file        The file.
+     * @param followLinks Whether to follow any links associated with the file or not.
+     * @return The attributes of the file, or null if it could not be read.
+     */
+    public static BasicFileAttributes readAttributes(File file, boolean followLinks) {
+        try {
+            return Files.readAttributes(file.toPath(), BasicFileAttributes.class,
+                    Stream.of(followLinks ? LinkOption.NOFOLLOW_LINKS : null)
+                            .filter(Objects::nonNull).toArray(LinkOption[]::new));
+        } catch (Exception ignored) {
+            if (logFilesystem()) {
+                logger.trace("Filesystem: Unable to read the attributes from: {}", StringUtility.fileString(file));
+            }
+            return null;
+        }
+    }
+    
+    /**
+     * Reads the attributes from a file.
+     *
+     * @param file The file.
+     * @return The attributes of the file, or null if it could not be read.
+     */
+    public static BasicFileAttributes readAttributes(File file) {
+        return readAttributes(file, false);
     }
     
     /**
@@ -2151,14 +2380,29 @@ public final class Filesystem {
     }
     
     /**
-     * Returns the file type of a file.
+     * Returns the current user's directory.
      *
-     * @param file The file.
-     * @return The file type of the file.
+     * @return The current user's directory.
      */
-    public static String getFileType(File file) {
-        return (file.getName().contains(".")) ?
-                file.getName().substring(file.getName().lastIndexOf('.') + 1) : "";
+    public static File getUserDirectory() {
+        String path = FileUtils.getUserDirectoryPath();
+        if (path != null) {
+            return new File(path);
+        }
+        return null;
+    }
+    
+    /**
+     * Returns a system temporary directory.
+     *
+     * @return A system temporary directory.
+     */
+    public static File getTempDirectory() {
+        String path = FileUtils.getTempDirectoryPath();
+        if (path != null) {
+            return new File(path);
+        }
+        return null;
     }
     
     /**

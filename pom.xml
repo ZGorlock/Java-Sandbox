@@ -52,6 +52,7 @@
         <module>RegexpTrie</module>
         <module>SineWaves</module>
         <module>Sphinx4Test</module>
+        <module>SpineLibGDXTest</module>
         <module>SpotifyPlaylistCreator</module>
         <module>StableDiffusionRunner</module>
         <module>StackOverflow</module>

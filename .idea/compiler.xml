@@ -47,6 +47,7 @@
         <module name="regexpTrie" />
         <module name="sineWaves" />
         <module name="sphinx4test" />
+        <module name="spineLibGDXTest" />
         <module name="spotifyPlaylistCreator" />
         <module name="stableDiffusionRunner" />
         <module name="stackOverflow" />

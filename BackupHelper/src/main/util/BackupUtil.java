@@ -82,7 +82,7 @@ public final class BackupUtil {
     public static final List<String> EXCLUSION = Stream.concat(
             GLOBAL_SKIP.stream(),
             PropertyUtil.readPropertyList(EXCLUSION_FILE.getName()).stream()
-    ).filter(e -> !StringUtility.isNullOrBlank(e)).distinct().collect(Collectors.toList());
+    ).filter(e -> !StringUtility.isNullOrBlank(e)).map(String::toUpperCase).distinct().collect(Collectors.toList());
     
     static {
         if (!BLACKLIST_FILE.exists()) {
@@ -412,7 +412,7 @@ public final class BackupUtil {
     public static List<String> filterExcluded(List<String> entrySet) {
         return entrySet.stream()
                 .filter(e -> !StringUtility.isNullOrBlank(e))
-                .filter(e -> BackupUtil.EXCLUSION.stream().noneMatch(e::contains))
+                .filter(e -> BackupUtil.EXCLUSION.stream().noneMatch(e.toUpperCase()::contains))
                 .collect(Collectors.toList());
     }
     

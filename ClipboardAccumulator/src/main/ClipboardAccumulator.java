@@ -17,6 +17,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.UnaryOperator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,6 +26,7 @@ import commons.access.CmdLine;
 import commons.access.Filesystem;
 import commons.access.Project;
 import commons.lambda.stream.mapper.Mappers;
+import commons.object.string.StringUtility;
 
 public class ClipboardAccumulator {
     
@@ -38,11 +40,22 @@ public class ClipboardAccumulator {
     
     private static final boolean FILTER = true;
     
-    private static final Pattern PATTERN = Pattern.compile("^\\s*https?://\\S+\\s*$");
+    private static final boolean FORMAT = true;
     
-    private static final String PREPEND = "call dl.bat \"";
+    private static final boolean TRANSFORM = true;
     
-    private static final String APPEND = "\"";
+    private static final Pattern PATTERN = Pattern.compile("^\\s*https?://.*$");
+    
+    private static final String PREPEND = "";
+    
+    private static final String APPEND = "";
+    
+    private static final UnaryOperator<String> TRANSFORMER = (String data) ->
+            Optional.ofNullable(data)
+                    .map(String::strip)
+                    .orElse(null);
+    
+    private static final int DELAY = 200;
     
     private static final File SAVE_FILE = new File(Project.DATA_DIR,
             ("clipboard-" + new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date()) + ".txt"));
@@ -72,32 +85,41 @@ public class ClipboardAccumulator {
         System.setErr(new PrintStream("log/error.log"));
         
         while (true) {
-            Thread.sleep(200);
+            Thread.sleep(DELAY);
             cmdDequeue();
-            Optional.ofNullable(Clipboard.getClipboard())
-                    .filter(e -> !e.isEmpty())
-                    .filter(e -> !e.equals(clipboard.get()))
-                    .map(e -> Mappers.perform(e, clipboard::set))
-                    .ifPresent(ClipboardAccumulator::processClipboard);
+            checkClipboard();
         }
     }
     
     
     //Static Methods
     
+    private static void checkClipboard() {
+        Optional.ofNullable(Clipboard.getClipboard())
+                .filter(e -> !StringUtility.isNullOrEmpty(e))
+                .filter(e -> !e.equals(clipboard.get()))
+                .map(e -> Mappers.perform(e, clipboard::set))
+                .ifPresent(ClipboardAccumulator::processClipboard);
+    }
+    
     private static void processClipboard(String clipboard) {
-        if (!acceptClipboard(clipboard)) {
-            return;
-        }
-        
-        clipboard = PREPEND + clipboard + APPEND;
-        accumulateClipboard(clipboard);
+        Optional.ofNullable(clipboard)
+                .filter(ClipboardAccumulator::acceptClipboard)
+                .map(ClipboardAccumulator::formatClipboard)
+                .ifPresent(ClipboardAccumulator::accumulateClipboard);
     }
     
     private static boolean acceptClipboard(String clipboard) {
         return !FILTER || Optional.ofNullable(clipboard)
                 .map(PATTERN::matcher).map(Matcher::matches)
                 .orElse(false);
+    }
+    
+    private static String formatClipboard(String clipboard) {
+        return Optional.ofNullable(clipboard)
+                .map(e -> (!TRANSFORM ? e : TRANSFORMER.apply(e)))
+                .map(e -> (!FORMAT ? e : (PREPEND + e + APPEND)))
+                .orElse(null);
     }
     
     private static void accumulateClipboard(String clipboard) {
@@ -115,7 +137,7 @@ public class ClipboardAccumulator {
     }
     
     private static void cmdDequeue() {
-        if (!CMD || queue.isEmpty() && busy.get()) {
+        if (!CMD || (queue.isEmpty() && busy.get())) {
             return;
         }
         executor.execute(ClipboardAccumulator::executeCmd);

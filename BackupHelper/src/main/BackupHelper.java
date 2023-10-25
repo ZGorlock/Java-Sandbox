@@ -30,6 +30,9 @@ public class BackupHelper {
     
     static {
         System.setProperty("logback.configurationFile", new File(Project.RESOURCES_DIR, "logback.xml").getAbsolutePath());
+        
+        Runtime.getRuntime().addShutdownHook(new Thread(
+                BackupUtil::clearTmpDir));
     }
     
     
@@ -115,6 +118,8 @@ public class BackupHelper {
             
             final File documentsBackup = BackupUtil.compressBackupCache(documentsCache, BackupUtil.Stamper.stamp(backupName));
             BackupUtil.commitBackup(localBackupDir, documentsBackup);
+            
+            BackupUtil.clearTmpDir();
         }
         BackupUtil.cleanBackupDir(localBackupDir, backupName, 1);
         
@@ -211,6 +216,8 @@ public class BackupHelper {
             
             final File runeScapeBackup = BackupUtil.compressBackupCache(runeScapeCache, BackupUtil.Stamper.stamp(backupName));
             BackupUtil.commitBackup(localBackupDir, runeScapeBackup);
+            
+            BackupUtil.clearTmpDir();
         }
         BackupUtil.cleanBackupDir(localBackupDir, backupName, 1);
         
@@ -224,6 +231,7 @@ public class BackupHelper {
         final String backupName = "StableDiffusion";
         
         final String userName = PropertyUtil.readProperty("name-user.txt");
+        final String password = PropertyUtil.readProperty("pass-sd.txt");
         
         final File localDir = new File(Drive.GAMES.drive, Filesystem.generatePath("Stable Diffusion", "Stable Diffusion"));
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", "Backups"));
@@ -231,7 +239,7 @@ public class BackupHelper {
         
         if (!BackupUtil.recentBackupExists(localBackupDir, backupName) && BackupUtil.modifiedSinceLastBackup(localDir, localBackupDir, backupName)) {
             
-            final File stableDiffusionBackup = BackupUtil.compressBackupFromSource(localDir, BackupUtil.Stamper.stamp(backupName));
+            final File stableDiffusionBackup = BackupUtil.compressBackupFromSource(localDir, false, BackupUtil.Stamper.stamp(backupName), false, password, true);
             BackupUtil.commitBackup(localBackupDir, stableDiffusionBackup);
         }
         BackupUtil.cleanBackupDir(localBackupDir, backupName, 1);
@@ -244,14 +252,58 @@ public class BackupHelper {
         BackupUtil.clearTmpDir();
         
         final String backupName = "Data";
+        final String programFilesName = "Program Files";
+        final String programFilesX86Name = "Program Files (x86)";
         final String programDataName = "ProgramData";
         final String appDataName = "AppData";
         final String userDataName = "User";
         
         final String userName = PropertyUtil.readProperty("name-user.txt");
+        final String password = PropertyUtil.readProperty("pass-data.txt");
         
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", backupName));
         final File backupDir = new File(Drive.BACKUP.drive, backupName);
+        
+        logger.info("\n--- Backing up Program Files ---\n");
+        
+        if (!BackupUtil.recentBackupExists(localBackupDir, programFilesName.replace(" ", "_"))) {
+            
+            final File programFilesLocalDir = new File(Drive.BOOT.drive, programFilesName);
+            
+            final File programFilesCache = new File(Filesystem.getTemporaryDirectory(), programFilesName);
+            BackupUtil.makeBackupCache(programFilesCache);
+            
+            BackupUtil.addToBackupCache(programFilesCache, programFilesLocalDir, true, List.of("Bitdefender", "Bitdefender Agent", "Carbonite", "Google", "Windows Defender", "Windows Defender Advanced Threat Protection", "Windows Security", "WindowsApps"), true);
+            
+            final File programFileBackup = BackupUtil.compressBackupCache(programFilesCache, BackupUtil.Stamper.stamp(programFilesName.replace(" ", "_")), false, password);
+            BackupUtil.commitBackup(localBackupDir, programFileBackup, true);
+            
+            BackupUtil.clearTmpDir();
+        }
+        BackupUtil.cleanBackupDir(localBackupDir, programFilesName.replace(" ", "_"), 1);
+        
+        logger.info("\n-------------------------------\n");
+        
+        logger.info("\n--- Backing up Program Files (x86) ---\n");
+        
+        if (!BackupUtil.recentBackupExists(localBackupDir, programFilesX86Name.replace(" ", "_").replaceAll("[()]", ""))) {
+            
+            final File programFilesX86LocalDir = new File(Drive.BOOT.drive, programFilesX86Name);
+            
+            final File programFilesX86Cache = new File(Filesystem.getTemporaryDirectory(), programFilesX86Name);
+            BackupUtil.makeBackupCache(programFilesX86Cache);
+            
+            BackupUtil.addToBackupCache(programFilesX86Cache, programFilesX86LocalDir, true, List.of("Backblaze", "Carbonite", "Google", "Windows Defender"), true);
+            
+            final File programFileX86Backup = BackupUtil.compressBackupCache(programFilesX86Cache, BackupUtil.Stamper.stamp(programFilesX86Name.replace(" ", "_").replaceAll("[()]", "")), false, password);
+            BackupUtil.commitBackup(localBackupDir, programFileX86Backup, true);
+            
+            BackupUtil.clearTmpDir();
+        }
+        BackupUtil.cleanBackupDir(localBackupDir, programFilesX86Name.replace(" ", "_").replaceAll("[()]", ""), 1);
+        
+        logger.info("\n-------------------------------\n");
+        
         
         logger.info("\n--- Backing up Program Data ---\n");
         
@@ -264,8 +316,10 @@ public class BackupHelper {
             
             BackupUtil.addToBackupCache(programDataCache, programDataLocalDir, true, List.of("Application Data", "Carbonite", "Desktop", "Documents", "ntuser.pol", "Package Cache", "Packages", "Start Menu", "Templates", "USOPrivate", "USOShared"), true);
             
-            final File programDataBackup = BackupUtil.compressBackupCache(programDataCache, BackupUtil.Stamper.stamp(programDataName));
+            final File programDataBackup = BackupUtil.compressBackupCache(programDataCache, BackupUtil.Stamper.stamp(programDataName), false, password);
             BackupUtil.commitBackup(localBackupDir, programDataBackup, true);
+            
+            BackupUtil.clearTmpDir();
         }
         BackupUtil.cleanBackupDir(localBackupDir, programDataName, 1);
         
@@ -284,8 +338,10 @@ public class BackupHelper {
             BackupUtil.addToBackupCache(appDataCache, new File(appDataLocalDir, "LocalLow"), List.of("IGDump", "Temp"), true);
             BackupUtil.addToBackupCache(appDataCache, new File(appDataLocalDir, "Roaming"), List.of(), true);
             
-            final File appDataBackup = BackupUtil.compressBackupCache(appDataCache, BackupUtil.Stamper.stamp(appDataName));
+            final File appDataBackup = BackupUtil.compressBackupCache(appDataCache, BackupUtil.Stamper.stamp(appDataName), false, password);
             BackupUtil.commitBackup(localBackupDir, appDataBackup);
+            
+            BackupUtil.clearTmpDir();
         }
         BackupUtil.cleanBackupDir(localBackupDir, appDataName, 1);
         
@@ -302,8 +358,10 @@ public class BackupHelper {
             
             BackupUtil.addToBackupCache(userDataCache, userDataLocalDir, true, List.of(".m2", ".runelite", "AppData", "Downloads"), true);
             
-            final File userDataBackup = BackupUtil.compressBackupCache(userDataCache, BackupUtil.Stamper.stamp(userDataName));
+            final File userDataBackup = BackupUtil.compressBackupCache(userDataCache, BackupUtil.Stamper.stamp(userDataName), false, password);
             BackupUtil.commitBackup(localBackupDir, userDataBackup, true);
+            
+            BackupUtil.clearTmpDir();
         }
         BackupUtil.cleanBackupDir(localBackupDir, userDataName, 1);
         
@@ -334,6 +392,8 @@ public class BackupHelper {
             
             final File registryBackup = BackupUtil.compressBackupCache(registryCacheEntry, BackupUtil.Stamper.stamp(backupName));
             BackupUtil.commitBackup(localBackupDir, registryBackup);
+            
+            BackupUtil.clearTmpDir();
         }
         
         BackupUtil.syncBackupDir(localBackupDir, backupDir);
@@ -344,6 +404,8 @@ public class BackupHelper {
         BackupUtil.clearTmpDir();
         
         final String backupName = "Manifest";
+        
+        final String password = PropertyUtil.readProperty("pass-manifest.txt");
         
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", backupName));
         final File backupDir = new File(Drive.BACKUP.drive, backupName);
@@ -359,8 +421,10 @@ public class BackupHelper {
                 WindowsBackupTools.createManifest(drive.drive, manifestEntry);
             }
             
-            final File manifestBackup = BackupUtil.compressBackupCache(manifestCache, true, BackupUtil.Stamper.stamp(backupName));
+            final File manifestBackup = BackupUtil.compressBackupCache(manifestCache, true, BackupUtil.Stamper.stamp(backupName), false, password);
             BackupUtil.commitBackup(localBackupDir, manifestBackup);
+            
+            BackupUtil.clearTmpDir();
         }
         
         BackupUtil.syncBackupDir(localBackupDir, backupDir);
@@ -401,6 +465,8 @@ public class BackupHelper {
             
             final File recoveryBackup = BackupUtil.compressBackupCache(recoveryCache, true, BackupUtil.Stamper.stamp(backupName), false, password);
             BackupUtil.commitBackup(localBackupDir, recoveryBackup);
+            
+            BackupUtil.clearTmpDir();
         }
         BackupUtil.cleanBackupDir(localBackupDir, backupName, 1);
         
@@ -514,6 +580,8 @@ public class BackupHelper {
             
             final File workPcBackup = BackupUtil.compressBackupCache(workPcCache, BackupUtil.Stamper.stamp(name), false, password);
             BackupUtil.commitBackup(localBackupDir, workPcBackup);
+            
+            BackupUtil.clearTmpDir();
         }
         BackupUtil.cleanBackupDir(localBackupDir, name, 4);
         

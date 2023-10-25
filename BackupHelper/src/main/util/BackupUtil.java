@@ -67,7 +67,8 @@ public final class BackupUtil {
     public static final List<String> GLOBAL_SKIP = List.of(
             "$RECYCLE.BIN", "$Recycle.Bin",
             "System Volume Information",
-            "desktop.ini", "Thumbs.db"
+            "desktop.ini", "Thumbs.db",
+            ".bzvol"
     );
     
     public static final File BLACKLIST_FILE = new File(Project.DATA_DIR, "blacklist.txt");

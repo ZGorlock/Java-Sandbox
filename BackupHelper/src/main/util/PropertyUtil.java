@@ -36,18 +36,27 @@ public final class PropertyUtil {
         return readProperty(new File(Project.DATA_DIR, fileName));
     }
     
-    public static List<String> readPropertyList(File file) {
+    public static List<String> readPropertyList(File file, boolean raw) {
         return Optional.ofNullable(file)
                 .filter(File::exists).map(Filesystem::readLines)
                 .map(e -> e.stream()
                         .filter(e2 -> !e2.isBlank())
+                        .filter(e2 -> !e2.trim().startsWith("#"))
                         .collect(Collectors.toList()))
                 .filter(e -> !e.isEmpty())
                 .orElseThrow();
     }
     
+    public static List<String> readPropertyList(File file) {
+        return readPropertyList(file, false);
+    }
+    
+    public static List<String> readPropertyList(String fileName, boolean raw) {
+        return readPropertyList(new File(Project.DATA_DIR, fileName), raw);
+    }
+    
     public static List<String> readPropertyList(String fileName) {
-        return readPropertyList(new File(Project.DATA_DIR, fileName));
+        return readPropertyList(fileName, false);
     }
     
 }

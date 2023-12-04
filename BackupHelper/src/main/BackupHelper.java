@@ -59,6 +59,7 @@ public class BackupHelper {
         backupCoding();
         backupMaven();
         
+        backupBackblaze();
         backupRuneScape();
         backupStableDiffusion();
         
@@ -191,6 +192,33 @@ public class BackupHelper {
             
             final File mavenBackup = BackupUtil.compressBackupCache(localDir, BackupUtil.Stamper.stamp(backupName));
             BackupUtil.commitBackup(localBackupDir, mavenBackup);
+        }
+        BackupUtil.cleanBackupDir(localBackupDir, backupName, 1);
+        
+        BackupUtil.syncBackupDir(localBackupDir, backupDir, backupName);
+    }
+    
+    private static void backupBackblaze() {
+        logger.info("\n\n\n--- BACKBLAZE ---\n");
+        BackupUtil.clearTmpDir();
+        
+        final String backupName = "Backblaze";
+        
+        final File localDir = new File(Drive.BOOT.drive, Filesystem.generatePath("ProgramData", "Backblaze"));
+        final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", "Backups"));
+        final File backupDir = new File(Drive.BACKUP.drive, "Backups");
+        
+        if (!BackupUtil.recentBackupExists(localBackupDir, backupName)) {
+            
+            final File backblazeCache = new File(Filesystem.getTemporaryDirectory(), backupName);
+            BackupUtil.makeBackupCache(backblazeCache);
+            
+            BackupUtil.addToBackupCache(backblazeCache, localDir, true);
+            
+            final File backblazeBackup = BackupUtil.compressBackupCache(backblazeCache, BackupUtil.Stamper.stamp(backupName));
+            BackupUtil.commitBackup(localBackupDir, backblazeBackup);
+            
+            BackupUtil.clearTmpDir();
         }
         BackupUtil.cleanBackupDir(localBackupDir, backupName, 1);
         

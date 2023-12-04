@@ -54,6 +54,8 @@ public final class BackupUtil {
     
     public static final boolean USE_RSYNC = false; //use rsync instead of sync to external backup
     
+    public static final boolean USE_XCOPY = true; //use xcopy to copy files when adding to a backup cache
+    
     public static final boolean FILTER_MANIFEST = true; //filter to exclude certain paths from the manifest
     
     public static final int RECENT_PERIOD_DAYS = 25; //the maximum number of days ago to consider a backup recent
@@ -129,7 +131,11 @@ public final class BackupUtil {
         for (File sourceFile : sourceFiles) {
             
             final File backupFile = new File(backupCache, sourceFile.getName()).getAbsoluteFile();
-            Action.copy(sourceFile, backupFile);
+            if (USE_XCOPY) {
+                Action.nativeCopy(sourceFile, backupFile);
+            } else {
+                Action.copy(sourceFile, backupFile);
+            }
         }
     }
     
@@ -428,7 +434,7 @@ public final class BackupUtil {
         
         //Static Methods
         
-        public static boolean copy(File file, File target, boolean log, boolean logPath) {
+        public static boolean copy(File file, File target, boolean log, boolean logPath, boolean nativeCopy) {
             final boolean update = target.exists();
             if (SAFE_MODE && target.exists()) {
                 if (log) {
@@ -439,16 +445,19 @@ public final class BackupUtil {
                     logger.trace(INDENT + StringUtility.format("{}: {}", (update ? "Updating" : "Copying"), Log.logFile(file, logPath)));
                 }
                 if (!TEST_MODE) {
-                    if (!Filesystem.copy(file, target, true)) {
+                    if (!doCopy(file, target, log, false, nativeCopy)) {
                         if (log) {
                             logger.error(INDENT + ERROR + StringUtility.format("Failed to {}: {}", (update ? "update" : "copy"), Log.logFile(file)));
                         }
                         return false;
                     }
-//                    return doCopy(file, target, true);
                 }
             }
             return true;
+        }
+        
+        public static boolean copy(File file, File target, boolean log, boolean logPath) {
+            return copy(file, target, log, logPath, false);
         }
         
         public static boolean copy(File file, File target, boolean log) {
@@ -459,23 +468,47 @@ public final class BackupUtil {
             return copy(file, target, true);
         }
         
+        public static boolean nativeCopy(File file, File target, boolean log, boolean logPath) {
+            return copy(file, target, log, logPath, true);
+        }
+        
+        public static boolean nativeCopy(File file, File target, boolean log) {
+            return nativeCopy(file, target, log, true);
+        }
+        
+        public static boolean nativeCopy(File file, File target) {
+            return nativeCopy(file, target, true);
+        }
+        
+        private static boolean doCopy(File source, File target, boolean log, boolean nioCopy, boolean nativeCopy) {
+            if (nativeCopy) {
+                return XCopyUtil.xcopy(source, target);
+                
+            } else if (nioCopy) {
+                final boolean update = target.exists();
+                boolean success = true;
+                try {
+                    Files.copy(source.toPath(), target.toPath(), StandardCopyOption.COPY_ATTRIBUTES, StandardCopyOption.REPLACE_EXISTING);
+                } catch (Exception e) {
+                    if (log) {
+                        logger.error(INDENT + ERROR + StringUtility.format("Failed to {}: {}", (update ? "update" : "copy"), Log.logFile(source)));
+                    }
+                    success = false;
+                }
+                if (success && source.isDirectory()) {
+                    for (File sourceFile : Optional.ofNullable(source.listFiles()).orElse(new File[] {})) {
+                        success &= doCopy(sourceFile, new File(target, sourceFile.getName()));
+                    }
+                }
+                return success;
+                
+            } else {
+                return Filesystem.copy(source, target, true);
+            }
+        }
+        
         private static boolean doCopy(File source, File target, boolean log) {
-            final boolean update = target.exists();
-            boolean success = true;
-            try {
-                Files.copy(source.toPath(), target.toPath(), StandardCopyOption.COPY_ATTRIBUTES, StandardCopyOption.REPLACE_EXISTING);
-            } catch (Exception e) {
-                if (log) {
-                    logger.error(INDENT + ERROR + StringUtility.format("Failed to {}: {}", (update ? "update" : "copy"), Log.logFile(source)));
-                }
-                success = false;
-            }
-            if (success && source.isDirectory()) {
-                for (File sourceFile : Optional.ofNullable(source.listFiles()).orElse(new File[] {})) {
-                    success &= doCopy(sourceFile, new File(target, sourceFile.getName()));
-                }
-            }
-            return success;
+            return doCopy(source, target, log, false, false);
         }
         
         private static boolean doCopy(File source, File target) {

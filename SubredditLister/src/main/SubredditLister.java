@@ -10,17 +10,24 @@ import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.gargoylesoftware.htmlunit.BrowserVersion;
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlForm;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import ch.qos.logback.classic.LoggerContext;
 import org.apache.commons.io.FileUtils;
+import org.htmlunit.BrowserVersion;
+import org.htmlunit.WebClient;
+import org.htmlunit.html.HtmlForm;
+import org.htmlunit.html.HtmlPage;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.LoggerFactory;
 
 public class SubredditLister {
+    
+    static {
+        ((LoggerContext) LoggerFactory.getILoggerFactory()).getLogger("org.htmlunit").setAdditive(false);
+        ((LoggerContext) LoggerFactory.getILoggerFactory()).getLogger("org.apache.http").setAdditive(false);
+    }
     
     private static final String username = "";
     

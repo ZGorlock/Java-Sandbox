@@ -33,7 +33,6 @@
         <module>Huffman</module>
         <module>ImageSlicer</module>
         <module>ImageTextTagger</module>
-        <module>InterviewTest</module>
         <module>JavaPojoGenerator</module>
         <module>LotteryGuesser</module>
         <module>MarketAnalyzer</module>
@@ -54,6 +53,7 @@
         <module>Sphinx4Test</module>
         <module>SpineLibGDXTest</module>
         <module>SpotifyPlaylistCreator</module>
+        <module>SpringCrudRepositoryTest</module>
         <module>StableDiffusionRunner</module>
         <module>StackOverflow</module>
         <module>SubredditLister</module>
@@ -70,7 +70,7 @@
     
     
     <properties>
-        <!-- BUILD  -->
+        <!-- BUILD -->
         <build.jdk>13</build.jdk>
         <build.mvn>3.8.6</build.mvn>
         <build.enc>UTF-8</build.enc>

@@ -28,7 +28,6 @@
         <module name="huffman" />
         <module name="imageSlicer" />
         <module name="imageTextTagger" />
-        <module name="interviewTest" />
         <module name="javaPojoGenerator" />
         <module name="lotteryGuesser" />
         <module name="marketAnalyzer" />
@@ -49,6 +48,7 @@
         <module name="sphinx4test" />
         <module name="spineLibGDXTest" />
         <module name="spotifyPlaylistCreator" />
+        <module name="springCrudRepositoryTest" />
         <module name="stableDiffusionRunner" />
         <module name="stackOverflow" />
         <module name="subredditLister" />
@@ -64,7 +64,6 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="InterviewTest" target="1.8" />
       <module name="Sandbox" target="13" />
     </bytecodeTargetLevel>
   </component>

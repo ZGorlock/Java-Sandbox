@@ -45,9 +45,6 @@
     <file url="file://$PROJECT_DIR$/ImageSlicer/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ImageTextTagger/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ImageTextTagger/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/InterviewTest/src" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/InterviewTest/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/InterviewTest/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/JavaPojoGenerator/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/JavaPojoGenerator/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/LotteryGuesser/resources" charset="UTF-8" />
@@ -88,6 +85,9 @@
     <file url="file://$PROJECT_DIR$/SpineLibGDXTest/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SpotifyPlaylistCreator/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SpotifyPlaylistCreator/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SpringCrudRepositoryTest/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SpringCrudRepositoryTest/src" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SpringCrudRepositoryTest/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/StableDiffusionRunner/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/StableDiffusionRunner/src" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/StackOverflow/resources" charset="UTF-8" />

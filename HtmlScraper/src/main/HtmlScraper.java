@@ -7,17 +7,21 @@
 package main;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import com.gargoylesoftware.htmlunit.BrowserVersion;
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import org.apache.commons.logging.LogFactory;
+import ch.qos.logback.classic.LoggerContext;
+import org.htmlunit.BrowserVersion;
+import org.htmlunit.WebClient;
+import org.htmlunit.html.HtmlPage;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.slf4j.LoggerFactory;
 
 public class HtmlScraper {
+    
+    static {
+        ((LoggerContext) LoggerFactory.getILoggerFactory()).getLogger("org.htmlunit").setAdditive(false);
+        ((LoggerContext) LoggerFactory.getILoggerFactory()).getLogger("org.apache.http").setAdditive(false);
+    }
     
     public static void main(String[] args) throws Exception {
         Document d = getHtml("https://www.google.com/search?num=1&q=define+run");
@@ -35,11 +39,6 @@ public class HtmlScraper {
 //        driver.get(url);
 //        return Jsoup.parse(driver.getPageSource());
         
-        
-        LogFactory.getFactory().setAttribute("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
-        Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(Level.OFF);
-        Logger.getLogger("org.apache.commons.httpclient").setLevel(Level.OFF);
-//
         WebClient webClient = new WebClient(BrowserVersion.CHROME);
         webClient.getOptions().setThrowExceptionOnScriptError(false);
         webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
@@ -51,7 +50,6 @@ public class HtmlScraper {
         
         return Jsoup.parse(page.asXml());
 
-
 //        return Jsoup.connect(url)
 //                .ignoreContentType(true)
 //                .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.80 Safari/537.36")
@@ -61,4 +59,5 @@ public class HtmlScraper {
 //                .execute()
 //                .parse();
     }
+    
 }

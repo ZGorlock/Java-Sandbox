@@ -44,6 +44,7 @@
         <module name="qrCodeTest" />
         <module name="reactionTimeClicker" />
         <module name="regexpTrie" />
+        <module name="runeliteScreenshotProcessor" />
         <module name="sineWaves" />
         <module name="sphinx4test" />
         <module name="spineLibGDXTest" />

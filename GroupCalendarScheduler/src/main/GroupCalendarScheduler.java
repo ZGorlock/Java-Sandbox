@@ -59,9 +59,9 @@ public class GroupCalendarScheduler {
     
     private static File CALENDARS_FILE = new File("data/calendars.txt");
     
-    private static String TIMEZONE_OFFSET = "-04";
+    private static Long TIMEZONE_OFFSET = TimeUnit.SECONDS.toHours(ZoneOffset.systemDefault().getRules().getOffset(Instant.now()).getTotalSeconds());
     
-    private static ZoneId ZONE_ID = ZoneOffset.ofHours(Integer.parseInt(TIMEZONE_OFFSET));
+    private static ZoneId ZONE_ID = ZoneOffset.ofHours(TIMEZONE_OFFSET.intValue());
     
     private static final int INTERVAL = 30;
     
@@ -114,9 +114,9 @@ public class GroupCalendarScheduler {
     //private static final String endDate = "2023-05-01";
     private static final String endDate = LocalDate.now(ZONE_ID).atStartOfDay().plus(searchRange).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     
-    private static final DateTime startTime = DateTime.parseRfc3339(startDate + "T00:00:00" + TIMEZONE_OFFSET + ":00");
+    private static final DateTime startTime = DateTime.parseRfc3339(startDate + "T00:00:00" + ZONE_ID.getId());
     
-    private static final DateTime endTime = DateTime.parseRfc3339(endDate + "T00:00:00" + TIMEZONE_OFFSET + ":00");
+    private static final DateTime endTime = DateTime.parseRfc3339(endDate + "T00:00:00" + ZONE_ID.getId());
     
     private static final boolean printSlots = true;
     

@@ -206,7 +206,7 @@ public class VideoRenamer {
                             .map(Integer::parseInt)
                             .collect(Collectors.toList());
                     
-                    final int extraCount = Optional.ofNullable(episodeCount).map(Integer::parseInt).map(e -> (e - 1)).orElse(0);
+                    final int extraCount = line.contains("</th><td rowspan") ? 0 : Optional.ofNullable(episodeCount).map(Integer::parseInt).map(e -> (e - 1)).orElse(0);
                     if ((episodeSet.size() == 1) && (extraCount > 0)) {
                         for (int extraEpisode = 1; extraEpisode <= extraCount; extraEpisode++) {
                             episodeSet.add(episodeSet.get(0) + extraEpisode);

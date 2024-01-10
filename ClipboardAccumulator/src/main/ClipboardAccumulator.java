@@ -53,6 +53,7 @@ public class ClipboardAccumulator {
     private static final UnaryOperator<String> TRANSFORMER = (String data) ->
             Optional.ofNullable(data)
                     .map(String::strip)
+                    .map(e -> e.replaceAll("(\r?\n)+,", ","))
                     .orElse(null);
     
     private static final int DELAY = 200;

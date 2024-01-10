@@ -9,8 +9,13 @@ package main;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -19,6 +24,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Queue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
@@ -30,7 +36,6 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import common.CmdLine;
-import common.DateTimeUtility;
 import common.Filesystem;
 import common.StringUtility;
 
@@ -41,8 +46,8 @@ public class VideoProcessor {
     
     public static final File videoDir = new File("E:\\Videos");
     
-    public static final File workDir = videoDir;
-//    public static final File workDir = new File("D:\\Work");
+    //public static final File workDir = videoDir;
+    public static final File workDir = new File("D:\\Work");
     
     public static final File log = new File("log/" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + ".txt");
     
@@ -81,8 +86,8 @@ public class VideoProcessor {
         //makePlaylists();
         //lossTest();
         
-        Stats.produceStats();
-        Stats.produceDirStats();
+        //Stats.produceStats();
+        //Stats.produceDirStats();
     }
     
     
@@ -108,7 +113,7 @@ public class VideoProcessor {
         
         
         //remove extra streams
-        final boolean removeStreams = false;
+        final boolean removeStreams = true;
         final Map<String, List<Integer>> saveStreams = new LinkedHashMap<>();
         saveStreams.put("video", List.of(0));
         saveStreams.put("audio", List.of(0));
@@ -126,12 +131,12 @@ public class VideoProcessor {
         final Map<String, String> streamEncoders = new LinkedHashMap<>();
         
         streamEncoders.put("video", "copy");
-//        streamEncoders.put("video", "libx265 -crf 26 -preset slower");
-//        streamEncoders.put("video", "libx264 -vf scale=-1:720");
+        //streamEncoders.put("video", "libx265 -crf 26 -preset slower");
+        //streamEncoders.put("video", "libx264 -vf scale=-1:720");
         
         streamEncoders.put("audio", "copy");
-//        streamEncoders.put("audio", "aac -ac 6");
-//        streamEncoders.put("audio", "libopus -ac 2");
+        //streamEncoders.put("audio", "aac -ac 6");
+        //streamEncoders.put("audio", "libopus -ac 2");
         
         streamEncoders.put("subtitle", "mov_text");
         
@@ -216,19 +221,19 @@ public class VideoProcessor {
             }
             
             String baseParams = "-map_metadata -1 -map_chapters -1";
-//            String params = "-map 0 -map -0:s:0 -map -0:s:2 -map -0:s:3 -map -0:s:4 -map -0:s:5 -c copy -c:s mov_text";
-//            String params = "-map 0 -map -0:s:0 -map -0:a:0 -c copy -c:s mov_text";
-//            String params = "-map 0 -map -0:a:0 -map -0:s:0 -0:s:1 -c:v copy -c:a copy";
-//            String params = "-map 0 -map -0:v:1 -map -0:v:2 -map -0:v:3 -c copy -c:s mov_text";
-//            String params = "-map 0 -map -0:a:1 -map -0:a:2 -map -0:a:3 -map -0:s -c copy";
-//            String params = "-c:a copy -c:s mov_text -b:v 2400k";
-//            String params = "-c:v libx265 -c:a copy -c:s mov_text";
-//            String params = "-c:v libx264 -c:a copy -crf 20";
-//            String params = "-c:v copy -c:a copy";
+            //String params = "-map 0 -map -0:s:0 -map -0:s:2 -map -0:s:3 -map -0:s:4 -map -0:s:5 -c copy -c:s mov_text";
+            //String params = "-map 0 -map -0:s:0 -map -0:a:0 -c copy -c:s mov_text";
+            //String params = "-map 0 -map -0:a:0 -map -0:s:0 -0:s:1 -c:v copy -c:a copy";
+            //String params = "-map 0 -map -0:v:1 -map -0:v:2 -map -0:v:3 -c copy -c:s mov_text";
+            //String params = "-map 0 -map -0:a:1 -map -0:a:2 -map -0:a:3 -map -0:s -c copy";
+            //String params = "-c:a copy -c:s mov_text -b:v 2400k";
+            //String params = "-c:v libx265 -c:a copy -c:s mov_text";
+            //String params = "-c:v libx264 -c:a copy -crf 20";
+            //String params = "-c:v copy -c:a copy";
             String params = "-c:v copy -c:a copy -c:s mov_text";
-//            String params = "-c:v copy -c:a aac -c:s mov_text";
-//            String params = "-c:v libx264 -c:a copy -c:s mov_text -crf 26";
-//            String params = "-c:v libx265 -c:a copy -c:s mov_text -crf 27";
+            //String params = "-c:v copy -c:a aac -c:s mov_text";
+            //String params = "-c:v libx264 -c:a copy -c:s mov_text -crf 26";
+            //String params = "-c:v libx265 -c:a copy -c:s mov_text -crf 27";
             
             String cmd = "-y -i \"" + f.getAbsolutePath() + "\" " + baseParams + " " + params + " \"" + output.getAbsolutePath() + "\"";
             FFmpeg.ffmpeg(cmd, true);
@@ -278,7 +283,7 @@ public class VideoProcessor {
     }
     
     private static void stripMetadataAndChapters() {
-//        stripMetadataAndChapters(videoDir);
+        //stripMetadataAndChapters(videoDir);
         stripMetadataAndChapters(workDir);
     }
     
@@ -380,9 +385,10 @@ public class VideoProcessor {
         String subFormat = ".srt";
         
         List<File> videos = Filesystem.getFilesRecursively(dir, ".*\\" + inFormat);
-//        List<File> videos = Filesystem.listFiles(dir, x -> x.getName().endsWith(inFormat));
+        //List<File> videos = Filesystem.listFiles(dir, x -> x.getName().endsWith(inFormat));
         
-        String subParam = "-map 0:s:0 -c:s mov_text";
+        String subParam = "-map 0:s:0 -c:s copy";
+        //String subParam = "-map 0:s:0 -c:s subrip";
         
         for (File video : videos) {
             File output = new File(video.getAbsolutePath().replace(inFormat, subFormat));
@@ -412,42 +418,23 @@ public class VideoProcessor {
         }
     }
     
-    private static void adjustSubtitles() {
-        adjustSubtitles(new File("E:\\Downloads\\New Folder\\a.srt"), -3850, new File("E:\\Downloads\\New Folder\\b.srt"));
-//        adjustSubtitles(new File(workDir, "subs.srt"), 5000, new File(workDir, "subs.new.srt"));
+    private static void adjustSubtitles(File subFile, File outFile) {
+        Subtitles subtitles = new Subtitles(subFile);
+        
+        subtitles.removeAllFrom(0, 10000);
+        //subtitles.shiftAll(-3850);
+        
+        subtitles.add(new Subtitles.Subtitle(6525, 7575, List.of("Tell me what you saw.")));
+        
+        subtitles.removeStyling();
+        subtitles.removeNonSpeech();
+        
+        Filesystem.writeLines(outFile, subtitles.format());
     }
     
-    private static void adjustSubtitles(File subFile, int shiftMs, File outFile) {
-        List<String> adjustedLines = new ArrayList<>();
-        
-        final Pattern timeRangePattern = Pattern.compile("(?<start>\\d{2}:\\d{2}:\\d{2}[,.]\\d{3})\\s-->\\s(?<end>\\d{2}:\\d{2}:\\d{2}[,.]\\d{3})");
-        
-        List<String> subLines = Filesystem.readLines(subFile);
-        for (String subLine : subLines) {
-            
-            Matcher timeRangeMatcher = timeRangePattern.matcher(subLine);
-            if (!timeRangeMatcher.matches()) {
-                adjustedLines.add(subLine);
-                continue;
-            }
-            
-            String start = timeRangeMatcher.group("start").replace(",", ".");
-            String end = timeRangeMatcher.group("end").replace(",", ".");
-            
-            long startTime = DateTimeUtility.durationStampToDuration(start);
-            long endTime = DateTimeUtility.durationStampToDuration(end);
-            
-            startTime += shiftMs;
-            endTime += shiftMs;
-            
-            String adjustedStart = DateTimeUtility.durationToDurationStamp(Math.max(startTime, 0));
-            String adjustedEnd = DateTimeUtility.durationToDurationStamp(Math.max(endTime, 0));
-            
-            String adjustedTimeRange = adjustedStart + " --> " + adjustedEnd;
-            adjustedLines.add(adjustedTimeRange);
-        }
-        
-        Filesystem.writeLines(outFile, adjustedLines);
+    private static void adjustSubtitles() {
+        adjustSubtitles(new File("E:\\Downloads\\New Folder\\a.srt"), new File("E:\\Downloads\\New Folder\\b.srt"));
+        //adjustSubtitles(new File(workDir, "subs.srt"), new File(workDir, "subs.new.srt"));
     }
     
     private static void collectFilesFromDownloads(File downloadsDir) {
@@ -484,7 +471,7 @@ public class VideoProcessor {
     
     private static void collectFilesFromDownloads() {
         collectFilesFromDownloads(workDir);
-//        collectFilesFromDownloads(new File("E:\\Downloads\\a"));
+        //collectFilesFromDownloads(new File("E:\\Downloads\\a"));
     }
     
     private static void makePlaylists() {
@@ -637,8 +624,8 @@ public class VideoProcessor {
         
         private static Map<String, Map<String, String>> produceStats() {
             return produceStats(workDir, statsFile, statsSpreadsheet);
-//            return produceStats(videoDir, statsFile, statsSpreadsheet);
-//            return produceStats(new File(videoDir, "Youtube"), statsFile, statsSpreadsheet);
+            //return produceStats(videoDir, statsFile, statsSpreadsheet);
+            //return produceStats(new File(videoDir, "Youtube"), statsFile, statsSpreadsheet);
         }
         
         public static Map<String, Map<String, String>> produceStats(File dir, File outputFile, File outputSpreadsheet) {
@@ -895,8 +882,8 @@ public class VideoProcessor {
         
         private static Map<String, Map<String, String>> produceDirStats() {
             return produceDirStats(workDir, dirStatsFile, dirStatsSpreadsheet);
-//            return produceDirStats(videoDir, dirStatsFile, dirStatsSpreadsheet);
-//            return produceDirStats(new File(videoDir, "Youtube"), dirStatsFile, dirStatsSpreadsheet);
+            //return produceDirStats(videoDir, dirStatsFile, dirStatsSpreadsheet);
+            //return produceDirStats(new File(videoDir, "Youtube"), dirStatsFile, dirStatsSpreadsheet);
         }
         
         public static Map<String, Map<String, String>> produceDirStats(File dir, File outputFile, File outputSpreadsheet) {
@@ -1022,6 +1009,245 @@ public class VideoProcessor {
             }
         }
         
+    }
+    
+    private static class Subtitles {
+        
+        private final List<String> source = new ArrayList<>();
+        
+        private final List<Subtitle> entries = new ArrayList<>();
+        
+        public Subtitles(List<String> lines) {
+            this.source.addAll(lines);
+            this.entries.addAll(parseSubtitles(new ArrayDeque<>(lines)));
+            alignEntries();
+        }
+        
+        public Subtitles(File srtFile) {
+            this(Filesystem.readLines(srtFile));
+        }
+        
+        public void add(Subtitle subtitle) {
+            entries.add(subtitle);
+            alignEntries();
+        }
+        
+        public void addAll(Collection<Subtitle> subtitles) {
+            entries.addAll(subtitles);
+            alignEntries();
+        }
+        
+        public synchronized void remove(Subtitle subtitle) {
+            entries.remove(subtitle);
+            alignEntries();
+        }
+        
+        public synchronized void removeAll(Collection<Subtitle> subtitles) {
+            entries.removeAll(subtitles);
+            alignEntries();
+        }
+        
+        public synchronized void remove(int index) {
+            entries.remove(index);
+            alignEntries();
+        }
+        
+        public synchronized void removeAllFrom(long startTime, long endTime) {
+            entries.removeIf(entry -> ((entry.startTime >= startTime) && (entry.startTime <= endTime)) || ((entry.endTime >= startTime) && (entry.endTime <= endTime)));
+            alignEntries();
+        }
+        
+        public synchronized void removeAllBefore(long time) {
+            entries.removeIf(entry -> (entry.endTime <= time));
+            alignEntries();
+        }
+        
+        public synchronized void removeAllAfter(long time) {
+            entries.removeIf(entry -> (entry.startTime >= time));
+            alignEntries();
+        }
+        
+        public synchronized void shiftAll(long shiftMs) {
+            entries.forEach(entry -> entry.shift(shiftMs));
+            alignEntries();
+        }
+        
+        public synchronized void shiftAllAfter(long time, long shiftMs) {
+            entries.stream()
+                    .filter(entry -> (entry.startTime >= time))
+                    .forEach(entry -> entry.shift(shiftMs));
+            alignEntries();
+        }
+        
+        public synchronized void shiftAllBefore(long time, long shiftMs) {
+            entries.stream()
+                    .filter(entry -> (entry.startTime <= time))
+                    .forEach(entry -> entry.shift(shiftMs));
+            alignEntries();
+        }
+        
+        public synchronized void removeStyling() {
+            entries.forEach(Subtitle::removeStyling);
+        }
+        
+        public synchronized void removeNonSpeech() {
+            entries.forEach(Subtitle::removeNonSpeech);
+        }
+        
+        private synchronized void alignEntries() {
+            entries.removeIf(Subtitle::isBlank);
+            entries.sort(Comparator.comparingLong(o -> o.startTime));
+            IntStream.range(0, entries.size()).forEachOrdered(i -> entries.get(i).index = (i + 1));
+        }
+        
+        public synchronized List<Subtitle> entries() {
+            alignEntries();
+            return entries;
+        }
+        
+        public List<String> source() {
+            return List.copyOf(source);
+        }
+        
+        public List<String> format() {
+            return formatSubtitles(entries());
+        }
+        
+        private static List<Subtitle> parseSubtitles(Queue<String> content) {
+            final List<Subtitle> subtitles = new ArrayList<>();
+            while (!content.isEmpty()) {
+                subtitles.add(new Subtitle(content));
+            }
+            return subtitles;
+        }
+        
+        private static List<String> formatSubtitles(List<Subtitle> subtitles) {
+            return subtitles.stream()
+                    .map(Subtitle::format).flatMap(Collection::stream)
+                    .collect(Collectors.toList());
+        }
+        
+        protected static class Subtitle {
+            
+            private static final Pattern INDEX_LINE_PATTERN = Pattern.compile("^(?<index>\\d+)$");
+            
+            private static final Pattern TIMERANGE_LINE_PATTERN = Pattern.compile("^(?<startTimestamp>\\d{2}:\\d{2}:\\d{2},\\d{3})\\s+-+>\\s+(?<endTimestamp>\\d{2}:\\d{2}:\\d{2},\\d{3})$");
+            
+            private static final Pattern TEXT_LINE_PATTERN = Pattern.compile("^(?<text>\\S.+)$");
+            
+            private static final Pattern SEPARATOR_LINE_PATTERN = Pattern.compile("^\\s*$");
+            
+            private static final DateTimeFormatter TIMESTAMP_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss,SSS");
+            
+            public int index;
+            
+            public long startTime;
+            
+            public long endTime;
+            
+            public final List<String> text = new ArrayList<>();
+            
+            private Subtitle(int index, long startTime, long endTime, List<String> text) {
+                this.index = index;
+                this.startTime = startTime;
+                this.endTime = endTime;
+                this.text.addAll(text);
+            }
+            
+            public Subtitle(long startTime, long endTime, List<String> text) {
+                this(-1, startTime, endTime, text);
+            }
+            
+            public Subtitle(long startTime, long endTime, String text) {
+                this(startTime, endTime, List.of(text));
+            }
+            
+            private Subtitle(int index, String startTimestamp, String endTimestamp, List<String> text) {
+                this(index, parseTimestamp(startTimestamp), parseTimestamp(endTimestamp), text);
+            }
+            
+            public Subtitle(String startTimestamp, String endTimestamp, List<String> text) {
+                this(-1, parseTimestamp(startTimestamp), parseTimestamp(endTimestamp), text);
+            }
+            
+            public Subtitle(String startTimestamp, String endTimestamp, String text) {
+                this(startTimestamp, endTimestamp, List.of(text));
+            }
+            
+            protected Subtitle(Queue<String> content) {
+                try {
+                    while (Optional.ofNullable(content).map(Queue::peek).map(String::isBlank).orElse(false)) {
+                        content.poll();
+                    }
+                    
+                    final Matcher indexLineMatcher = Optional.ofNullable(content).map(Queue::poll)
+                            .map(INDEX_LINE_PATTERN::matcher).filter(Matcher::matches)
+                            .orElseThrow();
+                    this.index = Integer.parseInt(indexLineMatcher.group("index"));
+                    
+                    final Matcher timestampLineMatcher = Optional.ofNullable(content).map(Queue::poll)
+                            .map(TIMERANGE_LINE_PATTERN::matcher).filter(Matcher::matches)
+                            .orElseThrow();
+                    this.startTime = parseTimestamp(timestampLineMatcher.group("startTimestamp"));
+                    this.endTime = parseTimestamp(timestampLineMatcher.group("endTimestamp"));
+                    
+                    while (!Optional.ofNullable(content).map(Queue::peek).map(String::isBlank).orElse(true)) {
+                        text.add(content.poll());
+                    }
+                    
+                    while (Optional.ofNullable(content).map(Queue::peek).map(String::isBlank).orElse(false)) {
+                        content.poll();
+                    }
+                    
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                    throw e;
+                }
+            }
+            
+            public synchronized void shift(long shiftMs) {
+                startTime = Math.max(0, (startTime + shiftMs));
+                endTime = Math.max(startTime, (endTime + shiftMs));
+            }
+            
+            public synchronized void removeStyling() {
+                IntStream.range(0, text.size()).forEachOrdered(i ->
+                        text.set(i, text.get(i).replaceAll("\\s*</?[^<>]+>\\s*", "")));
+                text.removeIf(String::isBlank);
+            }
+            
+            public synchronized void removeNonSpeech() {
+                IntStream.range(0, text.size()).forEachOrdered(i ->
+                        text.set(i, text.get(i).replaceAll("\\s*\\[[^\\[\\]]+]\\s*", "")));
+                text.removeIf(String::isBlank);
+            }
+            
+            public synchronized boolean isBlank() {
+                return text.isEmpty() || text.stream().allMatch(String::isBlank);
+            }
+            
+            public synchronized List<String> format() {
+                if (isBlank()) {
+                    return List.of();
+                }
+                
+                final List<String> subtitleContent = new ArrayList<>();
+                subtitleContent.add(String.valueOf(index));
+                subtitleContent.add(formatTimestamp(startTime) + " --> " + formatTimestamp(endTime));
+                subtitleContent.addAll(text.stream().filter(e -> !e.isBlank()).collect(Collectors.toList()));
+                subtitleContent.add("");
+                return subtitleContent;
+            }
+            
+            private static long parseTimestamp(String timestamp) {
+                return Duration.between(LocalTime.MIN, LocalTime.parse(timestamp, TIMESTAMP_FORMAT)).toMillis();
+            }
+            
+            private static String formatTimestamp(long timestamp) {
+                return LocalTime.MIN.plus(Duration.ofMillis(timestamp)).format(TIMESTAMP_FORMAT);
+            }
+            
+        }
     }
     
 }

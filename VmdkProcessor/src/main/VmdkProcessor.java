@@ -8,7 +8,10 @@ package main;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import common.CmdLine;
@@ -16,32 +19,39 @@ import common.Filesystem;
 
 public class VmdkProcessor {
     
+    private static final File VM_DIR = new File("G:/Virtual Machines");
+    
     public static void main(String[] args) {
-//        osboxesConvertMonolithicDisks();
-
-//        renameVmwareVm(new File("G:/Linux/CentOS/8/64bit"), "CentOS 8 - 64bit", "CentOS - 8 - 64bit");
-//        renameVmwareVm(new File("G:/Linux/Debian/10/64bit"), "Debian 10.x - 64bit", "Debian - 10 - 64bit");
-//        renameVmwareVm(new File("G:/Linux/Fedora/33/64bit"), "Fedora 33 - 64bit", "Fedora - 33 - 64bit");
-//        renameVmwareVm(new File("G:/Linux/Kali Linux/2021/64bit"), "Kali Linux - 64bit", "Kali Linux - 2021 - 64bit");
-//        renameVmwareVm(new File("G:/Linux/Linux Mint/20/64bit"), "Linux Mint 20.x - 64bit", "Linux Mint - 20 - 64bit");
-//        renameVmwareVm(new File("G:/Linux/Raspbian/2021/64bit"), "Raspbian - 64bit", "Raspbian - 2021 - 64bit");
-//        renameVmwareVm(new File("G:/Linux/Ubuntu/20/64bit"), "Ubuntu 20.x - 64bit", "Ubuntu - 20 - 64bit");
-
-//        macosConvertMonolithicDisks();
-
-//        renameVmwareVm(new File("G:/MacOS/Mojave/64bit"), "Mojave - 64bit", "macOS - Mojave - 64bit");
-//        renameVmwareVm(new File("G:/MacOS/Sierra/64bit"), "Sierra - 64bit", "macOS - Sierra - 64bit");
-//        renameVmwareVm(new File("G:/MacOS/High Sierra/64bit"), "High Sierra - 64bit", "macOS - High Sierra - 64bit");
-
-//        convertMonolithicDisk(new File("G:/old/Windows XP Professional/Windows XP Professional-old.vmdk"), "Windows XP Professional");
-//        renameVmwareVm(new File("G:/old/Windows XP Professional"), "Windows XP Professional", "Windows XP - Professional (SP3) - 32bit");
-//        convertMonolithicDisk(new File("G:/old/Windows 7 Ultimate 64-bit/Windows 7 Ultimate 64-bit-old.vmdk"), "Windows 7 Ultimate 64-bit");
-//        renameVmwareVm(new File("G:/old/Windows 7 Ultimate 64-bit"), "Windows 7 Ultimate 64-bit", "Windows 7 - Ultimate (SP1) - 64bit");
-
-//        renameVmwareVm(new File("G:/Windows/Windows 10/Pro (Latest)/32bit"), "Windows 10 - Pro (20H2) - 32bit", "Windows 10 - Pro (Latest) - 32bit");
-//        renameVmwareVm(new File("G:/Windows/Windows 10/Pro (Latest)/64bit"), "Windows 10 - Pro (20H2) - 64bit", "Windows 10 - Pro (Latest) - 64bit");
+        //backupVmConfigurations();
+        //relocateVms();
         
-        countVms();
+        //osboxesConvertMonolithicDisks();
+        
+        //renameVmwareVm(new File(VM_DIR, "Linux/CentOS/8/64bit"), "CentOS 8 - 64bit", "CentOS - 8 - 64bit");
+        //renameVmwareVm(new File(VM_DIR, "Linux/Debian/10/64bit"), "Debian 10.x - 64bit", "Debian - 10 - 64bit");
+        //renameVmwareVm(new File(VM_DIR, "Linux/Fedora/33/64bit"), "Fedora 33 - 64bit", "Fedora - 33 - 64bit");
+        //renameVmwareVm(new File(VM_DIR, "Linux/Kali Linux/2021/64bit"), "Kali Linux - 64bit", "Kali Linux - 2021 - 64bit");
+        //renameVmwareVm(new File(VM_DIR, "Linux/Linux Mint/20/64bit"), "Linux Mint 20.x - 64bit", "Linux Mint - 20 - 64bit");
+        //renameVmwareVm(new File(VM_DIR, "Linux/Raspbian/2021/64bit"), "Raspbian - 64bit", "Raspbian - 2021 - 64bit");
+        //renameVmwareVm(new File(VM_DIR, "Linux/Ubuntu/20/64bit"), "Ubuntu 20.x - 64bit", "Ubuntu - 20 - 64bit");
+        
+        //macosConvertMonolithicDisks();
+        
+        //renameVmwareVm(new File(VM_DIR, "MacOS/Big Sur/64bit"), "Big Sur - 64bit", "MacOS - Big Sur - 64bit");
+        //renameVmwareVm(new File(VM_DIR, "MacOS/Catalina/64bit"), "Catalina - 64bit", "MacOS - Catalina - 64bit");
+        //renameVmwareVm(new File(VM_DIR, "MacOS/High Sierra/64bit"), "High Sierra - 64bit", "MacOS - High Sierra - 64bit");
+        //renameVmwareVm(new File(VM_DIR, "MacOS/Mojave/64bit"), "Mojave - 64bit", "MacOS - Mojave - 64bit");
+        //renameVmwareVm(new File(VM_DIR, "MacOS/Sierra/64bit"), "Sierra - 64bit", "MacOS - Sierra - 64bit");
+        
+        //convertMonolithicDisk(new File(VM_DIR, "old/Windows XP Professional/Windows XP Professional-old.vmdk"), "Windows XP Professional");
+        //renameVmwareVm(new File(VM_DIR, "old/Windows XP Professional"), "Windows XP Professional", "Windows XP - Professional (SP3) - 32bit");
+        //convertMonolithicDisk(new File(VM_DIR, "old/Windows 7 Ultimate 64-bit/Windows 7 Ultimate 64-bit-old.vmdk"), "Windows 7 Ultimate 64-bit");
+        //renameVmwareVm(new File(VM_DIR, "old/Windows 7 Ultimate 64-bit"), "Windows 7 Ultimate 64-bit", "Windows 7 - Ultimate (SP1) - 64bit");
+        
+        //renameVmwareVm(new File(VM_DIR, "Windows/Windows 10/Pro (Latest)/32bit"), "Windows 10 - Pro (20H2) - 32bit", "Windows 10 - Pro (Latest) - 32bit");
+        //renameVmwareVm(new File(VM_DIR, "Windows/Windows 10/Pro (Latest)/64bit"), "Windows 10 - Pro (20H2) - 64bit", "Windows 10 - Pro (Latest) - 64bit");
+        
+        //countVms();
     }
     
     private static void renameVmwareVm(File dir, String oldName, String newName) {
@@ -81,7 +91,7 @@ public class VmdkProcessor {
     
     private static void convertMonolithicDisk(File vmdk, String title) {
         String vDiskManager = "C:\\Program Files (x86)\\VMware\\VMware Player\\vmware-vdiskmanager.exe";
-        String cmd = "\"" + vDiskManager + "\" -r \"" + vmdk.getAbsolutePath() + "\" -t 1 \"" + vmdk.getParentFile().getAbsolutePath() + "\\" + title + ".vmdk" + "\"" + "";
+        String cmd = "\"" + vDiskManager + "\" -r \"" + vmdk.getAbsolutePath() + "\" -t 1 \"" + vmdk.getParentFile().getAbsolutePath() + "\\" + title + ".vmdk" + "\"";
         System.out.println(cmd);
         String response = CmdLine.executeCmd(cmd, true);
         if (response.contains("Virtual disk conversion successful.")) {
@@ -90,7 +100,7 @@ public class VmdkProcessor {
     }
     
     private static void osboxesConvertMonolithicDisks() {
-        File dir = new File("G:/Linux/OSBoxes");
+        File dir = new File(VM_DIR, "Linux/OSBoxes");
         List<File> vmdks = Filesystem.getFilesRecursively(dir, ".*\\.vmdk");
         List<File> finalVmdks = vmdks.stream().filter(e -> !(e.getName().startsWith("{") || e.getName().matches("^.*-s\\d+\\.vmdk"))).collect(Collectors.toList());
         
@@ -98,13 +108,13 @@ public class VmdkProcessor {
             if (Filesystem.getFiles(vmdk.getParentFile(), ".*\\.vmdk").size() > 1) {
                 continue;
             }
-            String title = vmdk.getParentFile().getAbsolutePath().replace("G:\\Linux\\OSBoxes\\", "").replace("\\", " - ");
+            String title = vmdk.getParentFile().getAbsolutePath().replace((dir.getAbsolutePath() + "\\"), "").replace("\\", " - ");
             convertMonolithicDisk(vmdk, title);
         }
     }
     
     private static void macosConvertMonolithicDisks() {
-        File dir = new File("G:/MacOS");
+        File dir = new File(VM_DIR, "MacOS");
         List<File> vmdks = Filesystem.getFilesRecursively(dir, ".*\\.vmdk");
         List<File> finalVmdks = vmdks.stream().filter(e -> !(e.getName().startsWith("{") || e.getName().matches("^.*-s\\d+\\.vmdk"))).collect(Collectors.toList());
         
@@ -112,38 +122,90 @@ public class VmdkProcessor {
             if (Filesystem.getFiles(vmdk.getParentFile(), ".*\\.vmdk").size() > 1) {
                 continue;
             }
-            String title = vmdk.getParentFile().getAbsolutePath().replace("G:\\MacOS\\", "").replace("\\", " - ");
+            String title = vmdk.getParentFile().getAbsolutePath().replace((dir.getAbsolutePath() + "\\"), "").replace("\\", " - ");
             convertMonolithicDisk(vmdk, title);
         }
     }
     
+    private static void backupVmConfigurations() {
+        final File dir = VM_DIR;
+        final File backup = new File("E:/Downloads/VM Configs");
+        
+        List<String> backupExts = List.of("vmx", "vmxf", "vmdk", "vmsd", "vbox");
+        backupExts.stream()
+                .map(ext -> Filesystem.getFilesRecursively(dir, ("(?i).*\\." + ext + "$")))
+                .flatMap(Collection::stream).distinct()
+                .filter(f -> !f.getName().matches("(?i).*-s\\d+\\..*"))
+                .forEach(f -> {
+                    File o = new File(f.getAbsolutePath().replace(dir.getAbsolutePath(), backup.getAbsolutePath()));
+                    Filesystem.copyFile(f, o);
+                });
+    }
+    
+    private static void relocateVms() {
+        final File oldDir = new File(VM_DIR.getParentFile(), "Windows");
+        final File newDir = new File(VM_DIR, "Windows");
+        
+        final List<String> skipExts = List.of("gz", "7z", "zip", "rar", "iso", "log", "dmp", "vmdk", "vmem", "vmss");
+        
+        List<File> allFiles = Filesystem.getFilesRecursively(newDir);
+        List<File> testFiles = allFiles.stream()
+                .filter(f -> !skipExts.contains(f.getName().replaceAll(".*\\.([^.]+)$", "$1").toLowerCase()))
+                .filter(f -> !f.getName().matches("(?i).*-s\\d+\\.vmdk$"))
+                .filter(f -> !f.getName().matches("(?i)\\.log\\.\\d+$"))
+                .collect(Collectors.toList());
+        
+        for (File f : testFiles) {
+            if (f.length() > 10000000) {
+                System.err.println(f.getAbsolutePath());
+                continue;
+            }
+            
+            String content = Filesystem.readFileToString(f);
+            if (content.contains(oldDir.getAbsolutePath())) {
+                System.out.println();
+                System.out.println(f.getAbsolutePath());
+                
+                Pattern p = Pattern.compile("(?s)[^\r\n]+" + Pattern.quote(oldDir.getAbsolutePath()) + "[^\r\n]+");
+                Matcher m = p.matcher(content);
+                while (m.find()) {
+                    System.out.println("     " + m.group().strip());
+                }
+                
+                String newContent = content.replace(oldDir.getAbsolutePath(), newDir.getAbsolutePath());
+                Filesystem.writeStringToFile(f, newContent);
+                //break;
+            }
+        }
+    }
+    
     private static void countVms() {
-        List<File> vmxs = Filesystem.getFilesRecursively(new File("G:"), ".*\\.vmx$");
-        List<File> vboxs = Filesystem.getFilesRecursively(new File("G:"), ".*\\.vbox$");
+        List<File> vmx = Filesystem.getFilesRecursively(VM_DIR, ".*\\.vmx$");
+        List<File> vbox = Filesystem.getFilesRecursively(VM_DIR, ".*\\.vbox$");
         
         System.out.println();
-        System.out.println("VMs            : " + (vmxs.size() + vboxs.size()));
-        System.out.println("VMware VMs     : " + vmxs.size());
-        System.out.println("Virtualbox VMs : " + vboxs.size());
+        System.out.println("VMs            : " + (vmx.size() + vbox.size()));
+        System.out.println("VMware VMs     : " + vmx.size());
+        System.out.println("Virtualbox VMs : " + vbox.size());
         System.out.println();
         
-        System.out.println("Windows        : " + vmxs.stream().filter(e -> e.getAbsolutePath().contains("Windows")).count());
-        System.out.println("MacOS          : " + vmxs.stream().filter(e -> e.getAbsolutePath().contains("MacOS")).count());
-        System.out.println("Linux          : " + vmxs.stream().filter(e -> e.getAbsolutePath().contains("Linux")).count());
-        System.out.println("Solaris        : " + vmxs.stream().filter(e -> e.getAbsolutePath().contains("Solaris")).count());
-        System.out.println("OSBoxes        : " + vboxs.size());
+        System.out.println("Windows        : " + vmx.stream().filter(e -> e.getAbsolutePath().contains("Windows")).count());
+        System.out.println("MacOS          : " + vmx.stream().filter(e -> e.getAbsolutePath().contains("MacOS")).count());
+        System.out.println("Linux          : " + vmx.stream().filter(e -> e.getAbsolutePath().contains("Linux")).count());
+        System.out.println("Solaris        : " + vmx.stream().filter(e -> e.getAbsolutePath().contains("Solaris")).count());
+        System.out.println("OSBoxes        : " + vbox.size());
         System.out.println();
         
         System.out.println("Windows:");
-        vmxs.stream().filter(e -> e.getAbsolutePath().contains("Windows")).map(e -> "    " + e.getName().replace(".vmx", "")).forEach(System.out::println);
+        vmx.stream().filter(e -> e.getAbsolutePath().contains("Windows")).map(e -> "    " + e.getName().replace(".vmx", "")).forEach(System.out::println);
         System.out.println("MacOS:");
-        vmxs.stream().filter(e -> e.getAbsolutePath().contains("MacOS")).map(e -> "    " + e.getName().replace(".vmx", "")).forEach(System.out::println);
+        vmx.stream().filter(e -> e.getAbsolutePath().contains("MacOS")).map(e -> "    " + e.getName().replace(".vmx", "")).forEach(System.out::println);
         System.out.println("Linux:");
-        vmxs.stream().filter(e -> e.getAbsolutePath().contains("Linux")).map(e -> "    " + e.getName().replace(".vmx", "")).forEach(System.out::println);
+        vmx.stream().filter(e -> e.getAbsolutePath().contains("Linux")).map(e -> "    " + e.getName().replace(".vmx", "")).forEach(System.out::println);
         System.out.println("Solaris:");
-        vmxs.stream().filter(e -> e.getAbsolutePath().contains("Solaris")).map(e -> "    " + e.getName().replace(".vmx", "")).forEach(System.out::println);
+        vmx.stream().filter(e -> e.getAbsolutePath().contains("Solaris")).map(e -> "    " + e.getName().replace(".vmx", "")).forEach(System.out::println);
         System.out.println("OSBoxes:");
-        vboxs.stream().map(e -> "    " + e.getName().replace(".vbox", "")).forEach(System.out::println);
+        vbox.stream().map(e -> "    " + e.getName().replace(".vbox", "")).forEach(System.out::println);
     }
     
 }

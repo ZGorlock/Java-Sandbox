@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
@@ -61,6 +62,8 @@ public class PictureResizer {
     private static final boolean printMetadata = false;
     
     private static final boolean saveBackup = true;
+    
+    private static boolean allowEdits = true; //when inactive, cropping, scaling, and dimension limiting will be disabled
     
     private static final boolean crop = false; //occurs before scaling; aspect ratio will not be preserved
     
@@ -159,16 +162,79 @@ public class PictureResizer {
         }
         
         printMetadata("Input", picture);
-        if (preserveMetadata) {
-            processPicturePreserveMetadata(picture, tmp);
-        } else {
-            processPictureLoseMetadata(picture, tmp);
-        }
-        printMetadata("Output", tmp);
         
+        processImage(picture, tmp);
         replaceImage(picture, tmp, output);
+        
+        printMetadata("Output", picture);
     }
     
+    private static boolean processImage(File source, File target) {
+        if ((source == null) || !source.exists()) {
+            return false;
+        }
+        
+        try {
+            IIOImage imageData;
+            IIOMetadata streamMetadata;
+            
+            try (final ImageInputStream imageInputStream = ImageIO.createImageInputStream(source)) {
+                final ImageReader reader = ImageIO.getImageReaders(imageInputStream).next();
+                try {
+                    reader.setInput(imageInputStream);
+                    
+                    final ImageReadParam readParams = reader.getDefaultReadParam();
+                    
+                    imageData = reader.readAll(0, readParams);
+                    streamMetadata = reader.getStreamMetadata();
+                    
+                } finally {
+                    imageInputStream.flush();
+                    reader.dispose();
+                }
+            }
+            
+            if (allowEdits) {
+                final BufferedImage originalImage = (BufferedImage) imageData.getRenderedImage();
+                final BufferedImage image = prepareImage(source);
+                
+                imageData.setRenderedImage(image);
+            }
+            
+            if (!preserveMetadata) {
+                imageData.setMetadata(null);
+                imageData.setThumbnails(null);
+                streamMetadata = null;
+            }
+            
+            try (final ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(target)) {
+                final ImageWriter writer = ImageIO.getImageWritersBySuffix(Filesystem.getFileType(target)).next();
+                try {
+                    writer.setOutput(imageOutputStream);
+                    
+                    final ImageWriteParam writeParams = writer.getDefaultWriteParam();
+                    writeParams.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+                    writeParams.unsetCompression();
+                    
+                    writer.write(streamMetadata, imageData, writeParams);
+                    
+                } finally {
+                    imageOutputStream.flush();
+                    writer.dispose();
+                }
+            }
+            
+            return true;
+            
+        } catch (Exception e) {
+            if (Filesystem.logFilesystem()) {
+                System.err.println("Filesystem: Unable to clean image file: " + source.getAbsolutePath());
+            }
+            return false;
+        }
+    }
+    
+    @Deprecated
     private static void processPicturePreserveMetadata(File source, File target) throws Exception {
         try (FileInputStream fileInputStream = new FileInputStream(source);
              FileOutputStream fileOutputStream = new FileOutputStream(target)) {
@@ -183,7 +249,7 @@ public class PictureResizer {
             final BufferedImage originalImage = reader.read(0);
             imageInputStream.flush();
             
-            final BufferedImage image = prepareImage(source, false);
+            final BufferedImage image = prepareImage(source);
             
             final ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(fileOutputStream);
             final ImageWriter writer = ImageIO.getImageWriter(reader);
@@ -198,6 +264,7 @@ public class PictureResizer {
         }
     }
     
+    @Deprecated
     private static void processPictureLoseMetadata(File source, File target) throws Exception {
         final BufferedImage originalImage = ImageIO.read(source);
         final BufferedImage image = prepareImage(source);
@@ -205,11 +272,7 @@ public class PictureResizer {
         ImageIO.write(image, Filesystem.getFileType(source).toLowerCase(), target);
     }
     
-    private static BufferedImage prepareImage(File picture, boolean orient) throws Exception {
-        BufferedImage image = ImageIO.read(picture);
-        if (orient) {
-            image = orient(image, getMetadataTag(picture, "Exif IFD0", "Orientation"));
-        }
+    private static BufferedImage prepareImage(BufferedImage image) throws Exception {
         if (crop) {
             image = crop(image);
         }
@@ -223,7 +286,11 @@ public class PictureResizer {
     }
     
     private static BufferedImage prepareImage(File picture) throws Exception {
-        return prepareImage(picture, preserveOrientation);
+        BufferedImage image = ImageIO.read(picture);
+        if (preserveOrientation && !preserveMetadata) {
+            image = orient(image, getMetadataTag(picture, "Exif IFD0", "Orientation"));
+        }
+        return prepareImage(image);
     }
     
     public static BufferedImage cropImage(BufferedImage image, Rectangle rect) {

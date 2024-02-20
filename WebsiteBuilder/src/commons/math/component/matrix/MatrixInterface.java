@@ -228,7 +228,7 @@ public interface MatrixInterface<T extends Number, I extends MatrixInterface<?, 
         ComponentErrorHandlerProvider.assertCoordinateInBounds(this, x, y);
         
         return (T) (((x % 2) == (y % 2)) ?
-                getHandler().one() : getHandler().negativeOne());
+                    getHandler().one() : getHandler().negativeOne());
     }
     
     /**
@@ -412,7 +412,7 @@ public interface MatrixInterface<T extends Number, I extends MatrixInterface<?, 
     @Override
     default int dimensionalityToLength(int dim) {
         return (dim <= 0) ? 0 :
-                (dim * dim);
+               (dim * dim);
     }
     
     /**
@@ -464,7 +464,7 @@ public interface MatrixInterface<T extends Number, I extends MatrixInterface<?, 
     @Override
     default int lengthToDimensionality(int length) {
         return (length <= 0) ? 0 :
-                (int) Math.sqrt(length);
+               (int) Math.sqrt(length);
     }
     
     /**
@@ -602,8 +602,7 @@ public interface MatrixInterface<T extends Number, I extends MatrixInterface<?, 
     static <I extends MatrixInterface<?, ?>> I createInstance(int dim, Class<? extends I> clazz) {
         try {
             return clazz.getConstructor(int.class).newInstance(dim);
-        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException |
-                 InstantiationException e) {
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
             return null;
         }
     }

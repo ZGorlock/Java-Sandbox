@@ -91,4 +91,18 @@ public abstract class Folder<T extends Entity> extends Entity {
                 d -> true);
     }
     
+    public static void groupFoldersBySize(File source) {
+        for (File d : Filesystem.getDirs(source)) {
+            if (d.getName().startsWith("_")) {
+                continue;
+            }
+            for (int n : List.of(10, 20, 50, 100, 200, 300, 400, 500, 750, 1000)) {
+                if (Filesystem.getFiles(d).size() <= n) {
+                    Filesystem.moveDirectory(d, new File(source, "_" + n + "\\" + d.getName()));
+                    break;
+                }
+            }
+        }
+    }
+    
 }

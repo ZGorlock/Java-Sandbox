@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -18,7 +19,7 @@ import commons.access.Internet;
 import commons.object.string.StringUtility;
 import main.entity.shortcut.Shortcut;
 import main.util.persistence.VariableUtil;
-import org.jsoup.nodes.Node;
+import org.jsoup.nodes.Element;
 
 public class Subreddit extends Shortcut {
     
@@ -88,9 +89,10 @@ public class Subreddit extends Shortcut {
     @Override
     protected boolean doCleanFile() {
         return Stream.of(
-                super.doCleanFile(),
-                CHECK_HEALTH.auto() && checkHealth()
-        ).reduce(Boolean.FALSE, Boolean::logicalOr);
+                        ((Supplier<Boolean>) super::doCleanFile),
+                        (() -> (CHECK_HEALTH.auto() && checkHealth())))
+                .sequential().map(Supplier::get)
+                .reduce(Boolean.FALSE, Boolean::logicalOr);
     }
     
     public boolean checkHealth() {
@@ -110,9 +112,8 @@ public class Subreddit extends Shortcut {
         
         final SubredditStatus.Status status = Optional.ofNullable(healthStatus.get(getSubDisplayName()))
                 .orElseGet(() -> Optional.ofNullable(Internet.getHtml(getBaseUrl()))
-                        .map(e -> e.getElementById(VariableUtil.get(0x7272)))
-                        .map(Node::toString)
-                        .map(e -> e.replaceAll("<!--.*?-->", ""))
+                        .map(e -> e.selectFirst(VariableUtil.get(0x7272)))
+                        .map(Element::ownText).map(String::strip)
                         .map(e -> {
                             if (e.contains(StringUtility.format(VariableUtil.get(0xc706), getName()))) {
                                 return SubredditStatus.Status.BANNED;

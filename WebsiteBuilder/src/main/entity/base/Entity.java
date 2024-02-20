@@ -276,8 +276,8 @@ public abstract class Entity {
     
     public boolean replace(File tmpSource, File newSource) {
         System.err.println(newSource.equals(getSource()) ?
-                StringUtility.format("Rewriting: '{}'", getSource().getAbsolutePath()) :
-                StringUtility.format("Replacing: '{}' with: '{}'", getSource().getAbsolutePath(), newSource.getAbsolutePath()));
+                           StringUtility.format("Rewriting: '{}'", getSource().getAbsolutePath()) :
+                           StringUtility.format("Replacing: '{}' with: '{}'", getSource().getAbsolutePath(), newSource.getAbsolutePath()));
         return replaceQuietly(tmpSource, newSource);
     }
     
@@ -374,7 +374,7 @@ public abstract class Entity {
     
     public static String normalizeFileName(String fileName) {
         return FilenameUtil.normalizeFilename(fileName)
-                .replaceAll("\\s", (FILENAME_SPACES.allowed() ? " " : ""));
+                .replaceAll("\\s+", (FILENAME_SPACES.allowed() ? " " : "_"));
     }
     
 }

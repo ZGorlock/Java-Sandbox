@@ -13,11 +13,11 @@ import javax.naming.OperationNotSupportedException;
 import commons.access.Filesystem;
 import commons.io.file.media.FFmpeg;
 import commons.object.string.StringUtility;
-import main.entity.base.RawEntity;
+import main.entity.base.MediaEntity;
 import main.util.FilenameUtil;
 import main.util.persistence.VariableUtil;
 
-public abstract class Video extends RawEntity {
+public abstract class Video extends MediaEntity {
     
     //Constants
     
@@ -28,8 +28,6 @@ public abstract class Video extends RawEntity {
     public static final Permission FIX_FORMAT = Permission.AUTO;
     
     public static final Permission CLEAN_VIDEO = Permission.DENY;
-    
-    public static final Permission FILENAME_SPACES = Permission.ALLOW;
     
     
     //Constructors
@@ -56,18 +54,9 @@ public abstract class Video extends RawEntity {
     
     @Override
     protected boolean doFixName() {
-        boolean result = false;
-        if (FILENAME_SPACES.denied() && getFileName().contains(" ")) {
-            result |= rename(getFileName().replaceAll("\\s+", "_"));
-        }
+        boolean result = super.doFixName();
         if (isMobile()) {
             System.err.println(StringUtility.format("Mobile file detected: '{}'", getSource().getAbsolutePath()));
-        }
-        if (getFileName().matches(".*\\.mov\\d*\\..*")) {
-            result |= rename(getFileName().replaceAll("\\.mov\\d*\\.", "."));
-        }
-        if (getFileName().matches("^(imgur_[^_]+)_.*(\\.[^.]+)$")) {
-            result |= rename(getFileName().replace(" ", "_").replaceAll("^(imgur_[^_]+)_.*(\\.[^.]+)$", "$1$2"));
         }
         return result;
     }

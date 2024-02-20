@@ -208,9 +208,9 @@ public class Vector extends Component<Vector> implements VectorInterface<Double,
      * @see #average(List)
      */
     public static Vector averageVector(List<Vector> vectors) throws ArithmeticException {
-        return vectors.isEmpty() ? new Vector() : (
-                (vectors.size() == 1) ? vectors.get(0).cloned() :
-                        vectors.get(0).average(ListUtility.subList(vectors, 1)));
+        return vectors.isEmpty() ? new Vector() :
+               (vectors.size() == 1) ? vectors.get(0).cloned() :
+               vectors.get(0).average(ListUtility.subList(vectors, 1));
     }
     
     /**

@@ -63,7 +63,7 @@ public interface VectorInterface<T extends Number, I extends VectorInterface<?, 
     default I normalize() {
         T hypotenuse = hypotenuse();
         return getHandler().isZero(hypotenuse) ? cloned() :
-                scale(getHandler().reciprocal(hypotenuse()));
+               scale(getHandler().reciprocal(hypotenuse()));
     }
     
     /**
@@ -122,7 +122,7 @@ public interface VectorInterface<T extends Number, I extends VectorInterface<?, 
      */
     default T getRawX() {
         return (getDimensionality() > 0) ?
-                (T) getRawComponents()[0] : (T) getHandler().zero();
+               (T) getRawComponents()[0] : (T) getHandler().zero();
     }
     
     /**
@@ -142,7 +142,7 @@ public interface VectorInterface<T extends Number, I extends VectorInterface<?, 
      */
     default T getRawY() {
         return (getDimensionality() >= Vector2.DIMENSIONALITY) ?
-                (T) getRawComponents()[1] : (T) getHandler().zero();
+               (T) getRawComponents()[1] : (T) getHandler().zero();
     }
     
     /**
@@ -162,7 +162,7 @@ public interface VectorInterface<T extends Number, I extends VectorInterface<?, 
      */
     default T getRawZ() {
         return (getDimensionality() >= Vector3.DIMENSIONALITY) ?
-                (T) getRawComponents()[2] : (T) getHandler().zero();
+               (T) getRawComponents()[2] : (T) getHandler().zero();
     }
     
     /**
@@ -182,7 +182,7 @@ public interface VectorInterface<T extends Number, I extends VectorInterface<?, 
      */
     default T getRawW() {
         return (getDimensionality() >= Vector4.DIMENSIONALITY) ?
-                (T) getRawComponents()[3] : (T) getHandler().zero();
+               (T) getRawComponents()[3] : (T) getHandler().zero();
     }
     
     /**
@@ -256,8 +256,7 @@ public interface VectorInterface<T extends Number, I extends VectorInterface<?, 
     static <I extends VectorInterface<?, ?>> I createInstance(int dim, Class<? extends I> clazz) {
         try {
             return clazz.getConstructor(int.class).newInstance(Math.max(dim, 0));
-        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException |
-                 InstantiationException e) {
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e) {
             return null;
         }
     }

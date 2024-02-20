@@ -2071,7 +2071,7 @@ public final class Filesystem {
      */
     public static String getFileType(File file) {
         return (file.getName().contains(".")) ?
-                file.getName().substring(file.getName().lastIndexOf('.') + 1) : "";
+               file.getName().substring(file.getName().lastIndexOf('.') + 1) : "";
     }
     
     /**

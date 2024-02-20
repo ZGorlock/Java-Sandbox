@@ -7,6 +7,7 @@
 package main.entity.base;
 
 import java.io.File;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import commons.access.Filesystem;
@@ -45,10 +46,11 @@ public abstract class RawEntity extends Entity {
     @Override
     protected boolean doCleanName() {
         return Stream.of(
-                super.doCleanName(),
-                FIX_NAME.auto() && fixName(),
-                FIX_FORMAT.auto() && fixFormat()
-        ).reduce(Boolean.FALSE, Boolean::logicalOr);
+                        ((Supplier<Boolean>) super::doCleanName),
+                        (() -> (FIX_NAME.auto() && fixName())),
+                        (() -> (FIX_FORMAT.auto() && fixFormat())))
+                .sequential().map(Supplier::get)
+                .reduce(Boolean.FALSE, Boolean::logicalOr);
     }
     
     public boolean fixName() {
@@ -86,10 +88,11 @@ public abstract class RawEntity extends Entity {
     @Override
     protected boolean doCleanFile() {
         return Stream.of(
-                super.doCleanFile(),
-                REMOVE_DUPLICATES.auto() && removeDuplicates(),
-                CLEAN_ENTITY_FILE.auto() && cleanEntityFile()
-        ).reduce(Boolean.FALSE, Boolean::logicalOr);
+                        ((Supplier<Boolean>) super::doCleanFile),
+                        (() -> (REMOVE_DUPLICATES.auto() && removeDuplicates())),
+                        (() -> (CLEAN_ENTITY_FILE.auto() && cleanEntityFile())))
+                .sequential().map(Supplier::get)
+                .reduce(Boolean.FALSE, Boolean::logicalOr);
     }
     
     public boolean removeDuplicates() {

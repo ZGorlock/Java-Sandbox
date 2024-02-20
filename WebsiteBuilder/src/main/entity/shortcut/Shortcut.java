@@ -7,6 +7,7 @@
 package main.entity.shortcut;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -14,10 +15,10 @@ import java.util.Optional;
 import commons.access.Filesystem;
 import commons.lambda.stream.collector.MapCollectors;
 import commons.object.string.StringUtility;
-import main.entity.base.RawEntity;
+import main.entity.base.LinkEntity;
 import main.util.FilenameUtil;
 
-public abstract class Shortcut extends RawEntity {
+public abstract class Shortcut extends LinkEntity {
     
     //Constants
     
@@ -190,7 +191,31 @@ public abstract class Shortcut extends RawEntity {
     }
     
     public static Map<String, Optional<File>> createShortcuts(File dir, Map<String, String> linkMap) {
-        return linkMap.entrySet().stream()
+        final Map<String, String> existingLinks = findShortcutsInFolder(dir).stream()
+                .collect(MapCollectors.toLinkedHashMap(
+                        e -> e.getName().replace(DEFAULT_SHORTCUT_EXTENSION, ""),
+                        Shortcut::readUrlFromShortcut));
+        
+        final Map<String, String> newLinks = linkMap.entrySet().stream()
+                .filter(link -> Optional.ofNullable(existingLinks)
+                        .map(currentMap -> currentMap.get(link.getKey()))
+                        .map(currentUrl -> !currentUrl.equals(link.getValue()) &&
+                                Filesystem.renameFile(
+                                        new File(dir, (link.getKey() + DEFAULT_SHORTCUT_EXTENSION)),
+                                        new File(dir, (currentUrl.replaceAll("^.*/([^/]+)$", "$1") + DEFAULT_SHORTCUT_EXTENSION))))
+                        .orElse(true))
+                .filter(link -> Optional.ofNullable(existingLinks)
+                        .map(Map::entrySet).stream().flatMap(Collection::stream)
+                        .filter(current -> current.getValue().equals(link.getValue()))
+                        .findFirst()
+                        .map(current -> !current.getKey().equals(link.getKey()) &&
+                                !Filesystem.renameFile(
+                                        new File(dir, (current.getKey() + DEFAULT_SHORTCUT_EXTENSION)),
+                                        new File(dir, (link.getKey() + DEFAULT_SHORTCUT_EXTENSION))))
+                        .orElse(true))
+                .collect(MapCollectors.toLinkedHashMap());
+        
+        return newLinks.entrySet().stream()
                 .map(e -> Map.entry(e.getKey(),
                         Optional.of(e.getValue())
                                 .map(e2 -> new File(dir, (e.getKey() + DEFAULT_SHORTCUT_EXTENSION)))

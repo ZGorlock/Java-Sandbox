@@ -19,8 +19,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
@@ -31,6 +29,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
@@ -206,11 +205,12 @@ public class ImageUtility {
      * Deletes the extra data in an image file, reducing the file size.
      *
      * @param image            The image file.
+     * @param target           The output file.
      * @param preserveMetadata Whether or not to preserve the metadata of the image file.
      * @return Whether the image file was successfully cleaned or not.
      */
-    public static boolean cleanImageFile(File image, boolean preserveMetadata) {
-        if (image == null) {
+    public static boolean cleanImageFile(File image, File target, boolean preserveMetadata) {
+        if ((image == null) || !image.exists()) {
             return false;
         }
         
@@ -219,41 +219,55 @@ public class ImageUtility {
         }
         
         try {
-            File tmp = Filesystem.createTemporaryFile(Filesystem.getFileType(image));
+            final File output = Filesystem.createTemporaryFile(Filesystem.getFileType(image));
             
-            Map<String, FileTime> dates = Filesystem.readDates(image);
+            final Map<String, FileTime> dates = Filesystem.readDates(image);
             
-            if (preserveMetadata) {
-                try (FileInputStream fileInputStream = new FileInputStream(image);
-                     FileOutputStream fileOutputStream = new FileOutputStream(tmp)) {
+            IIOImage imageData;
+            IIOMetadata streamMetadata;
+            
+            try (final ImageInputStream imageInputStream = ImageIO.createImageInputStream(image)) {
+                final ImageReader reader = ImageIO.getImageReaders(imageInputStream).next();
+                try {
+                    reader.setInput(imageInputStream);
                     
-                    ImageInputStream imageInputStream = ImageIO.createImageInputStream(fileInputStream);
-                    ImageReader reader = ImageIO.getImageReaders(imageInputStream).next();
-                    reader.setInput(imageInputStream, true);
-                    IIOMetadata metadata = reader.getImageMetadata(0);
-                    IIOMetadata streamMetadata = reader.getStreamMetadata();
-                    BufferedImage data = reader.read(0);
+                    final ImageReadParam readParams = reader.getDefaultReadParam();
+                    
+                    imageData = reader.readAll(0, readParams);
+                    streamMetadata = reader.getStreamMetadata();
+                    
+                } finally {
                     imageInputStream.flush();
-                    
-                    ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(fileOutputStream);
-                    ImageWriter writer = ImageIO.getImageWriter(reader);
-                    writer.setOutput(imageOutputStream);
-                    ImageWriteParam writeParams = writer.getDefaultWriteParam();
-                    writeParams.setCompressionMode(ImageWriteParam.MODE_COPY_FROM_METADATA);
-                    
-                    writer.write(streamMetadata, new IIOImage(data, null, metadata), writeParams);
-                    writer.dispose();
-                    imageOutputStream.flush();
+                    reader.dispose();
                 }
-                
-            } else {
-                BufferedImage data = ImageIO.read(image);
-                ImageIO.write(data, Filesystem.getFileType(image).toLowerCase(), tmp);
             }
             
-            Filesystem.writeDates(tmp, dates);
+            if (!preserveMetadata) {
+                imageData.setMetadata(null);
+                imageData.setThumbnails(null);
+                streamMetadata = null;
+            }
             
-            if (!Filesystem.safeReplace(tmp, image)) {
+            try (final ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(output)) {
+                final ImageWriter writer = ImageIO.getImageWritersBySuffix(Filesystem.getFileType(output)).next();
+                try {
+                    writer.setOutput(imageOutputStream);
+                    
+                    final ImageWriteParam writeParams = writer.getDefaultWriteParam();
+                    writeParams.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+                    writeParams.unsetCompression();
+                    
+                    writer.write(streamMetadata, imageData, writeParams);
+                    
+                } finally {
+                    imageOutputStream.flush();
+                    writer.dispose();
+                }
+            }
+            
+            Filesystem.writeDates(output, dates);
+            
+            if (!Filesystem.safeReplace(output, target)) {
                 throw new Exception("Failed to safely replace image file");
             }
             return true;
@@ -269,12 +283,36 @@ public class ImageUtility {
     /**
      * Deletes the extra data in an image file, reducing the file size.
      *
+     * @param image            The image file.
+     * @param preserveMetadata Whether or not to preserve the metadata of the image file.
+     * @return Whether the image file was successfully cleaned or not.
+     * @see #cleanImageFile(File, File, boolean)
+     */
+    public static boolean cleanImageFile(File image, boolean preserveMetadata) {
+        return cleanImageFile(image, image, preserveMetadata);
+    }
+    
+    /**
+     * Deletes the extra data in an image file, reducing the file size.
+     *
+     * @param image  The image file.
+     * @param target The output file.
+     * @return Whether the image file was successfully cleaned or not.
+     * @see #cleanImageFile(File, File, boolean)
+     */
+    public static boolean cleanImageFile(File image, File target) {
+        return cleanImageFile(image, target, true);
+    }
+    
+    /**
+     * Deletes the extra data in an image file, reducing the file size.
+     *
      * @param image The image file.
      * @return Whether the image file was successfully cleaned or not.
-     * @see #cleanImageFile(File, boolean)
+     * @see #cleanImageFile(File, File)
      */
     public static boolean cleanImageFile(File image) {
-        return cleanImageFile(image, true);
+        return cleanImageFile(image, image);
     }
     
     /**

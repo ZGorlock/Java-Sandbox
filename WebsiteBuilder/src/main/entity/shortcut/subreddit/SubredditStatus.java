@@ -27,9 +27,9 @@ public class SubredditStatus {
     
     protected SubredditStatus(Subreddit subredditEntity) {
         this.status = subredditEntity.getAttributes().isBanned() ? Status.BANNED :
-                subredditEntity.getAttributes().isPrivate() ? Status.PRIVATE :
-                        subredditEntity.getAttributes().isAlive() ? Status.ALIVE :
-                                Status.UNKNOWN;
+                      subredditEntity.getAttributes().isPrivate() ? Status.PRIVATE :
+                      subredditEntity.getAttributes().isAlive() ? Status.ALIVE :
+                      Status.UNKNOWN;
     }
     
     

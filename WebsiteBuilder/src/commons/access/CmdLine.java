@@ -182,14 +182,6 @@ public final class CmdLine {
         return executeCmd(safeExecute, progressBar, buildProcess(command));
     }
     
-//    public static String executeCmd(boolean safeExecute, boolean useScriptCommand, File workingDirectory, List<String> command) throws RuntimeException {
-//        return executeCmd(safeExecute, null, buildProcess(command));
-//    }
-//    
-//    public static String executeCmd(boolean safeExecute, boolean useScriptCommand, File workingDirectory, List<String> command) throws RuntimeException {
-//        return executeCmd(safeExecute, null, buildProcess(command));
-//    }
-    
     /**
      * Executes a command on the system command line.
      *
@@ -516,7 +508,6 @@ public final class CmdLine {
         //Methods
         
         public Cmd addArgs(List<String> arguments) {
-//            Optional.of(this.processBuilder.get())
             Optional.ofNullable(processBuilder.get())
                     .ifPresentOrElse(processBuilder -> {
                         throw new UnsupportedOperationException("Cmd has already been compiled");
@@ -533,8 +524,7 @@ public final class CmdLine {
         }
         
         public Cmd compile() {
-//            this.processBuilder.get()
-            return this; //TODO
+            return this;
         }
         
         public Cmd compile(boolean useScriptCommand, OperatingSystem.OS operatingSystem) {
@@ -555,13 +545,11 @@ public final class CmdLine {
         
         public Cmd startIn(File workingDirectory) {
             this.workingDirectory = workingDirectory;
-//            Optional.ofNullable(this.processBuilder.get()).ifPresent(e -> e.directory(this.workingDirectory));
             return this;
         }
         
         public String execute() {
-            //Optional.ofNullable(executable).map(StringUtility::fixFileSeparators).orElse(null)
-            return null; //TODO
+            return null;
         }
         
         public String execute(boolean safeExecute, ProgressBar progressBar) {
@@ -596,12 +584,6 @@ public final class CmdLine {
             return executeAsync(DEFAULT_SAFE_EXECUTE, progressBar);
         }
         
-        
-        //Getters
-        
-//        public String getCommand() {
-//            
-//        }
     }
     
     /**

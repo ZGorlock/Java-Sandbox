@@ -17,11 +17,11 @@ import commons.access.Internet;
 import commons.io.file.media.image.ImageUtility;
 import commons.object.string.StringUtility;
 import main.WebsiteBuilder;
-import main.entity.base.RawEntity;
+import main.entity.base.MediaEntity;
 import main.util.FilenameUtil;
 import main.util.persistence.VariableUtil;
 
-public abstract class Image extends RawEntity {
+public abstract class Image extends MediaEntity {
     
     //Constants
     
@@ -67,11 +67,7 @@ public abstract class Image extends RawEntity {
     
     @Override
     protected boolean doFixName() {
-        boolean result = false;
-        if (FILENAME_SPACES.denied() && getFileName().contains(" ")) {
-            result |= rename(getFileName().replaceAll("\\s+", "_"));
-        }
-        
+        boolean result = super.doFixName();
         if (isSample()) {
             System.err.println(StringUtility.format("Sample file detected: '{}'", getSource().getAbsolutePath()));
             if (getFileName().startsWith("__")) {
@@ -82,17 +78,6 @@ public abstract class Image extends RawEntity {
                 result |= rename(getFileName().replaceAll("^sample[_\\-\\s]", ""));
             }
         }
-        
-        if (getFileName().matches(".*\\.pic[^.]*\\..*")) {
-            result |= rename(getFileName().replaceAll("\\.pic(?:small|large)?\\d*\\.", "."));
-        }
-        if (getFileName().matches(".*\\.mov\\d*\\..*")) {
-            result |= rename(getFileName().replaceAll("\\.mov\\d*\\.", "."));
-        }
-        if (getFileName().matches("^(imgur_[^_]+)_.*(\\.[^.]+)$")) {
-            result |= rename(getFileName().replace(" ", "_").replaceAll("^(imgur_[^_]+)_.*(\\.[^.]+)$", "$1$2"));
-        }
-        
         return result;
     }
     
@@ -126,7 +111,7 @@ public abstract class Image extends RawEntity {
     protected boolean doCleanEntityFile() {
         try {
             System.out.println(StringUtility.format("Cleaning image: '{}'", getSource().getAbsolutePath()));
-            ImageUtility.cleanImageFile(getSource(), true);
+            ImageUtility.cleanImageFile(getSource(), false);
         } catch (Exception ignored) {
             return false;
         }
@@ -153,7 +138,7 @@ public abstract class Image extends RawEntity {
         try {
             final String fileName = getFileName();
             final String title = fileName
-                    .replaceAll(("(?i)" + VariableUtil.get(0x164a) + "(?!\\.)[\\W_\\-]"), "");
+                    .replaceAll(("(?i)(^|.*\\b)" + VariableUtil.get(0x164a) + "(?!\\.)[\\W_\\-]"), "");
             final String hash = fileName
                     .replaceAll(("(?i)(?:^|.*[\\W_\\-])([0-9a-f]{4,})[\\W_]" + VariableUtil.get(0x164a) + "[\\W_\\-].*$"), "$1")
                     .replaceAll("(?i)(?:^|.*[\\W_\\-])" + VariableUtil.get(0x164a) + "[\\W_\\-]([0-9a-f]{4,})[\\W_\\-].*$", "$1");
@@ -165,7 +150,7 @@ public abstract class Image extends RawEntity {
                 return false;
             }
             
-            System.out.println(StringUtility.format("Attempting to Upgrading sample image: '{}'", getSource().getAbsolutePath()));
+            System.out.println(StringUtility.format("Attempting to upgrade sample image: '{}'", getSource().getAbsolutePath()));
             
             File save = new File(WebsiteBuilder.TMP_DIR, title);
             File downloaded = Internet.downloadFile(url, save);
@@ -204,8 +189,8 @@ public abstract class Image extends RawEntity {
     
     public boolean write(BufferedImage image, File newSource) {
         System.err.println(!getSource().exists() ? StringUtility.format("Writing: '{}'", getSource().getAbsolutePath()) :
-                !newSource.equals(getSource()) ? StringUtility.format("Converting: '{}' to: '{}'", getSource().getAbsolutePath(), newSource.getAbsolutePath()) :
-                        StringUtility.format("Re-Writing: '{}' to: '{}'", getSource().getAbsolutePath(), newSource.getAbsolutePath()));
+                           !newSource.equals(getSource()) ? StringUtility.format("Converting: '{}' to: '{}'", getSource().getAbsolutePath(), newSource.getAbsolutePath()) :
+                           StringUtility.format("Re-Writing: '{}' to: '{}'", getSource().getAbsolutePath(), newSource.getAbsolutePath()));
         return writeQuietly(image, newSource);
     }
     

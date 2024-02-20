@@ -8,6 +8,7 @@ package main.entity.shortcut.subreddit;
 
 import java.io.File;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -58,10 +59,11 @@ public class SubredditMulti extends Subreddit {
     @Override
     protected boolean doCleanFile() {
         return Stream.of(
-                super.doCleanFile(),
-                DELETE_EMPTY.auto() && deleteEmpty(),
-                AUTO_BUILD.auto() && autoBuild()
-        ).reduce(Boolean.FALSE, Boolean::logicalOr);
+                        ((Supplier<Boolean>) super::doCleanFile),
+                        (() -> (DELETE_EMPTY.auto() && deleteEmpty())),
+                        (() -> (AUTO_BUILD.auto() && autoBuild())))
+                .sequential().map(Supplier::get)
+                .reduce(Boolean.FALSE, Boolean::logicalOr);
     }
     
     public boolean deleteEmpty() {

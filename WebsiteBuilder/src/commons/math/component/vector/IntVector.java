@@ -233,9 +233,9 @@ public class IntVector extends IntComponent<IntVector> implements VectorInterfac
      * @see #average(List)
      */
     public static IntVector averageVector(List<IntVector> vectors) throws ArithmeticException {
-        return vectors.isEmpty() ? new IntVector() : (
-                (vectors.size() == 1) ? vectors.get(0).cloned() :
-                        vectors.get(0).average(ListUtility.subList(vectors, 1)));
+        return vectors.isEmpty() ? new IntVector() :
+               (vectors.size() == 1) ? vectors.get(0).cloned() :
+               vectors.get(0).average(ListUtility.subList(vectors, 1));
     }
     
     /**

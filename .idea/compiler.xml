@@ -45,6 +45,7 @@
         <module name="reactionTimeClicker" />
         <module name="regexpTrie" />
         <module name="runeliteScreenshotProcessor" />
+        <module name="runescapeCacheDownloader" />
         <module name="sineWaves" />
         <module name="sphinx4test" />
         <module name="spineLibGDXTest" />

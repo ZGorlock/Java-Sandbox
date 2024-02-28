@@ -50,6 +50,7 @@ public class RunescapeCacheDownloader {
     public static void main(String[] args) {
         listVersions();
         downloadCaches();
+        createCacheDumps();
     }
     
     
@@ -140,15 +141,56 @@ public class RunescapeCacheDownloader {
         return null;
     }
     
-    private static void fixCacheDates(File flatCache, File cacheDump) {
-        if (!Filesystem.exists(flatCache) || !Filesystem.exists(cacheDump)) {
+    private static void fixCacheDates(File sourceCache, File targetCache) {
+        if (!Filesystem.exists(sourceCache) || !Filesystem.exists(targetCache)) {
             return;
         }
         
-        final Map<String, FileTime> cacheDates = Filesystem.readDates(cacheDump);
+        final Map<String, FileTime> cacheDates = Filesystem.readDates(sourceCache);
         final Date lastModified = new Date(cacheDates.get("lastModifiedTime").toMillis());
         
-        Filesystem.setLastModifiedTime(flatCache, lastModified);
+        Filesystem.setLastModifiedTime(targetCache, lastModified);
+    }
+    
+    private static void createCacheDumps() {
+        for (String version : versions) {
+            final File flatCache = new File(FLAT_CACHE_DIR, (version + ".tar.gz"));
+            final File cacheDump = new File(CACHE_DUMP_DIR, ("dump-" + version + ".tar.gz"));
+            
+            if (flatCache.exists() && !cacheDump.exists()) {
+                produceDump(version);
+            }
+        }
+    }
+    
+    private static void produceDump(String version) {
+        File versionDir = new File(Project.TMP_DIR, version);
+        Filesystem.createDirectory(versionDir);
+        
+        File flatCacheSource = new File(FLAT_CACHE_DIR, (version + ".tar.gz"));
+        File flatCache = new File(versionDir, flatCacheSource.getName());
+        Filesystem.copyFile(flatCacheSource, flatCache);
+        
+        File cacheDir = new File(versionDir, "osrs-cache-" + version);
+        CmdLine.executeCmd("winrar x -ibck \"" + flatCache.getAbsolutePath() + "\" \"" + flatCache.getParentFile().getAbsolutePath() + "\"");
+        
+        File dumpDir = new File(versionDir, "dump");
+        Filesystem.createDirectory(dumpDir);
+        
+        File packerJar = new File(Project.RESOURCES_DIR, "packer-1.10.22-shaded.jar");
+        String dumpCategories = "underlays,kits,overlays,inventories,object_defs,enums,npc_defs,item_defs,sequences,var_players,var_bits,param_defs,interface_defs,models_raw,models,sprites,texture_defs,rs2asm,structs,binary,_18,_19,_20,dbtable,dbrow,dbtable_index";
+        String packerCmd = "java -jar \"" + packerJar.getAbsolutePath() + "\" dump " + dumpCategories + " \"" + cacheDir.getAbsolutePath() + "/\" \"" + dumpDir.getAbsolutePath() + "\"";
+        CmdLine.executeCmd(packerCmd);
+        
+        File dump = new File(versionDir, "dump-" + version + ".tar.gz");
+        CmdLine.executeCmd("winrar a -ibck -ma5 -m5 -md64m -cfg- -mt8 -ep1 -df -y \"" + dump.getAbsolutePath() + "\" \"" + dumpDir.getAbsolutePath() + "\"");
+        
+        fixCacheDates(flatCache, dump);
+        
+        File cacheDumpOutput = new File(CACHE_DUMP_DIR, dump.getName());
+        Filesystem.moveFile(dump, cacheDumpOutput);
+        
+        Filesystem.deleteDirectory(versionDir);
     }
     
 }

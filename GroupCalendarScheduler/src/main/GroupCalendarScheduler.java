@@ -12,11 +12,13 @@ import java.nio.file.Files;
 import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
@@ -24,10 +26,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -59,6 +63,8 @@ public class GroupCalendarScheduler {
     
     private static File CALENDARS_FILE = new File("data/calendars.txt");
     
+    private static File SA_USER_FILE = new File("data/sa-user.txt");
+    
     private static Long TIMEZONE_OFFSET = TimeUnit.SECONDS.toHours(ZoneOffset.systemDefault().getRules().getOffset(Instant.now()).getTotalSeconds());
     
     private static ZoneId ZONE_ID = ZoneOffset.ofHours(TIMEZONE_OFFSET.intValue());
@@ -66,6 +72,8 @@ public class GroupCalendarScheduler {
     private static final int INTERVAL = 30;
     
     private static final long INTERVAL_MS = TimeUnit.MINUTES.toMillis(INTERVAL);
+    
+    private static final long INTERVAL_NS = TimeUnit.MILLISECONDS.toNanos(INTERVAL_MS);
     
     private static final int INTERVALS_PER_HOUR = (int) TimeUnit.HOURS.toMinutes(1) / INTERVAL;
     
@@ -92,14 +100,14 @@ public class GroupCalendarScheduler {
     
     private static final boolean checkWeekends = true;
     
-    private static final List<DayOfWeek> daysAllowed = Stream.of(null
-            , (checkWeekends ? DayOfWeek.SUNDAY : null)
-            , (checkWeekdays ? DayOfWeek.MONDAY : null)
-            , (checkWeekdays ? DayOfWeek.TUESDAY : null)
-            , (checkWeekdays ? DayOfWeek.WEDNESDAY : null)
-            , (checkWeekdays ? DayOfWeek.THURSDAY : null)
-            , (checkWeekdays ? DayOfWeek.FRIDAY : null)
-            , (checkWeekends ? DayOfWeek.SATURDAY : null)
+    private static final List<DayOfWeek> daysAllowed = Stream.of(
+            (checkWeekdays ? DayOfWeek.MONDAY : null),
+            (checkWeekdays ? DayOfWeek.TUESDAY : null),
+            (checkWeekdays ? DayOfWeek.WEDNESDAY : null),
+            (checkWeekdays ? DayOfWeek.THURSDAY : null),
+            (checkWeekdays ? DayOfWeek.FRIDAY : null),
+            (checkWeekends ? DayOfWeek.SATURDAY : null),
+            (checkWeekends ? DayOfWeek.SUNDAY : null)
     ).filter(Objects::nonNull).collect(Collectors.toList());
     
     private static final int earliestTime = 9 * INTERVALS_PER_HOUR; //9:00 AM
@@ -108,17 +116,19 @@ public class GroupCalendarScheduler {
     
     private static final TemporalAmount searchRange = Period.ofMonths(1);
     
-    //private static final String startDate = "2023-04-01";
+    //private static final String startDate = "2024-03-01";
     private static final String startDate = LocalDate.now(ZONE_ID).atStartOfDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     
-    //private static final String endDate = "2023-05-01";
-    private static final String endDate = LocalDate.now(ZONE_ID).atStartOfDay().plus(searchRange).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    private static final String endDate = "2024-05-01";
+    //private static final String endDate = LocalDate.now(ZONE_ID).atStartOfDay().plus(searchRange).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     
     private static final DateTime startTime = DateTime.parseRfc3339(startDate + "T00:00:00" + ZONE_ID.getId());
     
     private static final DateTime endTime = DateTime.parseRfc3339(endDate + "T00:00:00" + ZONE_ID.getId());
     
     private static final boolean printSlots = true;
+    
+    private static final boolean printConfig = true;
     
     private static final boolean printWeekSeparators = true;
     
@@ -151,15 +161,15 @@ public class GroupCalendarScheduler {
         final GoogleCredential serviceKey = GoogleCredential
                 .fromStream(new FileInputStream(SERVICE_ACCOUNT_KEY_FILE))
                 .createScoped(SCOPES);
-
-//        final GoogleCredential credential = new GoogleCredential.Builder()
-//                .setTransport(readJsonFile.getTransport())
-//                .setJsonFactory(readJsonFile.getJsonFactory())
-//                .setServiceAccountId(readJsonFile.getServiceAccountId())
-////                .setServiceAccountUser("zgorlock@gmail.com")
-//                .setServiceAccountScopes(readJsonFile.getServiceAccountScopes())
-//                .setServiceAccountPrivateKey(readJsonFile.getServiceAccountPrivateKey())
-//                .build();
+        
+        //final GoogleCredential credential = new GoogleCredential.Builder()
+        //        .setTransport(readJsonFile.getTransport())
+        //        .setJsonFactory(readJsonFile.getJsonFactory())
+        //        .setServiceAccountId(readJsonFile.getServiceAccountId())
+        //        //.setServiceAccountUser(Files.readString(SA_USER_FILE.toPath()).strip())
+        //        .setServiceAccountScopes(readJsonFile.getServiceAccountScopes())
+        //        .setServiceAccountPrivateKey(readJsonFile.getServiceAccountPrivateKey())
+        //        .build();
         
         return serviceKey;
     }
@@ -211,14 +221,13 @@ public class GroupCalendarScheduler {
                 
                 eventsResponse.getItems().stream()
                         .map(e -> (!getInstances || (e.getRecurrence() == null)) ? List.of(e) :
-                                getEventInstances(calendarId, e.getId()))
+                                  getEventInstances(calendarId, e.getId()))
                         .flatMap(Collection::stream)
                         .forEachOrdered(events::add);
                 
                 pageToken = eventsResponse.getNextPageToken();
             } catch (Exception e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
+                throw new RuntimeException(("Error: " + calendarId), e);
             }
         } while (pageToken != null);
         
@@ -244,8 +253,7 @@ public class GroupCalendarScheduler {
                 
                 pageToken = instancesResponse.getNextPageToken();
             } catch (Exception e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
+                throw new RuntimeException(("Error: " + calendarId), e);
             }
         } while (pageToken != null);
         
@@ -327,6 +335,29 @@ public class GroupCalendarScheduler {
         }
         
         System.out.println("└" + "─".repeat(48) + "┘");
+        
+        printConf();
+    }
+    
+    private static void printConf() {
+        if (!printConfig) {
+            return;
+        }
+        
+        final Function<Integer, String> durationStringBuilder = (Integer minutes) ->
+                Stream.of(
+                        Optional.ofNullable(minutes).map(e -> (e / 60)).filter(e -> (e > 0)).map(String::valueOf).map(e -> (e + "hr")).orElse(null),
+                        Optional.ofNullable(minutes).map(e -> (e % 60)).filter(e -> (e > 0)).map(String::valueOf).map(e -> (e + "min")).orElse(null)
+                ).filter(Objects::nonNull).collect(Collectors.joining(" "));
+        
+        System.out.println("Start:      " + startDate);
+        System.out.println("End:        " + endDate);
+        System.out.println("Check:      " + daysAllowed.stream().map(day -> day.getDisplayName(TextStyle.SHORT_STANDALONE, Locale.getDefault())).collect(Collectors.joining(" ")));
+        System.out.println("Earliest:   " + LocalTime.ofNanoOfDay(earliestTime * INTERVAL_NS));
+        System.out.println("Latest:     " + LocalTime.ofNanoOfDay(latestTime * INTERVAL_NS));
+        System.out.println("Require:    " + durationStringBuilder.apply(minimumSlot * INTERVAL));
+        System.out.println("Buffer:     " + durationStringBuilder.apply(slotBorder * INTERVAL));
+        System.out.println("Resolution: " + durationStringBuilder.apply(INTERVAL));
     }
     
     
@@ -418,8 +449,11 @@ public class GroupCalendarScheduler {
             final Instant earliest = startOfDay.plus((earliestTime * INTERVAL_MS), ChronoUnit.MILLIS);
             final Instant latest = startOfDay.plus((latestTime * INTERVAL_MS), ChronoUnit.MILLIS);
             
-            return daysAllowed.contains(time.getDayOfWeek()) &&
-                    !instant.isBefore(earliest) && !instant.isAfter(latest);
+            return isDayValid(time) && !instant.isBefore(earliest) && !instant.isAfter(latest);
+        }
+        
+        private boolean isDayValid(ZonedDateTime time) {
+            return daysAllowed.contains(time.getDayOfWeek());
         }
         
         public boolean isStartTimeValid() {

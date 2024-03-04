@@ -1,11 +1,12 @@
 <component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
-    <option name="AUTODETECT_INDENTS" value="false" />
+    <option name="AUTODETECT_INDENTS" value="true" />
     <option name="OTHER_INDENT_OPTIONS">
       <value>
         <option name="USE_TAB_CHARACTER" value="true" />
       </value>
     </option>
+    <option name="RIGHT_MARGIN" value="999" />
     <option name="SOFT_MARGINS" value="120" />
     <DBN-PSQL>
       <case-options enabled="true">
@@ -68,9 +69,6 @@
       <option name="ALIGN_TYPES_IN_MULTI_CATCH" value="false" />
       <option name="JD_P_AT_EMPTY_LINES" value="false" />
     </JavaCodeStyleSettings>
-    <codeStyleSettings language="HTML">
-      <option name="RIGHT_MARGIN" value="1000" />
-    </codeStyleSettings>
     <codeStyleSettings language="JAVA">
       <option name="LINE_COMMENT_AT_FIRST_COLUMN" value="false" />
       <option name="BLOCK_COMMENT_AT_FIRST_COLUMN" value="false" />

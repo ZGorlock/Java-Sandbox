@@ -56,7 +56,7 @@
         <module>SpineLibGDXTest</module>
         <module>SpotifyPlaylistCreator</module>
         <module>SpringCrudRepositoryTest</module>
-        <module>SQLiteReader</module>
+        <module>SQLiteTest</module>
         <module>StableDiffusionRunner</module>
         <module>StackOverflow</module>
         <module>SubredditLister</module>

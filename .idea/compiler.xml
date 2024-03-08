@@ -51,7 +51,7 @@
         <module name="spineLibGDXTest" />
         <module name="spotifyPlaylistCreator" />
         <module name="springCrudRepositoryTest" />
-        <module name="sqliteReader" />
+        <module name="sqliteTest" />
         <module name="stableDiffusionRunner" />
         <module name="stackOverflow" />
         <module name="subredditLister" />

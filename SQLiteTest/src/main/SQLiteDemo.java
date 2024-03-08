@@ -1,5 +1,5 @@
 /*
- * File:    SQLiteReader.java
+ * File:    SQLiteDemo.java
  * Package: main
  * Author:  Zachary Gill
  */
@@ -16,7 +16,7 @@ import java.util.Properties;
 
 import org.sqlite.SQLiteConfig;
 
-public class SQLiteReader {
+public class SQLiteDemo {
     
     //Constants
     

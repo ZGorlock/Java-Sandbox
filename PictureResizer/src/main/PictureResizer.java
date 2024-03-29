@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.file.attribute.FileTime;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -142,8 +143,9 @@ public class PictureResizer {
                                 System.err.println("Failed to create backup directory: " + backupDir.getAbsolutePath());
                                 throw new RuntimeException();
                             }
-                        } else {
-                            final File oldBackupDir = new File(backupDir.getParentFile(), "old");
+                        } else if (!Filesystem.directoryIsEmpty(backupDir)) {
+                            final String oldBackupTimestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Filesystem.readDates(backupDir).get("creationTime"));
+                            final File oldBackupDir = new File(backupDir.getParentFile(), backupDir.getName() + "-" + oldBackupTimestamp);
                             final File saveOldBackupDir = new File(backupDir, backupDir.getName());
                             Filesystem.rename(backupDir, oldBackupDir);
                             Filesystem.moveDirectory(oldBackupDir, saveOldBackupDir);

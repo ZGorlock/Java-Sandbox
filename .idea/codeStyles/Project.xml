@@ -38,10 +38,6 @@
       <option name="HTML_KEEP_LINE_BREAKS" value="false" />
       <option name="HTML_KEEP_LINE_BREAKS_IN_TEXT" value="false" />
     </HTMLCodeStyleSettings>
-    <JSON>
-      <option name="OBJECT_WRAPPING" value="0" />
-      <option name="ARRAY_WRAPPING" value="0" />
-    </JSON>
     <JavaCodeStyleSettings>
       <option name="REPLACE_INSTANCEOF_AND_CAST" value="true" />
       <option name="SPACE_AFTER_CLOSING_ANGLE_BRACKET_IN_TYPE_ARGUMENT" value="true" />
@@ -98,7 +94,10 @@
       </indentOptions>
     </codeStyleSettings>
     <codeStyleSettings language="JSON">
+      <option name="KEEP_LINE_BREAKS" value="false" />
       <option name="KEEP_BLANK_LINES_IN_CODE" value="3" />
+      <option name="SPACE_WITHIN_BRACKETS" value="true" />
+      <option name="SPACE_WITHIN_BRACES" value="true" />
       <indentOptions>
         <option name="INDENT_SIZE" value="4" />
         <option name="USE_TAB_CHARACTER" value="true" />
@@ -107,6 +106,7 @@
     </codeStyleSettings>
     <codeStyleSettings language="XML">
       <indentOptions>
+        <option name="USE_TAB_CHARACTER" value="true" />
         <option name="KEEP_INDENTS_ON_EMPTY_LINES" value="true" />
       </indentOptions>
     </codeStyleSettings>

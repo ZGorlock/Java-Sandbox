@@ -96,6 +96,8 @@ public class BackupHelper {
         
         final String backupName = "Documents";
         
+        final String password = PropertyUtil.readProperty("pass-docs.txt");
+        
         final File localDir = new File(Drive.STORAGE.drive, backupName);
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", "Backups"));
         final File backupDir = new File(Drive.BACKUP.drive, "Backups");
@@ -117,7 +119,7 @@ public class BackupHelper {
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Work"), List.of("REST"), true);
             BackupUtil.addToBackupCache(documentsCache, new File(localDir, "Writing"));
             
-            final File documentsBackup = BackupUtil.compressBackupCache(documentsCache, BackupUtil.Stamper.stamp(backupName));
+            final File documentsBackup = BackupUtil.compressBackupCache(documentsCache, BackupUtil.Stamper.stamp(backupName), false, password);
             BackupUtil.commitBackup(localBackupDir, documentsBackup);
             
             BackupUtil.clearTmpDir();
@@ -153,6 +155,8 @@ public class BackupHelper {
         
         final String backupName = "Coding";
         
+        final String password = PropertyUtil.readProperty("pass-coding.txt");
+        
         final File localDir = Drive.CODING.drive;
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", backupName));
         final File backupDir = new File(Drive.BACKUP.drive, backupName);
@@ -165,7 +169,7 @@ public class BackupHelper {
             
             if (!BackupUtil.recentBackupExists(localBackupDir, language) && BackupUtil.modifiedSinceLastBackup(languageLocalDir, localBackupDir, language)) {
                 
-                final File languageBackup = BackupUtil.compressBackupCache(languageLocalDir, BackupUtil.Stamper.stamp(language));
+                final File languageBackup = BackupUtil.compressBackupCache(languageLocalDir, BackupUtil.Stamper.stamp(language), false, password);
                 BackupUtil.commitBackup(localBackupDir, languageBackup);
             }
             BackupUtil.cleanBackupDir(localBackupDir, language, 1);
@@ -204,6 +208,8 @@ public class BackupHelper {
         
         final String backupName = "Backblaze";
         
+        final String password = PropertyUtil.readProperty("pass-bb.txt");
+        
         final File localDir = new File(Drive.BOOT.drive, Filesystem.generatePath("ProgramData", "Backblaze"));
         final File localBackupDir = new File(Drive.STORAGE.drive, Filesystem.generatePath("Other", "Backup", "Backups"));
         final File backupDir = new File(Drive.BACKUP.drive, "Backups");
@@ -215,7 +221,7 @@ public class BackupHelper {
             
             BackupUtil.addToBackupCache(backblazeCache, localDir, true);
             
-            final File backblazeBackup = BackupUtil.compressBackupCache(backblazeCache, BackupUtil.Stamper.stamp(backupName));
+            final File backblazeBackup = BackupUtil.compressBackupCache(backblazeCache, BackupUtil.Stamper.stamp(backupName), false, password);
             BackupUtil.commitBackup(localBackupDir, backblazeBackup);
             
             BackupUtil.clearTmpDir();

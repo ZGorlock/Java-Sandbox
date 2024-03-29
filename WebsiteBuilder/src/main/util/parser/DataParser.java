@@ -15,6 +15,7 @@ import java.util.function.Function;
 
 import commons.access.Filesystem;
 import commons.lambda.stream.collector.MapCollectors;
+import main.entity.shortcut.Shortcut;
 import main.util.FilenameUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -48,8 +49,7 @@ public abstract class DataParser {
                         .filter(e -> useOriginalTitles)
                         .orElseGet(() -> Optional.ofNullable(element)
                                 .map(linkExtractor)
-                                .map(e -> e.replaceAll("^.*/([^/#?]+)([#?].+)?$", "$1"))
-                                .filter(e -> !e.isBlank())
+                                .map(Shortcut::getShortcutId)
                                 .orElse(""));
         
         final Function<Element, Map.Entry<String, String>> extractor = (Element element) ->

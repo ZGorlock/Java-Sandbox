@@ -8,9 +8,14 @@ package main.entity.shortcut;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import commons.access.Filesystem;
 import commons.lambda.stream.collector.MapCollectors;
@@ -30,6 +35,17 @@ public abstract class Shortcut extends LinkEntity {
     
     public static final Permission CLEAN_SHORTCUT = Permission.AUTO;
     
+    public static final Pattern SHORTCUT_CONTENT_PATTERN = Pattern.compile("(?s)^.*\\bURL=(?<url>\\S+)\\s+.*$");
+    
+    public static final Pattern SHORTCUT_URL_PATTERN = Pattern.compile("^" +
+            "(?<protocol>\\w+://|)" +
+            "(?<domain>(?:\\.?+[\\w\\-]+)+)" +
+            "(?<path>/(?:[^/&#?]+/)*?)" +
+            "(?<id>[^/&#?]+)/?+(?:#/)?(?=[^/]*$)" +
+            "(?<params>(?:[?&][^?&]+)*)" +
+            "(?<fragment>(?:#[^#]*)?)" +
+            "$");
+    
     
     //Fields
     
@@ -43,7 +59,7 @@ public abstract class Shortcut extends LinkEntity {
     protected Shortcut(File shortcut, boolean autoClean) {
         super(shortcut, false);
         
-        this.url = shortcut.isDirectory() ? "" : readUrlFromShortcut(shortcut);
+        this.url = shortcut.isDirectory() ? "" : Optional.ofNullable(readUrlFromShortcut(shortcut)).orElse("");
         this.name = getFileTitle();
         
         if (autoClean) {
@@ -154,11 +170,20 @@ public abstract class Shortcut extends LinkEntity {
     //Static Methods
     
     public static String readUrlFromShortcut(File shortcut) {
-        return getUrlFromShortcutContents(readContent(shortcut));
+        return Optional.ofNullable(shortcut)
+                .filter(Filesystem::exists)
+                .filter(e -> e.getName().toLowerCase().endsWith(DEFAULT_SHORTCUT_EXTENSION))
+                .map(Shortcut::readContent)
+                .map(Shortcut::getUrlFromShortcutContents)
+                .orElse(null);
     }
     
     public static String getUrlFromShortcutContents(String shortcutContents) {
-        return shortcutContents.replaceAll("(?s)^.*URL=", "").replaceAll("(?s)\\s+.*$", "");
+        return Optional.ofNullable(shortcutContents)
+                .filter(e -> !StringUtility.isNullOrBlank(e))
+                .map(SHORTCUT_CONTENT_PATTERN::matcher).filter(Matcher::matches)
+                .map(e -> e.group("url"))
+                .orElse(null);
     }
     
     public static String getShortcutContentsFromUrl(String url) {
@@ -202,7 +227,7 @@ public abstract class Shortcut extends LinkEntity {
                         .map(currentUrl -> !currentUrl.equals(link.getValue()) &&
                                 Filesystem.renameFile(
                                         new File(dir, (link.getKey() + DEFAULT_SHORTCUT_EXTENSION)),
-                                        new File(dir, (currentUrl.replaceAll("^.*/([^/]+)$", "$1") + DEFAULT_SHORTCUT_EXTENSION))))
+                                        new File(dir, (getShortcutId(currentUrl) + DEFAULT_SHORTCUT_EXTENSION))))
                         .orElse(true))
                 .filter(link -> Optional.ofNullable(existingLinks)
                         .map(Map::entrySet).stream().flatMap(Collection::stream)
@@ -221,6 +246,34 @@ public abstract class Shortcut extends LinkEntity {
                                 .map(e2 -> new File(dir, (e.getKey() + DEFAULT_SHORTCUT_EXTENSION)))
                                 .map(e2 -> Shortcut.createShortcut(e2, e.getValue()))))
                 .collect(MapCollectors.toLinkedHashMap());
+    }
+    
+    public static String getShortcutId(String shortcutUrl) {
+        return Optional.ofNullable(shortcutUrl)
+                .filter(e -> !StringUtility.isNullOrBlank(e))
+                .map(SHORTCUT_URL_PATTERN::matcher).filter(Matcher::matches)
+                .map(e -> e.group("id")).filter(e -> !StringUtility.isNullOrBlank(e))
+                .orElse(null);
+    }
+    
+    public static String getShortcutId(File shortcutFile) {
+        return getShortcutId(readUrlFromShortcut(shortcutFile));
+    }
+    
+    public static List<String> enumerateShortcutUrls(List<File> shortcuts) {
+        return shortcuts.stream()
+                .map(Shortcut::readUrlFromShortcut)
+                .filter(Objects::nonNull).distinct()
+                .sorted(Comparator.naturalOrder())
+                .collect(Collectors.toList());
+    }
+    
+    public static List<String> enumerateShortcutUrlsInFolder(File shortcutDir) {
+        return enumerateShortcutUrls(findShortcutsInFolder(shortcutDir));
+    }
+    
+    public static List<String> enumerateShortcutUrlsInFolderRecursively(File shortcutDir) {
+        return enumerateShortcutUrls(findShortcutsInFolderRecursively(shortcutDir));
     }
     
 }

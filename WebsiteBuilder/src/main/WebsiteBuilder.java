@@ -75,12 +75,6 @@ public class WebsiteBuilder {
                 d -> !d.getName().startsWith(Entity.META_PREFIX));
     }
     
-    private static List<SubredditRegistry> loadSubredditRegistry() {
-        return LocationUtil.getEntityLocations(SubredditRegistry.class).stream()
-                .map(SubredditRegistry::loadRegistry)
-                .collect(Collectors.toList());
-    }
-    
     private static List<PictureAlbum> loadGalleries() {
         return LocationUtil.getEntityLocations(PictureAlbum.class).stream()
                 .map(PictureAlbum::loadAlbum)
@@ -90,6 +84,12 @@ public class WebsiteBuilder {
     private static List<ClipLibrary> loadClipLibraries() {
         return LocationUtil.getEntityLocations(ClipLibrary.class).stream()
                 .map(ClipLibrary::loadLibrary)
+                .collect(Collectors.toList());
+    }
+    
+    private static List<SubredditRegistry> loadSubredditRegistry() {
+        return LocationUtil.getEntityLocations(SubredditRegistry.class).stream()
+                .map(SubredditRegistry::loadRegistry)
                 .collect(Collectors.toList());
     }
     

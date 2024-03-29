@@ -85,7 +85,7 @@ public class SeriesParser extends DataParser {
         
         info.posterUrl = HtmlParseUtil.attr(seriesDoc, 0x702b, "data-src").orElse(null);
         //info.poster = Optional.ofNullable(info.posterUrl)
-        //        .map(e -> Internet.downloadFile(info.posterUrl, new File(TMP_DIR, info.posterUrl.replaceAll("^.+/([^/]+)$", "$1"))))
+        //        .map(e -> Internet.downloadFile(info.posterUrl, new File(Project.TMP_DIR, (Shortcut.getShortcutId(info.posterUrl) + Shortcut.DEFAULT_SHORTCUT_EXTENSION))))
         //        .map(Picture::loadPicture).orElse(null);
         
         return info;
